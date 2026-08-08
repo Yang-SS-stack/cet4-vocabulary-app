@@ -67,6 +67,39 @@
   outline-offset: 5px;
 }
 
+@media (max-width: 800px) {
+  .line-sidebar {
+    padding-left: 0;
+  }
+
+  .line-sidebar__list {
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 2px 16px 6px 0;
+    scrollbar-width: none;
+  }
+
+  .line-sidebar__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .line-sidebar__item {
+    flex: 0 0 auto;
+  }
+
+  .line-sidebar__button {
+    width: auto;
+    min-height: 44px;
+    white-space: nowrap;
+  }
+
+  .line-sidebar__marker,
+  .line-sidebar__item::after {
+    display: none;
+  }
+}
+
 .line-sidebar__index {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.85em;

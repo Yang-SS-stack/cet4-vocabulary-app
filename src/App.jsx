@@ -36,28 +36,22 @@ function App() {
       </aside>
 
       <button
-        className="nav-toggle"
+        className={isNavOpen ? 'nav-toggle is-open' : 'nav-toggle'}
         type="button"
         onClick={() => setIsNavOpen((isOpen) => !isOpen)}
         aria-label={isNavOpen ? '隐藏导航栏' : '显示导航栏'}
         aria-expanded={isNavOpen}
         title={isNavOpen ? '隐藏导航栏' : '显示导航栏'}
       >
-        <span aria-hidden="true">{isNavOpen ? '‹' : '›'}</span>
+        <span aria-hidden="true" />
       </button>
 
       <main className="content-area">
-        <header className="content-header">
-          <span className="eyebrow">四级词汇学习</span>
-          <span className="header-date">本地学习空间</span>
-        </header>
-
         <section
           className="page-intro page-transition"
           key={selectedPage}
           aria-labelledby="page-title"
         >
-          <p className="section-index">01 / 05</p>
           <h1 id="page-title">{selectedPage}</h1>
           {selectedPage === '今日学习' ? (
             <p className="page-lede">从今天的单词开始</p>
