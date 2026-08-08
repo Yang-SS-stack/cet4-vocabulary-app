@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import LineSidebar from './components/LineSidebar'
 
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 
@@ -15,19 +16,21 @@ function App() {
           <span className="brand-name">单词簿</span>
         </div>
 
-        <nav className="main-nav" aria-label="主导航" aria-hidden={!isNavOpen}>
-          {pages.map((page) => (
-            <button
-              className={selectedPage === page ? 'nav-item is-active' : 'nav-item'}
-              key={page}
-              type="button"
-              onClick={() => setSelectedPage(page)}
-              aria-current={selectedPage === page ? 'page' : undefined}
-            >
-              {page}
-            </button>
-          ))}
-        </nav>
+        <LineSidebar
+          className="app-sidebar-nav"
+          items={pages}
+          accentColor="#96762e"
+          textColor="#526176"
+          markerColor="#b6a982"
+          showIndex={false}
+          maxShift={16}
+          markerLength={26}
+          markerGap={8}
+          itemGap={18}
+          fontSize={1}
+          ariaHidden={!isNavOpen}
+          onItemClick={(_, label) => setSelectedPage(label)}
+        />
 
         <p className="sidebar-note">今天也向前一步</p>
       </aside>

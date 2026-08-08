@@ -1,0 +1,114 @@
+.line-sidebar {
+  --accent-color: #96762e;
+  --text-color: #526176;
+  --marker-color: #b6a982;
+  --marker-length: 26px;
+  --marker-gap: 8px;
+  --tick-scale: 0.5;
+  --max-shift: 16px;
+  --item-gap: 18px;
+  --font-size: 1rem;
+
+  display: flex;
+  justify-content: flex-start;
+}
+
+.line-sidebar--markers {
+  padding-left: calc(var(--marker-length) + var(--marker-gap));
+}
+
+.line-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--item-gap);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.line-sidebar__item {
+  position: relative;
+  --effect: 0;
+}
+
+.line-sidebar__item::before {
+  position: absolute;
+  inset: -7px -12px;
+  content: '';
+}
+
+.line-sidebar__button {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  color: var(--text-color);
+  background: transparent;
+  font: inherit;
+  font-size: var(--font-size);
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+  transform: translateX(calc(var(--effect) * var(--max-shift)));
+}
+
+.line-sidebar__button:hover,
+.line-sidebar__button[aria-current='page'] {
+  color: var(--accent-color);
+}
+
+.line-sidebar__button:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 5px;
+}
+
+.line-sidebar__index {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+}
+
+.line-sidebar__marker {
+  position: absolute;
+  top: 50%;
+  left: calc(-1 * var(--marker-length) - var(--marker-gap));
+  width: var(--marker-length);
+  height: 1px;
+  background: var(--marker-color);
+  transform: translateY(-50%) scaleX(calc(0.7 + var(--effect) * 0.5));
+  transform-origin: left center;
+}
+
+.line-sidebar__item:has(.line-sidebar__button[aria-current='page']) .line-sidebar__marker,
+.line-sidebar__item:hover .line-sidebar__marker {
+  background: var(--accent-color);
+}
+
+.line-sidebar--markers .line-sidebar__item:not(:last-child)::after {
+  position: absolute;
+  top: calc(100% + var(--item-gap) / 2);
+  left: calc(-1 * var(--marker-length) - var(--marker-gap));
+  width: calc(var(--marker-length) * var(--tick-scale));
+  height: 1px;
+  background: var(--marker-color);
+  content: '';
+  opacity: 0.5;
+  transform: translateY(-50%);
+}
+
+.line-sidebar--scale-tick .line-sidebar__item:not(:last-child)::after {
+  transform: translateY(-50%) scaleX(calc(0.7 + var(--effect) * 0.6));
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line-sidebar__button,
+  .line-sidebar__marker,
+  .line-sidebar__item::after {
+    transform: none;
+  }
+}
