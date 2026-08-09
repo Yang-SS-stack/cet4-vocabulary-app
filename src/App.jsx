@@ -10,7 +10,11 @@ function App() {
 
   return (
     <div className={isNavOpen ? 'app-shell' : 'app-shell is-nav-collapsed'}>
-      <aside className="sidebar">
+      <aside
+        className="sidebar"
+        aria-hidden={!isNavOpen}
+        inert={!isNavOpen}
+      >
         <div className="brand-mark" aria-label="四级单词学习">
           <span className="brand-kicker">CET-4</span>
           <span className="brand-name">单词簿</span>
@@ -27,7 +31,6 @@ function App() {
           markerGap={8}
           itemGap={18}
           fontSize={1}
-          ariaHidden={!isNavOpen}
           onItemClick={(_, label) => setSelectedPage(label)}
         />
 

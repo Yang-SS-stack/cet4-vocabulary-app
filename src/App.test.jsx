@@ -18,9 +18,16 @@ test('hiding navigation keeps a control for showing it again', async () => {
 
   await user.click(screen.getByRole('button', { name: '隐藏导航栏' }))
 
-  expect(screen.getByRole('navigation', { hidden: true })).toHaveAttribute(
-    'aria-hidden',
-    'true',
-  )
   expect(screen.getByRole('button', { name: '显示导航栏' })).toBeVisible()
+})
+
+test('hiding navigation makes the entire sidebar inert', async () => {
+  const user = userEvent.setup()
+  const { container } = render(<App />)
+
+  await user.click(screen.getByRole('button', { name: '隐藏导航栏' }))
+
+  const sidebar = container.querySelector('.sidebar')
+  expect(sidebar).toHaveAttribute('aria-hidden', 'true')
+  expect(sidebar).toHaveAttribute('inert')
 })
