@@ -5,7 +5,6 @@
   --marker-length: 26px;
   --marker-gap: 8px;
   --tick-scale: 0.5;
-  --max-shift: 16px;
   --item-gap: 18px;
   --font-size: 1rem;
 
@@ -29,7 +28,6 @@
 
 .line-sidebar__item {
   position: relative;
-  --effect: 0;
 }
 
 .line-sidebar__item::before {
@@ -54,7 +52,7 @@
   line-height: 1.2;
   text-align: left;
   cursor: pointer;
-  transform: translateX(calc(var(--effect) * var(--max-shift)));
+  transition: color 160ms var(--ease-out, ease);
 }
 
 .line-sidebar__button:hover,
@@ -112,8 +110,8 @@
   width: var(--marker-length);
   height: 1px;
   background: var(--marker-color);
-  transform: translateY(-50%) scaleX(calc(0.7 + var(--effect) * 0.5));
-  transform-origin: left center;
+  transform: translateY(-50%);
+  transition: background-color 160ms var(--ease-out, ease);
 }
 
 .line-sidebar__item:has(.line-sidebar__button[aria-current='page']) .line-sidebar__marker,
@@ -133,15 +131,10 @@
   transform: translateY(-50%);
 }
 
-.line-sidebar--scale-tick .line-sidebar__item:not(:last-child)::after {
-  transform: translateY(-50%) scaleX(calc(0.7 + var(--effect) * 0.6));
-  transform-origin: left center;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .line-sidebar__button,
   .line-sidebar__marker,
   .line-sidebar__item::after {
-    transform: none;
+    transition: none;
   }
 }

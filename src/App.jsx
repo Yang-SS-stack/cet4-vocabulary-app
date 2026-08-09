@@ -23,7 +23,6 @@ function App() {
           textColor="#526176"
           markerColor="#b6a982"
           showIndex={false}
-          maxShift={16}
           markerLength={26}
           markerGap={8}
           itemGap={18}

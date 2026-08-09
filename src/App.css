@@ -7,6 +7,7 @@
   --gold-soft: #d8c89b;
   --white: #fffefa;
   --line: rgba(11, 34, 68, 0.16);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .app-shell {
@@ -16,7 +17,7 @@
   color: var(--ink);
   background: var(--paper);
   overflow: hidden;
-  transition: grid-template-columns 320ms ease;
+  transition: grid-template-columns 320ms var(--ease-out);
 }
 
 .app-shell.is-nav-collapsed {
@@ -24,6 +25,7 @@
 }
 
 .sidebar {
+  position: relative;
   min-height: 100vh;
   min-width: 0;
   width: 220px;
@@ -31,9 +33,20 @@
   flex-direction: column;
   padding: 36px 24px 28px;
   border-right: 0;
-  background: var(--paper);
+  background: var(--paper-deep);
   overflow: hidden;
-  transition: transform 320ms ease, opacity 180ms ease;
+  transition: transform 320ms var(--ease-out), opacity 180ms var(--ease-out);
+}
+
+.sidebar::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to right, var(--gold) 0 1px, var(--line) 1px 2px);
+  content: '';
+  pointer-events: none;
 }
 
 .is-nav-collapsed .sidebar {
@@ -52,18 +65,18 @@
   height: 44px;
   padding: 0;
   place-items: center;
-  border: 0;
+  border: 1px solid var(--line);
   border-radius: 50%;
   color: var(--ink);
-  background: transparent;
+  background: var(--paper);
   box-shadow: none;
   cursor: pointer;
   transform: translateY(-50%);
-  transition: left 320ms ease, background 180ms ease;
+  transition: left 320ms var(--ease-out), background 180ms var(--ease-out);
 }
 
 .nav-toggle:hover {
-  background: rgba(150, 118, 46, 0.1);
+  background: var(--paper-deep);
 }
 
 .nav-toggle:focus-visible {
@@ -77,7 +90,7 @@
   border-top: 1.5px solid currentColor;
   border-right: 1.5px solid currentColor;
   transform: rotate(-135deg);
-  transition: transform 320ms ease;
+  transition: transform 320ms var(--ease-out);
 }
 
 .nav-toggle:not(.is-open) span {
@@ -133,7 +146,7 @@
 }
 
 .page-transition {
-  animation: page-enter 360ms ease both;
+  animation: page-enter 360ms var(--ease-out) both;
 }
 
 @keyframes page-enter {
@@ -219,6 +232,10 @@ h1 {
     padding: 22px 20px 14px;
     border-right: 0;
     border-bottom: 0;
+  }
+
+  .sidebar::after {
+    display: none;
   }
 
   .is-nav-collapsed .sidebar {
