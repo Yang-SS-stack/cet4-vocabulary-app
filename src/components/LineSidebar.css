@@ -4,6 +4,8 @@
   --marker-color: #b6a982;
   --marker-length: 26px;
   --marker-gap: 8px;
+  --active-shift: 10px;
+  --active-marker-extension: 10px;
   --tick-scale: 0.5;
   --item-gap: 18px;
   --font-size: 1rem;
@@ -52,12 +54,19 @@
   line-height: 1.2;
   text-align: left;
   cursor: pointer;
-  transition: color 160ms var(--ease-out, ease);
+  transform: translateX(0);
+  transition:
+    color 160ms var(--ease-out, ease),
+    transform 180ms var(--ease-out, ease);
 }
 
 .line-sidebar__button:hover,
 .line-sidebar__button[aria-current='page'] {
   color: var(--accent-color);
+}
+
+.line-sidebar__button--active {
+  transform: translateX(var(--active-shift));
 }
 
 .line-sidebar__button:focus-visible {
@@ -92,6 +101,10 @@
     white-space: nowrap;
   }
 
+  .line-sidebar__button--active {
+    transform: none;
+  }
+
   .line-sidebar__marker,
   .line-sidebar__item::after {
     display: none;
@@ -111,12 +124,18 @@
   height: 1px;
   background: var(--marker-color);
   transform: translateY(-50%);
-  transition: background-color 160ms var(--ease-out, ease);
+  transition:
+    width 180ms var(--ease-out, ease),
+    background-color 160ms var(--ease-out, ease);
 }
 
 .line-sidebar__item:has(.line-sidebar__button[aria-current='page']) .line-sidebar__marker,
 .line-sidebar__item:hover .line-sidebar__marker {
   background: var(--accent-color);
+}
+
+.line-sidebar__item:has(.line-sidebar__button--active) .line-sidebar__marker {
+  width: calc(var(--marker-length) + var(--active-marker-extension));
 }
 
 .line-sidebar--markers .line-sidebar__item:not(:last-child)::after {

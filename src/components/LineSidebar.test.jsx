@@ -43,3 +43,17 @@ test('the selected navigation item exposes the current page state', async () => 
     'page',
   )
 })
+
+test('the selected navigation item gets the quiet stretch state', async () => {
+  const user = userEvent.setup()
+
+  render(<LineSidebar items={['今日学习', '词表']} />)
+  await user.click(screen.getByRole('button', { name: '词表' }))
+
+  expect(screen.getByRole('button', { name: '词表' })).toHaveClass(
+    'line-sidebar__button--active',
+  )
+  expect(screen.getByRole('button', { name: '今日学习' })).not.toHaveClass(
+    'line-sidebar__button--active',
+  )
+})

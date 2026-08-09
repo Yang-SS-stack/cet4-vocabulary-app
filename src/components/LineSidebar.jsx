@@ -54,7 +54,9 @@ function LineSidebar({
           <li className="line-sidebar__item" key={label}>
             {showMarker && <span className="line-sidebar__marker" aria-hidden="true" />}
             <button
-              className="line-sidebar__button"
+              className={`line-sidebar__button${
+                activeIndex === index ? ' line-sidebar__button--active' : ''
+              }`}
               type="button"
               onClick={() => handleItemClick(index, label)}
               aria-current={activeIndex === index ? 'page' : undefined}
