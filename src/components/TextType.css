@@ -1,0 +1,11 @@
+.text-type {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.text-type__cursor {
+  display: inline-block;
+  min-width: 0.3ch;
+  margin-left: 0.08em;
+  vertical-align: baseline;
+}

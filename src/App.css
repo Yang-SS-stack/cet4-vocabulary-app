@@ -11,13 +11,19 @@
 }
 
 .app-shell {
+  position: relative;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 220px minmax(0, 1fr);
   color: var(--ink);
   background: var(--paper);
-  overflow: hidden;
-  transition: grid-template-columns 320ms var(--ease-out);
+  overflow: visible;
+  transition: grid-template-columns 320ms var(--ease-out), opacity 1100ms var(--ease-out);
+}
+
+.app-shell.is-transition-prepared {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .app-shell.is-nav-collapsed {
@@ -25,7 +31,10 @@
 }
 
 .sidebar {
-  position: relative;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  z-index: 3;
   min-height: 100vh;
   min-width: 0;
   width: 220px;
@@ -56,9 +65,9 @@
 }
 
 .nav-toggle {
-  position: fixed;
+  position: absolute;
   z-index: 2;
-  top: 50%;
+  top: 50vh;
   left: 220px;
   display: grid;
   width: 44px;
@@ -117,9 +126,14 @@
 }
 
 .brand-name {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: 'Manrope Variable', 'Microsoft YaHei', 'PingFang SC', sans-serif;
   font-size: 26px;
+  font-weight: 600;
   line-height: 1.1;
+}
+
+.brand-name.is-brand-concealed {
+  opacity: 0;
 }
 
 .app-sidebar-nav {
@@ -227,6 +241,8 @@ h1 {
   }
 
   .sidebar {
+    position: sticky;
+    top: 0;
     min-height: auto;
     width: 100%;
     padding: 22px 20px 14px;
