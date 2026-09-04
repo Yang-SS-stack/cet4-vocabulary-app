@@ -84,18 +84,25 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
   )
 }
 
+function ParticleLogoTarget({ logoRef }) {
+  return (
+    <div className="particle-logo-target" data-testid="particle-logo-target" aria-hidden="true">
+      <span ref={logoRef} className="brand-name is-brand-concealed">LinguaJet</span>
+    </div>
+  )
+}
+
 function App() {
   const [selectedPage, setSelectedPage] = useState('今日学习')
   const [isNavOpen, setIsNavOpen] = useState(true)
   const [showSplash, setShowSplash] = useState(true)
   const [showLearningSurface, setShowLearningSurface] = useState(false)
   const [particleSources, setParticleSources] = useState(null)
-  const [logoElement, setLogoElement] = useState(null)
+  const [particleLogoElement, setParticleLogoElement] = useState(null)
   const [isParticleSourceReleased, setIsParticleSourceReleased] = useState(false)
   const [isLearningRevealed, setIsLearningRevealed] = useState(false)
 
   const startParticleTransition = useCallback((sourceTexts) => {
-    setShowLearningSurface(true)
     setParticleSources(sourceTexts)
     setIsParticleSourceReleased(false)
     setIsLearningRevealed(false)
@@ -107,7 +114,10 @@ function App() {
   }, [])
 
   const releaseParticleSource = useCallback(() => setIsParticleSourceReleased(true), [])
-  const revealLearningSurface = useCallback(() => setIsLearningRevealed(true), [])
+  const revealLearningSurface = useCallback(() => {
+    setShowLearningSurface(true)
+    setIsLearningRevealed(true)
+  }, [])
 
   return (
     <>
@@ -117,7 +127,7 @@ function App() {
           isNavOpen={isNavOpen}
           onNavToggle={() => setIsNavOpen((isOpen) => !isOpen)}
           onPageChange={setSelectedPage}
-          logoRef={setLogoElement}
+          logoRef={undefined}
           isBrandConcealed={Boolean(particleSources)}
           isTransitionPrepared={Boolean(particleSources) && !isLearningRevealed}
         />
@@ -129,10 +139,11 @@ function App() {
           isBackgroundLeaving={isLearningRevealed}
         />
       )}
+      {particleSources && <ParticleLogoTarget logoRef={setParticleLogoElement} />}
       {particleSources && (
         <ParticleTextTransition
           sourceTexts={particleSources}
-          targetElement={logoElement}
+          targetElement={particleLogoElement}
           onSourceRelease={releaseParticleSource}
           onScatterComplete={revealLearningSurface}
           onComplete={finishParticleTransition}

@@ -136,6 +136,13 @@
   opacity: 0;
 }
 
+.particle-logo-target {
+  position: fixed;
+  top: 36px;
+  left: 24px;
+  pointer-events: none;
+}
+
 .app-sidebar-nav {
   margin-top: 2px;
 }
@@ -277,6 +284,11 @@ h1 {
 
   .brand-mark {
     padding-bottom: 22px;
+  }
+
+  .particle-logo-target {
+    top: 22px;
+    left: 20px;
   }
 
   .sidebar-note {

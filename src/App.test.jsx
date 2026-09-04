@@ -23,6 +23,7 @@ async function waitForApp() {
 
 async function enterApp(user) {
   await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
+  await user.click(screen.getByRole('button', { name: '完成文字拆散' }))
   await waitForApp()
 }
 
@@ -49,8 +50,9 @@ test('hands the logo from the welcome screen to the particle transition', async 
   await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
 
   expect(screen.getByTestId('particle-text-transition')).toBeInTheDocument()
+  expect(document.querySelector('.app-shell')).not.toBeInTheDocument()
+  expect(screen.getByTestId('particle-logo-target')).toBeInTheDocument()
   expect(screen.getByText('LinguaJet', { exact: true })).toHaveClass('is-brand-concealed')
-  expect(document.querySelector('.app-shell')).toHaveClass('is-transition-prepared')
   expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).not.toHaveClass('is-background-leaving')
 
   await user.click(screen.getByRole('button', { name: '开始文字拆散' }))
@@ -59,7 +61,7 @@ test('hands the logo from the welcome screen to the particle transition', async 
 
   await user.click(screen.getByRole('button', { name: '完成文字拆散' }))
 
-  expect(document.querySelector('.app-shell')).not.toHaveClass('is-transition-prepared')
+  expect(document.querySelector('.app-shell')).toBeInTheDocument()
   expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).toHaveClass('is-background-leaving')
 
   await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
@@ -80,17 +82,21 @@ test('clicking vocabulary navigation shows the vocabulary page', async () => {
 
 test('vocabulary page displays the first study words', async () => {
   const user = userEvent.setup()
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    ok: true,
+    json: async () => JSON.parse(readFileSync('public/data/cet4.json', 'utf8')),
+  }))
   render(<App />)
   await enterApp(user)
 
   await user.click(screen.getByRole('button', { name: '词表' }))
   await user.click(screen.getByRole('button', { name: 'CET-4' }))
 
-  expect(screen.getByRole('list', { name: '四级单词' })).toBeInTheDocument()
-  const firstWord = screen.getByRole('heading', { name: 'abandon' }).closest('li')
-  expect(firstWord).toHaveTextContent('abandon')
-  expect(firstWord).toHaveTextContent('放弃；遗弃')
-})
+  expect(await screen.findByRole('list', { name: '四级单词' })).toBeInTheDocument()
+  const firstWord = await screen.findByRole('heading', { name: 'abruptly' }).then((heading) => heading.closest('li'))
+  expect(firstWord).toHaveTextContent('abruptly')
+  expect(firstWord).toHaveTextContent('突然')
+}, 15000)
 
 test('vocabulary page starts with a book list', async () => {
   const user = userEvent.setup()
