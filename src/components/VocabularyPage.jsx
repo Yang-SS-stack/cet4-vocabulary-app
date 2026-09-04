@@ -3,7 +3,7 @@ import { wordBooks } from '../data/wordBooks'
 import { loadWordBook } from '../data/loadWordBook'
 import './VocabularyPage.css'
 
-const WORDS_PER_PAGE = 20
+const WORDS_PER_PAGE = 21
 
 function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
   const [selectedBookId, setSelectedBookId] = useState(null)

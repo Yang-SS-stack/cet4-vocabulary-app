@@ -27,7 +27,7 @@ test('renders every book from the provided catalog', () => {
   expect(screen.getByRole('button', { name: 'CET-6' })).toBeInTheDocument()
 })
 
-test('shows at most twenty cards per page and navigates to the final partial page', async () => {
+test('shows at most twenty-one cards per page and navigates to the final partial page', async () => {
   const user = userEvent.setup()
   const testWords = Array.from({ length: 45 }, (_, index) => ({
     word: `test-${String(index + 1).padStart(2, '0')}`,
@@ -53,15 +53,15 @@ test('shows at most twenty cards per page and navigates to the final partial pag
 
   await user.click(screen.getByRole('button', { name: 'CET-4' }))
 
-  expect(screen.getAllByRole('listitem')).toHaveLength(20)
+  expect(screen.getAllByRole('listitem')).toHaveLength(21)
   expect(screen.getByText('第 1 / 3 页')).toBeInTheDocument()
 
   await user.click(screen.getByRole('button', { name: '下一页' }))
-  expect(screen.getAllByRole('listitem')).toHaveLength(20)
-  expect(screen.getByRole('heading', { name: 'test-21' })).toBeInTheDocument()
+  expect(screen.getAllByRole('listitem')).toHaveLength(21)
+  expect(screen.getByRole('heading', { name: 'test-22' })).toBeInTheDocument()
 
   await user.click(screen.getByRole('button', { name: '下一页' }))
-  expect(screen.getAllByRole('listitem')).toHaveLength(5)
+  expect(screen.getAllByRole('listitem')).toHaveLength(3)
   expect(screen.getByText('第 3 / 3 页')).toBeInTheDocument()
   expect(screen.getByRole('button', { name: '下一页' })).toBeDisabled()
 })
