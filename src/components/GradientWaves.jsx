@@ -46,7 +46,7 @@ void main() {
   color = mix(color, uWaveColor, middleWater * 0.4);
   color = mix(color, uWaveColor * 0.86, frontWater * 0.36);
   color = mix(color, uCrestColor, clamp(crest, 0.0, 0.45));
-  fragColor = vec4(color, uOpacity);
+  fragColor = vec4(color * uOpacity, uOpacity);
 }
 `
 
@@ -68,8 +68,12 @@ function GradientWaves({
   fogDepth = 12,
   opacity = 0.7,
   className = '',
+  paused = false,
 }) {
   const containerRef = useRef(null)
+  const pauseRef = useRef(paused)
+
+  useEffect(() => { pauseRef.current = paused }, [paused])
 
   useEffect(() => {
     const container = containerRef.current
@@ -107,6 +111,7 @@ function GradientWaves({
       const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
       const render = (time = 0) => {
+        if (pauseRef.current) return
         program.uniforms.iTime.value = reducedMotion ? 0 : time * 0.001
         renderer.render({ scene: mesh })
         if (!reducedMotion) frame = window.requestAnimationFrame(render)

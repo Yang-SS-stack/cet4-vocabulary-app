@@ -1,13 +1,10 @@
 import { useEffect, useRef } from 'react'
+import { createMotion, positionAt, TRANSITION_DURATION, LOGO_REVEAL_AT } from './particleMotion'
 import './ParticleTextTransition.css'
 
-const MAX_PARTICLES = 2400
-const SOURCE_HOLD_DURATION = 460
-const SCATTER_DURATION = 560
-const GATHER_DURATION = 1050
+const MAX_PARTICLES = 1800
 
 const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), maximum)
-const easeOutCubic = (value) => 1 - Math.pow(1 - value, 3)
 
 function fontFromSnapshot(snapshot) {
   return `${snapshot.fontWeight} ${snapshot.fontSize}px ${snapshot.fontFamily}`
@@ -100,6 +97,7 @@ function ParticleTextTransition({
   targetElement,
   onSourceRelease,
   onScatterComplete,
+  onLogoReveal,
   onComplete,
 }) {
   const canvasRef = useRef(null)
@@ -118,7 +116,10 @@ function ParticleTextTransition({
     }
 
     const context = canvas.getContext('2d')
-    if (!context) return undefined
+    if (!context) {
+      onComplete()
+      return undefined
+    }
 
     const targetStyles = window.getComputedStyle(targetElement)
     const targetRect = targetElement.getBoundingClientRect()
@@ -149,48 +150,33 @@ function ParticleTextTransition({
     context.setTransform(dpr, 0, 0, dpr, 0, 0)
 
     const particles = sourcePoints.map((point, index) => {
-      const seed = ((index * 9301 + 49297) % 233280) / 233280
-      const depth = ((index * 177 + 53) % 997) / 997
       const target = targetPoints[(index * 37) % targetPoints.length]
-
       return {
-        startX: point.x,
-        startY: point.y,
-        scatterX: width * (0.08 + seed * 0.84),
-        scatterY: height * (0.08 + depth * 0.84),
-        targetX: target.x,
-        targetY: target.y,
-        color: target.color || point.color,
-        size: 1.15 + depth * 1.1,
+        ...createMotion(point, target, index, width, height),
+        x: point.x,
+        y: point.y,
       }
     })
 
     let frame = 0
     const startedAt = performance.now()
+    let previousTime = startedAt
+    let logoRevealed = false
 
     const draw = (now) => {
       const elapsed = now - startedAt
-      const scatterStarted = elapsed >= SOURCE_HOLD_DURATION
-      const isScattering = scatterStarted && elapsed < SOURCE_HOLD_DURATION + SCATTER_DURATION
-      const isGathering = elapsed >= SOURCE_HOLD_DURATION + SCATTER_DURATION
-      const progress = isScattering
-        ? easeOutCubic(clamp((elapsed - SOURCE_HOLD_DURATION) / SCATTER_DURATION, 0, 1))
-        : isGathering
-          ? easeOutCubic(clamp((elapsed - SOURCE_HOLD_DURATION - SCATTER_DURATION) / GATHER_DURATION, 0, 1))
-          : 0
+      const follow = 1 - Math.exp(-Math.max(0, now - previousTime) / 38)
+      previousTime = now
+      const fade = 1 - clamp((elapsed - LOGO_REVEAL_AT) / (TRANSITION_DURATION - LOGO_REVEAL_AT), 0, 1)
 
       context.clearRect(0, 0, width, height)
       particles.forEach((particle) => {
-        const fromX = isGathering ? particle.scatterX : particle.startX
-        const fromY = isGathering ? particle.scatterY : particle.startY
-        const toX = isGathering ? particle.targetX : particle.scatterX
-        const toY = isGathering ? particle.targetY : particle.scatterY
-        const x = fromX + (toX - fromX) * progress
-        const y = fromY + (toY - fromY) * progress
-
-        context.fillStyle = particle.color
-        context.globalAlpha = isScattering ? 0.5 + progress * 0.5 : 1
-        context.fillRect(x - particle.size / 2, y - particle.size / 2, particle.size, particle.size)
+        const position = positionAt(particle, elapsed)
+        particle.x += (position.x - particle.x) * follow
+        particle.y += (position.y - particle.y) * follow
+        context.fillStyle = particle.gold && elapsed < 1000 ? '#96762e' : targetStyles.color
+        context.globalAlpha = fade * (0.65 + 0.35 * clamp(elapsed / 1100, 0, 1))
+        context.fillRect(particle.x - particle.size / 2, particle.y - particle.size / 2, particle.size, particle.size)
       })
       context.globalAlpha = 1
 
@@ -199,12 +185,17 @@ function ParticleTextTransition({
         onSourceRelease?.()
       }
 
-      if (isGathering && !scatterCompleteRef.current) {
+      if (elapsed >= 350 && !scatterCompleteRef.current) {
         scatterCompleteRef.current = true
         onScatterComplete?.()
       }
 
-      if (elapsed < SOURCE_HOLD_DURATION + SCATTER_DURATION + GATHER_DURATION) {
+      if (elapsed >= LOGO_REVEAL_AT && !logoRevealed) {
+        logoRevealed = true
+        onLogoReveal?.()
+      }
+
+      if (elapsed < TRANSITION_DURATION) {
         frame = window.requestAnimationFrame(draw)
       } else if (!completeRef.current) {
         completeRef.current = true
@@ -216,8 +207,22 @@ function ParticleTextTransition({
     sourceReleasedRef.current = false
     scatterCompleteRef.current = false
     frame = window.requestAnimationFrame(draw)
-    return () => window.cancelAnimationFrame(frame)
-  }, [onComplete, onScatterComplete, onSourceRelease, sourceTexts, targetElement])
+    // Finish cleanly if the destination moves or the tab stops producing frames.
+    const finish = () => {
+      if (completeRef.current) return
+      completeRef.current = true
+      window.cancelAnimationFrame(frame)
+      onComplete()
+    }
+    const onVisibilityChange = () => { if (document.hidden) finish() }
+    window.addEventListener('resize', finish)
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('resize', finish)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+    }
+  }, [onComplete, onScatterComplete, onSourceRelease, onLogoReveal, sourceTexts, targetElement])
 
   return (
     <div className="particle-text-transition" data-testid="particle-text-transition" aria-hidden="true">

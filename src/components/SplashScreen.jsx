@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '@fontsource-variable/manrope/wght.css'
 import GradientWaves from './GradientWaves'
 import TextType from './TextType'
@@ -40,6 +40,12 @@ function SplashScreen({ onStartTransition, isParticleSourceReleased, isBackgroun
   const messageRef = useRef(null)
   const promptRef = useRef(null)
 
+  useEffect(() => {
+    const previousOverflow = document.documentElement.style.overflow
+    document.documentElement.style.overflow = 'hidden'
+    return () => { document.documentElement.style.overflow = previousOverflow }
+  }, [])
+
   const startApp = () => {
     if (isLeaving) return
 
@@ -68,7 +74,16 @@ function SplashScreen({ onStartTransition, isParticleSourceReleased, isBackgroun
       ].filter(Boolean).join(' ')}
       aria-label="LinguaJet 欢迎页"
     >
-      <GradientWaves className="splash-screen__waves" />
+      <GradientWaves
+        className="splash-screen__waves"
+        horizonColor="#f2f0ec"
+        waveColor="#ded8cc"
+        crestColor="#d8c89b"
+        amplitude={0.65}
+        speed={0.1}
+        opacity={0.38}
+        paused={isLeaving}
+      />
       <div className="splash-screen__content">
         <p
           className={isBrandVisible ? 'splash-screen__brand is-visible' : 'splash-screen__brand'}

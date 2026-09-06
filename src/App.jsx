@@ -14,7 +14,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
       'app-shell',
       !isNavOpen && 'is-nav-collapsed',
       isTransitionPrepared && 'is-transition-prepared',
-    ].filter(Boolean).join(' ')}>
+    ].filter(Boolean).join(' ')} aria-hidden={isTransitionPrepared} inert={isTransitionPrepared}>
       <aside
         className="sidebar"
         aria-hidden={!isNavOpen}
@@ -84,19 +84,11 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
   )
 }
 
-function ParticleLogoTarget({ logoRef }) {
-  return (
-    <div className="particle-logo-target" data-testid="particle-logo-target" aria-hidden="true">
-      <span ref={logoRef} className="brand-name is-brand-concealed">LinguaJet</span>
-    </div>
-  )
-}
-
 function App() {
   const [selectedPage, setSelectedPage] = useState('今日学习')
   const [isNavOpen, setIsNavOpen] = useState(true)
   const [showSplash, setShowSplash] = useState(true)
-  const [showLearningSurface, setShowLearningSurface] = useState(false)
+  const [isBrandRevealed, setIsBrandRevealed] = useState(false)
   const [particleSources, setParticleSources] = useState(null)
   const [particleLogoElement, setParticleLogoElement] = useState(null)
   const [isParticleSourceReleased, setIsParticleSourceReleased] = useState(false)
@@ -109,29 +101,29 @@ function App() {
   }, [])
 
   const finishParticleTransition = useCallback(() => {
+    setIsLearningRevealed(true)
+    setIsBrandRevealed(true)
     setParticleSources(null)
     setShowSplash(false)
   }, [])
 
   const releaseParticleSource = useCallback(() => setIsParticleSourceReleased(true), [])
+  const revealBrand = useCallback(() => setIsBrandRevealed(true), [])
   const revealLearningSurface = useCallback(() => {
-    setShowLearningSurface(true)
     setIsLearningRevealed(true)
   }, [])
 
   return (
     <>
-      {showLearningSurface && (
-        <LearningSurface
+      <LearningSurface
           selectedPage={selectedPage}
           isNavOpen={isNavOpen}
           onNavToggle={() => setIsNavOpen((isOpen) => !isOpen)}
           onPageChange={setSelectedPage}
-          logoRef={undefined}
-          isBrandConcealed={Boolean(particleSources)}
-          isTransitionPrepared={Boolean(particleSources) && !isLearningRevealed}
-        />
-      )}
+          logoRef={setParticleLogoElement}
+          isBrandConcealed={showSplash && !isBrandRevealed}
+          isTransitionPrepared={!isLearningRevealed}
+      />
       {showSplash && (
         <SplashScreen
           onStartTransition={startParticleTransition}
@@ -139,13 +131,13 @@ function App() {
           isBackgroundLeaving={isLearningRevealed}
         />
       )}
-      {particleSources && <ParticleLogoTarget logoRef={setParticleLogoElement} />}
       {particleSources && (
         <ParticleTextTransition
           sourceTexts={particleSources}
           targetElement={particleLogoElement}
           onSourceRelease={releaseParticleSource}
           onScatterComplete={revealLearningSurface}
+          onLogoReveal={revealBrand}
           onComplete={finishParticleTransition}
         />
       )}

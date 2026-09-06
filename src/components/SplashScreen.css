@@ -1,13 +1,14 @@
 .splash-screen {
-  position: relative;
-  z-index: 2;
+  position: fixed;
+  inset: 0;
+  z-index: 6;
   display: grid;
   min-height: 100vh;
   place-items: center;
   color: var(--ink);
-  background: #bfd4e1;
+  background: var(--paper);
   overflow: hidden;
-  transition: opacity 1100ms var(--ease-out);
+  transition: opacity 700ms var(--ease-out);
 }
 
 .splash-screen__waves {
@@ -32,7 +33,7 @@
 }
 
 .splash-screen__message {
-  color: #153d5d;
+  color: var(--ink);
   font-family: 'Manrope Variable', 'Microsoft YaHei', 'PingFang SC', sans-serif;
   font-size: clamp(42px, 7vw, 86px);
   font-weight: 500;
@@ -40,7 +41,7 @@
 }
 
 .splash-screen__message.is-second-message {
-  color: #153d5d;
+  color: var(--ink);
   font-size: clamp(24px, 3.1vw, 38px);
   line-height: 1.5;
 }
@@ -50,7 +51,7 @@
   top: -74px;
   left: 50%;
   margin: 0;
-  color: #153d5d;
+  color: var(--ink);
   font-family: 'Manrope Variable', 'Microsoft YaHei', 'PingFang SC', sans-serif;
   font-size: clamp(18px, 2vw, 24px);
   font-weight: 600;
@@ -69,7 +70,7 @@
   min-height: 1.5em;
   margin: 20px 0 0;
   opacity: 0;
-  color: #5a7d97;
+  color: var(--ink-soft);
   font-size: 15px;
   transition: opacity 180ms var(--ease-out);
 }

@@ -18,7 +18,7 @@
   color: var(--ink);
   background: var(--paper);
   overflow: visible;
-  transition: grid-template-columns 320ms var(--ease-out), opacity 1100ms var(--ease-out);
+  transition: grid-template-columns 320ms var(--ease-out), opacity 700ms var(--ease-out);
 }
 
 .app-shell.is-transition-prepared {
@@ -126,6 +126,7 @@
 }
 
 .brand-name {
+  transition: opacity 180ms ease-out;
   font-family: 'Manrope Variable', 'Microsoft YaHei', 'PingFang SC', sans-serif;
   font-size: 26px;
   font-weight: 600;
@@ -134,13 +135,6 @@
 
 .brand-name.is-brand-concealed {
   opacity: 0;
-}
-
-.particle-logo-target {
-  position: fixed;
-  top: 36px;
-  left: 24px;
-  pointer-events: none;
 }
 
 .app-sidebar-nav {
@@ -284,11 +278,6 @@ h1 {
 
   .brand-mark {
     padding-bottom: 22px;
-  }
-
-  .particle-logo-target {
-    top: 22px;
-    left: 20px;
   }
 
   .sidebar-note {

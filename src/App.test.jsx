@@ -50,8 +50,9 @@ test('hands the logo from the welcome screen to the particle transition', async 
   await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
 
   expect(screen.getByTestId('particle-text-transition')).toBeInTheDocument()
-  expect(document.querySelector('.app-shell')).not.toBeInTheDocument()
-  expect(screen.getByTestId('particle-logo-target')).toBeInTheDocument()
+  expect(document.querySelector('.app-shell')).toHaveAttribute('inert')
+  expect(document.querySelector('.app-shell')).toHaveAttribute('aria-hidden', 'true')
+  expect(screen.queryByTestId('particle-logo-target')).not.toBeInTheDocument()
   expect(screen.getByText('LinguaJet', { exact: true })).toHaveClass('is-brand-concealed')
   expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).not.toHaveClass('is-background-leaving')
 
@@ -62,12 +63,23 @@ test('hands the logo from the welcome screen to the particle transition', async 
   await user.click(screen.getByRole('button', { name: '完成文字拆散' }))
 
   expect(document.querySelector('.app-shell')).toBeInTheDocument()
+  expect(document.querySelector('.app-shell')).not.toHaveAttribute('inert')
   expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).toHaveClass('is-background-leaving')
 
   await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
 
   expect(screen.queryByRole('main', { name: 'LinguaJet 欢迎页' })).not.toBeInTheDocument()
   expect(screen.getByText('LinguaJet', { exact: true })).not.toHaveClass('is-brand-concealed')
+})
+
+test('a skipped particle transition still reveals a usable homepage', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
+  await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
+  expect(screen.getByRole('button', { name: '今日学习' })).toBeVisible()
+  expect(document.querySelector('.app-shell')).not.toHaveAttribute('inert')
+  expect(screen.queryByRole('main', { name: 'LinguaJet 欢迎页' })).not.toBeInTheDocument()
 })
 
 test('clicking vocabulary navigation shows the vocabulary page', async () => {
@@ -160,6 +172,6 @@ test('crossfades the splash and learning surfaces over the same duration', () =>
   const appStyles = readFileSync('src/App.css', 'utf8')
   const splashStyles = readFileSync('src/components/SplashScreen.css', 'utf8')
 
-  expect(appStyles).toContain('opacity 1100ms var(--ease-out)')
-  expect(splashStyles).toContain('transition: opacity 1100ms var(--ease-out)')
+  expect(appStyles).toContain('opacity 700ms var(--ease-out)')
+  expect(splashStyles).toContain('transition: opacity 700ms var(--ease-out)')
 })
