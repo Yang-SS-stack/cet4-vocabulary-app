@@ -143,10 +143,10 @@ test('hiding navigation makes the entire sidebar inert', async () => {
   expect(sidebar).toHaveAttribute('inert')
 })
 
-test('navigation toggle scrolls with the application page', () => {
+test('navigation toggle stays fixed in the viewport while scrolling', () => {
   const appStyles = readFileSync('src/App.css', 'utf8')
 
-  expect(appStyles).toMatch(/\.nav-toggle\s*\{[^}]*position:\s*absolute/s)
+  expect(appStyles).toMatch(/\.nav-toggle\s*\{[^}]*position:\s*fixed/s)
 })
 
 test('navigation stays visible while the page scrolls', () => {
