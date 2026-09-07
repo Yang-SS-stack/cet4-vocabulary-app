@@ -1,5 +1,4 @@
 export const TRANSITION_DURATION = 1580
-export const LOGO_REVEAL_AT = 1400
 
 const clamp = value => Math.min(1, Math.max(0, value))
 const smooth = value => value * value * value * (value * (value * 6 - 15) + 10)

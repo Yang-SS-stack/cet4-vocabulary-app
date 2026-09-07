@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { createMotion, positionAt, TRANSITION_DURATION, LOGO_REVEAL_AT } from './particleMotion'
+import { createMotion, positionAt, TRANSITION_DURATION } from './particleMotion'
 import './ParticleTextTransition.css'
 
 const MAX_PARTICLES = 1800
@@ -8,6 +8,18 @@ const clamp = (value, minimum, maximum) => Math.min(Math.max(value, minimum), ma
 
 function fontFromSnapshot(snapshot) {
   return `${snapshot.fontWeight} ${snapshot.fontSize}px ${snapshot.fontFamily}`
+}
+
+function measureBaseline(element) {
+  // A zero-height inline box sits on the browser's actual text baseline.
+  // Glyph bounds cannot supply this: letters occupy only part of the font's line box.
+  const marker = document.createElement('span')
+  marker.setAttribute('aria-hidden', 'true')
+  marker.style.cssText = 'display:inline-block;width:0;height:0;padding:0;margin:0;border:0;vertical-align:baseline;'
+  element.appendChild(marker)
+  const baseline = marker.getBoundingClientRect().top - element.getBoundingClientRect().top
+  marker.remove()
+  return baseline
 }
 
 function wrapText(context, text, width) {
@@ -46,15 +58,10 @@ function sampleText(snapshot) {
   context.textBaseline = 'alphabetic'
 
   if (snapshot.lineBoxBaseline) {
-    const metrics = context.measureText(snapshot.text)
-    const ascent = metrics.actualBoundingBoxAscent || snapshot.fontSize * 0.78
-    const descent = metrics.actualBoundingBoxDescent || snapshot.fontSize * 0.22
-    const baseline = Math.max(ascent, (height - ascent - descent) / 2 + ascent)
-
     context.fillText(
       snapshot.text,
       0,
-      baseline,
+      snapshot.baseline,
     )
   } else {
     const lineHeight = Math.max(snapshot.fontSize * 1.18, snapshot.lineHeight)
@@ -97,7 +104,6 @@ function ParticleTextTransition({
   targetElement,
   onSourceRelease,
   onScatterComplete,
-  onLogoReveal,
   onComplete,
 }) {
   const canvasRef = useRef(null)
@@ -133,6 +139,7 @@ function ParticleTextTransition({
       lineHeight: parseFloat(targetStyles.lineHeight) || parseFloat(targetStyles.fontSize) * 1.2,
       textAlign: 'left',
       lineBoxBaseline: true,
+      baseline: measureBaseline(targetElement),
     })
     const sourcePoints = limitParticles(sourceTexts.flatMap(sampleText))
     if (!sourcePoints.length || !targetPoints.length) {
@@ -149,36 +156,67 @@ function ParticleTextTransition({
     canvas.style.height = `${height}px`
     context.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-    const particles = sourcePoints.map((point, index) => {
-      const target = targetPoints[(index * 37) % targetPoints.length]
+    // Cover every sampled stroke even when the user clicks before all welcome text appears.
+    const particles = Array.from({ length: Math.max(sourcePoints.length, targetPoints.length) }, (_, index) => {
+      const point = sourcePoints[index % sourcePoints.length]
+      const target = targetPoints[index % targetPoints.length]
       return {
         ...createMotion(point, target, index, width, height),
         x: point.x,
         y: point.y,
+        arrived: false,
       }
     })
 
     let frame = 0
     const startedAt = performance.now()
     let previousTime = startedAt
-    let logoRevealed = false
+    const originalClip = targetElement.style.clipPath
+    const originalOpacity = targetElement.style.opacity
+    const originalTransition = targetElement.style.transition
+    let revealedPath = ''
+    const revealedPoints = new Set()
+    targetElement.style.clipPath = 'path("M 0 0")'
+    targetElement.style.transition = 'none'
+    targetElement.style.opacity = '1'
+
+    const revealStroke = (particle) => {
+      const x = particle.targetX - targetRect.left
+      const y = particle.targetY - targetRect.top
+      const key = `${x},${y}`
+      if (revealedPoints.has(key)) return
+      revealedPoints.add(key)
+      // Overlapping local patches reveal the real, antialiased glyph, never a dot replica.
+      const radius = 4.5
+      revealedPath += `M ${x - radius} ${y} a ${radius} ${radius} 0 1 0 ${radius * 2} 0 a ${radius} ${radius} 0 1 0 ${-radius * 2} 0 Z `
+    }
 
     const draw = (now) => {
       const elapsed = now - startedAt
       const follow = 1 - Math.exp(-Math.max(0, now - previousTime) / 38)
       previousTime = now
-      const fade = 1 - clamp((elapsed - LOGO_REVEAL_AT) / (TRANSITION_DURATION - LOGO_REVEAL_AT), 0, 1)
+      const previousRevealedCount = revealedPoints.size
 
       context.clearRect(0, 0, width, height)
       particles.forEach((particle) => {
+        if (particle.arrived) return
         const position = positionAt(particle, elapsed)
         particle.x += (position.x - particle.x) * follow
         particle.y += (position.y - particle.y) * follow
+        const distance = Math.hypot(particle.x - particle.targetX, particle.y - particle.targetY)
+        if (elapsed >= particle.gatherStart && (distance < 3 || elapsed >= TRANSITION_DURATION)) {
+          particle.arrived = true
+          revealStroke(particle)
+          return
+        }
         context.fillStyle = particle.gold && elapsed < 1000 ? '#96762e' : targetStyles.color
-        context.globalAlpha = fade * (0.65 + 0.35 * clamp(elapsed / 1100, 0, 1))
+        context.globalAlpha = 0.65 + 0.35 * clamp(elapsed / 1100, 0, 1)
         context.fillRect(particle.x - particle.size / 2, particle.y - particle.size / 2, particle.size, particle.size)
       })
       context.globalAlpha = 1
+      if (revealedPoints.size !== previousRevealedCount) {
+        targetElement.style.clipPath = `path("${revealedPath}")`
+      }
 
       if (!sourceReleasedRef.current) {
         sourceReleasedRef.current = true
@@ -188,11 +226,6 @@ function ParticleTextTransition({
       if (elapsed >= 350 && !scatterCompleteRef.current) {
         scatterCompleteRef.current = true
         onScatterComplete?.()
-      }
-
-      if (elapsed >= LOGO_REVEAL_AT && !logoRevealed) {
-        logoRevealed = true
-        onLogoReveal?.()
       }
 
       if (elapsed < TRANSITION_DURATION) {
@@ -218,11 +251,14 @@ function ParticleTextTransition({
     window.addEventListener('resize', finish)
     document.addEventListener('visibilitychange', onVisibilityChange)
     return () => {
+      targetElement.style.clipPath = originalClip
+      targetElement.style.opacity = originalOpacity
+      targetElement.style.transition = originalTransition
       window.cancelAnimationFrame(frame)
       window.removeEventListener('resize', finish)
       document.removeEventListener('visibilitychange', onVisibilityChange)
     }
-  }, [onComplete, onScatterComplete, onSourceRelease, onLogoReveal, sourceTexts, targetElement])
+  }, [onComplete, onScatterComplete, onSourceRelease, sourceTexts, targetElement])
 
   return (
     <div className="particle-text-transition" data-testid="particle-text-transition" aria-hidden="true">
