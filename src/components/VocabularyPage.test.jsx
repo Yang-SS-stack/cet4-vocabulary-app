@@ -1,7 +1,84 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { expect, test, vi } from 'vitest'
 import VocabularyPage from './VocabularyPage'
+
+const browseWords = [
+  { word: 'zebra', meaning: '斑马', frequency: 8 },
+  { word: 'Apple', meaning: '苹果', frequency: 12 },
+  { word: 'application', meaning: '申请；应用', frequency: 8 },
+  { word: 'absent', meaning: '缺席' },
+  { word: 'zero', meaning: '零', frequency: 0 },
+].map((item) => ({ phonetic: '/test/', partOfSpeech: 'n', example: '', translation: '', phrases: [], ...item }))
+
+async function openBrowseBook(words = browseWords) {
+  const user = userEvent.setup()
+  render(<VocabularyPage books={[
+    { id: 'cet4', label: 'CET-4', wordListLabel: '测试单词', words },
+    { id: 'cet4-high-frequency', label: '高频测试', wordListLabel: '高频单词', words: browseWords },
+  ]} />)
+  await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
+  return user
+}
+
+function visibleWordNames() {
+  return within(screen.getByRole('list', { name: '测试单词' }))
+    .getAllByRole('heading', { level: 3 }).map((heading) => heading.textContent)
+}
+
+test('sorts alphabetically by default and by descending frequency with ties and missing data', async () => {
+  const user = await openBrowseBook()
+  expect(visibleWordNames()).toEqual(['absent', 'Apple', 'application', 'zebra', 'zero'])
+  await user.selectOptions(screen.getByRole('combobox', { name: '排序方式' }), 'frequency')
+  expect(visibleWordNames()).toEqual(['Apple', 'application', 'zebra', 'zero', 'absent'])
+  expect(browseWords[0].word).toBe('zebra')
+})
+
+test('searches only matching English spellings or Chinese meanings and clears an empty result', async () => {
+  const user = await openBrowseBook()
+  const search = screen.getByRole('searchbox', { name: '搜索单词或中文释义' })
+  await user.type(search, '  APP  ')
+  expect(visibleWordNames()).toEqual(['Apple', 'application'])
+  await user.clear(search)
+  await user.type(search, '申请')
+  expect(visibleWordNames()).toEqual(['application'])
+  await user.clear(search)
+  await user.type(search, '没有这个词')
+  expect(screen.queryByRole('list', { name: '测试单词' })).not.toBeInTheDocument()
+  expect(screen.getByText('没有找到匹配的单词')).toBeInTheDocument()
+  expect(screen.queryByRole('navigation', { name: '词表分页' })).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: '清空搜索' }))
+  expect(visibleWordNames()).toHaveLength(5)
+})
+
+test('resets pagination when searching or sorting and never fills results with unrelated words', async () => {
+  const words = Array.from({ length: 45 }, (_, index) => ({
+    ...browseWords[0], word: `word-${String(index + 1).padStart(2, '0')}`,
+    meaning: index < 23 ? '匹配' : '其他', frequency: index,
+  }))
+  const user = await openBrowseBook(words)
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+  await user.type(screen.getByRole('searchbox'), '匹配')
+  expect(screen.getByText('第 1 / 2 页')).toBeInTheDocument()
+  expect(visibleWordNames()).toHaveLength(21)
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+  expect(visibleWordNames()).toEqual(['word-22', 'word-23'])
+  await user.selectOptions(screen.getByRole('combobox'), 'frequency')
+  expect(screen.getByText('第 1 / 2 页')).toBeInTheDocument()
+  expect(visibleWordNames()[0]).toBe('word-23')
+})
+
+test('clears the search on changing books and restores each book default sort', async () => {
+  const user = await openBrowseBook()
+  await user.type(screen.getByRole('searchbox'), '不存在')
+  await user.click(screen.getByRole('button', { name: '返回词书' }))
+  await user.click(screen.getByRole('button', { name: '高频测试' }))
+  expect(screen.getByRole('searchbox')).toHaveValue('')
+  expect(screen.getByRole('combobox')).toHaveValue('frequency')
+  await user.click(screen.getByRole('button', { name: '返回词书' }))
+  await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
+  expect(screen.getByRole('combobox')).toHaveValue('alphabetical')
+})
 
 test('renders every book from the provided catalog', () => {
   render(

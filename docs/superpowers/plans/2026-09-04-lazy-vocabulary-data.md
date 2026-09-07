@@ -12,7 +12,7 @@
 
 - CET-4 and CET-4 high-frequency data must be separate JSON files under public/data/.
 - Initial production JavaScript must not import the full CET-4 list.
-- The catalog, card content, page size of 20, and offline static deployment behavior stay unchanged.
+- The catalog, card content, page size of 21, and offline static deployment behavior stay unchanged.
 - Loading failures must offer a return to the word-book catalog.
 - Existing dirty working-tree changes are outside this task and must not be reverted.
 

@@ -59,7 +59,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
             {selectedPage === '今日学习' ? (
               <p className="page-lede">从今天的单词开始</p>
             ) : selectedPage === '词表' ? (
-              <p className="page-lede">先从一小批单词开始</p>
+              <p className="page-lede">查找单词，浏览释义与例句</p>
             ) : (
               <p className="page-lede">这一部分即将准备好</p>
             )}

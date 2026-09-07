@@ -1,20 +1,48 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { wordBooks } from '../data/wordBooks'
 import { loadWordBook } from '../data/loadWordBook'
+import WordCard from './WordCard'
 import './VocabularyPage.css'
 
 const WORDS_PER_PAGE = 21
+const wordOrder = new Intl.Collator('en', { sensitivity: 'base' })
 
 function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
   const [selectedBookId, setSelectedBookId] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [words, setWords] = useState(null)
   const [loadState, setLoadState] = useState('idle')
+  const [query, setQuery] = useState('')
+  const [sort, setSort] = useState('alphabetical')
+  const searchRef = useRef(null)
   const loadRequestId = useRef(0)
   const contentRef = useRef(null)
   const animationRef = useRef(null)
   const isLeaving = useRef(false)
   const selectedBook = books.find((book) => book.id === selectedBookId)
+  const filteredWords = useMemo(() => {
+    const search = query.trim().toLowerCase()
+    return (words ?? []).filter((item) => (
+      item.word.toLowerCase().includes(search) || (item.meaning ?? '').toLowerCase().includes(search)
+    )).sort((first, second) => {
+      if (sort === 'frequency') {
+        const firstFrequency = Number.isFinite(first.frequency) && first.frequency >= 0 ? first.frequency : -1
+        const secondFrequency = Number.isFinite(second.frequency) && second.frequency >= 0 ? second.frequency : -1
+        if (firstFrequency !== secondFrequency) return secondFrequency - firstFrequency
+      }
+      return wordOrder.compare(first.word, second.word)
+    })
+  }, [words, query, sort])
+
+  const changeQuery = (value) => {
+    setQuery(value)
+    setCurrentPage(1)
+  }
+
+  const clearSearch = () => {
+    changeQuery('')
+    searchRef.current?.focus()
+  }
 
   const fade = (from, to, duration) => {
     const element = contentRef.current
@@ -58,6 +86,8 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
     contentRef.current.inert = false
     isLeaving.current = false
     setSelectedBookId(book.id)
+    setQuery('')
+    setSort(book.id === 'cet4-high-frequency' ? 'frequency' : 'alphabetical')
     setCurrentPage(1)
     setWords(null)
     setLoadState('loading')
@@ -130,9 +160,9 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
       )
     }
 
-    const totalPages = Math.max(1, Math.ceil(words.length / WORDS_PER_PAGE))
+    const totalPages = Math.max(1, Math.ceil(filteredWords.length / WORDS_PER_PAGE))
     const pageStart = (currentPage - 1) * WORDS_PER_PAGE
-    const pageWords = words.slice(pageStart, pageStart + WORDS_PER_PAGE)
+    const pageWords = filteredWords.slice(pageStart, pageStart + WORDS_PER_PAGE)
 
     return (
       <section className="vocabulary-page" aria-labelledby="vocabulary-heading">
@@ -146,24 +176,50 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
             >
               ← 返回词书
             </button>
-            <p className="panel-label">第一批词汇</p>
           </div>
           <h2 id="vocabulary-heading">{selectedBook.label}</h2>
-          <p>先熟悉一小批高频基础词，再逐步扩充完整词库。</p>
+          <p>按拼写或中文释义查找，点击词卡查看详情。</p>
         </div>
 
-        <ul className="vocabulary-list" aria-label={selectedBook.wordListLabel}>
+        <div className="vocabulary-filters">
+          <label className="vocabulary-search">
+            <span>搜索单词或中文释义</span>
+            <input
+              ref={searchRef}
+              type="search"
+              placeholder="例如 apple 或 苹果"
+              value={query}
+              onChange={(event) => changeQuery(event.target.value)}
+            />
+          </label>
+          <label className="vocabulary-sort">
+            <span>排序方式</span>
+            <select value={sort} onChange={(event) => {
+              setSort(event.target.value)
+              setCurrentPage(1)
+            }}>
+              <option value="alphabetical">字母顺序 A–Z</option>
+              <option value="frequency">词频从高到低</option>
+            </select>
+          </label>
+          <p className="vocabulary-result-count" aria-live="polite" aria-atomic="true">
+            {query.trim() ? `找到 ${filteredWords.length} 个单词 · 共 ${words.length} 个` : `共 ${words.length} 个单词`}
+          </p>
+        </div>
+        {sort === 'frequency' && !words.some((item) => Number.isFinite(item.frequency) && item.frequency >= 0) && (
+          <p className="vocabulary-data-note">本词书暂无词频数据，当前按字母顺序显示。</p>
+        )}
+
+        {pageWords.length === 0 ? (
+          <div className="vocabulary-empty">
+            <h3>{query.trim() ? '没有找到匹配的单词' : '这本词书暂无单词'}</h3>
+            <p>{query.trim() ? '试试更短的英文拼写或其他中文释义。' : '可以返回词书列表，选择其他词书。'}</p>
+            {query && <button type="button" onClick={clearSearch}>清空搜索</button>}
+          </div>
+        ) : <>
+        <ul className="vocabulary-list" aria-label={selectedBook.wordListLabel} key={`${selectedBookId}:${query}:${sort}:${currentPage}`}>
           {pageWords.map((item) => (
-            <li className="vocabulary-card" key={item.word}>
-              <div className="vocabulary-card__topline">
-                <h3>{item.word}</h3>
-                <span>{item.partOfSpeech}</span>
-              </div>
-              <p className="vocabulary-card__phonetic">{item.phonetic}</p>
-              <p className="vocabulary-card__meaning">{item.meaning}</p>
-              <p className="vocabulary-card__example">{item.example}</p>
-              <p className="vocabulary-card__translation">{item.translation}</p>
-            </li>
+            <WordCard item={item} key={item.word} />
           ))}
         </ul>
 
@@ -192,6 +248,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
             <span className="vocabulary-pagination__arrow" aria-hidden="true" />
           </button>
         </nav>
+        </>}
       </section>
     )
   }
