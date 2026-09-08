@@ -5,7 +5,7 @@ const book = { id: 'test-book', dataUrl: '/data/word-books/test/manifest.json' }
 const manifest = {
   total: 3,
   defaultSort: 'alphabetical',
-  initialPage: { ids: ['abruptly'], chunkIds: ['chunks/00.json'] },
+  initialPage: { ids: ['abruptly', 'apple', 'banana'], chunkIds: ['chunks/00.json', 'chunks/00.json', 'chunks/01.json'] },
   indexUrl: 'search-index.json',
   chunks: ['chunks/00.json', 'chunks/01.json', 'chunks/02.json'],
 }
@@ -49,13 +49,14 @@ test('returns the first page before the background search index resolves', async
   const fetchImpl = vi.fn(async (url) => {
     if (url.endsWith('/manifest.json')) return jsonResponse(manifest)
     if (url.endsWith('/chunks/00.json')) return jsonResponse(chunks['chunks/00.json'])
+    if (url.endsWith('/chunks/01.json')) return jsonResponse(chunks['chunks/01.json'])
     if (url.endsWith('/search-index.json')) return new Promise((resolve) => { resolveIndex = () => resolve(jsonResponse(index)) })
     throw new Error(`Unexpected URL: ${url}`)
   })
 
   const session = await loadWordBook(book, fetchImpl)
   await expect(session.loadPage({ sort: 'alphabetical', page: 1, query: '' }))
-    .resolves.toMatchObject({ words: [expect.objectContaining({ word: 'abruptly' })] })
+    .resolves.toEqual(expect.objectContaining({ words: expect.arrayContaining([expect.objectContaining({ word: 'abruptly' })]) }))
   expect(resolveIndex).toBeTypeOf('function')
   resolveIndex()
   await session.indexReady
@@ -68,7 +69,7 @@ test('reuses a session and does not refetch a completed detail chunk', async () 
   expect(second).toBe(first)
   await first.loadPage({ sort: 'alphabetical', page: 1, query: '' })
   await first.loadPage({ sort: 'alphabetical', page: 1, query: '' })
-  expect(fetchImpl).toHaveBeenCalledTimes(3)
+  expect(fetchImpl).toHaveBeenCalledTimes(4)
 })
 
 test('searches the complete index and loads only matching result page details', async () => {

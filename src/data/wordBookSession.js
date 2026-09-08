@@ -54,7 +54,8 @@ function validateManifest(value) {
     && isStringArray(value.chunks)
     && value.initialPage && isStringArray(value.initialPage.ids) && isStringArray(value.initialPage.chunkIds)
     && value.initialPage.ids.length === value.initialPage.chunkIds.length
-    && value.initialPage.ids.length <= Math.min(WORDS_PER_PAGE, value.total)
+    && value.initialPage.ids.length === Math.min(WORDS_PER_PAGE, value.total)
+    && new Set(value.initialPage.ids).size === value.initialPage.ids.length
     && value.initialPage.chunkIds.every((chunkId) => value.chunks.includes(chunkId))
 }
 

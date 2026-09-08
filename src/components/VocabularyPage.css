@@ -163,13 +163,16 @@
 }
 
 .vocabulary-result-count,
-.vocabulary-data-note {
+.vocabulary-data-note,
+.vocabulary-load-status {
   margin: 0;
   padding-bottom: 10px;
   color: var(--ink-soft);
   font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
+
+.vocabulary-load-status--error { color: #9b3326; }
 
 .vocabulary-empty {
   padding: 40px 0;

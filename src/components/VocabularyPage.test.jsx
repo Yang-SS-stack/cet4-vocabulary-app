@@ -1,6 +1,7 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
+import { createInlineWordBookSession } from '../data/wordBookSession'
 import VocabularyPage from './VocabularyPage'
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals() })
@@ -12,11 +13,11 @@ test('filters by Chinese and abbreviated POS including mixed labels without fill
     { word: 'listen', meaning: '听', partOfSpeech: 'vi' },
     { word: 'take', meaning: '拿', partOfSpeech: 'n/vt' },
   ])
-  const search = screen.getByRole('searchbox')
   for (const [query, expected] of [['名词', ['apple', 'take']], ['vt.', ['take']], ['不及物动词', ['listen']], ['动词', ['listen', 'take']]]) {
+    const search = screen.getByRole('searchbox')
     await user.clear(search)
     await user.type(search, query)
-    expect(visibleWordNames()).toEqual(expected)
+    await waitFor(() => expect(visibleWordNames()).toEqual(expected))
     expect(screen.getByRole('button', { name: '下一页' })).toBeDisabled()
   }
 })
@@ -48,6 +49,59 @@ const browseWords = [
   { word: 'absent', meaning: '缺席' },
   { word: 'zero', meaning: '零', frequency: 0 },
 ].map((item) => ({ phonetic: '/test/', partOfSpeech: 'n', example: '', translation: '', phrases: [], ...item }))
+
+const catalogBook = {
+  id: 'cet4',
+  label: 'CET-4',
+  description: '测试词书',
+  wordListLabel: '测试单词',
+}
+
+function deferredIndexSession(words) {
+  let resolveIndex
+  const indexReady = new Promise((resolve) => { resolveIndex = resolve })
+  return {
+    indexReady,
+    resolveIndex,
+    loadPage: createInlineWordBookSession(words).loadPage,
+  }
+}
+
+function searchableSession(words) {
+  return createInlineWordBookSession(words)
+}
+
+async function openSessionBook({ session, book = catalogBook }) {
+  const user = userEvent.setup()
+  render(<VocabularyPage books={[book]} loadWords={async () => session} />)
+  await user.click(screen.getByRole('button', { name: book.label, exact: true }))
+  await screen.findAllByRole('heading', { level: 3 })
+  return user
+}
+
+test('shows the first page while the search index is still loading', async () => {
+  const session = deferredIndexSession([{ ...browseWords[0], word: 'abruptly' }])
+  const user = userEvent.setup()
+  render(<VocabularyPage books={[catalogBook]} loadWords={async () => session} />)
+
+  await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
+
+  expect(await screen.findByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  expect(screen.getByText('正在准备搜索')).toBeInTheDocument()
+})
+
+test('uses the complete index for Chinese and POS search', async () => {
+  const user = await openSessionBook({ session: searchableSession([
+    { ...browseWords[0], word: 'apple', meaning: '苹果', partOfSpeech: 'n' },
+    { ...browseWords[0], word: 'listen', meaning: '听', partOfSpeech: 'vi' },
+    { ...browseWords[0], word: 'take', meaning: '拿', partOfSpeech: 'n/vt' },
+  ]) })
+
+  await user.type(screen.getByRole('searchbox'), '不及物动词')
+
+  await waitFor(() => expect(visibleWordNames()).toEqual(['listen']))
+  expect(screen.getByText('找到 1 个单词')).toBeInTheDocument()
+})
 
 async function openBrowseBook(words = browseWords) {
   const user = userEvent.setup()
