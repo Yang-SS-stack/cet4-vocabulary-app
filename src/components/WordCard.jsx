@@ -2,10 +2,9 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import SpeechButton from './SpeechButton'
 import { describePartOfSpeech } from '../data/partOfSpeech'
 import supplementalExamples from '../data/supplementalExamples.json'
-import audioManifest from '../data/audioManifest.json'
 import './WordCard.css'
 
-export default function WordCard({ item, showFrequency = true }) {
+export default function WordCard({ item, audioManifest = null, showFrequency = true }) {
   const [flipped, setFlipped] = useState(false)
   const frontFace = useRef(null)
   const backButton = useRef(null)
@@ -14,7 +13,7 @@ export default function WordCard({ item, showFrequency = true }) {
   const meaning = item.meaning?.trim() || '暂无释义'
   const briefMeaning = meaning.split(/[；;]/)[0]
   const hasFrequency = showFrequency && Number.isFinite(item.frequency) && item.frequency >= 0
-  const audio = audioManifest.words[item.word.toLowerCase()]
+  const audio = audioManifest?.words?.[item.word.toLowerCase()]
   const supplemental = !item.example?.trim() ? supplementalExamples[item.word.toLowerCase()] : null
   const example = supplemental?.example ?? item.example
   const translation = supplemental?.translation ?? item.translation

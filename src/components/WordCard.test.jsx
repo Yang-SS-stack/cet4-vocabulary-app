@@ -127,6 +127,36 @@ test('speech does not flip the card and returning stops the active pronunciation
   expect(synthesis.cancel).toHaveBeenCalledOnce()
 })
 
+test('uses resolved audio URLs after the manifest becomes available', async () => {
+  const synthesis = { speak: vi.fn(), cancel: vi.fn() }
+  vi.stubGlobal('speechSynthesis', synthesis)
+  vi.stubGlobal('SpeechSynthesisUtterance', class { constructor(text) { this.text = text } })
+  class AudioMock {
+    static last
+    constructor(src) {
+      this.src = src
+      this.play = vi.fn(() => Promise.resolve())
+      this.pause = vi.fn()
+      this.currentTime = 0
+      AudioMock.last = this
+    }
+  }
+  window.Audio = AudioMock
+  const user = userEvent.setup()
+
+  render(<WordCard item={word} audioManifest={{ words: {
+    absorb: {
+      'en-GB': '/cet4-vocabulary-app/audio/sonia-jenny/words/en-GB/absorb.mp3',
+      'en-US': '/cet4-vocabulary-app/audio/sonia-jenny/words/en-US/absorb.mp3',
+      example: '/cet4-vocabulary-app/audio/sonia-jenny/examples/en-US/example.mp3',
+    },
+  } }} />)
+
+  await user.click(screen.getByRole('button', { name: 'absorb 英音' }))
+  expect(AudioMock.last.src).toBe('/cet4-vocabulary-app/audio/sonia-jenny/words/en-GB/absorb.mp3')
+  expect(AudioMock.last.play).toHaveBeenCalledOnce()
+})
+
 test('flip hint is plain text and clicking the hint or card heading flips the card', async () => {
   const user = userEvent.setup()
   const { container } = render(<WordCard item={word} />)
