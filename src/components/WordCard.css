@@ -2,6 +2,7 @@
   min-width: 0;
   min-height: 430px;
   list-style: none;
+  transition: transform 180ms var(--ease-out);
 }
 
 .word-card__rotator {
@@ -27,7 +28,7 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   overflow-wrap: anywhere;
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), border-color 160ms var(--ease-out);
 }
 
 .word-card__face[aria-hidden='true'] { pointer-events: none; }
@@ -75,43 +76,26 @@
   overflow: hidden;
 }
 
-.word-card__open {
-  width: 100%;
+.word-card__hint {
+  display: block;
   margin-top: auto;
-  padding: 16px 0 0;
-  border: 0;
-  border-radius: inherit;
+  padding-top: 24px;
   color: var(--ink-soft);
-  background: transparent;
-  cursor: pointer;
-  text-align: left;
-}
-
-.word-card__open > span {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
   font-size: 13px;
+  text-align: center;
+  transition: color 160ms var(--ease-out);
 }
 
-.word-card__open svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.25;
-}
-
-.word-card__front:has(.word-card__open:hover) { border-color: var(--gold); }
-.word-card__open:hover { color: var(--ink); }
+.word-card:hover { transform: translateX(6px); }
+.word-card:hover .word-card__face { border-color: var(--gold); }
+.word-card:hover .word-card__hint { color: var(--gold); }
 
 .word-card__back {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto;
   gap: 14px;
   transform: rotateY(180deg);
+  cursor: pointer;
 }
 
 .word-card__details {
@@ -148,14 +132,15 @@
   min-height: 44px;
   padding: 8px;
   border: 0;
-  border-radius: 3px;
+  border-radius: 0;
+  transition: color 160ms var(--ease-out);
   color: var(--ink);
   background: transparent;
   font-size: 13px;
   cursor: pointer;
 }
 
-.word-card button:hover:not(:disabled) { background: var(--paper); }
+.word-card :is(.word-card__actions, .word-card__pronunciations, .word-card__example) button:hover:not(:disabled) { color: var(--gold); background: transparent; }
 .word-card button:disabled { color: var(--ink-soft); cursor: not-allowed; }
 .word-card__pronunciations { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 6px; }
 .word-card__frequency { margin: 8px 0 0; color: var(--ink-soft); font-size: 12px; font-variant-numeric: tabular-nums; }
@@ -169,5 +154,6 @@
 .word-card :is(button, [tabindex]):focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .word-card__face { transition: none; }
+  .word-card, .word-card__face, .word-card__hint, .word-card button { transition: none; }
+  .word-card:hover { transform: none; }
 }

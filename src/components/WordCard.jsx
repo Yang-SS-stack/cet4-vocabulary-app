@@ -7,7 +7,7 @@ import './WordCard.css'
 
 export default function WordCard({ item, showFrequency = true }) {
   const [flipped, setFlipped] = useState(false)
-  const frontButton = useRef(null)
+  const frontFace = useRef(null)
   const backButton = useRef(null)
   const hasFlipped = useRef(false)
   const pointerStart = useRef(null)
@@ -35,7 +35,7 @@ export default function WordCard({ item, showFrequency = true }) {
 
   useLayoutEffect(() => {
     if (!hasFlipped.current) return
-    const target = flipped ? backButton : frontButton
+    const target = flipped ? backButton : frontFace
     target.current?.focus({ preventScroll: true })
   }, [flipped])
 
@@ -62,6 +62,13 @@ export default function WordCard({ item, showFrequency = true }) {
     }}>
       <div className="word-card__rotator">
         <div className="word-card__face word-card__front" aria-hidden={flipped} inert={flipped}
+          ref={frontFace} role="group" aria-label={`${item.word}，查看详情`} tabIndex={flipped ? -1 : 0}
+          onKeyDown={(event) => {
+            if (event.target === event.currentTarget && (event.key === 'Enter' || event.key === ' ')) {
+              event.preventDefault()
+              flip(true)
+            }
+          }}
           onPointerDown={(event) => { pointerStart.current = { x: event.clientX, y: event.clientY } }}
           onClick={(event) => clickFace(event, true)}>
           <div className="word-card__topline">
@@ -73,16 +80,7 @@ export default function WordCard({ item, showFrequency = true }) {
           <p className="word-card__brief">{briefMeaning}</p>
           {hasFrequency && <p className="word-card__frequency">{frequency}</p>}
           {exampleContent(!flipped)}
-          <button
-            ref={frontButton}
-            className="word-card__open"
-            type="button"
-            aria-label={`${item.word}，查看详情`}
-            tabIndex={flipped ? -1 : 0}
-            onClick={() => flip(true)}
-          >
-            <span>查看详情 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg></span>
-          </button>
+          <span className="word-card__hint">点击翻页</span>
         </div>
         <div
           className="word-card__face word-card__back"
