@@ -13,10 +13,32 @@ test('contains the complete CET-4 vocabulary list', () => {
 
 test('keeps production word books as data-file references', () => {
   expect(wordBooks).toEqual(expect.arrayContaining([
-    expect.objectContaining({ id: 'cet4', dataUrl: '/data/cet4.json' }),
-    expect.objectContaining({ id: 'cet4-high-frequency', dataUrl: '/data/cet4-high-frequency.json' }),
+    expect.objectContaining({ id: 'cet4', dataUrl: '/data/word-books/cet4/manifest.json' }),
+    expect.objectContaining({ id: 'cet4-high-frequency', dataUrl: '/data/word-books/cet4-high-frequency/manifest.json' }),
   ]))
   expect(wordBooks.every((book) => !('words' in book))).toBe(true)
+})
+
+async function readGeneratedWords(bookId) {
+  const directory = join(process.cwd(), 'public', 'data', 'word-books', bookId)
+  const manifest = JSON.parse(await readFile(join(directory, 'manifest.json'), 'utf8'))
+  const chunks = await Promise.all(manifest.chunks.map(async (chunkId) => (
+    JSON.parse(await readFile(join(directory, chunkId), 'utf8'))
+  )))
+  return chunks.flat()
+}
+
+test('keeps generated word-book details aligned with the complete source data', async () => {
+  const [generatedCet4, generatedHighFrequency] = await Promise.all([
+    readGeneratedWords('cet4'),
+    readGeneratedWords('cet4-high-frequency'),
+  ])
+  const sourceHighFrequency = JSON.parse(await readFile(join(process.cwd(), 'public', 'data', 'cet4-high-frequency.json'), 'utf8'))
+
+  expect(generatedCet4).toHaveLength(words.length)
+  expect(new Set(generatedCet4.map((word) => word.word))).toEqual(new Set(words.map((word) => word.word)))
+  expect(generatedHighFrequency).toHaveLength(sourceHighFrequency.length)
+  expect(new Set(generatedHighFrequency.map((word) => word.word))).toEqual(new Set(sourceHighFrequency.map((word) => word.word)))
 })
 
 test('keeps high-frequency words in descending order in a separate data file', async () => {
