@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 // cannot cancel the current word when they leave the page.
 let activeSpeech = null
 
-export default function SpeechButton({ word }) {
+export default function SpeechButton({ word, lang = 'en-US', label = '发音', accessibleLabel, active = true }) {
   const [state, setState] = useState('idle')
   const speechRef = useRef(null)
   const messageId = useId()
@@ -18,11 +18,12 @@ export default function SpeechButton({ word }) {
     speechRef.current = null
     if (ownSpeech && activeSpeech === ownSpeech) {
       activeSpeech = null
+      ownSpeech.stop()
       ownSpeech.utterance.onend = null
       ownSpeech.utterance.onerror = null
       synthesis.cancel()
     }
-  }, [synthesis, word])
+  }, [synthesis, word, lang, active])
 
   const speak = () => {
     try {
@@ -30,7 +31,16 @@ export default function SpeechButton({ word }) {
       activeSpeech = null
       synthesis.cancel()
       const utterance = new window.SpeechSynthesisUtterance(word)
-      utterance.lang = 'en-US'
+      utterance.lang = lang
+      if (typeof synthesis.getVoices === 'function') {
+        const voices = synthesis.getVoices()
+        const voice = voices.find((entry) => entry.lang.replace('_', '-').toLowerCase() === lang.toLowerCase())
+        if (!voice) {
+          setState(voices.length ? 'missing-voice' : 'loading-voices')
+          return
+        }
+        utterance.voice = voice
+      }
       const ownSpeech = {
         utterance,
         stop: () => {
@@ -58,18 +68,20 @@ export default function SpeechButton({ word }) {
   }
 
   const message = !supported ? '此浏览器不支持语音发音'
+    : state === 'missing-voice' ? `未找到${lang === 'en-GB' ? '英音' : '美音'}语音，请检查系统英语语音设置。`
+    : state === 'loading-voices' ? '语音尚未就绪，请稍后再试。'
     : state === 'error' ? '发音失败，请重试或检查浏览器语音设置。' : ''
 
   return (
     <>
       <button
         type="button"
-        aria-label={`朗读 ${word}`}
+        aria-label={accessibleLabel ?? `朗读 ${word}`}
         aria-describedby={message ? messageId : undefined}
-        disabled={!supported}
+        disabled={!supported || !active}
         onClick={speak}
       >
-        {state === 'speaking' ? '重新发音' : '发音'}
+        {state === 'speaking' ? (label === '发音' ? '重新发音' : `${label} · 重播`) : label}
       </button>
       <span id={messageId} className="word-card__speech-message" aria-live="polite">{message}</span>
     </>

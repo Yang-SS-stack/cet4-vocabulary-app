@@ -1,6 +1,7 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { wordBooks } from '../data/wordBooks'
 import { loadWordBook } from '../data/loadWordBook'
+import { matchesWordQuery } from '../data/partOfSpeech'
 import WordCard from './WordCard'
 import './VocabularyPage.css'
 
@@ -23,10 +24,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
   const isLeaving = useRef(false)
   const selectedBook = books.find((book) => book.id === selectedBookId)
   const filteredWords = useMemo(() => {
-    const search = query.trim().toLowerCase()
-    return (words ?? []).filter((item) => (
-      item.word.toLowerCase().includes(search) || (item.meaning ?? '').toLowerCase().includes(search)
-    )).sort((first, second) => {
+    return (words ?? []).filter((item) => matchesWordQuery(item, query)).sort((first, second) => {
       if (sort === 'frequency') {
         const firstFrequency = Number.isFinite(first.frequency) && first.frequency >= 0 ? first.frequency : -1
         const secondFrequency = Number.isFinite(second.frequency) && second.frequency >= 0 ? second.frequency : -1
@@ -206,16 +204,16 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
             </button>
           </div>
           <h2 ref={headingRef} tabIndex={-1} id="vocabulary-heading">{selectedBook.label}</h2>
-          <p>按拼写或中文释义查找，点击词卡查看详情。</p>
+          <p>按拼写、中文释义或词性查找，点击词卡查看详情。</p>
         </div>
 
         <div className="vocabulary-filters">
           <label className="vocabulary-search">
-            <span>搜索单词或中文释义</span>
+            <span>搜索单词、中文释义或词性</span>
             <input
               ref={searchRef}
               type="search"
-              placeholder="例如 apple 或 苹果"
+              placeholder="例如 apple、苹果、名词或 n."
               value={query}
               onChange={(event) => changeQuery(event.target.value)}
             />

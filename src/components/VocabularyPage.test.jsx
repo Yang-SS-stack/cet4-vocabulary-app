@@ -6,6 +6,21 @@ import VocabularyPage from './VocabularyPage'
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals() })
 beforeEach(() => vi.spyOn(window, 'scrollTo').mockImplementation(() => {}))
 
+test('filters by Chinese and abbreviated POS including mixed labels without filling unrelated cards', async () => {
+  const user = await openBrowseBook([
+    { word: 'apple', meaning: '苹果', partOfSpeech: 'n' },
+    { word: 'listen', meaning: '听', partOfSpeech: 'vi' },
+    { word: 'take', meaning: '拿', partOfSpeech: 'n/vt' },
+  ])
+  const search = screen.getByRole('searchbox')
+  for (const [query, expected] of [['名词', ['apple', 'take']], ['vt.', ['take']], ['不及物动词', ['listen']], ['动词', ['listen', 'take']]]) {
+    await user.clear(search)
+    await user.type(search, query)
+    expect(visibleWordNames()).toEqual(expected)
+    expect(screen.getByRole('button', { name: '下一页' })).toBeDisabled()
+  }
+})
+
 test('previous and next page return to the document top after rendering the new page', async () => {
   const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
   const words = Array.from({ length: 43 }, (_, index) => ({
@@ -59,7 +74,7 @@ test('sorts alphabetically by default and by descending frequency with ties and 
 
 test('searches only matching English spellings or Chinese meanings and clears an empty result', async () => {
   const user = await openBrowseBook()
-  const search = screen.getByRole('searchbox', { name: '搜索单词或中文释义' })
+  const search = screen.getByRole('searchbox', { name: '搜索单词、中文释义或词性' })
   await user.type(search, '  APP  ')
   expect(visibleWordNames()).toEqual(['Apple', 'application'])
   await user.clear(search)

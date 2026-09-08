@@ -1,6 +1,6 @@
 .word-card {
   min-width: 0;
-  height: 340px;
+  min-height: 430px;
   list-style: none;
 }
 
@@ -32,6 +32,15 @@
 
 .word-card__face[aria-hidden='true'] { pointer-events: none; }
 
+.word-card__front {
+  position: relative;
+  min-height: 430px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
 .word-card__topline {
   display: flex;
   justify-content: space-between;
@@ -56,7 +65,7 @@
 .word-card__phonetic { margin: 8px 0 0; }
 
 .word-card__brief {
-  margin: 22px 0 48px;
+  margin: 14px 0 0;
   color: var(--ink);
   font-size: 16px;
   line-height: 1.7;
@@ -67,9 +76,9 @@
 }
 
 .word-card__open {
-  position: absolute;
-  inset: 0;
   width: 100%;
+  margin-top: auto;
+  padding: 16px 0 0;
   border: 0;
   border-radius: inherit;
   color: var(--ink-soft);
@@ -79,10 +88,6 @@
 }
 
 .word-card__open > span {
-  position: absolute;
-  bottom: 20px;
-  left: 22px;
-  right: 22px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -139,7 +144,7 @@
   border-top: 1px solid var(--line);
 }
 
-.word-card__actions button {
+.word-card :is(.word-card__actions, .word-card__pronunciations, .word-card__example) button {
   min-height: 44px;
   padding: 8px;
   border: 0;
@@ -150,8 +155,15 @@
   cursor: pointer;
 }
 
-.word-card__actions button:hover:not(:disabled) { background: var(--paper); }
-.word-card__actions button:disabled { color: var(--ink-soft); cursor: not-allowed; }
+.word-card button:hover:not(:disabled) { background: var(--paper); }
+.word-card button:disabled { color: var(--ink-soft); cursor: not-allowed; }
+.word-card__pronunciations { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 6px; }
+.word-card__frequency { margin: 8px 0 0; color: var(--ink-soft); font-size: 12px; font-variant-numeric: tabular-nums; }
+.word-card__example { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
+.word-card__example-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px; color: var(--ink-soft); font-size: 12px; }
+.word-card__example p { margin: 6px 0 0; line-height: 1.65; }
+.word-card__example p[lang='en'] { color: var(--ink); font: 400 16px/1.6 Georgia, 'Times New Roman', serif; }
+.word-card__back .word-card__topline { flex-wrap: wrap; }
 .word-card__speech-message { flex-basis: 100%; color: var(--ink-soft); font-size: 12px; }
 .word-card__speech-message:empty { display: none; }
 .word-card :is(button, [tabindex]):focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }

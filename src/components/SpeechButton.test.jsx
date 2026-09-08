@@ -63,3 +63,35 @@ test('cancels only the active card on unmount and resets the previous card when 
   second.unmount()
   expect(synthesis.cancel).toHaveBeenCalledOnce()
 })
+
+test('uses the matching British or American voice and can read an entire example', async () => {
+  const synthesis = mockSpeech()
+  const british = { lang: 'en-GB', name: 'British' }
+  const american = { lang: 'en-US', name: 'American' }
+  synthesis.getVoices = () => [american, british]
+  const user = userEvent.setup()
+  render(<>
+    <SpeechButton word="apple" lang="en-GB" label="英音" accessibleLabel="apple 英音" />
+    <SpeechButton word="apple" lang="en-US" label="美音" accessibleLabel="apple 美音" />
+    <SpeechButton word="I ate an apple." label="朗读例句" accessibleLabel="朗读 apple 的例句" />
+  </>)
+  await user.click(screen.getByRole('button', { name: 'apple 英音' }))
+  expect(synthesis.speak).toHaveBeenLastCalledWith(expect.objectContaining({ lang: 'en-GB', voice: british, text: 'apple' }))
+  await user.click(screen.getByRole('button', { name: 'apple 美音' }))
+  expect(synthesis.speak).toHaveBeenLastCalledWith(expect.objectContaining({ lang: 'en-US', voice: american }))
+  await user.click(screen.getByRole('button', { name: '朗读 apple 的例句' }))
+  expect(synthesis.speak).toHaveBeenLastCalledWith(expect.objectContaining({ text: 'I ate an apple.' }))
+})
+
+test('does not silently substitute a different accent and retries when voices become available', async () => {
+  const synthesis = mockSpeech()
+  synthesis.getVoices = () => [{ lang: 'en-US' }]
+  const user = userEvent.setup()
+  render(<SpeechButton word="apple" lang="en-GB" label="英音" />)
+  await user.click(screen.getByRole('button'))
+  expect(synthesis.speak).not.toHaveBeenCalled()
+  expect(screen.getByText('未找到英音语音，请检查系统英语语音设置。')).toBeInTheDocument()
+  synthesis.getVoices = () => [{ lang: 'en-GB' }]
+  await user.click(screen.getByRole('button'))
+  expect(synthesis.speak).toHaveBeenCalledOnce()
+})

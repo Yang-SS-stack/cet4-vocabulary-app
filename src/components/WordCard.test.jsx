@@ -6,6 +6,39 @@ import { readFileSync } from 'node:fs'
 
 afterEach(() => vi.unstubAllGlobals())
 
+test('front shows frequency and a full example with separate speech controls that do not flip', async () => {
+  const synthesis = { speak: vi.fn(), cancel: vi.fn(), getVoices: () => [{ lang: 'en-GB' }, { lang: 'en-US' }] }
+  vi.stubGlobal('speechSynthesis', synthesis)
+  vi.stubGlobal('SpeechSynthesisUtterance', class { constructor(text) { this.text = text } })
+  const user = userEvent.setup()
+  const { container } = render(<WordCard item={word} />)
+  const front = within(container.querySelector('.word-card__front'))
+  expect(front.getByText('词频 12')).toBeVisible()
+  expect(front.getByText(word.example)).toBeVisible()
+  expect(front.getByText(word.translation)).toBeVisible()
+  await user.click(screen.getByRole('button', { name: 'absorb 英音' }))
+  expect(synthesis.speak).toHaveBeenLastCalledWith(expect.objectContaining({ lang: 'en-GB', text: 'absorb' }))
+  await user.click(screen.getByRole('button', { name: 'absorb 美音' }))
+  expect(synthesis.speak).toHaveBeenLastCalledWith(expect.objectContaining({ lang: 'en-US' }))
+  await user.click(screen.getByRole('button', { name: '朗读 absorb 的例句' }))
+  expect(synthesis.speak).toHaveBeenLastCalledWith(expect.objectContaining({ text: word.example }))
+  expect(container.querySelector('.word-card')).not.toHaveClass('is-flipped')
+  synthesis.cancel.mockClear()
+  await user.click(front.getByText(word.example))
+  expect(synthesis.cancel).toHaveBeenCalledOnce()
+  expect(within(screen.getByRole('region', { name: 'absorb 的详情' })).getByText('动词')).toBeInTheDocument()
+})
+
+test('labels supplemental examples and preserves original examples', () => {
+  const { container, rerender } = render(<WordCard item={{ word: 'approximately', partOfSpeech: 'adv' }} />)
+  const front = within(container.querySelector('.word-card__front'))
+  expect(front.getByText('补充例句')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '朗读 approximately 的例句' })).toBeInTheDocument()
+  rerender(<WordCard item={{ word: 'approximately', example: 'Approximately ten people came.' }} />)
+  expect(front.getByText('Approximately ten people came.')).toBeInTheDocument()
+  expect(front.queryByText('补充例句')).not.toBeInTheDocument()
+})
+
 test('the readable back has no rotated ancestor or remaining rotation that can misroute wheel scrolling', async () => {
   const user = userEvent.setup()
   const css = readFileSync('src/components/WordCard.css', 'utf8')
@@ -34,6 +67,8 @@ test('flips from a concise front to complete details and returns with focus rest
   expect(container.querySelector('.word-card__back')).toHaveAttribute('inert')
   await user.click(front)
   expect(container.querySelector('.word-card__front')).toHaveAttribute('inert')
+  expect(container.querySelector('.word-card__front').querySelectorAll('button')).toHaveLength(4)
+  expect(within(container.querySelector('.word-card__front')).getByRole('button', { name: 'absorb 美音', hidden: true })).toBeDisabled()
   const details = screen.getByRole('region', { name: 'absorb 的详情' })
   expect(within(details).getByText(word.meaning)).toBeInTheDocument()
   expect(within(details).getByText(word.example)).toBeInTheDocument()
@@ -49,7 +84,7 @@ test('flips from a concise front to complete details and returns with focus rest
 test('supports Enter, Space, Escape and clicking the back without trapping keyboard focus', async () => {
   const user = userEvent.setup()
   render(<WordCard item={word} />)
-  await user.tab()
+  screen.getByRole('button', { name: 'absorb，查看详情' }).focus()
   expect(screen.getByRole('button', { name: 'absorb，查看详情' })).toHaveFocus()
   await user.keyboard('{Enter}')
   expect(screen.getByRole('button', { name: '返回单词正面' })).toHaveFocus()
@@ -57,7 +92,7 @@ test('supports Enter, Space, Escape and clicking the back without trapping keybo
   expect(screen.getByRole('button', { name: 'absorb，查看详情' })).toHaveFocus()
   await user.keyboard(' ')
   expect(screen.getByRole('region', { name: 'absorb 的详情' })).toBeInTheDocument()
-  await user.click(screen.getByText(word.example))
+  await user.click(within(screen.getByRole('region', { name: 'absorb 的详情' })).getByText(word.example))
   expect(screen.getByRole('button', { name: 'absorb，查看详情' })).toHaveFocus()
 })
 
@@ -70,7 +105,7 @@ test('shows honest missing-data messages and displays zero frequency as availabl
     expect(within(details).getByText(message)).toBeInTheDocument()
   }
   rerender(<WordCard item={{ word: 'test', frequency: 0 }} />)
-  expect(screen.getByText('词频 0')).toBeInTheDocument()
+  expect(within(details).getByText('词频 0')).toBeInTheDocument()
 })
 
 test('speech does not flip the card and returning stops the active pronunciation', async () => {
@@ -80,7 +115,7 @@ test('speech does not flip the card and returning stops the active pronunciation
   const user = userEvent.setup()
   render(<WordCard item={word} />)
   await user.click(screen.getByRole('button', { name: 'absorb，查看详情' }))
-  await user.click(screen.getByRole('button', { name: '朗读 absorb' }))
+  await user.click(screen.getByRole('button', { name: 'absorb 美音' }))
   expect(screen.getByRole('region', { name: 'absorb 的详情' })).toBeInTheDocument()
   expect(synthesis.speak).toHaveBeenCalledOnce()
   synthesis.cancel.mockClear()

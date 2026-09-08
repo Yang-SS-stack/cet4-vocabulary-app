@@ -1,0 +1,382 @@
+{
+  "advocator": {
+    "example": "She is an advocator of equal access to education.",
+    "translation": "她倡导人人平等地接受教育。"
+  },
+  "approximately": {
+    "example": "The walk takes approximately twenty minutes.",
+    "translation": "步行大约需要二十分钟。"
+  },
+  "avail": {
+    "example": "Our efforts did not avail us.",
+    "translation": "我们的努力没有帮上忙。"
+  },
+  "delightful": {
+    "example": "We had a delightful afternoon in the garden.",
+    "translation": "我们在花园里度过了愉快的下午。"
+  },
+  "downfall": {
+    "example": "A sudden downfall of rain flooded the path.",
+    "translation": "突如其来的大雨淹没了小路。"
+  },
+  "dramatically": {
+    "example": "The weather changed dramatically overnight.",
+    "translation": "天气在一夜之间发生了剧变。"
+  },
+  "favorable": {
+    "example": "We received a favorable response to our proposal.",
+    "translation": "我们的提议得到了赞同。"
+  },
+  "generalization": {
+    "example": "That generalization does not apply to everyone.",
+    "translation": "那种概括并不适用于所有人。"
+  },
+  "groundlessly": {
+    "example": "He was groundlessly accused of cheating.",
+    "translation": "他被毫无根据地指责作弊。"
+  },
+  "hardworking": {
+    "example": "Our new colleague is patient and hardworking.",
+    "translation": "我们的新同事耐心又勤奋。"
+  },
+  "honor": {
+    "example": "We planted a tree to honor our teacher.",
+    "translation": "我们种了一棵树来纪念老师。"
+  },
+  "impermanency": {
+    "example": "The poem explores the impermanency of life.",
+    "translation": "这首诗探讨生命的无常。"
+  },
+  "installment": {
+    "example": "I paid the first installment yesterday.",
+    "translation": "我昨天支付了第一期款项。"
+  },
+  "irrationally": {
+    "example": "She knew she was behaving irrationally.",
+    "translation": "她知道自己的行为不理智。"
+  },
+  "motivation": {
+    "example": "Learning with friends gives me motivation.",
+    "translation": "和朋友一起学习给了我动力。"
+  },
+  "tighten": {
+    "example": "Please tighten the loose screw.",
+    "translation": "请拧紧这颗松动的螺丝。"
+  },
+  "trait": {
+    "example": "Patience is a valuable trait in a teacher.",
+    "translation": "耐心是教师身上一种可贵的品质。"
+  },
+  "prohibitively": {
+    "example": "The hotel was prohibitively expensive.",
+    "translation": "这家酒店贵得让人住不起。"
+  },
+  "radically": {
+    "example": "We need to rethink our plan radically.",
+    "translation": "我们需要彻底重新考虑计划。"
+  },
+  "favor": {
+    "example": "I favor the simpler design.",
+    "translation": "我更喜欢那个简洁的设计。"
+  },
+  "statistics": {
+    "example": "She is taking a course in statistics.",
+    "translation": "她正在学习一门统计学课程。"
+  },
+  "headquarter": {
+    "example": "They plan to headquarter the company in a smaller city.",
+    "translation": "他们计划把公司总部设在一座较小的城市。"
+  },
+  "prosper": {
+    "example": "Small businesses can prosper with local support.",
+    "translation": "有了当地的支持，小企业可以蓬勃发展。"
+  },
+  "passively": {
+    "example": "He listened passively without asking any questions.",
+    "translation": "他被动地听着，没有提出任何问题。"
+  },
+  "logically": {
+    "example": "Try to explain your answer logically.",
+    "translation": "试着有条理地解释你的答案。"
+  },
+  "ring": {
+    "example": "The boxers stepped into the ring.",
+    "translation": "拳击手们走上了拳击台。"
+  },
+  "accessary": {
+    "example": "The story reveals that the driver was an accessary to the theft.",
+    "translation": "故事揭示了司机是那起盗窃案的从犯。"
+  },
+  "across": {
+    "example": "We walked across the bridge.",
+    "translation": "我们走过了那座桥。"
+  },
+  "all": {
+    "example": "All the windows were open.",
+    "translation": "所有的窗户都开着。"
+  },
+  "astronaut": {
+    "example": "The child dreams of becoming an astronaut.",
+    "translation": "这个孩子梦想成为宇航员。"
+  },
+  "awfully": {
+    "example": "It is awfully cold in here.",
+    "translation": "这里冷得很。"
+  },
+  "barn": {
+    "example": "The farmer stored hay in the barn.",
+    "translation": "农民把干草存放在谷仓里。"
+  },
+  "basketball": {
+    "example": "We play basketball after school.",
+    "translation": "我们放学后打篮球。"
+  },
+  "bathroom": {
+    "example": "There is a clean towel in the bathroom.",
+    "translation": "浴室里有一条干净的毛巾。"
+  },
+  "behalf": {
+    "example": "I thanked her on behalf of the team.",
+    "translation": "我代表团队向她表示感谢。"
+  },
+  "behavior": {
+    "example": "His rude behavior upset the other guests.",
+    "translation": "他的粗鲁行为让其他客人感到不快。"
+  },
+  "blanket": {
+    "example": "She covered the child with a blanket.",
+    "translation": "她给孩子盖上了一条毯子。"
+  },
+  "both": {
+    "example": "Both of my sisters enjoy reading.",
+    "translation": "我的两个姐妹都喜欢阅读。"
+  },
+  "bound": {
+    "example": "You are bound to feel tired after such a long walk.",
+    "translation": "走了这么远的路，你肯定会觉得累。"
+  },
+  "brute": {
+    "example": "The villain in the story is a cruel brute.",
+    "translation": "故事中的反派是一个残暴的恶棍。"
+  },
+  "can": {
+    "example": "She opened a can of beans.",
+    "translation": "她打开了一罐豆子。"
+  },
+  "cart": {
+    "example": "He pulled the cart up the hill.",
+    "translation": "他拉着运货车上了山坡。"
+  },
+  "catalog": {
+    "example": "I found the book in the library catalog.",
+    "translation": "我在图书馆目录中找到了这本书。"
+  },
+  "china": {
+    "example": "She hopes to visit China next year.",
+    "translation": "她希望明年去中国旅行。"
+  },
+  "colonel": {
+    "example": "The colonel spoke to the soldiers.",
+    "translation": "上校向士兵们讲话。"
+  },
+  "color": {
+    "example": "What color would you like to paint the wall?",
+    "translation": "你想把墙刷成什么颜色？"
+  },
+  "could": {
+    "example": "I could swim when I was six.",
+    "translation": "我六岁时就会游泳了。"
+  },
+  "course": {
+    "example": "This course will help you improve your writing.",
+    "translation": "这门课程会帮助你提高写作能力。"
+  },
+  "desk": {
+    "example": "I left my notebook on the desk.",
+    "translation": "我把笔记本留在了书桌上。"
+  },
+  "difficulty": {
+    "example": "She had difficulty opening the heavy door.",
+    "translation": "她很难打开那扇沉重的门。"
+  },
+  "direction": {
+    "example": "The station is in the opposite direction.",
+    "translation": "车站在相反的方向。"
+  },
+  "donkey": {
+    "example": "A donkey stood beside the fence.",
+    "translation": "一头驴站在篱笆旁。"
+  },
+  "dragon": {
+    "example": "The child drew a dragon with green wings.",
+    "translation": "孩子画了一条长着绿色翅膀的龙。"
+  },
+  "either": {
+    "example": "You can choose either seat.",
+    "translation": "你可以从这两个座位中任选一个。"
+  },
+  "england": {
+    "example": "My friend wants to study in England.",
+    "translation": "我的朋友想去英格兰留学。"
+  },
+  "everybody": {
+    "example": "Everybody is ready to leave.",
+    "translation": "大家都准备好出发了。"
+  },
+  "farmer": {
+    "example": "The farmer gets up early to feed the animals.",
+    "translation": "农民早起给动物喂食。"
+  },
+  "flour": {
+    "example": "Add the flour slowly and stir well.",
+    "translation": "慢慢加入面粉并搅拌均匀。"
+  },
+  "france": {
+    "example": "We are planning a trip to France.",
+    "translation": "我们正在计划去法国旅行。"
+  },
+  "from": {
+    "example": "This letter is from my sister.",
+    "translation": "这封信是我姐姐寄来的。"
+  },
+  "germany": {
+    "example": "He hopes to find a job in Germany.",
+    "translation": "他希望在德国找到一份工作。"
+  },
+  "gown": {
+    "example": "She wore a long gown to the party.",
+    "translation": "她穿着一件长礼服参加聚会。"
+  },
+  "gramme": {
+    "example": "The scale measures each gramme precisely.",
+    "translation": "这台秤能精确称量每一克。"
+  },
+  "gunpowder": {
+    "example": "The museum displayed an old gunpowder barrel.",
+    "translation": "博物馆展出了一只旧火药桶。"
+  },
+  "hawk": {
+    "example": "A hawk circled above the field.",
+    "translation": "一只鹰在田野上空盘旋。"
+  },
+  "italian": {
+    "example": "We had dinner at an Italian restaurant.",
+    "translation": "我们在一家意大利餐厅吃了晚饭。"
+  },
+  "japan": {
+    "example": "She brought back a postcard from Japan.",
+    "translation": "她从日本带回来一张明信片。"
+  },
+  "lead": {
+    "example": "The old pipe was made of lead.",
+    "translation": "那根旧管子是铅制的。"
+  },
+  "locomotive": {
+    "example": "A steam locomotive pulled into the station.",
+    "translation": "一辆蒸汽机车驶入了车站。"
+  },
+  "meadow": {
+    "example": "We sat in the meadow and watched the clouds.",
+    "translation": "我们坐在草地上看云。"
+  },
+  "oar": {
+    "example": "He lifted the oar out of the water.",
+    "translation": "他把船桨从水中提了起来。"
+  },
+  "occasionally": {
+    "example": "We occasionally have lunch together.",
+    "translation": "我们偶尔一起吃午饭。"
+  },
+  "okay": {
+    "example": "Is it okay if I sit here?",
+    "translation": "我坐在这里可以吗？"
+  },
+  "ought": {
+    "example": "You ought to get some rest.",
+    "translation": "你应该休息一下。"
+  },
+  "ox": {
+    "example": "The ox pulled a cart along the road.",
+    "translation": "那头牛沿着道路拉着一辆车。"
+  },
+  "pick": {
+    "example": "He used a pick to break the hard ground.",
+    "translation": "他用镐刨开坚硬的地面。"
+  },
+  "prefer": {
+    "example": "I prefer tea to coffee.",
+    "translation": "比起咖啡，我更喜欢茶。"
+  },
+  "probably": {
+    "example": "We will probably arrive before noon.",
+    "translation": "我们大概会在中午前到达。"
+  },
+  "really": {
+    "example": "I really enjoyed our conversation.",
+    "translation": "我非常喜欢我们这次谈话。"
+  },
+  "refrigerator": {
+    "example": "Put the milk back in the refrigerator.",
+    "translation": "把牛奶放回冰箱里。"
+  },
+  "reservior": {
+    "example": "We walked along the edge of the reservoir.",
+    "translation": "我们沿着水库边散步。"
+  },
+  "silver": {
+    "example": "She wore a simple silver ring.",
+    "translation": "她戴着一枚朴素的银戒指。"
+  },
+  "sulfur": {
+    "example": "The students examined a sample of sulfur.",
+    "translation": "学生们观察了一份硫黄样品。"
+  },
+  "sweater": {
+    "example": "I put on a sweater because I felt cold.",
+    "translation": "我觉得冷，就穿上了一件毛衣。"
+  },
+  "temple": {
+    "example": "We visited an old temple on the hill.",
+    "translation": "我们参观了山上的一座古庙。"
+  },
+  "waggon": {
+    "example": "The horse pulled a wooden waggon.",
+    "translation": "那匹马拉着一辆木制货车。"
+  },
+  "whilst": {
+    "example": "She read a book whilst waiting for the train.",
+    "translation": "她一边等火车，一边看书。"
+  },
+  "guitar": {
+    "example": "He plays the guitar every evening.",
+    "translation": "他每天晚上都弹吉他。"
+  },
+  "according": {
+    "example": "According to the timetable, the bus leaves at nine.",
+    "translation": "按照时刻表，公共汽车九点发车。"
+  },
+  "providing": {
+    "example": "You can borrow my bike, providing you return it tonight.",
+    "translation": "只要你今晚归还，就可以借我的自行车。"
+  },
+  "reservoir": {
+    "example": "The path leads down to the reservoir.",
+    "translation": "这条小路向下通往水库。"
+  },
+  "mold": {
+    "example": "There was mold on the old bread.",
+    "translation": "旧面包上长了霉。"
+  },
+  "connexion": {
+    "example": "She saw no connexion between the two events.",
+    "translation": "她看不出这两件事有什么联系。"
+  },
+  "scary": {
+    "example": "That was a scary film.",
+    "translation": "那是一部吓人的电影。"
+  },
+  "fulfill": {
+    "example": "I will do my best to fulfill my promise.",
+    "translation": "我会尽力履行承诺。"
+  }
+}
