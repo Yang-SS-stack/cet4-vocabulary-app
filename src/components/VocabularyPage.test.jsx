@@ -1,9 +1,9 @@
-import { render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import VocabularyPage from './VocabularyPage'
 
-afterEach(() => vi.restoreAllMocks())
+afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals() })
 beforeEach(() => vi.spyOn(window, 'scrollTo').mockImplementation(() => {}))
 
 test('previous and next page return to the document top after rendering the new page', async () => {
@@ -52,7 +52,7 @@ function visibleWordNames() {
 test('sorts alphabetically by default and by descending frequency with ties and missing data', async () => {
   const user = await openBrowseBook()
   expect(visibleWordNames()).toEqual(['absent', 'Apple', 'application', 'zebra', 'zero'])
-  await user.selectOptions(screen.getByRole('combobox', { name: '排序方式' }), 'frequency')
+  await user.click(screen.getByRole('button', { name: '词频从高到低' }))
   expect(visibleWordNames()).toEqual(['Apple', 'application', 'zebra', 'zero', 'absent'])
   expect(browseWords[0].word).toBe('zebra')
 })
@@ -86,7 +86,7 @@ test('resets pagination when searching or sorting and never fills results with u
   expect(visibleWordNames()).toHaveLength(21)
   await user.click(screen.getByRole('button', { name: '下一页' }))
   expect(visibleWordNames()).toEqual(['word-22', 'word-23'])
-  await user.selectOptions(screen.getByRole('combobox'), 'frequency')
+  await user.click(screen.getByRole('button', { name: '词频从高到低' }))
   expect(screen.getByText('第 1 / 2 页')).toBeInTheDocument()
   expect(visibleWordNames()[0]).toBe('word-23')
 })
@@ -97,10 +97,64 @@ test('clears the search on changing books and restores each book default sort', 
   await user.click(screen.getByRole('button', { name: '返回词书' }))
   await user.click(screen.getByRole('button', { name: '高频测试' }))
   expect(screen.getByRole('searchbox')).toHaveValue('')
-  expect(screen.getByRole('combobox')).toHaveValue('frequency')
+  expect(screen.getByRole('button', { name: '词频从高到低' })).toHaveAttribute('aria-pressed', 'true')
   await user.click(screen.getByRole('button', { name: '返回词书' }))
   await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
-  expect(screen.getByRole('combobox')).toHaveValue('alphabetical')
+  expect(screen.getByRole('button', { name: '字母顺序 A–Z' })).toHaveAttribute('aria-pressed', 'true')
+})
+
+test('offers two visible sort choices with keyboard operation and an explicit selected state', async () => {
+  const user = await openBrowseBook()
+  const group = screen.getByRole('group', { name: '排序方式' })
+  const alphabet = within(group).getByRole('button', { name: '字母顺序 A–Z' })
+  const frequency = within(group).getByRole('button', { name: '词频从高到低' })
+  expect(alphabet).toHaveAttribute('aria-pressed', 'true')
+  expect(frequency).toHaveAttribute('aria-pressed', 'false')
+  alphabet.focus()
+  await user.tab()
+  await user.keyboard('{Enter}')
+  expect(frequency).toHaveFocus()
+  expect(frequency).toHaveAttribute('aria-pressed', 'true')
+  expect(alphabet).toHaveAttribute('aria-pressed', 'false')
+})
+
+test('fades out before paging and scrolling, then fades in and restores keyboard access', async () => {
+  const user = await openBrowseBook(Array.from({ length: 43 }, (_, index) => ({
+    ...browseWords[0], word: `word-${String(index + 1).padStart(2, '0')}`,
+  })))
+  const root = document.querySelector('.vocabulary-transition')
+  const finishes = []
+  root.animate = vi.fn(() => ({
+    cancel: vi.fn(), finished: new Promise((resolve) => finishes.push(resolve)),
+  }))
+  const next = screen.getByRole('button', { name: '下一页' })
+  await user.click(next)
+  expect(root.inert).toBe(true)
+  expect(root.animate).toHaveBeenCalledTimes(1)
+  expect(window.scrollTo).not.toHaveBeenCalled()
+  expect(screen.getByText('第 1 / 3 页')).toBeInTheDocument()
+  fireEvent.click(next)
+  expect(root.animate).toHaveBeenCalledTimes(1)
+  await act(async () => finishes[0]())
+  expect(screen.getByText('第 2 / 3 页')).toBeInTheDocument()
+  expect(window.scrollTo).toHaveBeenCalledOnce()
+  expect(root.animate).toHaveBeenLastCalledWith([{ opacity: 0 }, { opacity: 1 }], expect.objectContaining({ duration: 240 }))
+  expect(root.inert).toBe(true)
+  await act(async () => finishes[1]())
+  expect(root.inert).toBe(false)
+  expect(screen.getByRole('heading', { name: 'CET-4', exact: true })).toHaveFocus()
+})
+
+test('skips page animation for reduced motion and still returns to the top', async () => {
+  const user = await openBrowseBook(Array.from({ length: 22 }, (_, index) => ({ ...browseWords[0], word: `test-${index}` })))
+  const root = document.querySelector('.vocabulary-transition')
+  root.animate = vi.fn()
+  vi.stubGlobal('matchMedia', () => ({ matches: true }))
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+  expect(root.animate).not.toHaveBeenCalled()
+  expect(screen.getByText('第 2 / 2 页')).toBeInTheDocument()
+  expect(root.inert).toBe(false)
+  expect(window.scrollTo).toHaveBeenCalledOnce()
 })
 
 test('renders every book from the provided catalog', () => {

@@ -41,8 +41,13 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
     setCurrentPage(1)
   }
 
-  const changePage = (page) => {
-    if (page === currentPage) return
+  const changePage = async (page) => {
+    if (page === currentPage || isLeaving.current) return
+    isLeaving.current = true
+    const requestId = ++loadRequestId.current
+    contentRef.current.inert = true
+    await fade(1, 0, 160)
+    if (loadRequestId.current !== requestId) return
     pageNavigation.current = true
     setCurrentPage(page)
   }
@@ -50,10 +55,16 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
   useLayoutEffect(() => {
     if (!pageNavigation.current) return
     pageNavigation.current = false
-    // After the new cards render, move both the viewport and keyboard's
-    // reading position to the start; typing a search does not trigger this.
-    headingRef.current?.focus({ preventScroll: true })
+    const requestId = loadRequestId.current
+    // Reposition while the outgoing page is invisible, then reveal the new
+    // cards. Keep input locked until the transition completes.
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    fade(0, 1, 240).then(() => {
+      if (loadRequestId.current !== requestId) return
+      contentRef.current.inert = false
+      isLeaving.current = false
+      headingRef.current?.focus({ preventScroll: true })
+    })
   }, [currentPage])
 
   const clearSearch = () => {
@@ -209,16 +220,26 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
               onChange={(event) => changeQuery(event.target.value)}
             />
           </label>
-          <label className="vocabulary-sort">
-            <span>排序方式</span>
-            <select value={sort} onChange={(event) => {
-              setSort(event.target.value)
-              setCurrentPage(1)
-            }}>
-              <option value="alphabetical">字母顺序 A–Z</option>
-              <option value="frequency">词频从高到低</option>
-            </select>
-          </label>
+          <div className="vocabulary-sort" role="group" aria-labelledby="vocabulary-sort-label">
+            <span id="vocabulary-sort-label">排序方式</span>
+            <div className="vocabulary-sort__choices">
+              {[
+                { value: 'alphabetical', label: '字母顺序 A–Z', text: '字母顺序' },
+                { value: 'frequency', label: '词频从高到低', text: '词频高低' },
+              ].map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  aria-label={option.label}
+                  aria-pressed={sort === option.value}
+                  onClick={() => {
+                    setSort(option.value)
+                    setCurrentPage(1)
+                  }}
+                >{option.text}</button>
+              ))}
+            </div>
+          </div>
           <p className="vocabulary-result-count" aria-live="polite" aria-atomic="true">
             {query.trim() ? `找到 ${filteredWords.length} 个单词 · 共 ${words.length} 个` : `共 ${words.length} 个单词`}
           </p>
