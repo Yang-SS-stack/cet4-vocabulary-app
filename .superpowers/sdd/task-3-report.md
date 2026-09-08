@@ -45,8 +45,9 @@ npm test -- --run src/components/VocabularyPage.test.jsx src/components/WordCard
 
 ## 提交
 
-`86790aa feat: load vocabulary pages on demand`
+`ce6d3fa feat: load vocabulary pages on demand`
 
 ## 疑虑
 
 - 生产构建未取得最终退出码，原因是本地构建命令在转换完成后超过当前命令窗口；聚焦测试与代码规范检查均已通过。
+- 工作区保留了 Task 1/2 的未跟踪简报、报告和审查材料；本次未改动或提交这些既有文件。
