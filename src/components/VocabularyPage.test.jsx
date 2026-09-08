@@ -1,7 +1,30 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import VocabularyPage from './VocabularyPage'
+
+afterEach(() => vi.restoreAllMocks())
+beforeEach(() => vi.spyOn(window, 'scrollTo').mockImplementation(() => {}))
+
+test('previous and next page return to the document top after rendering the new page', async () => {
+  const scroll = vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+  const words = Array.from({ length: 43 }, (_, index) => ({
+    ...browseWords[0], word: `word-${String(index + 1).padStart(2, '0')}`,
+  }))
+  const user = await openBrowseBook(words)
+  expect(scroll).not.toHaveBeenCalled()
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+  expect(visibleWordNames()[0]).toBe('word-22')
+  expect(screen.getByRole('heading', { name: 'CET-4', exact: true })).toHaveFocus()
+  expect(scroll).toHaveBeenLastCalledWith({ top: 0, left: 0, behavior: 'instant' })
+  await user.click(screen.getByRole('button', { name: '上一页' }))
+  expect(visibleWordNames()[0]).toBe('word-01')
+  expect(scroll).toHaveBeenCalledTimes(2)
+  await user.click(screen.getByRole('button', { name: '上一页' }))
+  expect(scroll).toHaveBeenCalledTimes(2)
+  await user.type(screen.getByRole('searchbox'), 'word-01')
+  expect(scroll).toHaveBeenCalledTimes(2)
+})
 
 const browseWords = [
   { word: 'zebra', meaning: '斑马', frequency: 8 },

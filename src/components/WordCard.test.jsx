@@ -2,8 +2,21 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 import WordCard from './WordCard'
+import { readFileSync } from 'node:fs'
 
 afterEach(() => vi.unstubAllGlobals())
+
+test('the readable back has no rotated ancestor or remaining rotation that can misroute wheel scrolling', async () => {
+  const user = userEvent.setup()
+  const css = readFileSync('src/components/WordCard.css', 'utf8')
+  const { container } = render(<><style>{css}</style><WordCard item={word} /></>)
+  await user.click(screen.getByRole('button', { name: 'absorb，查看详情' }))
+  const back = container.querySelector('.word-card__back')
+  expect(getComputedStyle(back).transform).toBe('none')
+  expect(getComputedStyle(back.parentElement).transform).not.toMatch(/rotate/)
+  expect(getComputedStyle(back.parentElement).transformStyle).not.toBe('preserve-3d')
+  expect(getComputedStyle(screen.getByRole('region', { name: 'absorb 的详情' })).overflowY).toBe('auto')
+})
 
 const word = {
   word: 'absorb', phonetic: '/əbˈsɔːb/', partOfSpeech: 'v',

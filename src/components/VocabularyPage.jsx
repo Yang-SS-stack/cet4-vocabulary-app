@@ -15,6 +15,8 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
   const [query, setQuery] = useState('')
   const [sort, setSort] = useState('alphabetical')
   const searchRef = useRef(null)
+  const headingRef = useRef(null)
+  const pageNavigation = useRef(false)
   const loadRequestId = useRef(0)
   const contentRef = useRef(null)
   const animationRef = useRef(null)
@@ -38,6 +40,21 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
     setQuery(value)
     setCurrentPage(1)
   }
+
+  const changePage = (page) => {
+    if (page === currentPage) return
+    pageNavigation.current = true
+    setCurrentPage(page)
+  }
+
+  useLayoutEffect(() => {
+    if (!pageNavigation.current) return
+    pageNavigation.current = false
+    // After the new cards render, move both the viewport and keyboard's
+    // reading position to the start; typing a search does not trigger this.
+    headingRef.current?.focus({ preventScroll: true })
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [currentPage])
 
   const clearSearch = () => {
     changeQuery('')
@@ -177,7 +194,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
               ← 返回词书
             </button>
           </div>
-          <h2 id="vocabulary-heading">{selectedBook.label}</h2>
+          <h2 ref={headingRef} tabIndex={-1} id="vocabulary-heading">{selectedBook.label}</h2>
           <p>按拼写或中文释义查找，点击词卡查看详情。</p>
         </div>
 
@@ -228,7 +245,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
             className="vocabulary-pagination__button vocabulary-pagination__button--previous"
             type="button"
             aria-label="上一页"
-            onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
+            onClick={() => changePage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
           >
             <span className="vocabulary-pagination__arrow" aria-hidden="true" />
@@ -241,7 +258,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
             className="vocabulary-pagination__button vocabulary-pagination__button--next"
             type="button"
             aria-label="下一页"
-            onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
+            onClick={() => changePage(Math.min(totalPages, currentPage + 1))}
             disabled={currentPage === totalPages}
           >
             下一页

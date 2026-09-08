@@ -2,18 +2,20 @@
   min-width: 0;
   height: 340px;
   list-style: none;
-  perspective: 1200px;
 }
 
 .word-card__rotator {
   position: relative;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  perspective: 1200px;
 }
 
-.word-card.is-flipped .word-card__rotator { transform: rotateY(180deg); }
+/* Rotate the faces independently in a flat perspective container. Keeping
+   the readable back in a preserve-3d scene breaks native wheel hit testing
+   in Chromium, even when the two rotations visually cancel each other. */
+.word-card.is-flipped .word-card__front { transform: rotateY(-180deg); }
+.word-card.is-flipped .word-card__back { transform: none; }
 
 .word-card__face {
   position: absolute;
@@ -25,6 +27,7 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   overflow-wrap: anywhere;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .word-card__face[aria-hidden='true'] { pointer-events: none; }
@@ -154,5 +157,5 @@
 .word-card :is(button, [tabindex]):focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .word-card__rotator { transition: none; }
+  .word-card__face { transition: none; }
 }
