@@ -1,0 +1,2331 @@
+[
+  {
+    "word": "slice",
+    "phonetic": "/slaɪs/",
+    "partOfSpeech": "n/vt",
+    "meaning": "薄片，切片；部分；切， 削",
+    "example": "pizza slices",
+    "translation": "比萨块",
+    "phrases": [
+      "a slice of",
+      "thin slice",
+      "slice of bread",
+      "time slice",
+      "slice off",
+      "tissue slice"
+    ]
+  },
+  {
+    "word": "slide",
+    "phonetic": "/slaɪd/",
+    "partOfSpeech": "v/n",
+    "meaning": "滑；使滑动；滑；悄悄地移动；滑动； 滑道， 滑面； 幻灯片",
+    "example": "He slid open the door of the glass cabinet.",
+    "translation": "他滑开玻璃柜的门。",
+    "phrases": [
+      "on the slide",
+      "slide show",
+      "slide block",
+      "slide down",
+      "slide into",
+      "slide rail",
+      "slide valve",
+      "slide way",
+      "slide plate",
+      "slide fastener",
+      "water slide",
+      "slide projector",
+      "slide guide",
+      "slide over",
+      "glass slide",
+      "slide bearing",
+      "slide gate",
+      "microscope slide",
+      "slide switch",
+      "slide up"
+    ]
+  },
+  {
+    "word": "slight",
+    "phonetic": "/slaɪt/",
+    "partOfSpeech": "adj/v",
+    "meaning": "轻微的，微小的；侮慢；轻视，冷落",
+    "example": "a slight improvement",
+    "translation": "些许的改进",
+    "phrases": [
+      "slight fever",
+      "slight pain",
+      "slight illness"
+    ]
+  },
+  {
+    "word": "slightly",
+    "phonetic": "/'slaɪtli/",
+    "partOfSpeech": "adv",
+    "meaning": "轻微地",
+    "example": "His family then moved to a slightly larger house.",
+    "translation": "他的家后来搬到了一间稍微大一点儿的房子。",
+    "phrases": []
+  },
+  {
+    "word": "slim",
+    "phonetic": "/slɪm/",
+    "partOfSpeech": "adj/v",
+    "meaning": "苗条的；薄的；少的；减轻体重， 变苗条",
+    "example": "a slim young woman",
+    "translation": "身材苗条的年轻女子",
+    "phrases": [
+      "slim hole",
+      "slim down"
+    ]
+  },
+  {
+    "word": "slip",
+    "phonetic": "/slɪp/",
+    "partOfSpeech": "v/n",
+    "meaning": "滑跤，滑落，溜；下降，跌落；悄悄放进；疏漏， 差错",
+    "example": "Ben slipped quietly out of the room.",
+    "translation": "本悄悄地溜出了房间。",
+    "phrases": [
+      "let slip",
+      "slip away",
+      "slip in",
+      "slip into",
+      "strike slip",
+      "slip surface",
+      "slip on",
+      "slip line",
+      "deposit slip",
+      "slip velocity",
+      "slip out",
+      "slip ratio",
+      "slip by",
+      "slip up",
+      "slip form",
+      "slip ring",
+      "slip casting",
+      "slip of the tongue",
+      "slip out of",
+      "slip plane"
+    ]
+  },
+  {
+    "word": "slippery",
+    "phonetic": "/'slɪpəri/",
+    "partOfSpeech": "adj",
+    "meaning": "模糊的，不明确的，滑的；滑的，使人滑跤的；滑的； 狡猾的",
+    "example": "In places, the path can be wet and slippery.",
+    "translation": "路上有些地方可能又湿又滑。",
+    "phrases": [
+      "slippery slope",
+      "slippery road",
+      "slippery elm"
+    ]
+  },
+  {
+    "word": "slit",
+    "phonetic": "/slɪt/",
+    "partOfSpeech": "n/v",
+    "meaning": "裂缝；切开，撕开",
+    "example": "light shining through a slit in the door",
+    "translation": "透过门缝照进来的光线",
+    "phrases": [
+      "slit lamp",
+      "slit width"
+    ]
+  },
+  {
+    "word": "slope",
+    "phonetic": "/slop/",
+    "partOfSpeech": "n/v",
+    "meaning": "倾斜；斜面；倾斜",
+    "example": "a steep slope",
+    "translation": "陡坡",
+    "phrases": [
+      "slope stability",
+      "rock slope",
+      "slope protection",
+      "side slope",
+      "steep slope",
+      "slope angle",
+      "north slope",
+      "gentle slope",
+      "slope failure",
+      "northern slope",
+      "at the slope",
+      "continental slope",
+      "longitudinal slope",
+      "slope efficiency",
+      "slippery slope",
+      "slope toe",
+      "abrupt slope",
+      "upstream slope",
+      "unstable slope",
+      "back slope"
+    ]
+  },
+  {
+    "word": "smart",
+    "phonetic": "/smɑrt/",
+    "partOfSpeech": "adj",
+    "meaning": "巧妙的；洒脱的",
+    "example": "The smart kids get good grades and go off to college.",
+    "translation": "聪明的孩子成绩好，可以去上大学。",
+    "phrases": [
+      "smart card",
+      "smart phone",
+      "little smart",
+      "smart money",
+      "smart for",
+      "a smart guy",
+      "play it smart",
+      "street smart"
+    ]
+  },
+  {
+    "word": "smash",
+    "phonetic": "/smæʃ/",
+    "partOfSpeech": "v/n",
+    "meaning": "粉碎，打烂；狠打，猛击；破灭，失败；猛撞，猛冲；破碎 ； 猛击， 猛撞； 轰动的演出， 巨大的成功",
+    "example": "Vandals had smashed all the windows.",
+    "translation": "破坏分子打碎了所有的窗子。",
+    "phrases": [
+      "smash up",
+      "smash hit"
+    ]
+  },
+  {
+    "word": "smooth",
+    "phonetic": "/smʊð/",
+    "partOfSpeech": "adj",
+    "meaning": "光滑的",
+    "example": "Her skin felt smooth and cool.",
+    "translation": "她的皮肤摸上去又滑又凉。",
+    "phrases": [
+      "smooth muscle",
+      "smooth surface",
+      "smooth operation",
+      "smooth blasting",
+      "smooth running",
+      "smooth transition",
+      "smooth flow",
+      "smooth finish",
+      "smooth over",
+      "smooth out",
+      "smooth sailing",
+      "smooth texture",
+      "smooth and steady",
+      "smooth line",
+      "smooth away",
+      "smooth face",
+      "piecewise smooth",
+      "smooth endoplasmic reticulum"
+    ]
+  },
+  {
+    "word": "snack",
+    "phonetic": "/snæk/",
+    "partOfSpeech": "n",
+    "meaning": "零食，小吃",
+    "example": "I grabbed a quick snack.",
+    "translation": "我赶紧吃了点零食。",
+    "phrases": [
+      "snack food",
+      "snack bar",
+      "snack street"
+    ]
+  },
+  {
+    "word": "snap",
+    "phonetic": "/snæp/",
+    "partOfSpeech": "v/adj/n",
+    "meaning": "咔嚓折断，啪地绷断；吧嗒一声；猛咬；厉声说话，怒声责骂；仓促的， 突然的；吧嗒声；快照",
+    "example": "A twig snapped under my feet.",
+    "translation": "一根细枝在我脚下嚓一声断开了。",
+    "phrases": [
+      "in a snap",
+      "snap up",
+      "cold snap",
+      "snap at",
+      "snap out",
+      "snap out of",
+      "snap back",
+      "snap shot",
+      "snap button",
+      "snap ring",
+      "snap election"
+    ]
+  },
+  {
+    "word": "so-called",
+    "phonetic": "/,so'kɔld/",
+    "partOfSpeech": "adj",
+    "meaning": "所谓的， 号称的",
+    "example": "The so-called experts couldn’t tell us what was wrong.",
+    "translation": "那些所谓的专家说不出问题出在哪里。",
+    "phrases": []
+  },
+  {
+    "word": "soak",
+    "phonetic": "/sok/",
+    "partOfSpeech": "v",
+    "meaning": "浸，泡；浸泡；浸， 泡",
+    "example": "Soak the clothes in cold water.",
+    "translation": "把衣服浸泡在冷水里。",
+    "phrases": [
+      "soak in",
+      "soak up",
+      "soak time",
+      "soak into",
+      "soak up the sun",
+      "soak out"
+    ]
+  },
+  {
+    "word": "soar",
+    "phonetic": "/sɔr/",
+    "partOfSpeech": "v/vi",
+    "meaning": "猛增；猛增， 剧增； 高飞， 升腾； 高涨； 高耸， 屹立",
+    "example": "Her temperature soared.",
+    "translation": "她的体温骤然升高。",
+    "phrases": []
+  },
+  {
+    "word": "social",
+    "phonetic": "/'soʃl/",
+    "partOfSpeech": "adj",
+    "meaning": "社会的； 交际的， 社交的",
+    "example": "social issues, such as unemployment and education",
+    "translation": "失业和教育之类的社会问题",
+    "phrases": [
+      "social development",
+      "social security",
+      "social life",
+      "social progress",
+      "social economy",
+      "social benefit",
+      "social responsibility",
+      "social environment",
+      "social security system",
+      "social science",
+      "social welfare",
+      "social insurance",
+      "social status",
+      "social capital",
+      "social system",
+      "social practice",
+      "social order",
+      "social structure",
+      "social support",
+      "social justice"
+    ]
+  },
+  {
+    "word": "socialism",
+    "phonetic": "/'soʃəlɪzəm/",
+    "partOfSpeech": "n",
+    "meaning": "社会主义",
+    "example": "From then on we proceeded to build socialism.",
+    "translation": "从那时起，我们开始建设社会主义。",
+    "phrases": [
+      "scientific socialism",
+      "market socialism",
+      "democratic socialism",
+      "utopian socialism",
+      "national socialism"
+    ]
+  },
+  {
+    "word": "socialist",
+    "phonetic": "/'soʃəlɪst/",
+    "partOfSpeech": "n",
+    "meaning": "社会主义者",
+    "example": "Esperanto has always been popular among socialists.",
+    "translation": "世界语在社会主义者中一直很受欢迎。",
+    "phrases": [
+      "socialist market economy",
+      "socialist economy",
+      "socialist construction",
+      "harmonious socialist society",
+      "socialist system",
+      "socialist political civilization",
+      "socialist party",
+      "socialist republic of vietnam",
+      "socialist realism"
+    ]
+  },
+  {
+    "word": "socialize",
+    "phonetic": "/'soʃəlaɪz/",
+    "partOfSpeech": "v",
+    "meaning": "交往，联谊",
+    "example": "...an open meeting, where members socialized and welcomed any new members.",
+    "translation": "…让会员们相互交流、欢迎所有新成员的一次公开集会。",
+    "phrases": []
+  },
+  {
+    "word": "sociology",
+    "phonetic": "/,sosɪ'ɑlədʒi/",
+    "partOfSpeech": "n",
+    "meaning": "社会学",
+    "example": "Basic courses in sociology and psychology as well as other humanities courses give students plenty of opportunity to explore their own emotions.",
+    "translation": "社会学和心理学的基础，以及其他人文学科的课程，赋予学生大量的机会去探索其个人情感。",
+    "phrases": [
+      "sociology of law",
+      "economic sociology",
+      "urban sociology",
+      "sociology of knowledge",
+      "sociology of science",
+      "educational sociology",
+      "rural sociology"
+    ]
+  },
+  {
+    "word": "soda",
+    "phonetic": "/'sodə/",
+    "partOfSpeech": "n",
+    "meaning": "碳酸钠， 纯碱； 汽水， 苏打水",
+    "example": "a Scotch and soda",
+    "translation": "一杯加苏打水的苏格兰威士忌",
+    "phrases": [
+      "caustic soda",
+      "soda ash",
+      "baking soda",
+      "soda water",
+      "soda solution",
+      "soda pop",
+      "soda fountain",
+      "club soda",
+      "diet soda",
+      "orange soda",
+      "soda lye"
+    ]
+  },
+  {
+    "word": "software",
+    "phonetic": "/'sɔftwɛr/",
+    "partOfSpeech": "n",
+    "meaning": "软件",
+    "example": "She loaded the new software .",
+    "translation": "她给电脑装上新的软件。",
+    "phrases": [
+      "software development",
+      "software design",
+      "software system",
+      "computer software",
+      "software engineering",
+      "application software",
+      "management software",
+      "simulation software",
+      "system software",
+      "software company",
+      "software package",
+      "software test",
+      "software reuse",
+      "software engineer",
+      "embedded software",
+      "software reliability",
+      "antivirus software",
+      "software interface",
+      "chinese software",
+      "software component"
+    ]
+  },
+  {
+    "word": "soil",
+    "phonetic": "/sɔɪl/",
+    "partOfSpeech": "v",
+    "meaning": "弄脏；变脏",
+    "example": "She moistenend the soil round the plant.",
+    "translation": "她把植物周围的土壤弄湿。",
+    "phrases": [
+      "soil erosion",
+      "soft soil",
+      "soil water",
+      "soil moisture",
+      "soil fertility",
+      "soil conservation",
+      "water and soil conservation",
+      "soil layer",
+      "frozen soil",
+      "soil pollution",
+      "fertile soil",
+      "red soil",
+      "soil nutrient",
+      "soil mechanics",
+      "sandy soil",
+      "foundation soil",
+      "surface soil",
+      "expansive soil",
+      "soil pressure",
+      "soil structure"
+    ]
+  },
+  {
+    "word": "solar",
+    "phonetic": "/'solɚ/",
+    "partOfSpeech": "adj",
+    "meaning": "太阳的，日光的；太阳的， 日光的； 太阳能的",
+    "example": "a solar eclipse",
+    "translation": "日食",
+    "phrases": [
+      "solar energy",
+      "solar system",
+      "solar power",
+      "solar cell",
+      "solar radiation",
+      "solar water heater",
+      "solar eclipse",
+      "solar panel",
+      "total solar eclipse",
+      "solar collector",
+      "solar battery",
+      "solar heat",
+      "solar activity",
+      "solar wind",
+      "solar heating",
+      "solar light",
+      "solar module",
+      "silicon solar cell",
+      "solar cycle",
+      "application of solar energy"
+    ]
+  },
+  {
+    "word": "sole",
+    "phonetic": "/sol/",
+    "partOfSpeech": "n/adj",
+    "meaning": "脚底，鞋底，袜底；单独的， 唯一的",
+    "example": "The soles of his feet were caked in mud.",
+    "translation": "他的脚掌上沾满了泥巴。",
+    "phrases": [
+      "sole agent",
+      "sole agency",
+      "sole purpose",
+      "sole proprietorship",
+      "sole discretion",
+      "sole distributor",
+      "sole proprietor",
+      "shoe sole",
+      "rubber sole",
+      "sole right",
+      "sole arbitrator"
+    ]
+  },
+  {
+    "word": "solely",
+    "phonetic": "/'solli/",
+    "partOfSpeech": "adv",
+    "meaning": "单独地，唯一地",
+    "example": "Scholarships are given solely on the basis of financial need.",
+    "translation": "奖学金完全是根据经济需要发放的。",
+    "phrases": []
+  },
+  {
+    "word": "solemn",
+    "phonetic": "/'sɑləm/",
+    "partOfSpeech": "adj",
+    "meaning": "庄严的；隆重的；庄严的， 隆重的； 严肃的",
+    "example": "a solemn expression",
+    "translation": "严肃的表情",
+    "phrases": [
+      "solemn promise",
+      "solemn ceremony"
+    ]
+  },
+  {
+    "word": "solicitor",
+    "phonetic": "/sə'lɪsɪtɚ/",
+    "partOfSpeech": "n",
+    "meaning": "律师， 法律顾问",
+    "example": "You need to see a solicitor.",
+    "translation": "你需要找个律师。",
+    "phrases": []
+  },
+  {
+    "word": "solid",
+    "phonetic": "/'sɑlɪd/",
+    "partOfSpeech": "adj/n",
+    "meaning": "扎实的，坚实的；固体的；固体",
+    "example": "The lake was frozen solid .",
+    "translation": "湖水冻得结结实实。",
+    "phrases": [
+      "solid foundation",
+      "solid waste",
+      "solid state",
+      "solid phase",
+      "solid wood",
+      "solid content",
+      "solid material",
+      "solid solution",
+      "solid surface",
+      "high solid",
+      "solid particle",
+      "solid fuel",
+      "solid support",
+      "solid food",
+      "solid work",
+      "solid ground",
+      "solid fermentation",
+      "suspended solid",
+      "solid wall",
+      "solid structure"
+    ]
+  },
+  {
+    "word": "soluble",
+    "phonetic": "/'sɑljəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "可溶的；可以解决的",
+    "example": "soluble aspirin",
+    "translation": "可溶性阿司匹林",
+    "phrases": [
+      "water soluble",
+      "soluble starch",
+      "soluble glass",
+      "acid soluble"
+    ]
+  },
+  {
+    "word": "solution",
+    "phonetic": "/sə'luʃən/",
+    "partOfSpeech": "n",
+    "meaning": "解决，解答，解决办法；解决，解答；溶解；解决； 解决办法； 溶液",
+    "example": "The best solution would be for them to separate.",
+    "translation": "最好的解决方法是他们分开。",
+    "phrases": [
+      "aqueous solution",
+      "optimal solution",
+      "in solution",
+      "numerical solution",
+      "analytical solution",
+      "acid solution",
+      "water solution",
+      "analytic solution",
+      "standard solution",
+      "feasible solution",
+      "solution polymerization",
+      "optimum solution",
+      "solution provider",
+      "solid solution",
+      "general solution",
+      "approximate solution",
+      "exact solution",
+      "alkaline solution",
+      "salt solution",
+      "solution concentration"
+    ]
+  },
+  {
+    "word": "solve",
+    "phonetic": "/sɔlv/",
+    "partOfSpeech": "v/vt",
+    "meaning": "解决；解答，解释，解决；解答； 解释； 解决",
+    "example": "Charlie thinks money will solve all his problems.",
+    "translation": "查理认为钱能解决他所有的问题。",
+    "phrases": []
+  },
+  {
+    "word": "somebody",
+    "phonetic": "/'sʌmbədi/",
+    "partOfSpeech": "pron",
+    "meaning": "某人，有人",
+    "example": "There’s somebody waiting to see you.",
+    "translation": "有人等着要见你。",
+    "phrases": [
+      "somebody else",
+      "or somebody",
+      "somebody up there"
+    ]
+  },
+  {
+    "word": "somehow",
+    "phonetic": "/'sʌmhaʊ/",
+    "partOfSpeech": "adv",
+    "meaning": "由于某种原因；由于某种原因， 不知怎么的； 以某种方式",
+    "example": "Somehow, I just don’t think it’ll work.",
+    "translation": "不知为什么，我总觉得那样行不通。",
+    "phrases": [
+      "somehow or other",
+      "somehow you will"
+    ]
+  },
+  {
+    "word": "sometime",
+    "phonetic": "/'sʌmtaɪm/",
+    "partOfSpeech": "adv",
+    "meaning": "在某一时候；从前",
+    "example": "The sales figures won't be released until sometime next month.",
+    "translation": "销售数据要到下个月的某个时候才会公布。",
+    "phrases": []
+  },
+  {
+    "word": "somewhat",
+    "phonetic": "/'sʌmwʌt/",
+    "partOfSpeech": "pron/adv",
+    "meaning": "一点儿；有点；有点儿",
+    "example": "Things have changed somewhat since then.",
+    "translation": "从那时候起，情况就有些不一样了。",
+    "phrases": []
+  },
+  {
+    "word": "sophisticated",
+    "phonetic": "/sə'fɪstɪketɪd/",
+    "partOfSpeech": "adj",
+    "meaning": "复杂的；世故的；老于世故的；高级的；老于世故的； 高级的； 精密的， 复杂的； 高雅的",
+    "example": "sophisticated software",
+    "translation": "很先进的软件",
+    "phrases": [
+      "sophisticated technology",
+      "sophisticated equipment"
+    ]
+  },
+  {
+    "word": "sore",
+    "phonetic": "/sɔr/",
+    "partOfSpeech": "adj/n",
+    "meaning": "痛的；恼火的；疮；痛的；恼火的；急剧的，剧烈的；疮， 痛处",
+    "example": "I had a sore throat and aching limbs.",
+    "translation": "我喉咙疼，四肢酸痛。",
+    "phrases": [
+      "sore throat",
+      "pressure sore",
+      "sore eyes",
+      "have a sore throat",
+      "sore loser"
+    ]
+  },
+  {
+    "word": "sorrow",
+    "phonetic": "/sɑro/",
+    "partOfSpeech": "n",
+    "meaning": "悲痛，悲哀，悲伤；悲痛， 悲哀， 悲伤； 伤心事， 不幸的事",
+    "example": "the family’s joys and sorrows",
+    "translation": "这家人的喜与悲",
+    "phrases": []
+  },
+  {
+    "word": "sort",
+    "phonetic": "/sɔrt/",
+    "partOfSpeech": "n/v",
+    "meaning": "种类；类别；整理",
+    "example": "Most of the victims developed psychological problems of one sort or another (= of various different types ) .",
+    "translation": "大多数受害者都出现了这样那样的心理问题。",
+    "phrases": [
+      "sort of",
+      "some sort of",
+      "sort out",
+      "of sorts",
+      "that sort of thing",
+      "of a sort",
+      "quick sort",
+      "sort order",
+      "bubble sort",
+      "sort by",
+      "out of sorts",
+      "sort through",
+      "insertion sort",
+      "heap sort",
+      "merge sort",
+      "selection sort",
+      "in some sort",
+      "sort ascending",
+      "a good sort",
+      "sort descending"
+    ]
+  },
+  {
+    "word": "sound",
+    "phonetic": "/saʊnd/",
+    "partOfSpeech": "adj",
+    "meaning": "健康的；完好的",
+    "example": "a sound understanding of money and banking systems",
+    "translation": "对货币和银行业体制的透彻理解",
+    "phrases": [
+      "sound like",
+      "sound quality",
+      "sound system",
+      "sound insulation",
+      "sound absorption",
+      "sound wave",
+      "sound field",
+      "sound pressure",
+      "sound card",
+      "sound effect",
+      "sound box",
+      "sound source",
+      "sound intensity",
+      "sound recording",
+      "sound level",
+      "sound production",
+      "sound sleep",
+      "sound signal",
+      "speed of sound",
+      "make a sound"
+    ]
+  },
+  {
+    "word": "sour",
+    "phonetic": "/'saʊɚ/",
+    "partOfSpeech": "adj/v",
+    "meaning": "酸的；脾气坏的；酸的；馊的，酸味的；脾气坏的；变酸， 变馊； 变得乖戾",
+    "example": "Rachel sampled the wine. It was sour.",
+    "translation": "雷切尔尝了尝葡萄酒，是酸的。",
+    "phrases": [
+      "sweet and sour",
+      "sour cream",
+      "sour gas",
+      "sour water",
+      "sour milk",
+      "sour crude",
+      "sour taste",
+      "sour someone on",
+      "sour cherry",
+      "sour crude oil",
+      "sour grape",
+      "go sour",
+      "sour orange"
+    ]
+  },
+  {
+    "word": "source",
+    "phonetic": "/sɔrs/",
+    "partOfSpeech": "n",
+    "meaning": "来源；河的源头， 根源； 来源， 出处",
+    "example": "They get their money from various sources.",
+    "translation": "他们从各种途径弄到钱。",
+    "phrases": [
+      "source code",
+      "power source",
+      "light source",
+      "source rock",
+      "water source",
+      "open source",
+      "heat source",
+      "data source",
+      "energy source",
+      "pollution source",
+      "point source",
+      "at source",
+      "carbon source",
+      "current source",
+      "source material",
+      "information source",
+      "source language",
+      "signal source",
+      "voltage source",
+      "source area"
+    ]
+  },
+  {
+    "word": "sow",
+    "phonetic": "/so/",
+    "partOfSpeech": "v",
+    "meaning": "播(种)；播种；播， 播种",
+    "example": "Sow the seeds in late March.",
+    "translation": "三月底播种。",
+    "phrases": [
+      "sow seeds",
+      "sow one's wild oats"
+    ]
+  },
+  {
+    "word": "spacecraft",
+    "phonetic": "/'speskræft/",
+    "partOfSpeech": "n",
+    "meaning": "航天器，宇宙飞船；航天器， 宇宙飞船",
+    "example": "...the world's largest and most expensive unmanned spacecraft.",
+    "translation": "…世界上最大、最贵的无人航天器。",
+    "phrases": [
+      "manned spacecraft",
+      "unmanned spacecraft"
+    ]
+  },
+  {
+    "word": "spade",
+    "phonetic": "/sped/",
+    "partOfSpeech": "n",
+    "meaning": "铲，铁锹；铲， 铁锹",
+    "example": "...a garden spade.",
+    "translation": "…一把花园里使用的锹。",
+    "phrases": [
+      "in spades"
+    ]
+  },
+  {
+    "word": "span",
+    "phonetic": "/spæn/",
+    "partOfSpeech": "n/vt",
+    "meaning": "跨距；一段时间；跨距，一段时间；持续， 贯穿； 包括； 横跨， 跨越",
+    "example": "It’ll be difficult to hire that many new staff in such a short time span .",
+    "translation": "在这么短的时间里要想招聘到那么多新员工是很难的。",
+    "phrases": [
+      "life span",
+      "long span",
+      "time span",
+      "span length",
+      "attention span",
+      "long span bridge",
+      "single span",
+      "bridge span",
+      "spick and span",
+      "memory span",
+      "digit span",
+      "clear span",
+      "wing span"
+    ]
+  },
+  {
+    "word": "spare",
+    "phonetic": "/spɛr/",
+    "partOfSpeech": "adj/v",
+    "meaning": "空闲的；节约；多余的",
+    "example": "Have you got any spare boxes?",
+    "translation": "你有没有多余的盒子？",
+    "phrases": [
+      "spare oneself",
+      "spare time",
+      "spare part",
+      "spare no effort",
+      "spare no pains",
+      "in his spare time",
+      "spare change",
+      "spare tire",
+      "spare capacity",
+      "spare cash",
+      "spare money",
+      "spare wheel",
+      "hot spare",
+      "spare no expense",
+      "go spare",
+      "spare parts list",
+      "spare tyre"
+    ]
+  },
+  {
+    "word": "spark",
+    "phonetic": "/spɑrk/",
+    "partOfSpeech": "n/vi",
+    "meaning": "火花，；火星；发出火花；火花，火星",
+    "example": "sparks from the fire",
+    "translation": "火里飞出的火星",
+    "phrases": [
+      "spark plug",
+      "electric spark",
+      "spark discharge",
+      "spark gap",
+      "spark ignition",
+      "spark machining",
+      "spark advance",
+      "electric spark machining",
+      "spark erosion",
+      "spark of life",
+      "make the sparks fly",
+      "spark timing",
+      "not a spark of"
+    ]
+  },
+  {
+    "word": "specialist",
+    "phonetic": "/'spɛʃəlɪst/",
+    "partOfSpeech": "n",
+    "meaning": "专家",
+    "example": "a heart specialist",
+    "translation": "心脏专科医生",
+    "phrases": [
+      "specialist system",
+      "heart specialist"
+    ]
+  },
+  {
+    "word": "specialize",
+    "phonetic": "/'spɛʃəlaɪz/",
+    "partOfSpeech": "v/vi",
+    "meaning": "专业从事；成为…专家；专攻；成为…专家； 专攻",
+    "example": "...a University professor who specializes in the history of the Russian empire.",
+    "translation": "…一位专门研究沙俄历史的大学教授。",
+    "phrases": [
+      "specialize in"
+    ]
+  },
+  {
+    "word": "species",
+    "phonetic": "/'spiʃiz/",
+    "partOfSpeech": "n",
+    "meaning": "种， 类",
+    "example": "Seven species of birds of prey have been observed.",
+    "translation": "已有七种猛禽被观察到。",
+    "phrases": [
+      "species diversity",
+      "species composition",
+      "species richness",
+      "species abundance",
+      "species group"
+    ]
+  },
+  {
+    "word": "specific",
+    "phonetic": "/spɪ'sɪfɪk/",
+    "partOfSpeech": "adj/n",
+    "meaning": "特定的，具体的；特有的；具体的；特有的；具体的，明确的；详情， 细节",
+    "example": "games suitable for specific age groups",
+    "translation": "适合特定年龄组的游戏",
+    "phrases": [
+      "specific surface",
+      "specific surface area",
+      "specific gravity",
+      "specific area",
+      "specific heat",
+      "specific energy",
+      "specific power",
+      "specific performance",
+      "specific strength",
+      "specific request",
+      "specific function",
+      "specific character",
+      "specific resistance",
+      "specific product",
+      "specific speed",
+      "specific form",
+      "specific items",
+      "specific value",
+      "specific volume",
+      "specific pressure"
+    ]
+  },
+  {
+    "word": "specifically",
+    "phonetic": "/spə'sɪfɪkli/",
+    "partOfSpeech": "adv",
+    "meaning": "特别地， 特定地； 明确地， 具体地",
+    "example": "advertising that specifically targets children",
+    "translation": "专门针对儿童的广告",
+    "phrases": [
+      "more specifically"
+    ]
+  },
+  {
+    "word": "specify",
+    "phonetic": "/'spɛsɪfaɪ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "指定，具体说明；指定，详细说明；指定； 详细说明",
+    "example": "Payments will be made for a specified number of months.",
+    "translation": "款项将在规定的几个月内支付。",
+    "phrases": []
+  },
+  {
+    "word": "specimen",
+    "phonetic": "/'spɛsəmən/",
+    "partOfSpeech": "n",
+    "meaning": "样本，标本，样品；样本， 标本， 样品",
+    "example": "a blood specimen",
+    "translation": "血样",
+    "phrases": [
+      "test specimen",
+      "specimen signature",
+      "specimen preparation",
+      "type specimen",
+      "metallographic specimen",
+      "specimen collection",
+      "standard specimen",
+      "tensile specimen",
+      "notched specimen"
+    ]
+  },
+  {
+    "word": "spectacular",
+    "phonetic": "/spɛk'tækjəlɚ/",
+    "partOfSpeech": "adj/n",
+    "meaning": "壮观的，引人注目的；壮观的演出； 惊人之举",
+    "example": "a mountainous area with spectacular scenery",
+    "translation": "景色壮丽的山区",
+    "phrases": []
+  },
+  {
+    "word": "speculate",
+    "phonetic": "/'spɛkjə'let/",
+    "partOfSpeech": "v",
+    "meaning": "推测， 推断； 投机， 做投机买卖",
+    "example": "She refused to speculate.",
+    "translation": "她拒绝猜测。",
+    "phrases": [
+      "speculate on"
+    ]
+  },
+  {
+    "word": "spelling",
+    "phonetic": "/'spɛlɪŋ/",
+    "partOfSpeech": "n",
+    "meaning": "拼字， 拼法， 拼写法",
+    "example": "Her spelling has improved.",
+    "translation": "她的拼写进步了。",
+    "phrases": [
+      "spelling bee",
+      "spelling mistake",
+      "spelling checker"
+    ]
+  },
+  {
+    "word": "sphere",
+    "phonetic": "/sfɪr/",
+    "partOfSpeech": "n",
+    "meaning": "球体, 范围；球，圆体；范围；球， 球体； 范围",
+    "example": "Because the earth spins, it is not a perfect sphere.",
+    "translation": "因为地球旋转，所以它不是个完完全全的球体。",
+    "phrases": []
+  },
+  {
+    "word": "spider",
+    "phonetic": "/'spaɪdɚ/",
+    "partOfSpeech": "n",
+    "meaning": "蜘蛛",
+    "example": "What should I find but an enormous spider!",
+    "translation": "我居然发现了一只巨大的蜘蛛！",
+    "phrases": [
+      "spider silk",
+      "spider web",
+      "red spider"
+    ]
+  },
+  {
+    "word": "spill",
+    "phonetic": "/spɪl/",
+    "partOfSpeech": "v/n",
+    "meaning": "使溢出；溢出；溢出，洒落",
+    "example": "Katie almost spilled her milk.",
+    "translation": "凯蒂差点把牛奶洒出来。",
+    "phrases": [
+      "oil spill",
+      "spill over",
+      "spill the beans",
+      "spill out",
+      "chemical spill",
+      "spill into"
+    ]
+  },
+  {
+    "word": "spin",
+    "phonetic": "/spɪn/",
+    "partOfSpeech": "v/n",
+    "meaning": "纺；使旋转；旋转；旋转；晕眩；纺，织；绞干，甩干；旋转， 自转",
+    "example": "The plane’s propellers were spinning.",
+    "translation": "飞机的螺旋桨在快速旋转。",
+    "phrases": [
+      "electron spin",
+      "spin out",
+      "spin resonance",
+      "electron spin resonance",
+      "spin in",
+      "spin off",
+      "spin coating",
+      "high spin",
+      "spin up",
+      "spin axis",
+      "spin wave",
+      "spin doctor",
+      "wheel spin"
+    ]
+  },
+  {
+    "word": "spiritual",
+    "phonetic": "/'spɪrɪtʃʊəl/",
+    "partOfSpeech": "adj",
+    "meaning": "精神的， 心灵的； 宗教的",
+    "example": "Painting helps fill a spiritual need for beauty.",
+    "translation": "绘画可以满足对美的精神需求。",
+    "phrases": [
+      "spiritual civilization",
+      "spiritual world",
+      "spiritual leader",
+      "spiritual pillar",
+      "negro spiritual",
+      "spiritual healing"
+    ]
+  },
+  {
+    "word": "spit",
+    "phonetic": "/spɪt/",
+    "partOfSpeech": "v/n",
+    "meaning": "吐唾沫，吐出；唾沫， 唾液",
+    "example": "Nick rolled down his window and spat.",
+    "translation": "尼克摇下窗子，啐了口唾沫。",
+    "phrases": [
+      "spit it out",
+      "spit out",
+      "spit on",
+      "spit upon",
+      "spit at",
+      "spit up",
+      "spit and polish"
+    ]
+  },
+  {
+    "word": "spite",
+    "phonetic": "/spaɪt/",
+    "partOfSpeech": "n/vt",
+    "meaning": "n.；恶意,怨恨,不顾；vt.；刁难,欺侮；恶意，怨恨；刁难， 欺侮",
+    "example": "We went out in spite of the rain.",
+    "translation": "尽管下着雨，我们还是出去了。",
+    "phrases": [
+      "in spite of",
+      "in spite of oneself",
+      "in spite",
+      "out of spite"
+    ]
+  },
+  {
+    "word": "splendid",
+    "phonetic": "/'splɛndɪd/",
+    "partOfSpeech": "adj",
+    "meaning": "壮丽的； 极好的",
+    "example": "a splendid idea",
+    "translation": "很妙的主意",
+    "phrases": []
+  },
+  {
+    "word": "split",
+    "phonetic": "/splɪt/",
+    "partOfSpeech": "v/n",
+    "meaning": "劈开；被劈开；分裂，分离；被撕裂，裂开；分担，分享；裂口",
+    "example": "The branch split under their weight.",
+    "translation": "树枝承受不住他们的重量断裂了。",
+    "phrases": [
+      "split up",
+      "split second",
+      "split hairs",
+      "split off",
+      "split type",
+      "split share",
+      "split ratio",
+      "split the cost",
+      "stock split",
+      "split up into",
+      "split personality",
+      "split phase",
+      "split leather",
+      "banana split",
+      "split ring"
+    ]
+  },
+  {
+    "word": "spoil",
+    "phonetic": "/spɔɪl/",
+    "partOfSpeech": "v/n",
+    "meaning": "损坏，糟蹋；宠坏；损坏，糟蹋；宠坏，溺爱；变质；战利品， 掠夺物",
+    "example": "The whole park is spoiled by litter.",
+    "translation": "整个公园环境都给垃圾破坏了。",
+    "phrases": [
+      "the spoils of war"
+    ]
+  },
+  {
+    "word": "spokesman",
+    "phonetic": "/'spoksmən/",
+    "partOfSpeech": "n",
+    "meaning": "发言人",
+    "example": "a White House spokesman",
+    "translation": "白宫发言人",
+    "phrases": []
+  },
+  {
+    "word": "sponsor",
+    "phonetic": "/'spɑnsɚ/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "赞助；发起者；发起；发起； 资助， 赞助； 支持",
+    "example": "Dozens of companies, including Hewlett-Packard, are sponsoring the event.",
+    "translation": "包括惠普在内的许多公司都在赞助这项赛事。",
+    "phrases": []
+  },
+  {
+    "word": "spontaneous",
+    "phonetic": "/spɑn'tenɪəs/",
+    "partOfSpeech": "adj",
+    "meaning": "自发的",
+    "example": "The crowd gave a spontaneous cheer.",
+    "translation": "人群自发地欢呼起来。",
+    "phrases": [
+      "spontaneous combustion",
+      "spontaneous emission",
+      "spontaneous abortion",
+      "amplified spontaneous emission",
+      "spontaneous ignition",
+      "spontaneous polarization",
+      "spontaneous recovery",
+      "spontaneous radiation",
+      "spontaneous magnetization"
+    ]
+  },
+  {
+    "word": "sportsman",
+    "phonetic": "/'spɔrtsmən/",
+    "partOfSpeech": "n",
+    "meaning": "运动员",
+    "example": "He’s a very keen sportsman .",
+    "translation": "他是个非常喜爱运动的人。",
+    "phrases": []
+  },
+  {
+    "word": "spot",
+    "phonetic": "/spɑt/",
+    "partOfSpeech": "n/vt",
+    "meaning": "点，斑点；地点，处所；少量；认出， 发现； 玷污",
+    "example": "a nice quiet spot on the beach",
+    "translation": "海滩上一个安静的好地方",
+    "phrases": [
+      "on the spot",
+      "hot spot",
+      "scenic spot",
+      "spot welding",
+      "bright spot",
+      "a spot of",
+      "spot market",
+      "top spot",
+      "on spot",
+      "in spots",
+      "blind spot",
+      "light spot",
+      "black spot",
+      "white spot",
+      "beauty spot",
+      "famous scenic spot",
+      "spot size",
+      "leaf spot",
+      "weak spot",
+      "high spot"
+    ]
+  },
+  {
+    "word": "spray",
+    "phonetic": "/spreɪ/",
+    "partOfSpeech": "n/v",
+    "meaning": "浪花；喷雾；喷；喷， 溅散；浪花，水花；喷雾",
+    "example": "a new hair styling spray",
+    "translation": "一种新的定型喷发剂",
+    "phrases": [
+      "spray drying",
+      "water spray",
+      "salt spray",
+      "spray nozzle",
+      "spray coating",
+      "spray paint",
+      "thermal spray",
+      "spray gun",
+      "spray on",
+      "spray painting",
+      "spray system",
+      "spray test",
+      "salt spray test",
+      "spray dryer",
+      "nasal spray",
+      "spray water",
+      "spray head",
+      "pepper spray",
+      "spray tower",
+      "spray angle"
+    ]
+  },
+  {
+    "word": "spread",
+    "phonetic": "/sprɛd/",
+    "partOfSpeech": "v",
+    "meaning": "传播，扩撒",
+    "example": "The industrial revolution, which started a couple of hundred years ago in Europe, is now spreading across the world.",
+    "translation": "几百年前始于欧洲的工业革命现在正向全世界扩散。",
+    "phrases": [
+      "spread oneself",
+      "spread out",
+      "spread spectrum",
+      "spread over",
+      "spread across",
+      "spread around",
+      "point spread",
+      "fire spread",
+      "spread spectrum communication",
+      "spread abroad",
+      "flame spread",
+      "spread knowledge",
+      "energy spread",
+      "delay spread",
+      "credit spread",
+      "spread foundation",
+      "spread risk",
+      "spread about",
+      "bid-ask spread",
+      "spread sheet"
+    ]
+  },
+  {
+    "word": "spring",
+    "phonetic": "/sprɪŋ/",
+    "partOfSpeech": "v/n",
+    "meaning": "跳，跃；跳跃；泉",
+    "example": "He sprang to his feet (= stood up suddenly ) and rushed after her.",
+    "translation": "他腾地站起身，冲过去追她。",
+    "phrases": [
+      "spring festival",
+      "in spring",
+      "spring and autumn",
+      "hot spring",
+      "spring tide",
+      "spring and autumn period",
+      "early spring",
+      "spring water",
+      "spring breeze",
+      "spring back",
+      "spring up",
+      "last spring",
+      "warm spring",
+      "make a spring",
+      "spring steel",
+      "spring onion",
+      "air spring",
+      "spring from",
+      "steel spring",
+      "happy spring festival"
+    ]
+  },
+  {
+    "word": "spur",
+    "phonetic": "/spɝ/",
+    "partOfSpeech": "n/v/vt",
+    "meaning": "刺激物；刺激；刺激， 鞭策， 激励",
+    "example": "The band were spurred on by the success of their last two singles.",
+    "translation": "乐队因最近两张单曲唱片的成功而深受鼓舞。",
+    "phrases": [
+      "spur gear",
+      "spur on",
+      "spur dike",
+      "spur track",
+      "spur line"
+    ]
+  },
+  {
+    "word": "square",
+    "phonetic": "/skwɛr/",
+    "partOfSpeech": "n",
+    "meaning": "正方形；广场",
+    "example": "First of all, draw a square.",
+    "translation": "首先，画一个正方形。",
+    "phrases": [
+      "square oneself",
+      "least square",
+      "least square method",
+      "on the square",
+      "square metre",
+      "mean square",
+      "square meter",
+      "tiananmen square",
+      "fair and square",
+      "square feet",
+      "square error",
+      "square kilometer",
+      "all square",
+      "by the square",
+      "times square",
+      "square wave",
+      "mean square error",
+      "square root",
+      "square foot",
+      "square miles"
+    ]
+  },
+  {
+    "word": "squeeze",
+    "phonetic": "/skwiz/",
+    "partOfSpeech": "v/vt&vi/n",
+    "meaning": "压，榨；榨，挤；压榨；挤；压榨，榨取；捏，握；挤； 握手； 拮据， 紧缺",
+    "example": "She smiled as he squeezed her hand.",
+    "translation": "他捏了捏她的手，她笑了。",
+    "phrases": [
+      "squeeze casting",
+      "squeeze out",
+      "credit squeeze",
+      "squeeze in",
+      "squeeze into",
+      "put the squeeze on",
+      "tight squeeze",
+      "squeeze through",
+      "liquidity squeeze",
+      "squeeze head"
+    ]
+  },
+  {
+    "word": "stability",
+    "phonetic": "/stə'bɪləti/",
+    "partOfSpeech": "n",
+    "meaning": "稳定，稳定性，巩固",
+    "example": "a period of relative stability",
+    "translation": "相对稳定的一段时期",
+    "phrases": [
+      "thermal stability",
+      "stability analysis",
+      "slope stability",
+      "high stability",
+      "voltage stability",
+      "heat stability",
+      "chemical stability",
+      "economic stability",
+      "financial stability",
+      "dynamic stability",
+      "storage stability",
+      "transient stability",
+      "stability control",
+      "dimensional stability",
+      "asymptotic stability",
+      "temperature stability",
+      "relative stability",
+      "global stability",
+      "structural stability",
+      "stability test"
+    ]
+  },
+  {
+    "word": "stable",
+    "phonetic": "/'stebl/",
+    "partOfSpeech": "adj/n",
+    "meaning": "稳定的，不变的；稳定的，不变的；沉稳的，持重的；厩， 马厩， 牛棚",
+    "example": "A wide base will make the structure much more stable.",
+    "translation": "宽大的底座会使结构牢固许多。",
+    "phrases": [
+      "stable quality",
+      "stable operation",
+      "stable state",
+      "stable isotope",
+      "stable condition",
+      "stable system",
+      "stable equilibrium",
+      "stable process",
+      "stable price",
+      "stable chemical",
+      "stable exchange rate",
+      "stable element",
+      "stable position",
+      "stable social order",
+      "stable air"
+    ]
+  },
+  {
+    "word": "stack",
+    "phonetic": "/stæk/",
+    "partOfSpeech": "n/v/vt",
+    "meaning": "堆，垛；堆积；堆积， 堆放于",
+    "example": "stacks of dirty dishes",
+    "translation": "一摞摞脏盘子",
+    "phrases": [
+      "a stack of",
+      "protocol stack",
+      "stack up",
+      "stack room",
+      "stack gas",
+      "call stack",
+      "stack up against",
+      "stack overflow",
+      "stack pointer",
+      "stack trace",
+      "chimney stack",
+      "stack effect",
+      "stack frame",
+      "flare stack"
+    ]
+  },
+  {
+    "word": "stadium",
+    "phonetic": "/'stedɪəm/",
+    "partOfSpeech": "n",
+    "meaning": "运动场， 体育场",
+    "example": "the new Olympic Stadium",
+    "translation": "新的奥林匹克体育场",
+    "phrases": [
+      "olympic stadium",
+      "emirates stadium",
+      "indoor stadium"
+    ]
+  },
+  {
+    "word": "staff",
+    "phonetic": "/stæf/",
+    "partOfSpeech": "n/vt",
+    "meaning": "工作人员；参谋；为…配备人员",
+    "example": "10 staff were allocated to the task.",
+    "translation": "10名员工被分派做这项任务。",
+    "phrases": [
+      "technical staff",
+      "teaching staff",
+      "medical staff",
+      "staff member",
+      "professional staff",
+      "sales staff",
+      "nursing staff",
+      "administrative staff",
+      "production staff",
+      "office staff",
+      "chief of staff",
+      "general staff",
+      "staff management",
+      "senior staff",
+      "support staff",
+      "marketing staff",
+      "staff development",
+      "maintenance staff",
+      "workers and staff members",
+      "managerial staff"
+    ]
+  },
+  {
+    "word": "stage",
+    "phonetic": "/stedʒ/",
+    "partOfSpeech": "n",
+    "meaning": "舞台；戏剧；阶段",
+    "example": "We’re getting to the stage where we hardly ever go out together.",
+    "translation": "我们快要到几乎不一起外出的地步了。",
+    "phrases": [
+      "stage by stage",
+      "early stage",
+      "by stages",
+      "initial stage",
+      "on stage",
+      "on the stage",
+      "at this stage",
+      "first stage",
+      "development stage",
+      "set the stage for",
+      "second stage",
+      "in the stage",
+      "two stage",
+      "stage of development",
+      "primary stage",
+      "late stage",
+      "design stage",
+      "earlier stage",
+      "last stage",
+      "construction stage"
+    ]
+  },
+  {
+    "word": "stain",
+    "phonetic": "/sten/",
+    "partOfSpeech": "v/vt/n",
+    "meaning": "沾污；给…着色；玷污；给…着色；污点， 污迹",
+    "example": "We’ve decided to stain the shelves blue.",
+    "translation": "我们决定把架子涂成蓝色。",
+    "phrases": [
+      "stain resistance",
+      "oil stain",
+      "gram stain",
+      "blue stain",
+      "wood stain",
+      "blood stain",
+      "black stain"
+    ]
+  },
+  {
+    "word": "stair",
+    "phonetic": "/stɛr/",
+    "partOfSpeech": "n",
+    "meaning": "楼梯",
+    "example": "We walked up four flights of stairs (= sets of stairs ) .",
+    "translation": "我们往上走了四段楼梯。",
+    "phrases": [
+      "below stairs",
+      "stair railing",
+      "winding stair",
+      "stair tread"
+    ]
+  },
+  {
+    "word": "stake",
+    "phonetic": "/stek/",
+    "partOfSpeech": "n/vt",
+    "meaning": "风险；桩；赌金；奖品；桩；利害关系；股份；赌金，赌注；以…打赌， 拿…冒险",
+    "example": "They have to win the contract – thousands of jobs are at stake.",
+    "translation": "他们必须拿下这份合同，这关系到数千个工作岗位。",
+    "phrases": [
+      "at stake",
+      "stake someone to something",
+      "equity stake",
+      "go to the stake",
+      "have a stake in",
+      "stake out",
+      "stake on"
+    ]
+  },
+  {
+    "word": "stale",
+    "phonetic": "/stel/",
+    "partOfSpeech": "adj/n",
+    "meaning": "乏味的，没有新意的；陈腐的；走了气的；不新鲜的； 陈腐的， 过时的",
+    "example": "French bread goes stale (= becomes stale ) very quickly.",
+    "translation": "法式面包极易变味。",
+    "phrases": []
+  },
+  {
+    "word": "standardize",
+    "phonetic": "/'stændɚdaɪz/",
+    "partOfSpeech": "v",
+    "meaning": "使标准化",
+    "example": "Attempts to standardize English spelling have never been successful.",
+    "translation": "统一英语拼写的尝试从未成功过。",
+    "phrases": []
+  },
+  {
+    "word": "standpoint",
+    "phonetic": "/'stændpɔɪnt/",
+    "partOfSpeech": "n",
+    "meaning": "立场；立场， 观点",
+    "example": "a discussion of marriage from the standpoint of women",
+    "translation": "从女性角度对婚姻的探讨",
+    "phrases": [
+      "from the standpoint of"
+    ]
+  },
+  {
+    "word": "stare",
+    "phonetic": "/stɛr/",
+    "partOfSpeech": "n&vi",
+    "meaning": "盯， 凝视",
+    "example": "She sat there staring into space (= looking for a long time at nothing ) .",
+    "translation": "她坐在那里，出神地凝视前方。",
+    "phrases": [
+      "stare at",
+      "stare into",
+      "stare decisis"
+    ]
+  },
+  {
+    "word": "startle",
+    "phonetic": "/'stɑrtl/",
+    "partOfSpeech": "v",
+    "meaning": "吃惊",
+    "example": "Sorry, I didn’t mean to startle you.",
+    "translation": "抱歉，我不是故意吓你一跳的。",
+    "phrases": []
+  },
+  {
+    "word": "startup",
+    "phonetic": "/'stɑrt'ʌp/",
+    "partOfSpeech": "n",
+    "meaning": "启动，开办",
+    "example": "You should see something like Figure 3 after startup.",
+    "translation": "启动后，您应该看到类似于 图 3 的画面。",
+    "phrases": [
+      "startup options",
+      "startup disk",
+      "startup code"
+    ]
+  },
+  {
+    "word": "starve",
+    "phonetic": "/stɑrv/",
+    "partOfSpeech": "v",
+    "meaning": "挨饿， 饿死",
+    "example": "Thousands of people will starve if food doesn’t reach the city.",
+    "translation": "如果食品不能运到那座城市，成千上万的人就要饿死。",
+    "phrases": [
+      "starve to death",
+      "starve for"
+    ]
+  },
+  {
+    "word": "statement",
+    "phonetic": "/'stetmənt/",
+    "partOfSpeech": "n",
+    "meaning": "陈述， 声明； 结算单， 报表",
+    "example": "In an official statement, she formally announced her resignation.",
+    "translation": "在一份官方声明中，她正式宣布辞职。",
+    "phrases": [
+      "financial statement",
+      "income statement",
+      "joint statement",
+      "bank statement",
+      "mission statement",
+      "written statement",
+      "accounting statement",
+      "make a statement",
+      "false statement",
+      "cash flow statement",
+      "official statement",
+      "statement analysis",
+      "impact statement",
+      "personal statement",
+      "an official statement",
+      "privacy statement",
+      "policy statement",
+      "environmental impact statement",
+      "fashion statement",
+      "monthly statement"
+    ]
+  },
+  {
+    "word": "static",
+    "phonetic": "/'stætɪk/",
+    "partOfSpeech": "adj/n",
+    "meaning": "静的；静态的；静的，静态的；静止的，停滞的；静电",
+    "example": "Economists predict that house prices will remain static for a long period.",
+    "translation": "经济学家预测，房价将长期保持稳定。",
+    "phrases": [
+      "static electricity",
+      "static state",
+      "static pressure",
+      "static load",
+      "static analysis",
+      "static test",
+      "static strength",
+      "static loading",
+      "static data",
+      "static load test",
+      "static stability",
+      "static control",
+      "static characteristic",
+      "static force",
+      "static equilibrium",
+      "static mixer",
+      "static friction",
+      "static stress",
+      "static balance",
+      "static stiffness"
+    ]
+  },
+  {
+    "word": "statistic",
+    "phonetic": "/stə'tɪstɪk/",
+    "partOfSpeech": "n",
+    "meaning": "统计数值， 统计资料； 统计学",
+    "example": "The statistic comes from a study recently conducted by the British government.",
+    "translation": "这项统计数据来自英国政府最近进行的一项研究。",
+    "phrases": [
+      "statistic analysis",
+      "statistic data",
+      "statistic bureau",
+      "statistic model",
+      "test statistic",
+      "descriptive statistic",
+      "order statistic"
+    ]
+  },
+  {
+    "word": "statistical",
+    "phonetic": "/stə'tɪstɪkl/",
+    "partOfSpeech": "adj",
+    "meaning": "统计的，统计学的",
+    "example": "The report contains a great deal of statistical information.",
+    "translation": "该报告包含大量统计资料。",
+    "phrases": [
+      "statistical analysis",
+      "statistical data",
+      "statistical method",
+      "statistical model",
+      "statistical information",
+      "statistical significance",
+      "statistical theory",
+      "statistical work",
+      "statistical process control",
+      "statistical software",
+      "statistical yearbook",
+      "statistical distribution",
+      "multivariate statistical analysis",
+      "statistical physics",
+      "statistical test",
+      "statistical mechanics",
+      "statistical inference",
+      "statistical technique",
+      "statistical property",
+      "statistical regression"
+    ]
+  },
+  {
+    "word": "statistics",
+    "phonetic": "/stə'tɪstɪks/",
+    "partOfSpeech": "n",
+    "meaning": "统计学；数据",
+    "example": "",
+    "translation": "",
+    "phrases": [
+      "mathematical statistics",
+      "bureau of statistics",
+      "according to statistics",
+      "statistics analysis",
+      "national bureau of statistics",
+      "probability and statistics",
+      "probability statistics",
+      "official statistics",
+      "health statistics",
+      "financial statistics",
+      "medical statistics",
+      "economic statistics",
+      "multivariate statistics",
+      "bureau of labor statistics",
+      "population statistics",
+      "business statistics",
+      "vital statistics",
+      "applied statistics",
+      "census and statistics department",
+      "statistics law"
+    ]
+  },
+  {
+    "word": "statue",
+    "phonetic": "/'stætʃu/",
+    "partOfSpeech": "n",
+    "meaning": "塑像，雕像，铸像；塑像， 雕像， 铸像",
+    "example": "Churchill’s statue stands outside the parliament building.",
+    "translation": "丘吉尔的塑像矗立在议会大厦外。",
+    "phrases": [
+      "statue of liberty",
+      "bronze statue",
+      "buddha statue",
+      "marble statue"
+    ]
+  },
+  {
+    "word": "status",
+    "phonetic": "/ˈstætəs; ˈstetəs/",
+    "partOfSpeech": "n",
+    "meaning": "地位；地位，身分；地位， 身份； 情形， 状况",
+    "example": "These documents have no legal status in Britain.",
+    "translation": "这些文件在英国并无法律效力。",
+    "phrases": [
+      "status quo",
+      "current status",
+      "present status",
+      "social status",
+      "legal status",
+      "health status",
+      "production status",
+      "status in quo",
+      "marital status",
+      "status bar",
+      "economic status",
+      "running status",
+      "nutritional status",
+      "financial status",
+      "status of development",
+      "status information",
+      "system status",
+      "operating status",
+      "delivery status",
+      "political status"
+    ]
+  },
+  {
+    "word": "steady",
+    "phonetic": "/'stɛdi/",
+    "partOfSpeech": "adj/v/vi",
+    "meaning": "稳定的，逐步的；稳固的；使稳定；稳定；稳的，平稳的；稳定的，持续的；稳固的",
+    "example": "Paul is making steady progress.",
+    "translation": "保罗逐渐在进步。",
+    "phrases": [
+      "steady state",
+      "steady growth",
+      "steady flow",
+      "go steady",
+      "steady increase",
+      "steady stream",
+      "smooth and steady",
+      "go steady with"
+    ]
+  },
+  {
+    "word": "steal",
+    "phonetic": "/stil/",
+    "partOfSpeech": "v",
+    "meaning": "偷窃",
+    "example": "Boys broke into a shop and stole £45 in cash.",
+    "translation": "男孩们闯进一家商店，盗走了45英镑现金。",
+    "phrases": [
+      "steal away",
+      "steal over"
+    ]
+  },
+  {
+    "word": "steam",
+    "phonetic": "/stim/",
+    "partOfSpeech": "n/v",
+    "meaning": "蒸汽；蒸发；蒸",
+    "example": "Steam rose from the hot tub.",
+    "translation": "水蒸气从热腾腾的浴缸里升起。",
+    "phrases": [
+      "steam turbine",
+      "steam injection",
+      "steam pressure",
+      "steam generator",
+      "steam distillation",
+      "main steam",
+      "steam engine",
+      "steam boiler",
+      "steam consumption",
+      "steam heating",
+      "superheated steam",
+      "steam flow",
+      "steam reforming",
+      "steam power",
+      "steam explosion",
+      "steam pipe",
+      "steam coal",
+      "steam room",
+      "wet steam",
+      "saturated steam"
+    ]
+  },
+  {
+    "word": "steamer",
+    "phonetic": "/'stimɚ/",
+    "partOfSpeech": "n",
+    "meaning": "轮船，汽船；轮船， 汽船",
+    "example": "The steamer touched at 3 ports.",
+    "translation": "这艘轮船曾停靠3个港口。",
+    "phrases": []
+  },
+  {
+    "word": "steel",
+    "phonetic": "/stil/",
+    "partOfSpeech": "n",
+    "meaning": "钢，钢铁",
+    "example": "a steel bridge",
+    "translation": "钢铁大桥",
+    "phrases": [
+      "stainless steel",
+      "iron and steel",
+      "steel industry",
+      "carbon steel",
+      "steel pipe",
+      "steel structure",
+      "steel wire",
+      "steel plate",
+      "steel tube",
+      "alloy steel",
+      "iron and steel industry",
+      "steel production",
+      "stainless steel products",
+      "steel sheet",
+      "molten steel",
+      "steel bar",
+      "steel plant",
+      "steel fiber",
+      "cast steel",
+      "special steel"
+    ]
+  },
+  {
+    "word": "steep",
+    "phonetic": "/stip/",
+    "partOfSpeech": "adj",
+    "meaning": "急剧升/降的；陡峭的；险峻的，陡峭的；险峻的， 陡峭的； 过高的； 急剧的",
+    "example": "The road became rocky and steep.",
+    "translation": "路变得崎岖陡峭起来。",
+    "phrases": [
+      "steep slope",
+      "steep hill",
+      "steep rise",
+      "steep dip",
+      "steep incline",
+      "steep grade",
+      "corn steep liquor"
+    ]
+  },
+  {
+    "word": "steer",
+    "phonetic": "/stɪr/",
+    "partOfSpeech": "v/vt&vi",
+    "meaning": "驾驶；掌舵， 驾驶； 操纵",
+    "example": "He was steering with only one hand.",
+    "translation": "他只用一只手在驾驶。",
+    "phrases": [
+      "steer clear of"
+    ]
+  },
+  {
+    "word": "stem",
+    "phonetic": "/stɛm/",
+    "partOfSpeech": "n/v/vi/vt",
+    "meaning": "茎，(树)干；起源；茎，干；词干；堵住， 止住， 停住",
+    "example": "long-stemmed wine glasses",
+    "translation": "高脚酒杯",
+    "phrases": [
+      "stem cell",
+      "stem from",
+      "brain stem",
+      "drill stem",
+      "main stem",
+      "valve stem",
+      "from stem to stern",
+      "stem rust",
+      "hemopoietic stem cell",
+      "stem borer",
+      "rising stem",
+      "stem seal"
+    ]
+  },
+  {
+    "word": "stereotype",
+    "phonetic": "/'stɛrɪətaɪp/",
+    "partOfSpeech": "n/vt",
+    "meaning": "老套，固定模式；陈规，老套，固定的模式；铅版；把…浇铸成铅版； 对…形成固定看法",
+    "example": "There's always been a stereotype about successful businessmen.",
+    "translation": "对成功的商人们总有一种成见。",
+    "phrases": []
+  },
+  {
+    "word": "sticky",
+    "phonetic": "/'stɪki/",
+    "partOfSpeech": "adj",
+    "meaning": "粘的；粘性的；胶粘的；黏性的， 胶黏的； 湿热的",
+    "example": "There’s some sticky stuff in your hair.",
+    "translation": "你的头发上有什么黏糊糊的东西。",
+    "phrases": [
+      "sticky rice",
+      "sticky tape",
+      "sticky fingers"
+    ]
+  },
+  {
+    "word": "stiff",
+    "phonetic": "/stɪf/",
+    "partOfSpeech": "adj/adv",
+    "meaning": "硬的；僵直的；极其， 非常； 僵硬地；硬的，僵直的；不灵活的；拘谨的，生硬的；费劲的；强烈的",
+    "example": "I never felt stiff after training until I was in my thirties.",
+    "translation": "三十岁之前，我训练后从不会感到身体发僵。",
+    "phrases": [
+      "stiff with",
+      "stiff neck",
+      "stiff upper lip",
+      "stiff resistance",
+      "stiff collar"
+    ]
+  },
+  {
+    "word": "stimulate",
+    "phonetic": "/'stɪmjə'let/",
+    "partOfSpeech": "v/vt",
+    "meaning": "刺激；刺激，激励，激发；刺激， 激励， 激发",
+    "example": "Her interest in art was stimulated by her father.",
+    "translation": "她对艺术的兴趣是她父亲激发的。",
+    "phrases": [
+      "stimulate economic growth",
+      "stimulate domestic demand"
+    ]
+  },
+  {
+    "word": "sting",
+    "phonetic": "/stɪŋ/",
+    "partOfSpeech": "v/vi&n/n",
+    "meaning": "刺；刺痛；刺；刺，蜇，叮；刺伤处，蜇伤处",
+    "example": "He was stung by a bee.",
+    "translation": "他被蜜蜂蜇了。",
+    "phrases": []
+  },
+  {
+    "word": "stir",
+    "phonetic": "/stɝ/",
+    "partOfSpeech": "v/n",
+    "meaning": "搅动；煽动，激起；动；拨动；激动；搅动；拨动；激动；唤起；搅拌， 搅动； 激动， 骚乱",
+    "example": "Stir the paint to make sure it is smooth.",
+    "translation": "将油漆搅拌至均匀。",
+    "phrases": [
+      "stir oneself",
+      "stir up",
+      "stir in",
+      "stir fry"
+    ]
+  },
+  {
+    "word": "stock",
+    "phonetic": "/stɑk/",
+    "partOfSpeech": "n/adj/vt",
+    "meaning": "库存，股票；原料；库存品；股本；常用的， 常备的；原料，库存品；股本，公债；世系，血统；汤汁；家畜，牲畜；储备",
+    "example": "the trading of stocks and shares",
+    "translation": "股票交易",
+    "phrases": [
+      "stock market",
+      "in stock",
+      "stock exchange",
+      "stock price",
+      "stock raising",
+      "stock index",
+      "joint stock",
+      "out of stock",
+      "stock option",
+      "stock company",
+      "on the stock exchange",
+      "take stock",
+      "shanghai stock exchange",
+      "rolling stock",
+      "new york stock exchange",
+      "nursery stock",
+      "capital stock",
+      "common stock",
+      "stock investment",
+      "stock management"
+    ]
+  },
+  {
+    "word": "stocking",
+    "phonetic": "/'stɑkɪŋ/",
+    "partOfSpeech": "n",
+    "meaning": "长(统)袜；长袜",
+    "example": "I want you stuffed in my stocking.",
+    "translation": "我只要你塞在我的袜子里。",
+    "phrases": [
+      "stock market",
+      "in stock",
+      "stock exchange",
+      "stock price",
+      "stock raising",
+      "stock index",
+      "joint stock",
+      "out of stock",
+      "stock option",
+      "stock company",
+      "on the stock exchange",
+      "take stock",
+      "shanghai stock exchange",
+      "rolling stock",
+      "new york stock exchange",
+      "nursery stock",
+      "capital stock",
+      "common stock",
+      "stock investment",
+      "stock management"
+    ]
+  },
+  {
+    "word": "stoop",
+    "phonetic": "/stʊp/",
+    "partOfSpeech": "v/n",
+    "meaning": "俯身；弯身；弯腰；俯身，弯腰；堕落，自贬；弯腰， 曲背",
+    "example": "We had to stoop to pass through the low entrance.",
+    "translation": "我们得弯腰通过那低矮的入口。",
+    "phrases": [
+      "stoop to something"
+    ]
+  },
+  {
+    "word": "storage",
+    "phonetic": "/'stɔrɪdʒ/",
+    "partOfSpeech": "n",
+    "meaning": "贮藏；贮藏量；贮藏； 贮藏量",
+    "example": "the storage of highly radioactive material",
+    "translation": "高放射性材料的存放",
+    "phrases": [
+      "data storage",
+      "storage system",
+      "energy storage",
+      "storage tank",
+      "storage space",
+      "cold storage",
+      "storage capacity",
+      "gas storage",
+      "water storage",
+      "oil storage",
+      "storage battery",
+      "storage stability",
+      "storage time",
+      "storage device",
+      "storage period",
+      "pumped storage",
+      "storage area",
+      "storage life",
+      "storage and transport",
+      "storage equipment"
+    ]
+  },
+  {
+    "word": "store",
+    "phonetic": "/stɔr/",
+    "partOfSpeech": "n",
+    "meaning": "贮藏；贮存品；商店",
+    "example": "At Christmas the stores stay open late.",
+    "translation": "在圣诞节期间，商店营业到很晚。",
+    "phrases": [
+      "department store",
+      "in store",
+      "chain store",
+      "grocery store",
+      "convenience store",
+      "store up",
+      "in store for",
+      "retail store",
+      "book store",
+      "clothing store",
+      "flagship store",
+      "store information",
+      "jewelry store",
+      "hardware store",
+      "food store",
+      "general store",
+      "data store",
+      "drug store",
+      "computer store",
+      "candy store"
+    ]
+  },
+  {
+    "word": "storey",
+    "phonetic": "/'stɔri/",
+    "partOfSpeech": "n",
+    "meaning": "(层)楼",
+    "example": "...long brick buildings, two storeys high.",
+    "translation": "…很长的两层砖楼。",
+    "phrases": []
+  },
+  {
+    "word": "stove",
+    "phonetic": "/stov/",
+    "partOfSpeech": "n",
+    "meaning": "炉，火炉，电炉；炉， 火炉， 电炉",
+    "example": "a wood-burning stove",
+    "translation": "烧木柴的火炉",
+    "phrases": [
+      "gas stove",
+      "electric stove",
+      "hot blast stove",
+      "cooking stove",
+      "kitchen stove",
+      "coal stove"
+    ]
+  },
+  {
+    "word": "strain",
+    "phonetic": "/stren/",
+    "partOfSpeech": "v/n",
+    "meaning": "扭伤，拉伤；拉紧；尽力；扭伤， 拉伤； 尽力； 拉紧；拉紧；过劳；极度紧张；张力；扭伤，拉伤；旋律；品种，家系；气质，个性特点",
+    "example": "I’ve strained a muscle in my leg.",
+    "translation": "我的腿有一处肌肉拉伤。",
+    "phrases": [
+      "strain rate",
+      "strain energy",
+      "strain at something",
+      "plane strain",
+      "strain distribution",
+      "plastic strain",
+      "strain gauge",
+      "strain field",
+      "shear strain",
+      "strain hardening",
+      "strain at",
+      "axial strain",
+      "strain gage",
+      "tensile strain",
+      "muscle strain",
+      "strain test",
+      "bacterial strain",
+      "strain amplitude",
+      "small strain",
+      "without strain"
+    ]
+  },
+  {
+    "word": "strange",
+    "phonetic": "/strendʒ/",
+    "partOfSpeech": "adj",
+    "meaning": "陌生的；奇怪的",
+    "example": "strange noises",
+    "translation": "奇怪的噪声",
+    "phrases": [
+      "feel strange",
+      "strange to say",
+      "look strange",
+      "make strange",
+      "strange attractor"
+    ]
+  }
+]

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:wordbooks": "node scripts/build-word-book-assets.mjs",
     "test": "vitest run",
     "lint": "oxlint",
     "preview": "vite preview"

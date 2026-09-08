@@ -1,0 +1,2349 @@
+[
+  {
+    "word": "railway",
+    "phonetic": "/'relwe/",
+    "partOfSpeech": "n",
+    "meaning": "铁路，铁道；铁路",
+    "example": "a railway company",
+    "translation": "铁路公司",
+    "phrases": [
+      "railway station",
+      "railway line",
+      "railway transport",
+      "railway bridge",
+      "railway system",
+      "railway network",
+      "electrified railway",
+      "railway vehicle",
+      "railway tunnel",
+      "railway engineering",
+      "electric railway",
+      "railway track",
+      "underground railway",
+      "light railway",
+      "railway carriage",
+      "railway crossing",
+      "railway car",
+      "suburban railway",
+      "railway wagon",
+      "elevated railway"
+    ]
+  },
+  {
+    "word": "rain",
+    "phonetic": "/reɪn/",
+    "partOfSpeech": "n/v",
+    "meaning": "雨，雨水；下雨",
+    "example": "a night of wind and rain",
+    "translation": "风雨交加的夜晚",
+    "phrases": [
+      "heavy rain",
+      "in the rain",
+      "acid rain",
+      "rain forest",
+      "rain on",
+      "rain water",
+      "torrential rain",
+      "rain or shine",
+      "light rain",
+      "rain check",
+      "tropical rain forest",
+      "freezing rain",
+      "take a rain check",
+      "rain fall",
+      "summer rain",
+      "rain shower",
+      "fine rain",
+      "rain season",
+      "rain storm",
+      "rain day"
+    ]
+  },
+  {
+    "word": "rainbow",
+    "phonetic": "/'renbo/",
+    "partOfSpeech": "n",
+    "meaning": "虹，彩虹；虹， 彩虹",
+    "example": "...silk and satin in every shade of the rainbow.",
+    "translation": "…如彩虹般五颜六色的丝绸与锦缎。",
+    "phrases": [
+      "rainbow bridge",
+      "rainbow trout",
+      "rainbow nation"
+    ]
+  },
+  {
+    "word": "rainy",
+    "phonetic": "/'reni/",
+    "partOfSpeech": "adj",
+    "meaning": "下雨的，多雨的",
+    "example": "a cold rainy day in October",
+    "translation": "十月里一个寒冷的雨天",
+    "phrases": [
+      "rainy day",
+      "rainy season",
+      "rainy night",
+      "rainy weather"
+    ]
+  },
+  {
+    "word": "raise",
+    "phonetic": "/rez/",
+    "partOfSpeech": "v",
+    "meaning": "提高，筹款，抚养；举起；引起；提高",
+    "example": "Many shops have raised their prices.",
+    "translation": "很多商店都提价了。",
+    "phrases": [
+      "raise oneself",
+      "raise money",
+      "get a raise",
+      "raise capital",
+      "raise up",
+      "raise fund",
+      "raise the temperature",
+      "pay raise",
+      "raise price",
+      "raise the roof",
+      "raise the bar",
+      "raise doubts",
+      "raise the management level",
+      "raise the devil",
+      "salary raise",
+      "raise cain",
+      "raise question",
+      "raise the alarm",
+      "raise a claim"
+    ]
+  },
+  {
+    "word": "rally",
+    "phonetic": "/'ræli/",
+    "partOfSpeech": "v/n",
+    "meaning": "集合， 团结； 恢复， 重新振作；集会；公路汽车赛",
+    "example": "an attempt to rally support for the party",
+    "translation": "为政党争取支持的努力",
+    "phrases": [
+      "(hold a) rally",
+      "pep rally",
+      "rally point"
+    ]
+  },
+  {
+    "word": "range",
+    "phonetic": "/rendʒ/",
+    "partOfSpeech": "n/v",
+    "meaning": "范围；在范围内变化；排，行；山脉；范围；变动； 漫游， 四处搜索； 使排列成行；一系列；范围；射程，距离；脉；射击场",
+    "example": "a temperature range of 72-85˚",
+    "translation": "72 度到85度之间的温度范围",
+    "phrases": [
+      "wide range",
+      "a wide range of",
+      "a range of",
+      "full range",
+      "in the range of",
+      "temperature range",
+      "application range",
+      "product range",
+      "dynamic range",
+      "long range",
+      "frequency range",
+      "range of application",
+      "mountain range",
+      "price range",
+      "at close range",
+      "applied range",
+      "measuring range",
+      "operating range",
+      "in range",
+      "measurement range"
+    ]
+  },
+  {
+    "word": "rank",
+    "phonetic": "/ræŋk/",
+    "partOfSpeech": "v/n",
+    "meaning": "分等级；衔，阶层；排，横行；社会阶层；给…评定等级； 列入， 占特定等级；军衔，职衔；地位，社会阶层；排，行列",
+    "example": "We rank among the safest countries in the world.",
+    "translation": "我们是世界上最安全的国家之一。",
+    "phrases": [
+      "in the ranks",
+      "in rank",
+      "first rank",
+      "rank among",
+      "rank first",
+      "rank and file",
+      "in the front rank",
+      "front rank",
+      "rank with",
+      "military rank",
+      "rank order",
+      "social rank",
+      "other ranks",
+      "keep rank",
+      "rank correlation"
+    ]
+  },
+  {
+    "word": "rapid",
+    "phonetic": "/'ræpɪd/",
+    "partOfSpeech": "adj/n",
+    "meaning": "快的；急流",
+    "example": "The patient made a rapid recovery.",
+    "translation": "病人迅速康复。",
+    "phrases": [
+      "rapid development",
+      "rapid prototyping",
+      "rapid response",
+      "rapid change",
+      "rapid transit",
+      "rapid reaction",
+      "rapid analysis",
+      "rapid cooling",
+      "rapid heating",
+      "rapid test",
+      "rapid eye movement",
+      "bus rapid transit",
+      "rapid fire",
+      "rapid drying",
+      "rapid hardening",
+      "rapid pulse",
+      "rapid application development",
+      "rapid reaction force",
+      "rapid traverse"
+    ]
+  },
+  {
+    "word": "rare",
+    "phonetic": "/rɛr/",
+    "partOfSpeech": "adj",
+    "meaning": "罕有的，少见的；稀薄的；稀有的；稀有的， 冷僻的； 珍奇的； 出类拔萃的； 稀薄的； 煎得嫩的",
+    "example": "This species of plant is becoming increasingly rare.",
+    "translation": "这种植物越来越罕见。",
+    "phrases": [
+      "rare earth",
+      "rare and",
+      "rare opportunity",
+      "rare earth element",
+      "rare metal",
+      "rare earth metal",
+      "rare old",
+      "rare animal",
+      "rare earth oxide",
+      "rare book",
+      "rare plant",
+      "rare bird",
+      "rare breed",
+      "rare gas",
+      "medium rare"
+    ]
+  },
+  {
+    "word": "rarely",
+    "phonetic": "/'rɛrli/",
+    "partOfSpeech": "adv",
+    "meaning": "很少，难得；很少， 难得",
+    "example": "We rarely see someone go after the health area.",
+    "translation": "我们很少见到有人在健康领域做文章。",
+    "phrases": [
+      "rarely if ever",
+      "rarely or never"
+    ]
+  },
+  {
+    "word": "rat",
+    "phonetic": "/ræt/",
+    "partOfSpeech": "n",
+    "meaning": "老鼠，耗子；鼠",
+    "example": "But you promised to help us, you rat!",
+    "translation": "可你答应过要帮我们的，你这小人！",
+    "phrases": [
+      "smell a rat",
+      "rat race",
+      "like a drowned rat",
+      "rat poison",
+      "pack rat",
+      "white rat",
+      "mole rat",
+      "mall rat",
+      "water rat",
+      "rat on"
+    ]
+  },
+  {
+    "word": "rate",
+    "phonetic": "/ret/",
+    "partOfSpeech": "n/vi/vt",
+    "meaning": "比率，速率；比率；速度；价格；被评价； 被列入特定级别；速度，速率；比率；价格，费用；等级；评估；给…定级，把…列为；值得，应得",
+    "example": "Immediately his heart rate (= the number of beats per minute ) increased.",
+    "translation": "他的心率立即加快了。",
+    "phrases": [
+      "exchange rate",
+      "interest rate",
+      "growth rate",
+      "flow rate",
+      "recovery rate",
+      "survival rate",
+      "utilization rate",
+      "high rate",
+      "heart rate",
+      "success rate",
+      "production rate",
+      "at any rate",
+      "discount rate",
+      "at the rate of",
+      "unemployment rate",
+      "tax rate",
+      "strain rate",
+      "reaction rate",
+      "error rate",
+      "death rate"
+    ]
+  },
+  {
+    "word": "rather",
+    "phonetic": "/'ræðɚ/",
+    "partOfSpeech": "adv",
+    "meaning": "宁可，宁愿；相当",
+    "example": "I grew up in rather unusual circumstances.",
+    "translation": "我在相当不寻常的环境中长大。",
+    "phrases": [
+      "rather than",
+      "would rather",
+      "or rather",
+      "rather too"
+    ]
+  },
+  {
+    "word": "ratio",
+    "phonetic": "/'reʃɪo/",
+    "partOfSpeech": "n",
+    "meaning": "比，比率；比， 比率",
+    "example": "The adult to child ratio is one to six.",
+    "translation": "成人与儿童之比是1比6。",
+    "phrases": [
+      "utilization ratio",
+      "noise ratio",
+      "compression ratio",
+      "molar ratio",
+      "signal-to-noise ratio",
+      "recovery ratio",
+      "aspect ratio",
+      "signal to noise ratio",
+      "mixture ratio",
+      "mole ratio",
+      "mass ratio",
+      "area ratio",
+      "volume ratio",
+      "damping ratio",
+      "blending ratio",
+      "weight ratio",
+      "mixing ratio",
+      "transmission ratio",
+      "sex ratio",
+      "stress ratio"
+    ]
+  },
+  {
+    "word": "rational",
+    "phonetic": "/'ræʃnəl/",
+    "partOfSpeech": "adj",
+    "meaning": "神智清楚的；理性的；出于理性的；理性的， 理智的； 合理的",
+    "example": "Did he come across as a sane, rational person?",
+    "translation": "他看上去是不是一个头脑清醒而理智的人？",
+    "phrases": [
+      "rational design",
+      "rational choice",
+      "rational analysis",
+      "rational thinking",
+      "rational construction",
+      "rational function",
+      "rational number",
+      "rational behavior",
+      "rational expectation",
+      "rational formula",
+      "rational being",
+      "rational index"
+    ]
+  },
+  {
+    "word": "raw",
+    "phonetic": "/rɔ/",
+    "partOfSpeech": "adj",
+    "meaning": "未煮过的；未加工的；自然状态的， 未加工过的； 生的； 未经分析的， 原始的； 生疏无知的， 未经训练的； 露肉而刺痛的",
+    "example": "raw meat",
+    "translation": "生肉",
+    "phrases": [
+      "raw material",
+      "in the raw",
+      "raw water",
+      "raw data",
+      "raw silk",
+      "raw coal",
+      "raw milk",
+      "chemical raw material",
+      "raw meat",
+      "raw cotton",
+      "raw ore",
+      "raw fish",
+      "raw gas",
+      "raw product",
+      "industrial raw material",
+      "raw oil",
+      "raw mix",
+      "raw recruit",
+      "raw rubber",
+      "raw sugar"
+    ]
+  },
+  {
+    "word": "ray",
+    "phonetic": "/-/",
+    "partOfSpeech": "n",
+    "meaning": "光线，射线，辐射线",
+    "example": "The room darkened as a cloud hid the sun’s rays.",
+    "translation": "一朵云挡住了阳光，房间暗了下来。",
+    "phrases": []
+  },
+  {
+    "word": "reach",
+    "phonetic": "/ritʃ/",
+    "partOfSpeech": "v",
+    "meaning": "抵达；伸出vi达到",
+    "example": "Chelsea could reach the final of the European Cup.",
+    "translation": "切尔西队会进入欧洲杯决赛。",
+    "phrases": [
+      "reach out",
+      "reach for",
+      "reach an agreement",
+      "out of reach",
+      "reach the top",
+      "within reach",
+      "hard to reach",
+      "beyond the reach",
+      "beyond the reach of",
+      "reach the standard",
+      "reach up",
+      "reach a consensus",
+      "upper reach",
+      "lower reach",
+      "reach over",
+      "reach into",
+      "reach out for",
+      "global reach",
+      "reach a conclusion",
+      "reach at"
+    ]
+  },
+  {
+    "word": "react",
+    "phonetic": "/ri'ækt/",
+    "partOfSpeech": "v/vi",
+    "meaning": "对……作出反应；起反应；有影响；反应， 作出反应",
+    "example": "He reacted angrily to the suggestion that he had lied.",
+    "translation": "说他撒谎，他非常生气。",
+    "phrases": [
+      "react on",
+      "react against"
+    ]
+  },
+  {
+    "word": "reaction",
+    "phonetic": "/rɪ'ækʃən/",
+    "partOfSpeech": "n",
+    "meaning": "反应；反作用；反应； 反作用",
+    "example": "What was Jeff’s reaction when you told him about the job?",
+    "translation": "你告诉杰夫这个工作时，他是什么反应？",
+    "phrases": [
+      "reaction time",
+      "reaction temperature",
+      "chemical reaction",
+      "reaction mechanism",
+      "reaction rate",
+      "chain reaction",
+      "reaction system",
+      "reaction kinetics",
+      "polymerase chain reaction",
+      "adverse reaction",
+      "catalytic reaction",
+      "allergic reaction",
+      "drug reaction",
+      "oxidation reaction",
+      "reaction principle",
+      "inflammatory reaction",
+      "condensation reaction",
+      "reaction product",
+      "addition reaction",
+      "coupling reaction"
+    ]
+  },
+  {
+    "word": "read",
+    "phonetic": "/rid; (read, read) rɛd/",
+    "partOfSpeech": "v",
+    "meaning": "读，看懂；读",
+    "example": "I can’t read your writing.",
+    "translation": "我看不懂你写的东西。",
+    "phrases": [
+      "read in",
+      "read and write",
+      "read english",
+      "read about",
+      "read books",
+      "read a book",
+      "read on",
+      "read out",
+      "read aloud",
+      "read as",
+      "read through",
+      "read only",
+      "read for",
+      "read of",
+      "read between the lines",
+      "read data",
+      "read the newspaper",
+      "read into",
+      "read over",
+      "read up"
+    ]
+  },
+  {
+    "word": "reader",
+    "phonetic": "/'ridɚ/",
+    "partOfSpeech": "n",
+    "meaning": "读者；读物，读本",
+    "example": "The book will appeal to young readers.",
+    "translation": "这本书会吸引年轻读者。",
+    "phrases": [
+      "card reader",
+      "news reader",
+      "mind reader",
+      "bar code reader",
+      "general reader",
+      "tape reader"
+    ]
+  },
+  {
+    "word": "readily",
+    "phonetic": "/'rɛdɪli/",
+    "partOfSpeech": "adv",
+    "meaning": "乐意地， 欣然地； 容易地； 很快地， 立即",
+    "example": "Boats are readily available to visitors.",
+    "translation": "游客可以很方便地租到船只。",
+    "phrases": [
+      "readily accessible"
+    ]
+  },
+  {
+    "word": "reading",
+    "phonetic": "/'ridɪŋ/",
+    "partOfSpeech": "n",
+    "meaning": "读，阅读；读书",
+    "example": "She loves reading.",
+    "translation": "她喜欢看书。",
+    "phrases": [
+      "english reading",
+      "reading comprehension",
+      "reading room",
+      "reading ability",
+      "extensive reading",
+      "meter reading",
+      "reading aloud",
+      "reading list",
+      "intensive reading",
+      "reading speed",
+      "reading material",
+      "reading book",
+      "direct reading",
+      "do some reading",
+      "reading method",
+      "second reading",
+      "first reading",
+      "mind reading",
+      "fast reading",
+      "outside reading"
+    ]
+  },
+  {
+    "word": "ready",
+    "phonetic": "/'rɛdi/",
+    "partOfSpeech": "adj",
+    "meaning": "准备好的；愿意的",
+    "example": "Come on. Aren’t you ready yet?",
+    "translation": "快点，你还没准备好吗？",
+    "phrases": [
+      "ready for something",
+      "get ready",
+      "ready for",
+      "we are ready",
+      "all ready",
+      "always ready",
+      "get ready for",
+      "make ready",
+      "ready money",
+      "ready market",
+      "got ready",
+      "ready and waiting",
+      "ready to eat",
+      "ready made",
+      "at the ready",
+      "ready for off",
+      "ready for delivery",
+      "ready sale",
+      "ready meal",
+      "nearly ready"
+    ]
+  },
+  {
+    "word": "real",
+    "phonetic": "/'riəl/",
+    "partOfSpeech": "adj",
+    "meaning": "真的；现实的",
+    "example": "There is a real danger that the disease might spread.",
+    "translation": "这种疾病确实有蔓延的危险。",
+    "phrases": [
+      "real estate",
+      "real time",
+      "real estate market",
+      "real estate development",
+      "for real",
+      "real life",
+      "real world",
+      "real madrid",
+      "real value",
+      "real man",
+      "real thing",
+      "real right",
+      "real love",
+      "real name",
+      "the real economy",
+      "real estate management",
+      "real estate tax",
+      "real number",
+      "real friend",
+      "get real"
+    ]
+  },
+  {
+    "word": "realistic",
+    "phonetic": "/,riə'lɪstɪk/",
+    "partOfSpeech": "adj",
+    "meaning": "现实的，实际的；现实的； 实际可行的； 现实主义的； 逼真的",
+    "example": "Is this a realistic target?",
+    "translation": "这个目标能够实现吗？",
+    "phrases": [
+      "realistic painting"
+    ]
+  },
+  {
+    "word": "reality",
+    "phonetic": "/rɪ'æləti/",
+    "partOfSpeech": "n",
+    "meaning": "现实；真实；现实， 实际； 真实",
+    "example": "the distinction between fantasy and reality",
+    "translation": "幻想和现实之间的区别",
+    "phrases": [
+      "in reality",
+      "virtual reality",
+      "social reality",
+      "reality show",
+      "sense of reality",
+      "reality tv",
+      "harsh reality",
+      "reality check",
+      "economic reality",
+      "reality tv show",
+      "ultimate reality",
+      "physical reality"
+    ]
+  },
+  {
+    "word": "realize",
+    "phonetic": "/rɪəˌlaɪz/",
+    "partOfSpeech": "v",
+    "meaning": "实现；认识到",
+    "example": "It took us a while to realize the extent of the tragedy.",
+    "translation": "我们过了一段时间才意识到这场悲剧有多严重。",
+    "phrases": [
+      "realize the value",
+      "come to realize",
+      "realize on"
+    ]
+  },
+  {
+    "word": "really",
+    "phonetic": "/-/",
+    "partOfSpeech": "adv",
+    "meaning": "真正地；实在",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "realm",
+    "phonetic": "/rɛlm/",
+    "partOfSpeech": "n",
+    "meaning": "王国，国土；领域；界， 领域， 范围； 王国， 国度",
+    "example": "the spiritual realm",
+    "translation": "精神领域",
+    "phrases": [
+      "in the realm of"
+    ]
+  },
+  {
+    "word": "rear",
+    "phonetic": "/rɪr/",
+    "partOfSpeech": "n/adj/vt",
+    "meaning": "后部，后面；背面；后部的，背后的；后部，背面；后方；抚养， 饲养； 种植",
+    "example": "Carole was left to bring up the rear.",
+    "translation": "卡萝尔被落在最后。",
+    "phrases": [
+      "front and rear",
+      "rear axle",
+      "rear wheel",
+      "rear end",
+      "rear area",
+      "rear view",
+      "rear view mirror",
+      "rear seat",
+      "rear suspension",
+      "rear door",
+      "in the rear of",
+      "rear bumper",
+      "rear side",
+      "rear spoiler",
+      "rear projection",
+      "rear guard",
+      "rear brake",
+      "rear admiral",
+      "rear window",
+      "rear axle housing"
+    ]
+  },
+  {
+    "word": "rearrange",
+    "phonetic": "/,riə'rendʒ/",
+    "partOfSpeech": "v",
+    "meaning": "重新安排",
+    "example": "She set about rearranging the furniture in the living room.",
+    "translation": "她开始重新摆放起居室的家具。",
+    "phrases": []
+  },
+  {
+    "word": "reason",
+    "phonetic": "/ˈrizən/",
+    "partOfSpeech": "n/v",
+    "meaning": "理由；理性；推理",
+    "example": "She has reason to feel guilty.",
+    "translation": "她有理由感到内疚。",
+    "phrases": [
+      "reason for",
+      "main reason",
+      "for this reason",
+      "no reason",
+      "by reason of",
+      "good reason",
+      "with reason",
+      "for some reason",
+      "for the reason",
+      "for no reason",
+      "have reason",
+      "reason with",
+      "in reason",
+      "without reason",
+      "for the same reason",
+      "for reason",
+      "within reason",
+      "one reason or another",
+      "practical reason",
+      "by reason that"
+    ]
+  },
+  {
+    "word": "reasonable",
+    "phonetic": "/'riznəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "合情合理的；公道的；通情达理的， 讲道理的； 合理的； 公道的； 尚好的， 过得去的",
+    "example": "a reasonable request",
+    "translation": "合情合理的要求",
+    "phrases": [
+      "reasonable price",
+      "reasonable distribution",
+      "reasonable time",
+      "reasonable profit",
+      "reasonable value",
+      "reasonable doubt",
+      "reasonable expenses",
+      "reasonable excuse"
+    ]
+  },
+  {
+    "word": "reassess",
+    "phonetic": "/'riə'sɛs/",
+    "partOfSpeech": "v",
+    "meaning": "重新评估",
+    "example": "This has caused us to reassess the way we approach our planning.",
+    "translation": "这件事让我们重新审视了我们的规划方式。",
+    "phrases": []
+  },
+  {
+    "word": "rebel",
+    "phonetic": "/rɪ'bɛl/",
+    "partOfSpeech": "v/n/vi",
+    "meaning": "造反；造反者；反叛， 造反； 反对， 不服从；反叛分子， 反对者",
+    "example": "Voters rebelled against high property taxes.",
+    "translation": "投票者们反对高额财产税。",
+    "phrases": [
+      "rebel against"
+    ]
+  },
+  {
+    "word": "rebuild",
+    "phonetic": "/,ri'bɪld/",
+    "partOfSpeech": "v",
+    "meaning": "重建， 改造； 复原",
+    "example": "The church was completely rebuilt in the last century.",
+    "translation": "这座教堂在上个世纪全面重建。",
+    "phrases": []
+  },
+  {
+    "word": "recall",
+    "phonetic": "/'rikɔl/",
+    "partOfSpeech": "v",
+    "meaning": "回想；叫回；收回；回忆； 召回， 叫回； 收回， 撤销",
+    "example": "You don’t happen to recall his name, do you?",
+    "translation": "你不会恰巧还想得起他的名字吧？",
+    "phrases": [
+      "beyond recall",
+      "recall from",
+      "recall to mind",
+      "recall ratio"
+    ]
+  },
+  {
+    "word": "receipt",
+    "phonetic": "/rɪ'sit/",
+    "partOfSpeech": "n",
+    "meaning": "收到；收条，收据；发票， 收据； 收入， 进款； 收到， 接到",
+    "example": "Keep your receipt in case you want to bring it back.",
+    "translation": "保留收据以备退货之需。",
+    "phrases": [
+      "on receipt of",
+      "official receipt",
+      "acknowledge receipt",
+      "acknowledge receipt of",
+      "in receipt of",
+      "deposit receipt",
+      "warehouse receipt",
+      "courier receipt",
+      "trust receipt",
+      "tax receipt",
+      "place of receipt",
+      "return receipt",
+      "cargo receipt",
+      "goods receipt",
+      "acknowledgement of receipt",
+      "bank receipt"
+    ]
+  },
+  {
+    "word": "receive",
+    "phonetic": "/rɪ'siv/",
+    "partOfSpeech": "v",
+    "meaning": "收到；得到；接待",
+    "example": "All the children will receive a small gift.",
+    "translation": "每个孩子都会收到一份小礼物。",
+    "phrases": []
+  },
+  {
+    "word": "receiver",
+    "phonetic": "/rɪ'sivɚ/",
+    "partOfSpeech": "n",
+    "meaning": "收受者，收件人；听筒； 接收器",
+    "example": "The business is in the hands of the receivers .",
+    "translation": "公司现在由破产管理人接管。",
+    "phrases": [
+      "radio receiver",
+      "television receiver",
+      "infrared receiver",
+      "radar receiver",
+      "superheterodyne receiver",
+      "official receiver",
+      "telephone receiver",
+      "receiver unit",
+      "receiver circuit",
+      "adaptive receiver"
+    ]
+  },
+  {
+    "word": "recent",
+    "phonetic": "/'risnt/",
+    "partOfSpeech": "adj",
+    "meaning": "新近的，最近的",
+    "example": "Irving’s most recent book",
+    "translation": "欧文最新的书",
+    "phrases": [
+      "in recent years",
+      "recent development",
+      "more recent",
+      "recent situation",
+      "recent news",
+      "recent period",
+      "recent projects"
+    ]
+  },
+  {
+    "word": "recently",
+    "phonetic": "/'risntli/",
+    "partOfSpeech": "adv",
+    "meaning": "最近，新近；最近， 新近",
+    "example": "He has recently been promoted to Assistant Manager.",
+    "translation": "他最近晋升为经理助理。",
+    "phrases": [
+      "until recently"
+    ]
+  },
+  {
+    "word": "reception",
+    "phonetic": "/rɪ'sɛpʃən/",
+    "partOfSpeech": "n/adj",
+    "meaning": "接待；接待；招待会；接受；招待会， 欢迎会； 接受； 接待； 接收效果",
+    "example": "She was unsure of her reception after everything that had happened.",
+    "translation": "发生了这些事后，她对自己是否还受欢迎没把握。",
+    "phrases": [
+      "warm reception",
+      "reception desk",
+      "reception area",
+      "reception room",
+      "wedding reception",
+      "reception centre"
+    ]
+  },
+  {
+    "word": "recession",
+    "phonetic": "/rɪ'sɛʃən/",
+    "partOfSpeech": "n",
+    "meaning": "衰退；衰退， 衰退期",
+    "example": "the economic recession of the early 1980s",
+    "translation": "20世纪80年代初的经济衰退",
+    "phrases": [
+      "economic recession"
+    ]
+  },
+  {
+    "word": "recharge",
+    "phonetic": "/ri:'tʃɑ:dʒ, 'ri:tʃɑ:dʒ/",
+    "partOfSpeech": "v",
+    "meaning": "再充电",
+    "example": "The device can recharge a battery in about 25 minutes.",
+    "translation": "该充电器可在约25分钟内完成给电池充电。",
+    "phrases": [
+      "groundwater recharge",
+      "recharge area"
+    ]
+  },
+  {
+    "word": "reckon",
+    "phonetic": "/'rɛkən/",
+    "partOfSpeech": "vt",
+    "meaning": "认为， 估计； 指望， 盼望； 测算， 测量",
+    "example": "‘There’s nothing we can do about it.’ ‘You reckon (= used to express doubt or disagreement ) ?’",
+    "translation": "“这件事我们无能为力。”“是吗？”",
+    "phrases": [
+      "reckon with",
+      "reckon on",
+      "reckon in",
+      "reckon up"
+    ]
+  },
+  {
+    "word": "recognition",
+    "phonetic": "/,rɛkəɡ'nɪʃən/",
+    "partOfSpeech": "n",
+    "meaning": "认出，识别；承认；认出， 识别； 承认； 赏识， 表彰， 报偿",
+    "example": "He stared at her, but there was no sign of recognition .",
+    "translation": "他盯着她看，但似乎没认出她来。",
+    "phrases": [
+      "pattern recognition",
+      "recognition system",
+      "speech recognition",
+      "recognition method",
+      "character recognition",
+      "in recognition of",
+      "molecular recognition",
+      "mutual recognition",
+      "voice recognition",
+      "brand recognition",
+      "international recognition",
+      "optical character recognition",
+      "public recognition",
+      "facial recognition",
+      "beyond recognition",
+      "gesture recognition",
+      "handwriting recognition",
+      "diplomatic recognition",
+      "revenue recognition",
+      "cell recognition"
+    ]
+  },
+  {
+    "word": "recognize",
+    "phonetic": "/ˈrɛkəɡˌnaɪz/",
+    "partOfSpeech": "v/vt",
+    "meaning": "认识，认出；承认；认出， 识别； 承认； 赏识， 表彰， 报偿",
+    "example": "I didn’t recognize you in your uniform.",
+    "translation": "你穿上制服我认不出你了。",
+    "phrases": []
+  },
+  {
+    "word": "recommend",
+    "phonetic": "/'rɛkə'mɛnd/",
+    "partOfSpeech": "v/vt",
+    "meaning": "推荐，劝告，使受欢迎；推荐，介绍；劝告；推荐， 举荐； 劝告， 建议； 使成为可取； 使受欢迎",
+    "example": "Doctors strongly recommend that fathers should be present at their baby’s birth.",
+    "translation": "医生极力建议孩子出生时父亲应该在场。",
+    "phrases": [
+      "recommend for"
+    ]
+  },
+  {
+    "word": "recommendation",
+    "phonetic": "/,rɛkəmɛn'deʃən/",
+    "partOfSpeech": "n",
+    "meaning": "推荐，介绍；劝告；推荐， 推荐信； 建议； 优点， 可取之处",
+    "example": "Try to get letters of recommendation from bosses and colleagues.",
+    "translation": "设法得到老板和同事的推荐信。",
+    "phrases": [
+      "letter of recommendation",
+      "recommendation letter",
+      "on the recommendation of"
+    ]
+  },
+  {
+    "word": "record",
+    "phonetic": "/(for v.) rɪˈkɔrd; (for n. adj.) ˈrɛkɚd/",
+    "partOfSpeech": "n/v",
+    "meaning": "记录；履历；记录",
+    "example": "According to official records, five people were killed last year near that road junction.",
+    "translation": "据官方记录，去年有五人在那个路口附近丧生。",
+    "phrases": [
+      "world record",
+      "of record",
+      "for the record",
+      "medical record",
+      "on record",
+      "track record",
+      "no record",
+      "record of formal schooling",
+      "put on record",
+      "record number",
+      "in record",
+      "record keeping",
+      "criminal record",
+      "record holder",
+      "academic record",
+      "data record",
+      "on the record",
+      "off the record",
+      "proven track record",
+      "sales record"
+    ]
+  },
+  {
+    "word": "recorder",
+    "phonetic": "/rɪ'kɔrdɚ/",
+    "partOfSpeech": "n",
+    "meaning": "记录者；录音机；录音机， 录像机； 记录装置， 记录仪",
+    "example": "Rodney put the recorder on the desk top and pushed the play button.",
+    "translation": "罗德尼把录音机放在桌面上，按下了播放键。",
+    "phrases": [
+      "tape recorder",
+      "video recorder",
+      "voice recorder",
+      "cassette recorder",
+      "audio recorder",
+      "flight recorder",
+      "sound recorder",
+      "video cassette recorder"
+    ]
+  },
+  {
+    "word": "recover",
+    "phonetic": "/rɪ'kʌvɚ/",
+    "partOfSpeech": "v",
+    "meaning": "恢复，重新获得；重新获得；挽回；重新获得， 挽回； 恢复",
+    "example": "After a few days of fever, she began to recover.",
+    "translation": "发烧几天之后，她开始恢复。",
+    "phrases": [
+      "recover from"
+    ]
+  },
+  {
+    "word": "recovery",
+    "phonetic": "/rɪ'kʌvəri/",
+    "partOfSpeech": "n",
+    "meaning": "重获；痊愈，恢复；恢复， 痊愈； 追回， 寻回， 收复",
+    "example": "Hopes of economic recovery are fading.",
+    "translation": "经济复苏的希望越来越渺茫。",
+    "phrases": [
+      "recovery rate",
+      "oil recovery",
+      "economic recovery",
+      "recovery from",
+      "heat recovery",
+      "recovery system",
+      "recovery ratio",
+      "data recovery",
+      "energy recovery",
+      "recovery factor",
+      "recovery efficiency",
+      "thermal recovery",
+      "recovery time",
+      "disaster recovery",
+      "waste heat recovery",
+      "recovery period",
+      "quick recovery",
+      "solvent recovery",
+      "elastic recovery",
+      "full recovery"
+    ]
+  },
+  {
+    "word": "recreation",
+    "phonetic": "/,rɛkrɪ'eʃən/",
+    "partOfSpeech": "n",
+    "meaning": "娱乐活动， 消遣",
+    "example": "His only recreations are drinking beer and watching football.",
+    "translation": "他唯一的消遣就是喝啤酒和看足球比赛。",
+    "phrases": [
+      "recreation center",
+      "recreation area",
+      "recreation industry",
+      "recreation room",
+      "recreation park",
+      "recreation centre",
+      "recreation ground"
+    ]
+  },
+  {
+    "word": "recreational",
+    "phonetic": "/,rɛkri'eʃənəl/",
+    "partOfSpeech": "adj",
+    "meaning": "休养的； 娱乐的",
+    "example": "...parks and other recreational facilities.",
+    "translation": "…公园及其它娱乐设施。",
+    "phrases": [
+      "recreational sports",
+      "recreational activity",
+      "recreational vehicle",
+      "recreational drug",
+      "recreational areas"
+    ]
+  },
+  {
+    "word": "recruit",
+    "phonetic": "/rɪ'krut/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "招募，吸收；新兵，新成员；新兵； 新成员",
+    "example": "We’re having difficulty recruiting enough qualified staff.",
+    "translation": "我们难以招聘到足够的合格职员。",
+    "phrases": []
+  },
+  {
+    "word": "recycle",
+    "phonetic": "/,ri'saɪkl/",
+    "partOfSpeech": "v",
+    "meaning": "循环，再利用",
+    "example": "We take all our bottles to be recycled.",
+    "translation": "我们把我们所有的瓶子都回收利用。",
+    "phrases": [
+      "recycle bin",
+      "recycle gas"
+    ]
+  },
+  {
+    "word": "red",
+    "phonetic": "/rɛd/",
+    "partOfSpeech": "adj/n",
+    "meaning": "红色的；红色",
+    "example": "We painted the door bright red .",
+    "translation": "我们把门漆成鲜红色。",
+    "phrases": [
+      "in the red",
+      "in red",
+      "red wine",
+      "red cross",
+      "red army",
+      "red blood",
+      "red light",
+      "bright red",
+      "into the red",
+      "red sea",
+      "ruby red",
+      "deep red",
+      "red rose",
+      "red carpet",
+      "dark red",
+      "red pigment",
+      "red meat",
+      "see red",
+      "red soil",
+      "red mud"
+    ]
+  },
+  {
+    "word": "reduce",
+    "phonetic": "/rɪ'dʊs/",
+    "partOfSpeech": "v",
+    "meaning": "减少；减少，减小；简化",
+    "example": "The governor announced a new plan to reduce crime.",
+    "translation": "州长宣布了一项降低犯罪率的新计划。",
+    "phrases": [
+      "reduce pollution",
+      "reduce weight",
+      "reduce waste",
+      "reduce by"
+    ]
+  },
+  {
+    "word": "reduction",
+    "phonetic": "/rɪ'dʌkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "减少，减小，缩减；减少， 缩小； 下降， 降低",
+    "example": "strategies for noise reduction",
+    "translation": "减少噪音的对策",
+    "phrases": [
+      "noise reduction",
+      "cost reduction",
+      "reduction method",
+      "reduction process",
+      "direct reduction",
+      "drag reduction",
+      "reduction ratio",
+      "reduction rate",
+      "weight reduction",
+      "open reduction",
+      "dimensionality reduction",
+      "reduction reaction",
+      "data reduction",
+      "chemical reduction",
+      "tax reduction",
+      "price reduction",
+      "reduction gear",
+      "temperature reduction",
+      "pressure reduction",
+      "reduction cell"
+    ]
+  },
+  {
+    "word": "refer",
+    "phonetic": "/rɪ'fɝ/",
+    "partOfSpeech": "v",
+    "meaning": "使求助于；谈到",
+    "example": "In his speech, he referred to a recent trip to Canada.",
+    "translation": "在他的讲话中，他提到了最近的加拿大之行。",
+    "phrases": [
+      "refer to as",
+      "refer a friend"
+    ]
+  },
+  {
+    "word": "reference",
+    "phonetic": "/'rɛfrəns/",
+    "partOfSpeech": "n",
+    "meaning": "参考；出处；提及；提到， 论及； 参考； 引文； 参考书目； 证明书， 证明人",
+    "example": "...a reference from the Koran.",
+    "translation": "…一段《可兰经》的引文。",
+    "phrases": [
+      "for reference",
+      "with reference to",
+      "reference value",
+      "in reference to",
+      "for your reference",
+      "reference service",
+      "by reference",
+      "reference model",
+      "reference data",
+      "without reference to",
+      "reference material",
+      "reference frame",
+      "reference point",
+      "reference book",
+      "frame of reference",
+      "reference system",
+      "future reference",
+      "terms of reference",
+      "make reference",
+      "reference room"
+    ]
+  },
+  {
+    "word": "refine",
+    "phonetic": "/rɪ'faɪn/",
+    "partOfSpeech": "v/vt&vi/vt",
+    "meaning": "改善，精炼；精炼，提纯；精炼， 精制， 提纯； 使优美， 使完善",
+    "example": "Car makers are constantly refining their designs.",
+    "translation": "汽车制造商在不断完善他们的设计。",
+    "phrases": [
+      "refine on"
+    ]
+  },
+  {
+    "word": "reflect",
+    "phonetic": "/rɪ'flɛkt/",
+    "partOfSpeech": "v",
+    "meaning": "反映；反射；反映；思考；反映， 显示； 反射， 映现； 深思， 考虑， 反省",
+    "example": "The drop in consumer spending reflects concern about the economy.",
+    "translation": "消费支出的下降反映出人们对经济的担忧。",
+    "phrases": [
+      "reflect on",
+      "reflect upon"
+    ]
+  },
+  {
+    "word": "reflection",
+    "phonetic": "/rɪ'flɛkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "反射；映象；反映；映像， 倒影； 反射； 反映， 表达； 非议； 沉思， 反省",
+    "example": "Can you see your reflection in the glass?",
+    "translation": "你能看到玻璃里你的影像吗？",
+    "phrases": [
+      "seismic reflection",
+      "on reflection",
+      "reflection coefficient",
+      "total reflection",
+      "reflection method",
+      "direct reflection",
+      "diffuse reflection",
+      "internal reflection",
+      "total internal reflection",
+      "mirror reflection",
+      "critical reflection",
+      "bragg reflection",
+      "reflection of light",
+      "multiple reflection",
+      "specular reflection",
+      "upon reflection",
+      "reflection factor",
+      "reflection nebula",
+      "angle of reflection",
+      "reflection grating"
+    ]
+  },
+  {
+    "word": "reflexion",
+    "phonetic": "/rɪ'flɛkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "反射；映象；反映",
+    "example": "Maxwell equations: Lorentz force, plane electromagnetic waves, radiation, light waves, reflexion, refraction, Huyghens principle, diffraction, interference phenomena.",
+    "translation": "麦克斯韦方程组：洛仑兹力，平面电磁波，辐射，光波，反射，折射，惠更斯原理，衍射，干涉现象。",
+    "phrases": []
+  },
+  {
+    "word": "reform",
+    "phonetic": "/rɪ'fɔrm/",
+    "partOfSpeech": "vt&n/n&v",
+    "meaning": "改革，改良；改革， 改良， 改造； 改正， 改过自新",
+    "example": "plans to radically reform the tax system",
+    "translation": "彻底改革税收制度的计划",
+    "phrases": [
+      "curriculum reform",
+      "educational reform",
+      "reform and opening-up",
+      "economic reform",
+      "deepen the reform",
+      "reform measures",
+      "technical reform",
+      "tax reform",
+      "land reform",
+      "political reform",
+      "social reform",
+      "institutional reform",
+      "promote reform",
+      "democratic reform",
+      "economy and reform",
+      "banking reform",
+      "reform school",
+      "agrarian reform",
+      "tariff reform",
+      "shareholding reform"
+    ]
+  },
+  {
+    "word": "reframe",
+    "phonetic": "/rɪ'freɪm/",
+    "partOfSpeech": "v",
+    "meaning": "重新装裱",
+    "example": "How could you reframe them?",
+    "translation": "你将如何重新定义它们？",
+    "phrases": []
+  },
+  {
+    "word": "refresh",
+    "phonetic": "/ri'frɛʃ/",
+    "partOfSpeech": "v",
+    "meaning": "使清新vi恢复精神；振作精神， 恢复活力",
+    "example": "A shower will refresh you.",
+    "translation": "洗个淋浴你就凉快了。",
+    "phrases": [
+      "refresh oneself",
+      "refresh rate"
+    ]
+  },
+  {
+    "word": "refreshing",
+    "phonetic": "/ri'frɛʃɪŋ/",
+    "partOfSpeech": "adj",
+    "meaning": "恢复活力的",
+    "example": "Herbs have been used for centuries to make refreshing drinks.",
+    "translation": "草药用于调制清凉饮料已有几百年的历史了。",
+    "phrases": [
+      "refresh oneself",
+      "refresh rate"
+    ]
+  },
+  {
+    "word": "refrigerator",
+    "phonetic": "/rɪ'frɪdʒəretɚ/",
+    "partOfSpeech": "n",
+    "meaning": "冰箱，冷藏库；冰箱， 冷藏库",
+    "example": "",
+    "translation": "",
+    "phrases": [
+      "absorption refrigerator",
+      "electric refrigerator",
+      "refrigerator car",
+      "cryogenic refrigerator"
+    ]
+  },
+  {
+    "word": "refuel",
+    "phonetic": "/ri'fjʊəl/",
+    "partOfSpeech": "v",
+    "meaning": "（给）加油，加燃料",
+    "example": "The plane was refuelled in Dubai.",
+    "translation": "飞机在迪拜加过油。",
+    "phrases": []
+  },
+  {
+    "word": "refugee",
+    "phonetic": "/'rɛfjʊdʒi/",
+    "partOfSpeech": "n",
+    "meaning": "难民",
+    "example": "Refugees were streaming across the border.",
+    "translation": "难民正涌过边境。",
+    "phrases": [
+      "refugee camp"
+    ]
+  },
+  {
+    "word": "refusal",
+    "phonetic": "/rɪ'fjuzl/",
+    "partOfSpeech": "n",
+    "meaning": "拒绝",
+    "example": "Her country suffered through her refusal to accept change.",
+    "translation": "她的国家因为她拒绝接受变革而受了害。",
+    "phrases": [
+      "first refusal"
+    ]
+  },
+  {
+    "word": "refuse",
+    "phonetic": "/ri'fjʊz/",
+    "partOfSpeech": "v",
+    "meaning": "拒绝",
+    "example": "She asked him to leave, but he refused.",
+    "translation": "她叫他走，但他不肯。",
+    "phrases": [
+      "municipal refuse",
+      "refuse to do",
+      "refuse treatment",
+      "refuse collection",
+      "refuse disposal",
+      "coal refuse",
+      "refuse dump",
+      "refuse transfer station"
+    ]
+  },
+  {
+    "word": "regard",
+    "phonetic": "/rɪ'ɡɑrd/",
+    "partOfSpeech": "v",
+    "meaning": "把…看作；尊敬",
+    "example": "He was regarded as the most successful president of modern times.",
+    "translation": "他被看成是近代最成功的总统。",
+    "phrases": [
+      "with regard to",
+      "in this regard",
+      "in regard to",
+      "regard as",
+      "as regards",
+      "regard for",
+      "without regard to",
+      "in regard of",
+      "pay regard to",
+      "regard highly"
+    ]
+  },
+  {
+    "word": "regarding",
+    "phonetic": "/rɪ'ɡɑrdɪŋ/",
+    "partOfSpeech": "prep",
+    "meaning": "关于",
+    "example": "Regarding your recent inquiry, I have enclosed a copy of our new brochure.",
+    "translation": "关于你最近的咨询，我随信附上一本我们最新的手册。",
+    "phrases": [
+      "with regard to",
+      "in this regard",
+      "in regard to",
+      "regard as",
+      "as regards",
+      "regard for",
+      "without regard to",
+      "in regard of",
+      "pay regard to",
+      "regard highly"
+    ]
+  },
+  {
+    "word": "regardless",
+    "phonetic": "/rɪ'ɡɑrdləs/",
+    "partOfSpeech": "adv",
+    "meaning": "不顾一切地；不顾后果地； 不管怎样， 无论如何",
+    "example": "Despite her recent surgery she has been carrying on regardless.",
+    "translation": "尽管她最近动了手术，她却一直在不顾一切地继续工作。",
+    "phrases": [
+      "regardless of"
+    ]
+  },
+  {
+    "word": "region",
+    "phonetic": "/'ridʒən/",
+    "partOfSpeech": "n",
+    "meaning": "地区，地带；领域；地区， 地带， 区域； 范围， 幅度",
+    "example": "efforts to bring peace to the region",
+    "translation": "给这个地区带来和平的努力",
+    "phrases": [
+      "autonomous region",
+      "administrative region",
+      "special administrative region",
+      "in the region of",
+      "central region",
+      "economic region",
+      "border region",
+      "coastal region",
+      "mediterranean region",
+      "local region",
+      "source region",
+      "feasible region",
+      "arid region",
+      "polar region",
+      "transition region",
+      "active region",
+      "critical region",
+      "geographic region",
+      "growing region",
+      "peripheral region"
+    ]
+  },
+  {
+    "word": "register",
+    "phonetic": "/'rɛdʒɪstɚ/",
+    "partOfSpeech": "n&vt/v/n",
+    "meaning": "登记，注册；登记， 注册； 指示， 自动记下； 流露； 表示， 表达； 把挂号；登记；登记表",
+    "example": "Have you signed the hotel register ?",
+    "translation": "你在酒店登记簿上签名了吗？",
+    "phrases": [
+      "register for",
+      "register with",
+      "cash register",
+      "census register",
+      "register system",
+      "household register",
+      "shift register",
+      "register now",
+      "register file",
+      "register office",
+      "federal register",
+      "register card",
+      "company register",
+      "control register",
+      "register paper",
+      "in register",
+      "lloyd's register",
+      "hotel register",
+      "data register",
+      "status register"
+    ]
+  },
+  {
+    "word": "regret",
+    "phonetic": "/rɪ'ɡrɛt/",
+    "partOfSpeech": "v/n",
+    "meaning": "懊悔；抱歉；懊悔",
+    "example": "We regret any inconvenience caused to our customers.",
+    "translation": "我们对于给顾客造成的不便表示歉意。",
+    "phrases": [
+      "regret doing",
+      "to express regret"
+    ]
+  },
+  {
+    "word": "regular",
+    "phonetic": "/'rɛgjəlɚ/",
+    "partOfSpeech": "adj",
+    "meaning": "有规律的，经常的；规则的；整齐的",
+    "example": "The company holds regular meetings with employees.",
+    "translation": "公司定期召集雇员开会。",
+    "phrases": [
+      "on a regular basis",
+      "regular pattern",
+      "regular meeting",
+      "regular exercise",
+      "at regular intervals",
+      "regular season",
+      "regular expression",
+      "regular work",
+      "regular practice",
+      "regular price",
+      "regular service",
+      "regular customer",
+      "regular polygon",
+      "regular inspection",
+      "regular bus",
+      "regular army",
+      "regular script",
+      "regular school",
+      "regular staff",
+      "regular order"
+    ]
+  },
+  {
+    "word": "regularly",
+    "phonetic": "/'reɡjələli/",
+    "partOfSpeech": "adv",
+    "meaning": "定期地，有规律地",
+    "example": "We meet regularly, once a month.",
+    "translation": "我们定期见面，每月一次。",
+    "phrases": []
+  },
+  {
+    "word": "regulate",
+    "phonetic": "/'rɛɡjulet/",
+    "partOfSpeech": "v/vt",
+    "meaning": "管理；管理，控制；调整；管理， 控制； 调整， 调节",
+    "example": "strict rules regulating the use of chemicals in food",
+    "translation": "限制化学品在食物中使用的严格规定",
+    "phrases": []
+  },
+  {
+    "word": "regulation",
+    "phonetic": "/ˌrɛɡjəˈleʃən/",
+    "partOfSpeech": "n",
+    "meaning": "管理；规则；规则，规章；管理；规章， 规则； 管理， 控制； 调节",
+    "example": "There seem to be so many rules and regulations these days.",
+    "translation": "如今好像条条框框很多。",
+    "phrases": [
+      "speed regulation",
+      "regulation and control",
+      "government regulation",
+      "market regulation",
+      "financial regulation",
+      "legal regulation",
+      "voltage regulation",
+      "safety regulation",
+      "administrative regulation",
+      "temperature regulation",
+      "current regulation",
+      "technical regulation",
+      "pressure regulation",
+      "power regulation",
+      "load regulation",
+      "general regulation",
+      "traffic regulation",
+      "accounting regulation",
+      "provisional regulation",
+      "local regulation"
+    ]
+  },
+  {
+    "word": "reinforce",
+    "phonetic": "/,riɪn'fɔrs/",
+    "partOfSpeech": "v/vt",
+    "meaning": "加强，强化；增援，支援；加强；增强， 加强， 增援",
+    "example": "The film reinforces the idea that women should be pretty and dumb.",
+    "translation": "这部影片强化了这个观点——女人要漂亮，而且要笨一些。",
+    "phrases": [
+      "reinforce the management"
+    ]
+  },
+  {
+    "word": "reject",
+    "phonetic": "/rɪ'dʒɛkt/",
+    "partOfSpeech": "v/vt/n",
+    "meaning": "拒绝，驳回；拒绝；丢掉；驳回；拒绝； 拒纳， 退回；次品",
+    "example": "Sarah rejected her brother’s offer of help.",
+    "translation": "萨拉拒绝了她弟弟的帮助。",
+    "phrases": [
+      "reject rate",
+      "reject ratio"
+    ]
+  },
+  {
+    "word": "relate",
+    "phonetic": "/rɪ'let/",
+    "partOfSpeech": "v/vi/vt",
+    "meaning": "叙述；使联系；有关， 涉及； 符合； 相处；使有关联；讲述，叙述",
+    "example": "I don’t understand how the two ideas relate.",
+    "translation": "我不明白这两个观点有什么联系。",
+    "phrases": [
+      "relate with"
+    ]
+  },
+  {
+    "word": "relation",
+    "phonetic": "/rɪ'leʃən/",
+    "partOfSpeech": "n",
+    "meaning": "关系，联系；家属",
+    "example": "The price the meat is sold for bears no relation to (= is not connected to ) the price the farmer receives.",
+    "translation": "肉的售价和农民拿到的价格无关。",
+    "phrases": [
+      "in relation to",
+      "public relation",
+      "direct relation",
+      "linear relation",
+      "quantitative relation",
+      "internal relation",
+      "social relation",
+      "international relation",
+      "logical relation",
+      "labor relation",
+      "dispersion relation",
+      "human relation",
+      "causal relation",
+      "equivalence relation",
+      "interpersonal relation",
+      "complex relation",
+      "with relation to",
+      "power relation",
+      "labour relations",
+      "uncertainty relation"
+    ]
+  },
+  {
+    "word": "relationship",
+    "phonetic": "/rɪ'leʃən'ʃɪp/",
+    "partOfSpeech": "n",
+    "meaning": "关系，联系；关系， 关联",
+    "example": "He’s never had a sexual relationship before.",
+    "translation": "他以前从未与人有过性关系。",
+    "phrases": [
+      "relationship management",
+      "customer relationship management",
+      "cooperative relationship",
+      "interpersonal relationship",
+      "linear relationship",
+      "relationship marketing",
+      "direct relationship",
+      "causal relationship",
+      "personal relationship",
+      "intimate relationship",
+      "blood relationship",
+      "sexual relationship",
+      "genetic relationship",
+      "international relationship",
+      "public relationship",
+      "family relationship",
+      "spatial relationship",
+      "symbiotic relationship",
+      "inverse relationship",
+      "geometrical relationship"
+    ]
+  },
+  {
+    "word": "relative",
+    "phonetic": "/'rɛlətɪv/",
+    "partOfSpeech": "adj/n",
+    "meaning": "相对的；亲戚；有关系的；相对的；有关系的，相对的；亲属， 亲戚",
+    "example": "The relative merits of both approaches have to be considered.",
+    "translation": "两种方法的相对优点都得考虑在内。",
+    "phrases": [
+      "relative humidity",
+      "relative error",
+      "relative position",
+      "relative standard",
+      "relative motion",
+      "relative density",
+      "relative permeability",
+      "relative importance",
+      "relative standard deviation",
+      "relative stability",
+      "relative theory",
+      "relative merits",
+      "relative molecular mass",
+      "relative movement",
+      "relative value",
+      "relative displacement",
+      "relative analysis",
+      "relative strength",
+      "relative velocity",
+      "relative efficiency"
+    ]
+  },
+  {
+    "word": "relativity",
+    "phonetic": "/,rɛlə'tɪvəti/",
+    "partOfSpeech": "n",
+    "meaning": "相关性；相对性；相对论； 相关性",
+    "example": "They teach the relativity of all ethical ideas.",
+    "translation": "他们宣扬一切道德观念的相对性。",
+    "phrases": [
+      "theory of relativity",
+      "general relativity",
+      "special relativity",
+      "principle of relativity",
+      "relativity theory",
+      "general theory of relativity",
+      "relativity principle",
+      "special theory of relativity"
+    ]
+  },
+  {
+    "word": "relax",
+    "phonetic": "/rɪ'læks/",
+    "partOfSpeech": "v",
+    "meaning": "使松弛；松弛；放松， 松弛； 放宽， 缓和",
+    "example": "Gentle exercise can relax stiff shoulder muscles.",
+    "translation": "和缓的运动可以使僵硬的肩部肌肉放松。",
+    "phrases": [
+      "relax oneself"
+    ]
+  },
+  {
+    "word": "release",
+    "phonetic": "/rɪ'lis/",
+    "partOfSpeech": "v/vt",
+    "meaning": "发布，释放；释放；放松；发表；释放， 排放； 解除， 解脱； 放开， 松开； 发布； 发行",
+    "example": "Police arrested several men, who were later released.",
+    "translation": "警察逮捕了几个人，后来都释放了。",
+    "phrases": [
+      "release rate",
+      "controlled release",
+      "press release",
+      "release from",
+      "heat release",
+      "news release",
+      "energy release",
+      "release agent",
+      "release date",
+      "release mechanism",
+      "day release",
+      "quick release",
+      "block release",
+      "release valve",
+      "pressure release",
+      "release lever",
+      "stress release",
+      "release pressure",
+      "release paper",
+      "release time"
+    ]
+  },
+  {
+    "word": "relevant",
+    "phonetic": "/'rɛləvənt/",
+    "partOfSpeech": "adj",
+    "meaning": "有关的，中肯的；有关的，贴切的；有关的， 切题的",
+    "example": "Relevant documents were presented in court.",
+    "translation": "法庭上出示了相关的文件。",
+    "phrases": [
+      "relevant information",
+      "relevant data",
+      "relevant experience",
+      "relevant issues",
+      "relevant document",
+      "relevant works",
+      "relevant cost",
+      "relevant parameter",
+      "relevant authority",
+      "relevant character"
+    ]
+  },
+  {
+    "word": "reliability",
+    "phonetic": "/rɪ,laɪə'bɪləti/",
+    "partOfSpeech": "n",
+    "meaning": "可靠性",
+    "example": "I can assure you of the reliability of the information.",
+    "translation": "我可以向你保证这消息是可靠的。",
+    "phrases": [
+      "high reliability",
+      "reliability analysis",
+      "system reliability",
+      "reliability design",
+      "reliability theory",
+      "software reliability",
+      "reliability test",
+      "reliability engineering",
+      "operational reliability",
+      "reliability testing",
+      "reliability growth",
+      "safe reliability",
+      "reliability prediction",
+      "reliability estimation",
+      "degree of reliability",
+      "mechanical reliability",
+      "reliability allocation",
+      "reliability coefficient",
+      "reliability function",
+      "inherent reliability"
+    ]
+  },
+  {
+    "word": "reliable",
+    "phonetic": "/rɪ'laɪəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "可靠的，可信赖的；可靠的， 可信赖的",
+    "example": "a birth control method that is cheap and reliable",
+    "translation": "既便宜又可靠的避孕方法",
+    "phrases": [
+      "reliable quality",
+      "reliable data",
+      "reliable information",
+      "reliable source",
+      "reliable reputation"
+    ]
+  },
+  {
+    "word": "relief",
+    "phonetic": "/rɪ'lif/",
+    "partOfSpeech": "n",
+    "meaning": "减轻；救济；援救；轻松， 宽慰； 缓解； 调剂， 消遣； 接替",
+    "example": "Marijuana can provide pain relief for some cancer patients.",
+    "translation": "大麻可以为一些癌症患者减轻疼痛。",
+    "phrases": [
+      "in relief",
+      "disaster relief",
+      "relief valve",
+      "relief work",
+      "pressure relief",
+      "relief from",
+      "stress relief",
+      "tax relief",
+      "relief fund",
+      "pressure relief valve",
+      "relief effort",
+      "emergency relief",
+      "relief map",
+      "relief supplies",
+      "on relief",
+      "relief materials",
+      "drought relief",
+      "high relief",
+      "comic relief",
+      "relief printing"
+    ]
+  },
+  {
+    "word": "relieve",
+    "phonetic": "/rɪ'liv/",
+    "partOfSpeech": "v/vt",
+    "meaning": "解除，减轻，缓解；减轻，解除；救济；使轻松， 使宽慰， 缓解； 使得到调剂； 接替",
+    "example": "Drugs helped to relieve the pain.",
+    "translation": "药物有助于舒缓疼痛。",
+    "phrases": [
+      "relieve oneself",
+      "relieve stress",
+      "relieve from",
+      "relieve of"
+    ]
+  },
+  {
+    "word": "religion",
+    "phonetic": "/rɪ'lɪdʒən/",
+    "partOfSpeech": "n",
+    "meaning": "宗教；宗教信仰；宗教， 宗教信仰",
+    "example": "The U.S. Constitution promises freedom of religion.",
+    "translation": "美国宪法保证宗教信仰自由。",
+    "phrases": [
+      "freedom of religion",
+      "christian religion",
+      "primitive religion",
+      "organized religion",
+      "philosophy of religion"
+    ]
+  },
+  {
+    "word": "religious",
+    "phonetic": "/rɪ'lɪdʒəs/",
+    "partOfSpeech": "adj",
+    "meaning": "宗教的；虔诚的；宗教的； 笃信宗教的， 虔诚的",
+    "example": "I don’t share her religious beliefs .",
+    "translation": "她的宗教信仰和我的不同。",
+    "phrases": [
+      "religious belief",
+      "religious culture",
+      "religious education",
+      "religious festival",
+      "religious sect",
+      "religious studies",
+      "religious man"
+    ]
+  },
+  {
+    "word": "reluctant",
+    "phonetic": "/rɪ'lʌktənt/",
+    "partOfSpeech": "adj",
+    "meaning": "不愿意的，勉强的；不愿的，勉强的；不情愿的， 勉强的",
+    "example": "She gave a reluctant smile.",
+    "translation": "她勉强笑了笑。",
+    "phrases": [
+      "reluctant to help"
+    ]
+  },
+  {
+    "word": "rely",
+    "phonetic": "/rɪ'laɪ/",
+    "partOfSpeech": "v/vi",
+    "meaning": "依赖，依靠；信赖；依靠， 依赖； 信赖， 指望",
+    "example": "They relied heavily on the advice of their professional advisers.",
+    "translation": "他们非常依赖专业顾问的建议。",
+    "phrases": [
+      "rely on"
+    ]
+  },
+  {
+    "word": "remain",
+    "phonetic": "/rɪ'men/",
+    "partOfSpeech": "v/vi/n",
+    "meaning": "剩下，余留；保持；剩下，余留；保持；仍然是；残余； 残骸； 遗迹",
+    "example": "The refugees were allowed to remain in the UK.",
+    "translation": "难民获准留在英国。",
+    "phrases": [
+      "remain invincible",
+      "remain silent",
+      "remain with",
+      "remain calm",
+      "remain of",
+      "to remain as"
+    ]
+  },
+  {
+    "word": "remark",
+    "phonetic": "/rɪ'mɑrk/",
+    "partOfSpeech": "vt&vi&n/vt/n",
+    "meaning": "评论，谈论；说；评论说；话语； 谈论， 评论",
+    "example": "Unfortunately, a local journalist overheard the remark.",
+    "translation": "不巧一名当地记者无意中听到了这些话。",
+    "phrases": [
+      "remark on"
+    ]
+  },
+  {
+    "word": "remarkable",
+    "phonetic": "/rɪ'mɑrkəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "异常的，非凡的；值得注意的， 引人注目的； 异常的， 非凡的",
+    "example": "She has made remarkable progress.",
+    "translation": "她取得了显著的进步。",
+    "phrases": [
+      "remarkable development"
+    ]
+  },
+  {
+    "word": "remedy",
+    "phonetic": "/'rɛmədi/",
+    "partOfSpeech": "n/n&vt/vt",
+    "meaning": "药物；治疗；补救；补救办法，纠正办法；药品；治疗法；补救， 纠正； 医治， 治疗",
+    "example": "a home remedy (= one that you make at home ) for sore throats",
+    "translation": "治疗喉咙疼痛的家庭疗法",
+    "phrases": [
+      "remedy for",
+      "sovereign remedy",
+      "legal remedy",
+      "folk remedy"
+    ]
+  },
+  {
+    "word": "remember",
+    "phonetic": "/rɪ'mɛmbɚ/",
+    "partOfSpeech": "v",
+    "meaning": "记得，想起；记住",
+    "example": "Do you remember Rosa Davies?",
+    "translation": "你记得罗莎·戴维斯吗？",
+    "phrases": [
+      "remember oneself",
+      "remember someone to someone",
+      "remember to do",
+      "remember doing",
+      "remember of",
+      "when you remember"
+    ]
+  },
+  {
+    "word": "remind",
+    "phonetic": "/rɪ'maɪnd/",
+    "partOfSpeech": "v/vt",
+    "meaning": "提醒，使想起；提醒， 使想起",
+    "example": "Yes, I’ll be there. Thanks for reminding me.",
+    "translation": "是的，我会去那里的。 谢谢提醒。",
+    "phrases": [
+      "remind of",
+      "that reminds me"
+    ]
+  },
+  {
+    "word": "remonstrate",
+    "phonetic": "/rɪ'mɑnstret/",
+    "partOfSpeech": "v",
+    "meaning": "抗议",
+    "example": "He remonstrated with the referee.",
+    "translation": "他曾向裁判抗议。",
+    "phrases": []
+  },
+  {
+    "word": "remote",
+    "phonetic": "/rɪ'mot/",
+    "partOfSpeech": "adj",
+    "meaning": "相隔很远的；冷淡的；遥远的； 偏僻的； 关系疏远的； 脱离的； 微乎其微的； 孤高的， 冷淡的； 遥控的",
+    "example": "a remote border town",
+    "translation": "一个偏远的边境小镇",
+    "phrases": [
+      "remote sensing",
+      "remote control",
+      "remote monitoring",
+      "remote sensing data",
+      "remote access",
+      "remote control system",
+      "satellite remote sensing",
+      "remote education",
+      "remote monitor",
+      "remote sensing technique",
+      "remote controller",
+      "remote from",
+      "remote sensor",
+      "remote transmission",
+      "remote host",
+      "remote location",
+      "remote terminal",
+      "remote sensing application",
+      "remote sense",
+      "remote operation"
+    ]
+  },
+  {
+    "word": "removal",
+    "phonetic": "/rɪ'muvl/",
+    "partOfSpeech": "n",
+    "meaning": "移动；迁移；除掉；除去， 消除； 移动， 搬迁",
+    "example": "stain removal",
+    "translation": "去污",
+    "phrases": [
+      "removal efficiency",
+      "dust removal",
+      "ash removal",
+      "heat removal",
+      "rust removal",
+      "metal removal",
+      "scale removal",
+      "algae removal",
+      "nutrient removal",
+      "slag removal",
+      "trouble removal",
+      "moisture removal",
+      "paraffin removal",
+      "stock removal",
+      "heat removal system",
+      "snow removal"
+    ]
+  },
+  {
+    "word": "remove",
+    "phonetic": "/rɪ'muv/",
+    "partOfSpeech": "v",
+    "meaning": "消除，移除；移动，搬开；脱掉",
+    "example": "a cleaner that will remove wine stains",
+    "translation": "可去除葡萄酒酒渍的清洁剂",
+    "phrases": [
+      "remove oneself",
+      "remove all",
+      "remove from",
+      "at one remove"
+    ]
+  },
+  {
+    "word": "render",
+    "phonetic": "/'rɛndɚ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "给予；表示，给予；使得；使得， 致使； 给予， 提供； 翻译",
+    "example": "an obligation to render assistance to those in need",
+    "translation": "为有困难的人提供援助的义务",
+    "phrases": [
+      "account rendered",
+      "render services",
+      "render an account"
+    ]
+  },
+  {
+    "word": "renew",
+    "phonetic": "/rɪ'nʊ/",
+    "partOfSpeech": "v",
+    "meaning": "更新；使更新；重新开始， 继续； 更新； 恢复； 延长有效期",
+    "example": "Local people have renewed their efforts to save the school.",
+    "translation": "当地居民再一次作出努力，挽救这所学校。",
+    "phrases": []
+  },
+  {
+    "word": "rent",
+    "phonetic": "/rɛnt/",
+    "partOfSpeech": "n/v",
+    "meaning": "租金，租；出租；租借，租用；出租，出借；租金； 出租",
+    "example": "I pay the rent at the beginning of every month.",
+    "translation": "我每逢月初交付房租。",
+    "phrases": [
+      "for rent",
+      "rent out",
+      "pay the rent",
+      "pay rent",
+      "monthly rent",
+      "rent from",
+      "house rent",
+      "pay someone his rent",
+      "economic rent",
+      "rent control",
+      "apartment for rent",
+      "ground rent",
+      "rent charge"
+    ]
+  },
+  {
+    "word": "rental",
+    "phonetic": "/'rɛntl/",
+    "partOfSpeech": "n",
+    "meaning": "租",
+    "example": "Video rental is usually £3.",
+    "translation": "录像带的租金通常是3英镑。",
+    "phrases": [
+      "rental housing",
+      "car rental",
+      "rental income",
+      "equipment rental",
+      "residential rental",
+      "rental fee",
+      "rental house",
+      "rental agreement",
+      "video rental",
+      "rental agency",
+      "rental rate",
+      "rental return",
+      "rental value"
+    ]
+  },
+  {
+    "word": "repair",
+    "phonetic": "/rɪ'pɛr/",
+    "partOfSpeech": "vt&n",
+    "meaning": "修理，修补",
+    "example": "Dad was up the ladder, repairing the roof.",
+    "translation": "爸爸在梯子上修补屋顶。",
+    "phrases": [
+      "maintenance and repair",
+      "repair and maintenance",
+      "repair work",
+      "repair shop",
+      "under repair",
+      "in good repair",
+      "beyond repair",
+      "repair welding",
+      "heavy repair",
+      "dna repair",
+      "ship repair",
+      "emergency repair",
+      "repair cost",
+      "major repair",
+      "repair parts",
+      "repair kit",
+      "out of repair",
+      "repair workshop",
+      "mismatch repair",
+      "repair cycle"
+    ]
+  },
+  {
+    "word": "repave",
+    "phonetic": "/ri:'peɪv/",
+    "partOfSpeech": "v",
+    "meaning": "再铺，重新铺砌",
+    "example": "Therefore, lots of pavements need to repair in large. scale even repave wholly after using a long time, which will bring large numbers of waste asphalt mixture.",
+    "translation": "因此，沥青路面使用一定年限后必须进行大面积的维修，甚至全路段铣刨，重新铺筑。",
+    "phrases": []
+  },
+  {
+    "word": "repeat",
+    "phonetic": "/rɪ'pit/",
+    "partOfSpeech": "v/n",
+    "meaning": "重说，重做；重复",
+    "example": "Can you repeat your question?",
+    "translation": "你能重复一遍你的问题吗？",
+    "phrases": [
+      "repeat oneself",
+      "and repeat",
+      "repeat order",
+      "automatic repeat request",
+      "tandem repeat",
+      "repeat back",
+      "repeat mode"
+    ]
+  },
+  {
+    "word": "repeatedly",
+    "phonetic": "/rɪ'pitɪdli/",
+    "partOfSpeech": "adv",
+    "meaning": "重复地；一再；一再， 再三， 多次地",
+    "example": "Graham was repeatedly warned not to work so hard.",
+    "translation": "格雷厄姆一再被提醒工作不要这么拼命。",
+    "phrases": []
+  },
+  {
+    "word": "repetition",
+    "phonetic": "/'rɛpə'tɪʃən/",
+    "partOfSpeech": "n",
+    "meaning": "重复，反复；重复， 反复",
+    "example": "Children used to learn by repetition.",
+    "translation": "过去小孩子是通过背诵来学习的。",
+    "phrases": [
+      "repetition rate",
+      "repetition frequency",
+      "pulse repetition frequency",
+      "repetition measurement",
+      "repetition period"
+    ]
+  },
+  {
+    "word": "replace",
+    "phonetic": "/rɪ'ples/",
+    "partOfSpeech": "v/vt",
+    "meaning": "代替；代替， 取代； 更换， 调换； 把…放回原处",
+    "example": "I’m replacing Sue on the team.",
+    "translation": "我将接替队里的休。",
+    "phrases": [
+      "replace with",
+      "replace by"
+    ]
+  },
+  {
+    "word": "replacement",
+    "phonetic": "/rɪ'plesmənt/",
+    "partOfSpeech": "n",
+    "meaning": "代替；代替， 取代； 更换， 调换； 替代的人",
+    "example": "Our old car is badly in need of replacement.",
+    "translation": "我们的旧车急需更换。",
+    "phrases": [
+      "hormone replacement therapy",
+      "replacement cost",
+      "replacement ratio",
+      "replacement rate",
+      "replacement of assets",
+      "replacement value"
+    ]
+  }
+]

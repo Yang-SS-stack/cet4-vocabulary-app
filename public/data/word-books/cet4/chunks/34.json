@@ -1,0 +1,2192 @@
+[
+  {
+    "word": "unbearable",
+    "phonetic": "/ʌn'bɛrəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "无法忍受的",
+    "example": "The pain was almost unbearable.",
+    "translation": "那疼痛几乎难以忍受。",
+    "phrases": [
+      "unbearable pain"
+    ]
+  },
+  {
+    "word": "uncertain",
+    "phonetic": "/ʌn'sɝtn/",
+    "partOfSpeech": "adj",
+    "meaning": "不确定的",
+    "example": "My whole future now seemed uncertain.",
+    "translation": "现在我的前途似乎是个未知数。",
+    "phrases": [
+      "uncertain about"
+    ]
+  },
+  {
+    "word": "unconscious",
+    "phonetic": "/ʌn'kɑnʃəs/",
+    "partOfSpeech": "adj",
+    "meaning": "不省人事的",
+    "example": "She was found alive but unconscious.",
+    "translation": "她被找到时还活着，但已不省人事。",
+    "phrases": [
+      "unconscious of",
+      "collective unconscious"
+    ]
+  },
+  {
+    "word": "uncover",
+    "phonetic": "/ʌn'kʌvɚ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "揭开…的盖子；揭露， 暴露； 揭开…的盖子",
+    "example": "When the seedlings sprout, uncover the tray.",
+    "translation": "幼苗发芽后，揭开盘上的遮盖物。",
+    "phrases": []
+  },
+  {
+    "word": "undergo",
+    "phonetic": "/,ʌndɚ'ɡo/",
+    "partOfSpeech": "v/vt",
+    "meaning": "承受；经历，经受，忍受；经历， 经受， 忍受； 接受",
+    "example": "The country has undergone massive changes recently.",
+    "translation": "这个国家最近经历了巨大的变化。",
+    "phrases": []
+  },
+  {
+    "word": "undergraduate",
+    "phonetic": "/,ʌndɚ'ɡrædʒuət/",
+    "partOfSpeech": "n",
+    "meaning": "大学在校生；大学本科生",
+    "example": "second-year undergraduates",
+    "translation": "大学二年级学生",
+    "phrases": [
+      "undergraduate course",
+      "undergraduate education",
+      "undergraduate degree",
+      "undergraduate student",
+      "undergraduate program",
+      "undergraduate college",
+      "undergraduate study"
+    ]
+  },
+  {
+    "word": "underground",
+    "phonetic": "/ʌndɚˈɡraʊnd/",
+    "partOfSpeech": "adv/adj/n",
+    "meaning": "在地下，往地下；秘密地，不公开地；地下的；秘密的，不公开的；地铁； 地下组织",
+    "example": "This animal spends most of its life underground.",
+    "translation": "这种动物一生中的大部分时间都待在地下。",
+    "phrases": [
+      "underground water",
+      "underground space",
+      "underground mining",
+      "an underground",
+      "underground mine",
+      "underground garage",
+      "underground pipeline",
+      "underground structure",
+      "underground parking",
+      "underground tunnel",
+      "underground construction",
+      "underground railway",
+      "underground excavation",
+      "underground river",
+      "underground station",
+      "underground gasification",
+      "underground passage",
+      "underground car park",
+      "underground cable",
+      "underground system"
+    ]
+  },
+  {
+    "word": "underline",
+    "phonetic": "/'ʌndəlaɪn/",
+    "partOfSpeech": "v/vt",
+    "meaning": "强调；划线于…之下；在…下面画线； 强调， 使…突出",
+    "example": "This tragic incident underlines the need for immediate action.",
+    "translation": "这一悲剧事件突显了立即采取行动的必要性。",
+    "phrases": []
+  },
+  {
+    "word": "undermine",
+    "phonetic": "/'ʌndɚ'maɪn/",
+    "partOfSpeech": "v",
+    "meaning": "暗中破坏",
+    "example": "The continued fighting threatens to undermine efforts to negotiate an agreement.",
+    "translation": "持续的战斗有可能破坏通过谈判达成协议的努力。",
+    "phrases": []
+  },
+  {
+    "word": "underneath",
+    "phonetic": "/,ʌndɚ'niθ/",
+    "partOfSpeech": "adv/prep/n",
+    "meaning": "在下面，在底下；在…下面，在…底下；下部， 底部",
+    "example": "He has on his jeans and a long-sleeved blue denim shirt with a white T-shirt underneath.",
+    "translation": "他身穿牛仔裤和一件蓝色长袖粗斜纹棉布衬衫，里面还有件白色T恤衫。",
+    "phrases": []
+  },
+  {
+    "word": "understanding",
+    "phonetic": "/,ʌndɚ'stændɪŋ/",
+    "partOfSpeech": "adj/n",
+    "meaning": "体谅的， 宽容的， 通情达理的；理解，理解力；谅解；协议；相互理解，融洽",
+    "example": "Luckily, I have a very under­standing boss.",
+    "translation": "幸运的是，我有一个非常通情达理的上司。",
+    "phrases": [
+      "mutual understanding",
+      "memorandum of understanding",
+      "tacit understanding",
+      "on the understanding that",
+      "international understanding",
+      "come to an understanding",
+      "perception and understanding"
+    ]
+  },
+  {
+    "word": "undertake",
+    "phonetic": "/,ʌndɚ'tek/",
+    "partOfSpeech": "v/vt",
+    "meaning": "承担；从事；承担；保证；从事； 承担； 同意； 保证",
+    "example": "He undertook to pay the money back in six months.",
+    "translation": "他保证在六个月之内还钱。",
+    "phrases": []
+  },
+  {
+    "word": "undervalue",
+    "phonetic": "/,ʌndɚ'vælju/",
+    "partOfSpeech": "v",
+    "meaning": "低估",
+    "example": "Society undervalues staying at home and looking after children.",
+    "translation": "社会低估了待在家里照看孩子的意义。",
+    "phrases": []
+  },
+  {
+    "word": "undo",
+    "phonetic": "/ʌn'du/",
+    "partOfSpeech": "v/vt",
+    "meaning": "解开，打开；取消；解开， 打开； 取消， 撤销",
+    "example": "The screws can be undone by hand.",
+    "translation": "这些螺丝可以用手拧开。",
+    "phrases": []
+  },
+  {
+    "word": "undoubtedly",
+    "phonetic": "/ʌn'daʊtɪdli/",
+    "partOfSpeech": "adv",
+    "meaning": "无疑；无容置疑，肯定地；毋庸置疑地， 肯定地",
+    "example": "This is undoubtedly important.",
+    "translation": "这无疑是重要的。",
+    "phrases": []
+  },
+  {
+    "word": "uneasy",
+    "phonetic": "/ʌn'izi/",
+    "partOfSpeech": "adj",
+    "meaning": "心神不安的，忧虑的；心神不安的， 忧虑的",
+    "example": "She eventually fell into an uneasy sleep.",
+    "translation": "她终于睡着了，但睡得并不踏实。",
+    "phrases": [
+      "uneasy about"
+    ]
+  },
+  {
+    "word": "unexpected",
+    "phonetic": "/'ʌnɪk'spɛktɪd/",
+    "partOfSpeech": "adj",
+    "meaning": "想不到的，意外的；想不到的， 意外的",
+    "example": "The experiment produced some unexpected results.",
+    "translation": "这次试验产生了一些意想不到的结果。",
+    "phrases": [
+      "unexpected news",
+      "unexpected accident"
+    ]
+  },
+  {
+    "word": "unfortunately",
+    "phonetic": "/ʌn'fɔrtʃənətli/",
+    "partOfSpeech": "adv",
+    "meaning": "不幸地",
+    "example": "Unfortunately, you were out when we called.",
+    "translation": "很遗憾，我们来的时候你出去了。",
+    "phrases": []
+  },
+  {
+    "word": "uniform",
+    "phonetic": "/'junɪfɔrm/",
+    "partOfSpeech": "adj/n",
+    "meaning": "一样的；制服",
+    "example": "Grade A eggs must be of uniform size.",
+    "translation": "A 级鸡蛋必须大小相同。",
+    "phrases": [
+      "in uniform",
+      "uniform distribution",
+      "school uniform",
+      "military uniform",
+      "uniform temperature",
+      "uniform customs",
+      "uniform flow",
+      "uniform motion",
+      "uniform load",
+      "uniform customs and practice",
+      "non uniform",
+      "uniform magnetic field",
+      "uniform convergence",
+      "uniform structure",
+      "uniform rules",
+      "uniform system",
+      "uniform speed",
+      "uniform price",
+      "uniform velocity",
+      "uniform strength"
+    ]
+  },
+  {
+    "word": "unintended",
+    "phonetic": "/,ʌnɪn'tɛndɪd/",
+    "partOfSpeech": "adj",
+    "meaning": "意想不到的",
+    "example": "...the unintended consequences of human action.",
+    "translation": "...人类行为无心的结果。",
+    "phrases": []
+  },
+  {
+    "word": "union",
+    "phonetic": "/'junɪən/",
+    "partOfSpeech": "n",
+    "meaning": "联合；团结；协会；工会， 联盟； 联合， 团结； 一致",
+    "example": "Are you planning to join the union?",
+    "translation": "你打算加入工会吗？",
+    "phrases": [
+      "european union",
+      "soviet union",
+      "trade union",
+      "student union",
+      "labour union",
+      "labor union",
+      "in union",
+      "state of the union",
+      "students' union",
+      "monetary union",
+      "customs union",
+      "union station",
+      "credit union",
+      "national union",
+      "union square",
+      "european monetary union",
+      "world conservation union",
+      "international astronomical union",
+      "union jack",
+      "economic union"
+    ]
+  },
+  {
+    "word": "unique",
+    "phonetic": "/jʊ'nik/",
+    "partOfSpeech": "adj",
+    "meaning": "独特的，唯一的；唯一的，独一无二的；唯一的， 独一无二的； 极不寻常的， 极好的",
+    "example": "a unique opportunity to study these rare creatures",
+    "translation": "研究这些珍稀动物的难得机会",
+    "phrases": [
+      "unique style",
+      "unique feature",
+      "unique opportunity",
+      "unique ability",
+      "unique solution",
+      "unique skill",
+      "unique name",
+      "unique color",
+      "unique identifier",
+      "unique construction",
+      "unique index",
+      "unique selling proposition"
+    ]
+  },
+  {
+    "word": "unit",
+    "phonetic": "/'junɪt/",
+    "partOfSpeech": "n",
+    "meaning": "单位；单元；部件",
+    "example": "The man is in the hospital’s intensive care unit.",
+    "translation": "那名男子在医院的重症监护室。",
+    "phrases": [
+      "per unit",
+      "control unit",
+      "basic unit",
+      "pumping unit",
+      "business unit",
+      "unit area",
+      "construction unit",
+      "per unit area",
+      "grass-roots unit",
+      "processing unit",
+      "power unit",
+      "production unit",
+      "unit operation",
+      "unit time",
+      "single unit",
+      "unit cost",
+      "measurement unit",
+      "main unit",
+      "pump unit",
+      "generating unit"
+    ]
+  },
+  {
+    "word": "unite",
+    "phonetic": "/ju'naɪt/",
+    "partOfSpeech": "v",
+    "meaning": "联合；使联合；联合， 统一",
+    "example": "Our goal is to unite the opposition parties and defeat the President.",
+    "translation": "我们的目标是联合各反对党挫败总统。",
+    "phrases": [
+      "unite with"
+    ]
+  },
+  {
+    "word": "unity",
+    "phonetic": "/'junəti/",
+    "partOfSpeech": "n",
+    "meaning": "单一；统一；团结；单一， 统一， 团结； 和睦， 协调",
+    "example": "economic unity",
+    "translation": "经济统一",
+    "phrases": [
+      "national unity",
+      "unity is strength",
+      "strengthen unity",
+      "live together in unity",
+      "partition of unity"
+    ]
+  },
+  {
+    "word": "universal",
+    "phonetic": "/'jʊnə'vɝsl/",
+    "partOfSpeech": "adj",
+    "meaning": "普遍的，宇宙的，全世界的；宇宙的；普遍的；普遍的； 通用的； 全世界的",
+    "example": "free universal healthcare",
+    "translation": "免费的全民保健制度",
+    "phrases": [
+      "universal joint",
+      "universal law",
+      "universal suffrage",
+      "universal language",
+      "universal love",
+      "universal serial bus",
+      "universal gravitation",
+      "universal access",
+      "universal education",
+      "universal time",
+      "universal testing machine",
+      "universal music",
+      "universal coupling",
+      "universal shaft",
+      "universal machine",
+      "universal knowledge",
+      "universal rule",
+      "universal postal union",
+      "universal genius",
+      "universal grammar"
+    ]
+  },
+  {
+    "word": "universe",
+    "phonetic": "/'junɪvɝs/",
+    "partOfSpeech": "n",
+    "meaning": "宇宙， 世界； 领域， 范围",
+    "example": "Einstein's equations showed the universe to be expanding.",
+    "translation": "爱因斯坦的方程式表明宇宙正在扩大。",
+    "phrases": [
+      "universe of discourse",
+      "island universe",
+      "universe toy company",
+      "expanding universe"
+    ]
+  },
+  {
+    "word": "unknown",
+    "phonetic": "/,ʌn'non/",
+    "partOfSpeech": "adj",
+    "meaning": "不知道的；未知的",
+    "example": "The murderer’s identity remains unknown.",
+    "translation": "杀人凶手身份仍然不明。",
+    "phrases": [
+      "unknown number",
+      "unknown soldier",
+      "fever of unknown origin"
+    ]
+  },
+  {
+    "word": "unless",
+    "phonetic": "/ən'lɛs/",
+    "partOfSpeech": "conj",
+    "meaning": "除非，如果不；除非， 如果不",
+    "example": "Unless some extra money is found, the theatre will close.",
+    "translation": "要是不能找到更多资金，剧院将要关闭。",
+    "phrases": [
+      "unless and until"
+    ]
+  },
+  {
+    "word": "unlike",
+    "phonetic": "/'ʌn'laɪk/",
+    "partOfSpeech": "adj/prep",
+    "meaning": "不同的；不象…；不像…",
+    "example": "Now I see that, unlike her, they were my positive models.",
+    "translation": "现在我知道了，那些人不像她，他们是我的正面的表率。",
+    "phrases": []
+  },
+  {
+    "word": "unlikely",
+    "phonetic": "/ʌn'laɪkli/",
+    "partOfSpeech": "adj",
+    "meaning": "未必的，未必可能的",
+    "example": "Donna might be able to come tomorrow, but it’s very unlikely.",
+    "translation": "唐娜明天也许能来，不过这可能性很小。",
+    "phrases": []
+  },
+  {
+    "word": "unload",
+    "phonetic": "/'ʌn'lod/",
+    "partOfSpeech": "v",
+    "meaning": "卸(货)；卸货；卸， 卸货； 下客； 退出子弹； 卸下胶卷",
+    "example": "Unload everything from the boat and clean it thoroughly.",
+    "translation": "从小船上卸下所有的货物并彻底地清洗。",
+    "phrases": []
+  },
+  {
+    "word": "unrest",
+    "phonetic": "/ʌn'rɛst/",
+    "partOfSpeech": "n",
+    "meaning": "不安定，动荡",
+    "example": "There is growing unrest throughout the country.",
+    "translation": "全国各地日益动荡不安。",
+    "phrases": [
+      "social unrest"
+    ]
+  },
+  {
+    "word": "unusual",
+    "phonetic": "/ʌnˈjuʒəl/",
+    "partOfSpeech": "adj",
+    "meaning": "不平常的， 少有的； 独特的， 与众不同的",
+    "example": "an unusual feature",
+    "translation": "不寻常的特点",
+    "phrases": [
+      "unusual weather"
+    ]
+  },
+  {
+    "word": "unwilling",
+    "phonetic": "/ʌn'wɪlɪŋ/",
+    "partOfSpeech": "adj",
+    "meaning": "不愿意的",
+    "example": "an unwilling helper",
+    "translation": "勉强来帮忙的人",
+    "phrases": []
+  },
+  {
+    "word": "up-to-date",
+    "phonetic": "/'ʌptə 'det/",
+    "partOfSpeech": "adj",
+    "meaning": "直到最近的， 现代的； 跟上时代的",
+    "example": "...the most up-to-date information available on foods today.",
+    "translation": "…今日有关食品的最新消息。",
+    "phrases": [
+      "keep up-to-date"
+    ]
+  },
+  {
+    "word": "upbringing",
+    "phonetic": "/'ʌpbrɪŋɪŋ/",
+    "partOfSpeech": "n",
+    "meaning": "养育，培养，教养",
+    "example": "Mike had had a strict upbringing.",
+    "translation": "迈克从小家教很严。",
+    "phrases": []
+  },
+  {
+    "word": "update",
+    "phonetic": "/,ʌp'det/",
+    "partOfSpeech": "v",
+    "meaning": "更新，使现代化",
+    "example": "The files need updating.",
+    "translation": "这些档案需要更新。",
+    "phrases": [
+      "update information",
+      "dynamic update",
+      "last update",
+      "update now"
+    ]
+  },
+  {
+    "word": "upper",
+    "phonetic": "/'ʌpɚ/",
+    "partOfSpeech": "adj",
+    "meaning": "上面的；地位较高的；上面的， 地位较高的",
+    "example": "the upper lip",
+    "translation": "上唇",
+    "phrases": [
+      "upper part",
+      "upper limit",
+      "upper bound",
+      "upper hand",
+      "upper end",
+      "upper lip",
+      "upper layer",
+      "upper class",
+      "upper level",
+      "upper mantle",
+      "upper respiratory tract",
+      "upper arm",
+      "upper surface",
+      "upper right",
+      "upper leather",
+      "upper side",
+      "upper cover",
+      "upper atmosphere",
+      "upper house",
+      "upper limb"
+    ]
+  },
+  {
+    "word": "upright",
+    "phonetic": "/'ʌpraɪt/",
+    "partOfSpeech": "adj/adv",
+    "meaning": "垂直的；正直的；挺直着， 竖立着；垂直的；正直的，诚实的",
+    "example": "Katie was still awake, sitting bolt upright(= sitting with her back very straight ) staring at the television.",
+    "translation": "凯蒂还醒着，坐得笔直，眼睛盯着电视。",
+    "phrases": [
+      "upright position",
+      "upright post",
+      "an upright man"
+    ]
+  },
+  {
+    "word": "upset",
+    "phonetic": "/ʌp'sɛt/",
+    "partOfSpeech": "v/adj/vt/n",
+    "meaning": "弄翻，打翻，倾覆；心烦的， 苦恼的； 不适的；使心烦意乱，使苦恼，使不适；搅乱；弄翻，倾覆；翻倒；搅乱；不安；不适",
+    "example": "He upset a bowl of soup.",
+    "translation": "他打翻了一碗汤。",
+    "phrases": [
+      "upset stomach",
+      "get upset",
+      "stomach upset",
+      "upset forging",
+      "upset the apple cart"
+    ]
+  },
+  {
+    "word": "upward",
+    "phonetic": "/'ʌpwɚd/",
+    "partOfSpeech": "adj",
+    "meaning": "向上的，上升的",
+    "example": "upward pressure on bank interest rates",
+    "translation": "针对银行利率的越来越大的压力",
+    "phrases": [
+      "upward pressure",
+      "upward tendency",
+      "upward mobility",
+      "upward flow",
+      "move upward",
+      "upward movement",
+      "upward thrust"
+    ]
+  },
+  {
+    "word": "urban",
+    "phonetic": "/'ɝbən/",
+    "partOfSpeech": "adj",
+    "meaning": "a.；都市的,住在都市的；城市的， 都市的； 住在都市的",
+    "example": "unemployment in urban areas",
+    "translation": "城市地区的失业状况",
+    "phrases": [
+      "urban planning",
+      "urban construction",
+      "urban development",
+      "urban area",
+      "urban traffic",
+      "urban residents",
+      "urban environment",
+      "urban district",
+      "urban transportation",
+      "urban sewage",
+      "urban population",
+      "urban life",
+      "urban renewal",
+      "urban water supply",
+      "urban agglomeration",
+      "urban heat island",
+      "urban center",
+      "urban growth",
+      "urban sprawl",
+      "urban poor"
+    ]
+  },
+  {
+    "word": "urge",
+    "phonetic": "/ɝdʒ/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "推进；催促；冲动；鼓励；推进，催促；竭力主张，强烈要求；冲动， 强烈的欲望",
+    "example": "The charity urged quick action.",
+    "translation": "慈善机构敦促迅速采取行动。",
+    "phrases": []
+  },
+  {
+    "word": "urgent",
+    "phonetic": "/'ɝdʒənt/",
+    "partOfSpeech": "adj",
+    "meaning": "紧急的；强求的；紧急的， 急迫的",
+    "example": "He was in urgent need of medical attention.",
+    "translation": "他急需治疗。",
+    "phrases": [
+      "urgent need",
+      "extremely urgent",
+      "urgent message",
+      "an urgent message",
+      "top urgent",
+      "urgent call",
+      "urgent telegram"
+    ]
+  },
+  {
+    "word": "usage",
+    "phonetic": "/'jusɪdʒ/",
+    "partOfSpeech": "n",
+    "meaning": "使用，对待；惯用法；使用； 对待； 惯用法",
+    "example": "a book on modern English usage",
+    "translation": "关于现代英语用法的书",
+    "phrases": [
+      "usage rate",
+      "long term usage",
+      "usage time",
+      "usage period",
+      "usage data",
+      "usage factor",
+      "usage scenario",
+      "international usage",
+      "trade usage"
+    ]
+  },
+  {
+    "word": "utility",
+    "phonetic": "/ju'tɪləti/",
+    "partOfSpeech": "n",
+    "meaning": "使用，公共设施；效用，有用，实用；效用， 有用， 实用； 公用事业",
+    "example": "Does your rent include utilities?",
+    "translation": "你的房租包括公用事业费吗？",
+    "phrases": [
+      "utility model",
+      "public utility",
+      "utility function",
+      "utility value",
+      "utility theory",
+      "marginal utility",
+      "utility boiler",
+      "utility system",
+      "expected utility",
+      "utility vehicle",
+      "utility ratio",
+      "utility program",
+      "utility maximization",
+      "electric utility",
+      "sport utility vehicle",
+      "total utility",
+      "social utility",
+      "utility company",
+      "economic utility",
+      "practical utility"
+    ]
+  },
+  {
+    "word": "utilize",
+    "phonetic": "/'juːtəlaɪz/",
+    "partOfSpeech": "v/vt",
+    "meaning": "利用",
+    "example": "We must consider how best to utilize what resources we have.",
+    "translation": "我们必须考虑怎样充分利用现有的资源。",
+    "phrases": []
+  },
+  {
+    "word": "utmost",
+    "phonetic": "/'ʌt'most/",
+    "partOfSpeech": "adj/n",
+    "meaning": "最远的；极限",
+    "example": "It is a matter of the utmost urgency to find out what has happened to these people.",
+    "translation": "当务之急是弄清楚这些人出了什么事。",
+    "phrases": [
+      "to the utmost",
+      "do one's utmost",
+      "utmost good faith",
+      "at the utmost"
+    ]
+  },
+  {
+    "word": "utter",
+    "phonetic": "/'ʌtɚ/",
+    "partOfSpeech": "adj/vt",
+    "meaning": "完全的，彻底的；发出， 说， 讲",
+    "example": "That’s utter nonsense!",
+    "translation": "真是一派胡言！",
+    "phrases": []
+  },
+  {
+    "word": "vacant",
+    "phonetic": "/'vekənt/",
+    "partOfSpeech": "adj",
+    "meaning": "空的；未被占用的；空的， 未被占用的； 空缺的； 茫然的， 空虚的",
+    "example": "Only a few apartments were still vacant.",
+    "translation": "只有几套公寓仍然空着。",
+    "phrases": [
+      "vacant space",
+      "vacant room",
+      "vacant position",
+      "vacant land",
+      "vacant lot",
+      "vacant seat"
+    ]
+  },
+  {
+    "word": "vacation",
+    "phonetic": "/veˈkeʃən/",
+    "partOfSpeech": "n",
+    "meaning": "假期， 休假",
+    "example": "We’re planning a vacation in Europe.",
+    "translation": "我们正计划去欧洲度假。",
+    "phrases": [
+      "summer vacation",
+      "on vacation",
+      "winter vacation",
+      "long vacation",
+      "go on vacation",
+      "take a vacation",
+      "paid vacation",
+      "spring vacation"
+    ]
+  },
+  {
+    "word": "vacuum",
+    "phonetic": "/'vækjʊəm/",
+    "partOfSpeech": "n/v",
+    "meaning": "真空；真空吸尘器；用吸尘器清扫",
+    "example": "His presence should fill the power vacuum that has been developing over the past few days.",
+    "translation": "他的出现应该能填补过去几天中形成的权力空缺。",
+    "phrases": [
+      "vacuum pump",
+      "in a vacuum",
+      "high vacuum",
+      "vacuum distillation",
+      "vacuum cleaner",
+      "vacuum system",
+      "vacuum degree",
+      "vacuum drying",
+      "vacuum packaging",
+      "vacuum furnace",
+      "vacuum filter",
+      "vacuum tube",
+      "vacuum packing",
+      "vacuum circuit breaker",
+      "vacuum equipment",
+      "vacuum chamber",
+      "vacuum evaporation",
+      "vacuum heat treatment",
+      "vacuum interrupter",
+      "vacuum forming"
+    ]
+  },
+  {
+    "word": "vague",
+    "phonetic": "/veɡ/",
+    "partOfSpeech": "adj",
+    "meaning": "模糊的，含糊的；模糊的， 含糊的",
+    "example": "The governor gave only a vague outline of his tax plan.",
+    "translation": "州长只是含糊地大致说了一下他的税务计划。",
+    "phrases": []
+  },
+  {
+    "word": "vain",
+    "phonetic": "/ven/",
+    "partOfSpeech": "adj",
+    "meaning": "徒劳的；自负的；徒劳的； 自负的",
+    "example": "Men can be just as vain as women.",
+    "translation": "男人有时会和女人一样虚荣。",
+    "phrases": [
+      "in vain",
+      "vain glory"
+    ]
+  },
+  {
+    "word": "valid",
+    "phonetic": "/'vælɪd/",
+    "partOfSpeech": "adj",
+    "meaning": "有效的；有效的；正当的；有效的； 正当的； 有根据的， 有理的",
+    "example": "a valid credit card",
+    "translation": "有效信用卡",
+    "phrases": [
+      "valid period",
+      "valid certificate",
+      "valid until",
+      "valid data",
+      "must be valid",
+      "valid time",
+      "valid contract",
+      "valid from",
+      "valid date",
+      "valid business registration certificate"
+    ]
+  },
+  {
+    "word": "value",
+    "phonetic": "/'vælju/",
+    "partOfSpeech": "v/n",
+    "meaning": "重视；价值；价格；评价",
+    "example": "Shelley valued her privacy.",
+    "translation": "谢利很重视自己的隐私。",
+    "phrases": [
+      "of value",
+      "reference value",
+      "practical value",
+      "value chain",
+      "in value",
+      "economic value",
+      "market value",
+      "high value",
+      "added value",
+      "value on",
+      "boundary value",
+      "value added",
+      "of great value",
+      "value system",
+      "peak value",
+      "social value",
+      "numerical value",
+      "core value",
+      "theoretical value",
+      "threshold value"
+    ]
+  },
+  {
+    "word": "van",
+    "phonetic": "/væn/",
+    "partOfSpeech": "n",
+    "meaning": "大篷车，运货车；大篷车， 运货车",
+    "example": "a delivery van",
+    "translation": "运货车",
+    "phrases": [
+      "van gogh",
+      "van der waals",
+      "vincent van gogh",
+      "van buren",
+      "jeff van gundy",
+      "van der waals force",
+      "ludwig van beethoven"
+    ]
+  },
+  {
+    "word": "vanish",
+    "phonetic": "/'vænɪʃ/",
+    "partOfSpeech": "v",
+    "meaning": "消失；突然不见，消失；突然不见， 消失； 不复存在， 绝迹",
+    "example": "My keys were here a minute ago but now they’ve vanished.",
+    "translation": "我的钥匙刚刚还在这里，现在却不翼而飞了。",
+    "phrases": [
+      "vanish from",
+      "vanish away"
+    ]
+  },
+  {
+    "word": "vapour",
+    "phonetic": "/'vepɚ/",
+    "partOfSpeech": "n",
+    "meaning": "汽，蒸气；蒸汽",
+    "example": "water vapour",
+    "translation": "水蒸气",
+    "phrases": [
+      "water vapour",
+      "chemical vapour deposition",
+      "vapour pressure",
+      "vapour phase",
+      "oil vapour",
+      "saturated vapour"
+    ]
+  },
+  {
+    "word": "variable",
+    "phonetic": "/'vɛrɪəbl/",
+    "partOfSpeech": "adj/n",
+    "meaning": "易变的；变量",
+    "example": "Expect variable cloudiness and fog tomorrow.",
+    "translation": "预计明天多云有雾，天气多变。",
+    "phrases": [
+      "variable speed",
+      "random variable",
+      "state variable",
+      "independent variable",
+      "dependent variable",
+      "design variable",
+      "complex variable",
+      "control variable",
+      "local variable",
+      "environment variable",
+      "variable parameter",
+      "continuous variable",
+      "variable cost",
+      "variable pitch",
+      "variable flow",
+      "output variable",
+      "global variable",
+      "variable data",
+      "discrete variable",
+      "variable coefficient"
+    ]
+  },
+  {
+    "word": "variation",
+    "phonetic": "/,vɛrɪ'eʃən/",
+    "partOfSpeech": "n",
+    "meaning": "变化，变动；变异；变化， 变动； 变异； 变奏",
+    "example": "Most of his poems are variations on the theme of love.",
+    "translation": "他的大部分诗作都是有关爱情主题的形式不同的作品。",
+    "phrases": [
+      "temperature variation",
+      "genetic variation",
+      "coefficient of variation",
+      "variation coefficient",
+      "seasonal variation",
+      "spatial variation",
+      "total variation",
+      "frequency variation",
+      "time variation",
+      "variation method",
+      "variation range",
+      "diurnal variation",
+      "annual variation",
+      "speed variation",
+      "variation principle",
+      "variation analysis",
+      "environmental variation",
+      "weight variation",
+      "voltage variation",
+      "random variation"
+    ]
+  },
+  {
+    "word": "variety",
+    "phonetic": "/və'raɪəti/",
+    "partOfSpeech": "n",
+    "meaning": "多样；多样化；种类；变种；多样化； 种类； 变种",
+    "example": "The girls come from a variety of different backgrounds.",
+    "translation": "这些女孩出身背景各不相同。",
+    "phrases": [
+      "variety of",
+      "product variety",
+      "a great variety of",
+      "variety show",
+      "infinite variety",
+      "variety store"
+    ]
+  },
+  {
+    "word": "various",
+    "phonetic": "/'vɛrɪəs/",
+    "partOfSpeech": "adj",
+    "meaning": "各种各样的，不同的；各种各样的， 不同的",
+    "example": "The jacket is available in various colours.",
+    "translation": "这种夹克有好多种颜色可选。",
+    "phrases": [
+      "in various ways",
+      "various styles",
+      "various people",
+      "at various times",
+      "on various occasions",
+      "adopt various methods",
+      "various artists"
+    ]
+  },
+  {
+    "word": "vary",
+    "phonetic": "/ˈveri/",
+    "partOfSpeech": "v",
+    "meaning": "变化；不同；改变；使多样化；改变； 多样化",
+    "example": "Test scores vary from school to school.",
+    "translation": "测验成绩各校不同。",
+    "phrases": [
+      "vary with",
+      "vary from",
+      "vary in",
+      "vary in size"
+    ]
+  },
+  {
+    "word": "vast",
+    "phonetic": "/væst/",
+    "partOfSpeech": "adj",
+    "meaning": "巨大的；大量的；巨大的， 大量的； 浩瀚的",
+    "example": "The refugees come across the border in vast numbers.",
+    "translation": "大量难民涌过边境。",
+    "phrases": [
+      "vast majority",
+      "vast scale",
+      "vast sums of money"
+    ]
+  },
+  {
+    "word": "vehicle",
+    "phonetic": "/'viːɪkl/",
+    "partOfSpeech": "n",
+    "meaning": "车辆；车辆，机动车；车辆， 机动车； 传播媒介， 工具， 手段",
+    "example": "a description of the stolen vehicle",
+    "translation": "对被盗车辆的描述",
+    "phrases": [
+      "motor vehicle",
+      "electric vehicle",
+      "vehicle maintenance",
+      "commercial vehicle",
+      "launch vehicle",
+      "railway vehicle",
+      "passenger vehicle",
+      "vehicle registration",
+      "transport vehicle",
+      "tracked vehicle",
+      "road vehicle",
+      "armored vehicle",
+      "special purpose vehicle",
+      "space vehicle",
+      "utility vehicle",
+      "vehicle traffic",
+      "heavy vehicle",
+      "hybrid vehicle",
+      "off-road vehicle",
+      "light vehicle"
+    ]
+  },
+  {
+    "word": "velocity",
+    "phonetic": "/vəˈlɑsəti/",
+    "partOfSpeech": "n",
+    "meaning": "速度，速率",
+    "example": "the velocity of light",
+    "translation": "光速",
+    "phrases": [
+      "flow velocity",
+      "velocity field",
+      "velocity distribution",
+      "wave velocity",
+      "high velocity",
+      "gas velocity",
+      "angular velocity",
+      "wind velocity",
+      "low velocity",
+      "air velocity",
+      "velocity measurement",
+      "velocity of flow",
+      "group velocity",
+      "particle velocity",
+      "space velocity",
+      "linear velocity",
+      "constant velocity",
+      "vibration velocity",
+      "critical velocity",
+      "average velocity"
+    ]
+  },
+  {
+    "word": "venture",
+    "phonetic": "/'vɛntʃɚ/",
+    "partOfSpeech": "n&vi/v/n",
+    "meaning": "冒险；敢于；冒险， 敢于；风险投资，风险项目",
+    "example": "When darkness fell, he would venture out.",
+    "translation": "天黑以后，他就会壮着胆子出去。",
+    "phrases": [
+      "joint venture",
+      "venture capital",
+      "venture company",
+      "sino-foreign joint venture",
+      "joint venture enterprise",
+      "venture capitalist",
+      "business venture",
+      "venture capital fund",
+      "venture capital firms",
+      "joint venture contract",
+      "contractual joint venture",
+      "venture out",
+      "venture capital market",
+      "venture business",
+      "venture on",
+      "at a venture",
+      "joint venture agreement"
+    ]
+  },
+  {
+    "word": "verify",
+    "phonetic": "/'vɛrɪfaɪ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "证实，查证；证明；证实， 查证， 证明",
+    "example": "His statement was verified by several witnesses.",
+    "translation": "他的说法得到了几位证人的证实。",
+    "phrases": [
+      "examine and verify"
+    ]
+  },
+  {
+    "word": "version",
+    "phonetic": "/'vɝʒn/",
+    "partOfSpeech": "n",
+    "meaning": "版本；译文；说法；改写本；译本； 说法； 改写本",
+    "example": "the human version of mad cow disease",
+    "translation": "疯牛病的人类变体",
+    "phrases": [
+      "english version",
+      "latest version",
+      "original version",
+      "current version",
+      "version control",
+      "trial version",
+      "version number",
+      "updated version",
+      "special version",
+      "release version",
+      "basic version"
+    ]
+  },
+  {
+    "word": "vertical",
+    "phonetic": "/'vɝtɪkl/",
+    "partOfSpeech": "adj",
+    "meaning": "垂直的，竖式的；垂直的， 竖式的",
+    "example": "a vertical line",
+    "translation": "垂直线",
+    "phrases": [
+      "vertical direction",
+      "vertical shaft",
+      "vertical distribution",
+      "vertical load",
+      "vertical integration",
+      "vertical displacement",
+      "vertical lathe",
+      "vertical axis",
+      "vertical line",
+      "vertical section",
+      "vertical plane",
+      "vertical position",
+      "vertical structure",
+      "vertical resolution",
+      "vertical tube",
+      "vertical flow",
+      "vertical distance",
+      "vertical pressure",
+      "vertical force",
+      "vertical plate"
+    ]
+  },
+  {
+    "word": "vessel",
+    "phonetic": "/'vɛsl/",
+    "partOfSpeech": "n",
+    "meaning": "容器；船，飞船；管；容器； 船； 飞船； 管",
+    "example": "a fishing vessel",
+    "translation": "渔船",
+    "phrases": [
+      "pressure vessel",
+      "blood vessel",
+      "vessel wall",
+      "naval vessel",
+      "carrying vessel",
+      "fishing vessel",
+      "reaction vessel",
+      "capillary vessel",
+      "name of vessel",
+      "lymphatic vessel",
+      "high pressure vessel",
+      "sailing vessel",
+      "cargo vessel",
+      "container vessel",
+      "reactor vessel",
+      "culture vessel",
+      "pressure vessel code",
+      "vacuum vessel",
+      "steel vessel",
+      "vessel element"
+    ]
+  },
+  {
+    "word": "veteran",
+    "phonetic": "/'vɛtərən/",
+    "partOfSpeech": "n",
+    "meaning": "老兵，老手；老兵， 老手",
+    "example": "a Vietnam veteran",
+    "translation": "越战老兵",
+    "phrases": []
+  },
+  {
+    "word": "via",
+    "phonetic": "/ˈvaɪə, ˈviə/",
+    "partOfSpeech": "prep",
+    "meaning": "通过；经过；通过；经过， 通过",
+    "example": "We flew to Athens via Paris.",
+    "translation": "我们经由巴黎飞往雅典。",
+    "phrases": []
+  },
+  {
+    "word": "vibrate",
+    "phonetic": "/vaɪ'breɪt/",
+    "partOfSpeech": "v",
+    "meaning": "使颤动；颤动",
+    "example": "The floor was vibrating to the beat of the music.",
+    "translation": "地板随着音乐的节奏在颤动。",
+    "phrases": []
+  },
+  {
+    "word": "vice",
+    "phonetic": "/vaɪs/",
+    "partOfSpeech": "n",
+    "meaning": "罪恶；恶习；缺点；罪恶； 恶习， 缺点； 虎钳",
+    "example": "the fight against vice on the streets",
+    "translation": "打击街头犯罪",
+    "phrases": [
+      "vice president",
+      "vice versa",
+      "vice director",
+      "vice chairman",
+      "vice premier",
+      "vice minister",
+      "senior vice president",
+      "executive vice president",
+      "vice governor",
+      "standing vice",
+      "vice general manager",
+      "vice manager",
+      "vice verse",
+      "inherent vice",
+      "virtue and vice",
+      "vice squad"
+    ]
+  },
+  {
+    "word": "victim",
+    "phonetic": "/'vɪktɪm/",
+    "partOfSpeech": "n",
+    "meaning": "牺牲者， 受害者",
+    "example": "The victim received head injuries from which she died a week later.",
+    "translation": "受害人头部受伤，一周后死亡。",
+    "phrases": [
+      "fall victim to",
+      "fashion victim"
+    ]
+  },
+  {
+    "word": "victimize",
+    "phonetic": "/'vɪktɪmaɪz/",
+    "partOfSpeech": "vt",
+    "meaning": "使受害， 使牺牲",
+    "example": "The men claim they have been victimized because of their political activity.",
+    "translation": "那些人声称他们因为自己的政治活动而受到了迫害。",
+    "phrases": []
+  },
+  {
+    "word": "video",
+    "phonetic": "/'vɪdɪo/",
+    "partOfSpeech": "adj/n",
+    "meaning": "录像的；电视的；录像",
+    "example": "video production",
+    "translation": "录像制作",
+    "phrases": [
+      "digital video",
+      "video game",
+      "video frequency",
+      "video camera",
+      "video signal",
+      "video conferencing",
+      "video conference",
+      "video recording",
+      "video transmission",
+      "video compression",
+      "video capture",
+      "video clip",
+      "music video",
+      "video processing",
+      "video card",
+      "video tape",
+      "video equipment",
+      "video display",
+      "video monitor",
+      "video quality"
+    ]
+  },
+  {
+    "word": "view",
+    "phonetic": "/vju/",
+    "partOfSpeech": "v",
+    "meaning": "看待",
+    "example": "an opportunity to view the film before it goes on general release",
+    "translation": "在影片公映之前观影的机会",
+    "phrases": [
+      "in view",
+      "in view of",
+      "point of view",
+      "with a view to",
+      "view on",
+      "in the view of",
+      "points of view",
+      "view point",
+      "angle of view",
+      "new view",
+      "in my view",
+      "on the view",
+      "world view",
+      "distant view",
+      "field of view",
+      "view as",
+      "with a view of",
+      "with the view of",
+      "beautiful view",
+      "to the view"
+    ]
+  },
+  {
+    "word": "viewpoint",
+    "phonetic": "/'vjupɔɪnt/",
+    "partOfSpeech": "n",
+    "meaning": "观点， 看法， 见解",
+    "example": "Different viewpoints produce different images.",
+    "translation": "角度不同，产生的画面也不同。",
+    "phrases": []
+  },
+  {
+    "word": "vigorous",
+    "phonetic": "/'vɪɡərəs/",
+    "partOfSpeech": "adj",
+    "meaning": "朝气蓬勃的；朝气蓬勃的； 有力的， 用力的",
+    "example": "Your dog needs at least 20 minutes of vigorous exercise every day.",
+    "translation": "你的狗每天需要进行至少20分钟的剧烈运动。",
+    "phrases": []
+  },
+  {
+    "word": "vinegar",
+    "phonetic": "/'vɪnɪɡɚ/",
+    "partOfSpeech": "n",
+    "meaning": "醋",
+    "example": "The sugared vinegar is refined from the sugarcane and pine.",
+    "translation": "加糖的醋是从甘蔗和松木中精炼出来的.",
+    "phrases": [
+      "fruit vinegar",
+      "apple vinegar",
+      "cider vinegar",
+      "white vinegar",
+      "rice vinegar",
+      "balsamic vinegar",
+      "wine vinegar"
+    ]
+  },
+  {
+    "word": "violate",
+    "phonetic": "/'vaɪəlet/",
+    "partOfSpeech": "v/vt",
+    "meaning": "违反；违反， 违背； 亵渎； 侵犯； 妨碍",
+    "example": "34 protesters were arrested for violating criminal law.",
+    "translation": "34名抗议者因违反刑法而被逮捕。",
+    "phrases": []
+  },
+  {
+    "word": "violence",
+    "phonetic": "/'vaɪələns/",
+    "partOfSpeech": "n",
+    "meaning": "猛烈， 激烈； 暴力",
+    "example": "She spoke with a violence that surprised them both.",
+    "translation": "她言辞激烈，令他们俩都很惊讶。",
+    "phrases": [
+      "domestic violence",
+      "family violence",
+      "physical violence",
+      "do violence to",
+      "marital violence",
+      "brutal violence"
+    ]
+  },
+  {
+    "word": "violent",
+    "phonetic": "/'vaɪələnt/",
+    "partOfSpeech": "adj",
+    "meaning": "猛烈的；狂暴的；暴力引起的， 暴力的； 猛烈的， 剧烈的",
+    "example": "the increase in violent crime",
+    "translation": "暴力犯罪的增多",
+    "phrases": [
+      "violent crime",
+      "violent death",
+      "violent storm",
+      "violent earthquake"
+    ]
+  },
+  {
+    "word": "violet",
+    "phonetic": "/'vaɪələt/",
+    "partOfSpeech": "n/adj",
+    "meaning": "紫罗兰；紫色的",
+    "example": "She inhaled the violet perfume, saying “How sweet!”",
+    "translation": "她一边闻紫罗兰的芳香， 一边说“好香啊！”",
+    "phrases": [
+      "crystal violet",
+      "ultra violet",
+      "violet light",
+      "violet red",
+      "shrinking violet",
+      "methyl violet",
+      "violet ray",
+      "gentian violet"
+    ]
+  },
+  {
+    "word": "violin",
+    "phonetic": "/,vaɪə'lɪn/",
+    "partOfSpeech": "n",
+    "meaning": "小提琴",
+    "example": "He plays the violin in an orchestra.",
+    "translation": "他在管弦乐队中演奏小提琴。",
+    "phrases": [
+      "violin concerto",
+      "violin concertos"
+    ]
+  },
+  {
+    "word": "virtual",
+    "phonetic": "/[ˈvɜ:rtʃuəl]/",
+    "partOfSpeech": "adj",
+    "meaning": "虚拟的；实质上的， 事实上的， 实际上的",
+    "example": "The website allows you to take a virtual tour of the art gallery.",
+    "translation": "这个网站可让你对美术馆作一番虚拟参观。",
+    "phrases": [
+      "virtual reality",
+      "virtual world",
+      "virtual machine",
+      "virtual memory",
+      "virtual network",
+      "virtual space",
+      "virtual organization",
+      "virtual work",
+      "virtual community",
+      "virtual storage",
+      "virtual function",
+      "virtual server",
+      "virtual address",
+      "virtual logistics",
+      "virtual value",
+      "virtual image",
+      "virtual circuit",
+      "virtual office",
+      "virtual disk",
+      "virtual market"
+    ]
+  },
+  {
+    "word": "virtually",
+    "phonetic": "/ˈvɜrtʃuəli/",
+    "partOfSpeech": "adv",
+    "meaning": "几乎，差不多；实际上，事实上；实际上， 事实上",
+    "example": "Virtually all the children come to school by bus.",
+    "translation": "几乎所有的孩子都乘公交车上学。",
+    "phrases": []
+  },
+  {
+    "word": "virtue",
+    "phonetic": "/'vɝtʃʊ/",
+    "partOfSpeech": "n",
+    "meaning": "善；美德；优点；善， 美德； 优点， 长处",
+    "example": "Women have often been used as symbols of virtue.",
+    "translation": "女性常被用作美德的象征。",
+    "phrases": [
+      "virtue of",
+      "by virtue of",
+      "in virtue of",
+      "virtue education",
+      "have the virtue of",
+      "of easy virtue",
+      "virtue and vice"
+    ]
+  },
+  {
+    "word": "virus",
+    "phonetic": "/'vaɪrəs/",
+    "partOfSpeech": "n",
+    "meaning": "病毒；病毒； 病毒性疾病， 病毒病",
+    "example": "children infected with the Aids virus",
+    "translation": "感染艾滋病病毒的儿童",
+    "phrases": [
+      "influenza virus",
+      "b virus",
+      "hepatitis b virus",
+      "flu virus",
+      "computer virus",
+      "virus infection",
+      "aids virus",
+      "human immunodeficiency virus",
+      "hiv virus",
+      "herpes simplex virus",
+      "virus disease",
+      "mosaic virus",
+      "avian influenza virus",
+      "hepatitis virus",
+      "virus hepatitis",
+      "newcastle disease virus",
+      "rabies virus",
+      "influenza a virus",
+      "respiratory syncytial virus",
+      "human papilloma virus"
+    ]
+  },
+  {
+    "word": "visibility",
+    "phonetic": "/'vɪzə'bɪləti/",
+    "partOfSpeech": "n",
+    "meaning": "能见度；可见度， 能见度； 可见性， 明显性",
+    "example": "Visibility on the roads is down to 20 metres due to heavy fog.",
+    "translation": "道路能见度因浓雾降至20米。",
+    "phrases": [
+      "low visibility",
+      "poor visibility",
+      "visibility meter"
+    ]
+  },
+  {
+    "word": "visible",
+    "phonetic": "/'vɪzəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "看得见的；可见的，看得见的；可见的， 看得见的， 有形的",
+    "example": "The comet is visible to the naked eye (= can be seen without using special equipment ).",
+    "translation": "这颗彗星肉眼看得见。",
+    "phrases": [
+      "visible light",
+      "visible spectrum",
+      "visible image",
+      "visible range",
+      "visible trade",
+      "visible laser"
+    ]
+  },
+  {
+    "word": "vision",
+    "phonetic": "/'vɪʒən/",
+    "partOfSpeech": "n",
+    "meaning": "视；想象力；梦幻；想象力； 梦幻； 视力， 视觉",
+    "example": "She suffered temporary loss of vision after being struck on the head.",
+    "translation": "她头部受撞击以后出现暂时性失明。",
+    "phrases": [
+      "computer vision",
+      "machine vision",
+      "field of vision",
+      "vision system",
+      "night vision",
+      "blurred vision",
+      "binocular vision",
+      "range of vision",
+      "color vision",
+      "vision of the future",
+      "laser vision",
+      "peripheral vision",
+      "line of vision",
+      "monocular vision",
+      "wide vision",
+      "stereoscopic vision",
+      "tunnel vision",
+      "double vision",
+      "angle of vision",
+      "persistence of vision"
+    ]
+  },
+  {
+    "word": "visual",
+    "phonetic": "/'vɪʒʊəl/",
+    "partOfSpeech": "adj/n",
+    "meaning": "看的；看得见的；看得见的；视觉资料",
+    "example": "Artists translate their ideas into visual images.",
+    "translation": "画家把自己的思想转换成视觉画面。",
+    "phrases": [
+      "visual angle",
+      "visual effect",
+      "visual field",
+      "visual acuity",
+      "visual system",
+      "visual communication",
+      "visual information",
+      "visual impact",
+      "visual image",
+      "visual language",
+      "visual art",
+      "visual inspection",
+      "visual perception",
+      "visual basic",
+      "visual display",
+      "visual identity",
+      "visual cortex",
+      "visual range",
+      "visual impairment",
+      "visual programming"
+    ]
+  },
+  {
+    "word": "vital",
+    "phonetic": "/'vaɪtl/",
+    "partOfSpeech": "adj",
+    "meaning": "重要的；生命的；有生命力的；致命的， 生死攸关的； 极其重要的； 生命的， 有生命力的",
+    "example": "The work she does is absolutely vital.",
+    "translation": "她所做的工作至关重要。",
+    "phrases": [
+      "vital part",
+      "vital energy",
+      "vital force",
+      "vital capacity",
+      "vital function",
+      "vital statistics",
+      "vital interest",
+      "vital point",
+      "vital sign"
+    ]
+  },
+  {
+    "word": "vitally",
+    "phonetic": "/'vaɪtəli/",
+    "partOfSpeech": "adv",
+    "meaning": "极其重要地",
+    "example": "A sensible diet is vitally important if you want to remain in good health.",
+    "translation": "如想保持健康，合理的饮食十分重要。",
+    "phrases": [
+      "vitally important"
+    ]
+  },
+  {
+    "word": "vitamin",
+    "phonetic": "/'vaɪtəmɪn/",
+    "partOfSpeech": "n",
+    "meaning": "维生素，维他命；维生素",
+    "example": "Try to eat foods that are rich in vitamins and minerals.",
+    "translation": "尽量吃富含维生素和矿物质的食物。",
+    "phrases": [
+      "vitamin c",
+      "vitamin e",
+      "vitamin d",
+      "vitamin a",
+      "vitamin k",
+      "vitamin b complex",
+      "vitamin p",
+      "vitamin deficiency"
+    ]
+  },
+  {
+    "word": "vivid",
+    "phonetic": "/'vɪvɪd/",
+    "partOfSpeech": "adj",
+    "meaning": "鲜艳的；生动的；鲜艳的； 生动的， 栩栩如生的",
+    "example": "I’ve got vivid memories of that summer.",
+    "translation": "我对那年夏天记忆犹新。",
+    "phrases": [
+      "vivid description",
+      "vivid picture",
+      "vivid green"
+    ]
+  },
+  {
+    "word": "vocabulary",
+    "phonetic": "/və'kæbjəlɛri/",
+    "partOfSpeech": "n",
+    "meaning": "词汇；词汇表， 词汇， 语汇",
+    "example": "Teachers were impressed by his vocabulary.",
+    "translation": "他的词汇量给老师们留下了深刻的印象。",
+    "phrases": [
+      "grammar and vocabulary",
+      "basic vocabulary"
+    ]
+  },
+  {
+    "word": "volcano",
+    "phonetic": "/vɑl'keno/",
+    "partOfSpeech": "n",
+    "meaning": "火山",
+    "example": "Pompeii was destroyed when the volcano erupted in 79 AD.",
+    "translation": "庞贝城于公元79年在火山爆发中毁灭。",
+    "phrases": [
+      "active volcano",
+      "dormant volcano",
+      "extinct volcano"
+    ]
+  },
+  {
+    "word": "volt",
+    "phonetic": "/volt/",
+    "partOfSpeech": "n",
+    "meaning": "伏特，伏；伏特， 伏",
+    "example": "That is one electron volt.",
+    "translation": "就是一单位的电子伏特。",
+    "phrases": []
+  },
+  {
+    "word": "voltage",
+    "phonetic": "/'voltɪdʒ/",
+    "partOfSpeech": "n",
+    "meaning": "电压",
+    "example": "The systems are getting smaller and using lower voltages.",
+    "translation": "这些系统正变得更小而且使用更低的电压。",
+    "phrases": [
+      "low voltage",
+      "output voltage",
+      "voltage stability",
+      "input voltage",
+      "dc voltage",
+      "rated voltage",
+      "voltage control",
+      "voltage regulator",
+      "voltage source",
+      "supply voltage",
+      "voltage drop",
+      "ac voltage",
+      "voltage transformer",
+      "constant voltage",
+      "voltage regulation",
+      "arc voltage",
+      "working voltage",
+      "breakdown voltage",
+      "medium voltage",
+      "applied voltage"
+    ]
+  },
+  {
+    "word": "volume",
+    "phonetic": "/'vɑljum/",
+    "partOfSpeech": "n",
+    "meaning": "卷，册；容积；音量；卷， 册， 书卷； 容积， 体积； 音量， 响度",
+    "example": "the volume of trade",
+    "translation": "贸易量",
+    "phrases": [
+      "sales volume",
+      "volume fraction",
+      "traffic volume",
+      "high volume",
+      "air volume",
+      "trading volume",
+      "volume ratio",
+      "pore volume",
+      "total volume",
+      "trade volume",
+      "volume production",
+      "constant volume",
+      "by volume",
+      "volume control",
+      "control volume",
+      "unit volume",
+      "production volume",
+      "transaction volume",
+      "volume change",
+      "data volume"
+    ]
+  },
+  {
+    "word": "voluntary",
+    "phonetic": "/'vɑləntɛri/",
+    "partOfSpeech": "adj",
+    "meaning": "自愿的，主动的；自愿的，志愿的；自愿的， 志愿的",
+    "example": "Workers are being encouraged to take voluntary redundancy.",
+    "translation": "工人被鼓励主动离职。",
+    "phrases": [
+      "voluntary contributions",
+      "voluntary agreement",
+      "voluntary withdrawal",
+      "voluntary movement",
+      "voluntary association",
+      "voluntary action",
+      "voluntary muscle"
+    ]
+  },
+  {
+    "word": "volunteer",
+    "phonetic": "/,vɑlən'tɪr/",
+    "partOfSpeech": "v/n",
+    "meaning": "自愿提供； 自愿， 志愿；志愿者；志愿兵",
+    "example": "I volunteered my services as a driver.",
+    "translation": "我主动提出来当司机。",
+    "phrases": [
+      "volunteer services"
+    ]
+  },
+  {
+    "word": "vote",
+    "phonetic": "/vot; voʊt/",
+    "partOfSpeech": "v/n",
+    "meaning": "投票，选举；投票； 表决；票，选票；选举，投票，表决；表决结果，投票总数",
+    "example": "In 1918 British women got the right to vote.",
+    "translation": "1918年，英国妇女获得了选举权。",
+    "phrases": [
+      "vote for",
+      "vote on",
+      "vote in",
+      "right to vote",
+      "vote against",
+      "majority vote",
+      "vote of confidence",
+      "cast a vote",
+      "put to the vote",
+      "popular vote",
+      "vote of no confidence",
+      "casting vote",
+      "unanimous vote",
+      "negative vote",
+      "vote out",
+      "vote down",
+      "affirmative vote",
+      "take a vote",
+      "voice vote"
+    ]
+  },
+  {
+    "word": "voyage",
+    "phonetic": "/'vɔɪɪdʒ/",
+    "partOfSpeech": "n&vi/n",
+    "meaning": "航海，航空；字",
+    "example": "The voyage from England to India used to take six months.",
+    "translation": "过去从英格兰到印度要航行六个月。",
+    "phrases": [
+      "maiden voyage",
+      "sea voyage",
+      "bon voyage",
+      "voyage charter"
+    ]
+  },
+  {
+    "word": "wage",
+    "phonetic": "/wedʒ/",
+    "partOfSpeech": "v",
+    "meaning": "开展(运动)",
+    "example": "The government, along with the three factions that had been waging a civil war, signed a peace agreement.",
+    "translation": "政府和发动了内战的3方一起签订了1份和平协议。",
+    "phrases": [
+      "minimum wage",
+      "the wages of sin",
+      "wage system",
+      "average wage",
+      "wage level",
+      "wage income",
+      "low wage",
+      "wage rate",
+      "basic wage",
+      "living wage",
+      "hourly wage",
+      "incentive wage",
+      "freeze wages",
+      "wage earner",
+      "efficiency wage",
+      "wage freeze",
+      "wage scale",
+      "wage labor",
+      "wage structure",
+      "wage hike"
+    ]
+  },
+  {
+    "word": "waggon",
+    "phonetic": "/'wægən/",
+    "partOfSpeech": "n",
+    "meaning": "四轮运货马车",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "wagon",
+    "phonetic": "/'wægən/",
+    "partOfSpeech": "n",
+    "meaning": "四轮马车， 大篷车； 铁路货车， 客货两用车",
+    "example": "In the wagon.",
+    "translation": "在货车里。",
+    "phrases": [
+      "station wagon",
+      "on the wagon",
+      "railway wagon",
+      "off the wagon",
+      "tank wagon",
+      "wagon train",
+      "circus wagon",
+      "covered wagon"
+    ]
+  },
+  {
+    "word": "waist",
+    "phonetic": "/west/",
+    "partOfSpeech": "n",
+    "meaning": "腰， 腰部",
+    "example": "The skirt was too big around the waist.",
+    "translation": "那条裙子腰围太大。",
+    "phrases": [
+      "waist circumference",
+      "beam waist",
+      "waist line",
+      "waist width",
+      "waist belt",
+      "strip to the waist",
+      "waist bag"
+    ]
+  },
+  {
+    "word": "waken",
+    "phonetic": "/'wekən/",
+    "partOfSpeech": "v",
+    "meaning": "醒来；弄醒；醒来， 弄醒",
+    "example": "She gently wakened the sleeping child.",
+    "translation": "她轻轻地唤醒睡梦中的孩子。",
+    "phrases": [
+      "waken up"
+    ]
+  },
+  {
+    "word": "wander",
+    "phonetic": "/'wɑndɚ/",
+    "partOfSpeech": "v/vi",
+    "meaning": "漫游；迷路；离题；漫游， 闲逛， 漫步； 偏离正道； 走神， 恍惚",
+    "example": "Don’t let any of the kids wander off.",
+    "translation": "不要让任何一个小孩走开去。",
+    "phrases": [
+      "wander off",
+      "wander about",
+      "wander from",
+      "baseline wander"
+    ]
+  },
+  {
+    "word": "want",
+    "phonetic": "/wɑnt/",
+    "partOfSpeech": "n",
+    "meaning": "需要；缺乏",
+    "example": "The gallery closed down for want of funding.",
+    "translation": "那家画廊由于缺乏资金关闭了。",
+    "phrases": [
+      "want to be",
+      "do you want to",
+      "want to do",
+      "what do you want",
+      "want of",
+      "want in",
+      "in want",
+      "want for",
+      "whatever you want",
+      "in want of",
+      "for want of",
+      "want out",
+      "freedom from want",
+      "want ad",
+      "want a go"
+    ]
+  },
+  {
+    "word": "warmth",
+    "phonetic": "/wɔrmθ/",
+    "partOfSpeech": "n",
+    "meaning": "暖和，温暖；热烈；暖和， 温暖； 热烈， 热情， 热心",
+    "example": "She went further into the room, drawn by the warmth of the fire.",
+    "translation": "她被火的温暖吸引着，走进了房间。",
+    "phrases": []
+  },
+  {
+    "word": "water",
+    "phonetic": "/ˈwɔtɚ; ˈwɑtɚ/",
+    "partOfSpeech": "n/v",
+    "meaning": "水；使湿，灌溉",
+    "example": "There’s water all over the bathroom floor.",
+    "translation": "浴室地面上都是水。",
+    "phrases": [
+      "water quality",
+      "water supply",
+      "water treatment",
+      "waste water",
+      "drinking water",
+      "hot water",
+      "water pollution",
+      "water resource",
+      "water content",
+      "water system",
+      "water conservancy",
+      "cooling water",
+      "water level",
+      "by water",
+      "surface water",
+      "fresh water",
+      "cold water",
+      "high water",
+      "water injection",
+      "ground water"
+    ]
+  },
+  {
+    "word": "waterproof",
+    "phonetic": "/'wɔtɚpruf/",
+    "partOfSpeech": "adj",
+    "meaning": "不透水的，防水的；不透水的， 防水的",
+    "example": "a waterproof jacket",
+    "translation": "防水上衣",
+    "phrases": [
+      "waterproof paint",
+      "waterproof concrete",
+      "waterproof membrane",
+      "waterproof paper",
+      "waterproof agent",
+      "waterproof jacket",
+      "waterproof fabric",
+      "waterproof cloth"
+    ]
+  },
+  {
+    "word": "wave",
+    "phonetic": "/wev/",
+    "partOfSpeech": "n/v",
+    "meaning": "波；波涛；波动",
+    "example": "Dee watched the waves breaking on the shore.",
+    "translation": "迪伊凝视着拍岸的波涛。",
+    "phrases": [
+      "shock wave",
+      "tidal wave",
+      "in waves",
+      "heat wave",
+      "electromagnetic wave",
+      "ultrasonic wave",
+      "wave equation",
+      "wave propagation",
+      "seismic wave",
+      "wave motion",
+      "cold wave",
+      "wave velocity",
+      "plane wave",
+      "wave theory",
+      "sound wave",
+      "new wave",
+      "acoustic wave",
+      "sine wave",
+      "wave field",
+      "wave function"
+    ]
+  },
+  {
+    "word": "wax",
+    "phonetic": "/waks/",
+    "partOfSpeech": "n/vt",
+    "meaning": "蜡，蜂蜡；给…上蜡",
+    "example": "wax crayons",
+    "translation": "蜡笔",
+    "phrases": [
+      "paraffin wax",
+      "on the wax",
+      "wax printing",
+      "wax emulsion",
+      "wax gourd",
+      "wax and wane",
+      "wax pattern",
+      "microcrystalline wax",
+      "wax oil",
+      "polishing wax",
+      "lost wax casting",
+      "floor wax",
+      "wax paper",
+      "wax museum",
+      "carnauba wax",
+      "sealing wax",
+      "hard wax",
+      "slack wax",
+      "petroleum wax",
+      "ear wax"
+    ]
+  },
+  {
+    "word": "weaken",
+    "phonetic": "/'wikən/",
+    "partOfSpeech": "v",
+    "meaning": "减少，减弱；削弱；变弱；削弱， 变弱",
+    "example": "Over the last two years the president’s position has weakened.",
+    "translation": "过去两年来，总统的地位被削弱了。",
+    "phrases": []
+  },
+  {
+    "word": "weakness",
+    "phonetic": "/'wiknəs/",
+    "partOfSpeech": "n",
+    "meaning": "虚弱，软弱；弱点",
+    "example": "The legislation has a fundamental weakness.",
+    "translation": "这项立法有一个根本性缺陷。",
+    "phrases": [
+      "structural weakness"
+    ]
+  },
+  {
+    "word": "wealth",
+    "phonetic": "/wɛlθ/",
+    "partOfSpeech": "n",
+    "meaning": "财富， 财产； 丰富",
+    "example": "The country’s wealth comes from its oil.",
+    "translation": "这个国家的财富来自石油。",
+    "phrases": [
+      "a wealth of",
+      "wealth management",
+      "wealth of society",
+      "wealth effect",
+      "wealth tax",
+      "common wealth",
+      "sovereign wealth fund",
+      "health and wealth",
+      "god of wealth",
+      "wealth of nations",
+      "wealth and fame",
+      "financial wealth",
+      "wealth brings happiness"
+    ]
+  },
+  {
+    "word": "wealthy",
+    "phonetic": "/'wɛlθi/",
+    "partOfSpeech": "adj",
+    "meaning": "富有的， 富裕的",
+    "example": "the wealthy nations of the world",
+    "translation": "世界上的富国",
+    "phrases": []
+  },
+  {
+    "word": "weapon",
+    "phonetic": "/'wɛpən/",
+    "partOfSpeech": "n",
+    "meaning": "武器， 兵器",
+    "example": "They all had sticks which they planned to use as weapons.",
+    "translation": "他们都持有棍棒，打算当武器用。",
+    "phrases": [
+      "nuclear weapon",
+      "secret weapon",
+      "lethal weapon",
+      "biological weapon",
+      "chemical weapon",
+      "automatic weapon",
+      "natural weapons",
+      "weapon control system",
+      "conventional weapon"
+    ]
+  },
+  {
+    "word": "wear",
+    "phonetic": "/wɛr/",
+    "partOfSpeech": "v",
+    "meaning": "磨损",
+    "example": "The cushions are starting to wear a little.",
+    "translation": "这些靠垫开始有点磨破了。",
+    "phrases": [
+      "wear resistance",
+      "wear and tear",
+      "wear resistant",
+      "wear in",
+      "wear glasses",
+      "tool wear",
+      "casual wear",
+      "wear out",
+      "in wear",
+      "abrasive wear",
+      "sports wear",
+      "wear properties",
+      "wear rate",
+      "wear on",
+      "wear test",
+      "children's wear",
+      "wear away",
+      "wear well",
+      "resistance to wear",
+      "wear off"
+    ]
+  }
+]

@@ -1,0 +1,2359 @@
+[
+  {
+    "word": "around",
+    "phonetic": "/ə'raʊnd/",
+    "partOfSpeech": "prep",
+    "meaning": "在…周围",
+    "example": "What an inspiration she was to all around her!",
+    "translation": "她对于她周围所有的人是一种多么大的鼓舞!",
+    "phrases": [
+      "all around",
+      "around here",
+      "go around",
+      "in and around",
+      "have been around"
+    ]
+  },
+  {
+    "word": "arouse",
+    "phonetic": "/ə'raʊz/",
+    "partOfSpeech": "v/vt",
+    "meaning": "引起，唤起；唤醒；引起； 唤起， 唤醒",
+    "example": "Matt’s behavior was arousing the interest of the neighbors.",
+    "translation": "马特的行为渐渐引起了邻居的兴趣。",
+    "phrases": [
+      "arouse the enthusiasm of",
+      "arouse from"
+    ]
+  },
+  {
+    "word": "arrange",
+    "phonetic": "/ə'rendʒ/",
+    "partOfSpeech": "v",
+    "meaning": "把…（系统地）分类；筹备；整理；调解；安排， 准备， 整理",
+    "example": "Ben arranged the flowers in a vase.",
+    "translation": "本把花放在花瓶里插好。",
+    "phrases": [
+      "arrange for"
+    ]
+  },
+  {
+    "word": "arrangement",
+    "phonetic": "/ə'rendʒmənt/",
+    "partOfSpeech": "n",
+    "meaning": "整理，排列；安排；整理， 排列， 安排； 准备工作",
+    "example": "Have you made all your travel arrangements?",
+    "translation": "你的旅行都安排好了吗？",
+    "phrases": [
+      "arrangement for",
+      "institutional arrangement",
+      "flower arrangement",
+      "course arrangement",
+      "general arrangement",
+      "spatial arrangement",
+      "floral arrangement",
+      "comprehensive arrangement",
+      "financial arrangement",
+      "arrangement plan",
+      "financing arrangement",
+      "make arrangement for",
+      "parallel arrangement",
+      "previous arrangement",
+      "security arrangement"
+    ]
+  },
+  {
+    "word": "arrest",
+    "phonetic": "/ə'rɛst/",
+    "partOfSpeech": "v/vt/n",
+    "meaning": "逮捕；逮捕，拘留；阻止；逮捕，拘留；停止，阻止；吸引；逮捕， 拘留， 扣留",
+    "example": "He was arrested and charged with murder.",
+    "translation": "他遭到逮捕并被指控谋杀。",
+    "phrases": [
+      "cardiac arrest",
+      "under house arrest",
+      "house arrest",
+      "under arrest",
+      "arrest warrant",
+      "respiratory arrest",
+      "crack arrest",
+      "sudden cardiac arrest"
+    ]
+  },
+  {
+    "word": "arrival",
+    "phonetic": "/ə'raɪvəl/",
+    "partOfSpeech": "n",
+    "meaning": "到达；到来；到达者；到达， 到来； 到达者， 到达物",
+    "example": "Only the timely arrival of the police prevented the situation from becoming worse.",
+    "translation": "警方及时赶到才阻止了事态恶化。",
+    "phrases": [
+      "on arrival",
+      "arrival time",
+      "upon arrival",
+      "new arrival",
+      "arrival date",
+      "time of arrival",
+      "late arrival",
+      "date of arrival",
+      "first arrival",
+      "arrival rate",
+      "early arrival",
+      "estimated time of arrival",
+      "port of arrival",
+      "arrival process",
+      "arrival notice"
+    ]
+  },
+  {
+    "word": "arrive",
+    "phonetic": "/ə'raɪv/",
+    "partOfSpeech": "v",
+    "meaning": "到达；来临；达到",
+    "example": "Give me a call to let me know you’ve arrived safely.",
+    "translation": "打个电话给我，告诉我你已平安到达。",
+    "phrases": [
+      "arrive at",
+      "arrive in",
+      "arrive from",
+      "arrive on",
+      "arrive home",
+      "arrive at a conclusion",
+      "arrive at a decision",
+      "to arrive late"
+    ]
+  },
+  {
+    "word": "arrow",
+    "phonetic": "/'æro/",
+    "partOfSpeech": "n",
+    "meaning": "箭；箭状物；箭， 箭状物； 箭头符号",
+    "example": "Follow the arrows to the X-ray department.",
+    "translation": "顺着箭头指示的方向去X光科。",
+    "phrases": [
+      "bow and arrow",
+      "down arrow",
+      "arrow key",
+      "black arrow",
+      "right arrow",
+      "left arrow",
+      "arrow head",
+      "up arrow",
+      "shoot an arrow"
+    ]
+  },
+  {
+    "word": "art",
+    "phonetic": "/ɑrt/",
+    "partOfSpeech": "n",
+    "meaning": "艺术，美术；技术",
+    "example": "the Museum of Modern Art in New York",
+    "translation": "纽约现代艺术博物馆",
+    "phrases": [
+      "contemporary art",
+      "works of art",
+      "literature and art",
+      "modern art",
+      "state of the art",
+      "art design",
+      "folk art",
+      "art education",
+      "art form",
+      "fine art",
+      "work of art",
+      "art history",
+      "art museum",
+      "prior art",
+      "art gallery",
+      "art work",
+      "martial art",
+      "art exhibition",
+      "art school",
+      "public art"
+    ]
+  },
+  {
+    "word": "article",
+    "phonetic": "/'ɑrtɪkl/",
+    "partOfSpeech": "n",
+    "meaning": "文章；条款；物品",
+    "example": "The paper’s leading article (= the main article ) described the government as weak.",
+    "translation": "该报社论称政府软弱。",
+    "phrases": [
+      "in articles",
+      "write an article",
+      "first article",
+      "an article of",
+      "handicraft article",
+      "journal article",
+      "jade article",
+      "feature article",
+      "definite article",
+      "article of faith",
+      "article number",
+      "article of association",
+      "leading article",
+      "article by article"
+    ]
+  },
+  {
+    "word": "artificial",
+    "phonetic": "/,ɑrtɪ'fɪʃl/",
+    "partOfSpeech": "adj",
+    "meaning": "人工的；娇揉造作的；人工的， 人为的； 矫揉造作的； 模拟的",
+    "example": "artificial flowers",
+    "translation": "假花",
+    "phrases": [
+      "artificial intelligence",
+      "artificial leather",
+      "artificial insemination",
+      "artificial stone",
+      "artificial life",
+      "artificial heart",
+      "artificial light",
+      "artificial lake",
+      "artificial flower",
+      "artificial aging",
+      "artificial color",
+      "artificial limb",
+      "artificial marble",
+      "artificial lift",
+      "artificial person",
+      "artificial silk",
+      "artificial respiration",
+      "artificial satellite",
+      "artificial turf",
+      "artificial lighting"
+    ]
+  },
+  {
+    "word": "artist",
+    "phonetic": "/'ɑrtɪst/",
+    "partOfSpeech": "n",
+    "meaning": "艺术家，美术家",
+    "example": "an exhibition of paintings by local artists",
+    "translation": "当地画家的画展",
+    "phrases": [
+      "graphic artist",
+      "martial artist",
+      "make-up artist",
+      "con artist",
+      "visual artist",
+      "conceptual artist",
+      "escape artist"
+    ]
+  },
+  {
+    "word": "artistic",
+    "phonetic": "/ɑr'tɪstɪk/",
+    "partOfSpeech": "adj",
+    "meaning": "艺术的；艺术家的；艺术的， 艺术家的； 富有艺术性的， 精美的； 精彩的",
+    "example": "artistic work",
+    "translation": "艺术作品",
+    "phrases": [
+      "artistic conception",
+      "artistic style",
+      "artistic form",
+      "artistic value",
+      "artistic charm",
+      "artistic works",
+      "artistic design",
+      "artistic talent",
+      "artistic director",
+      "artistic appreciation",
+      "artistic gymnastics",
+      "artistic temperament",
+      "artistic culture",
+      "artistic merit",
+      "artistic ability"
+    ]
+  },
+  {
+    "word": "as",
+    "phonetic": "/æz,əz/",
+    "partOfSpeech": "conj",
+    "meaning": "当…的时候",
+    "example": "I saw Peter as I was getting off the bus.",
+    "translation": "我下公共汽车的时候看见了彼得。",
+    "phrases": [
+      "as well",
+      "as well as",
+      "as one",
+      "as soon",
+      "as soon as",
+      "as long as",
+      "as if",
+      "as much",
+      "as for",
+      "as soon as possible",
+      "as a whole",
+      "as far as",
+      "as of",
+      "as though",
+      "as being",
+      "as early as",
+      "as usual",
+      "as good as",
+      "as per",
+      "as such"
+    ]
+  },
+  {
+    "word": "ash",
+    "phonetic": "/æʃ/",
+    "partOfSpeech": "n",
+    "meaning": "灰，灰末；骨灰；灰， 灰末； 骨灰",
+    "example": "cigarette ash",
+    "translation": "香烟灰",
+    "phrases": [
+      "fly ash",
+      "coal ash",
+      "ash content",
+      "soda ash",
+      "prickly ash",
+      "volcanic ash",
+      "rise from the ashes",
+      "ash removal",
+      "fly ash concrete",
+      "cigarette ash",
+      "manchurian ash",
+      "ash handling",
+      "ash wednesday",
+      "bone ash",
+      "bottom ash",
+      "ash separator",
+      "ash cloud",
+      "wood ash",
+      "black ash",
+      "ash discharge"
+    ]
+  },
+  {
+    "word": "ashamed",
+    "phonetic": "/ə'ʃemd/",
+    "partOfSpeech": "adj",
+    "meaning": "害羞的；惭愧(的)；羞耻(的)；惭愧的， 羞耻的， 害臊的",
+    "example": "Everyone cries sometimes – it’s nothing to be ashamed of.",
+    "translation": "每个人都会有哭的时候——没什么好难为情的。",
+    "phrases": [
+      "ashamed of",
+      "feel ashamed"
+    ]
+  },
+  {
+    "word": "asia",
+    "phonetic": "/ˈeʒə;ˈeʃə/",
+    "partOfSpeech": "n",
+    "meaning": "亚洲",
+    "example": "The European powers extended their authority in Asia.",
+    "translation": "欧洲列强在亚洲扩大他们的管辖权。",
+    "phrases": [
+      "southeast asia",
+      "east asia",
+      "asia pacific",
+      "south asia",
+      "central asia",
+      "asia minor",
+      "financial crisis in asia"
+    ]
+  },
+  {
+    "word": "asian",
+    "phonetic": "/ˈeʒən, ˈeʃən/",
+    "partOfSpeech": "adj/n",
+    "meaning": "亚洲的；亚洲人",
+    "example": "The financial crisis devitalized the economy of the Asian countries.",
+    "translation": "这次金融危机使亚洲国家的经济大伤元气。",
+    "phrases": [
+      "the asian games",
+      "asian development bank",
+      "asian american",
+      "asian business",
+      "asian values"
+    ]
+  },
+  {
+    "word": "aside",
+    "phonetic": "/ə'saɪd/",
+    "partOfSpeech": "adv",
+    "meaning": "在旁边，到旁边；在旁边， 到旁边",
+    "example": "He pushed his half-eaten salad aside and left.",
+    "translation": "他推开吃了一半的色拉走了。",
+    "phrases": [
+      "set aside",
+      "aside from",
+      "put aside",
+      "lay aside"
+    ]
+  },
+  {
+    "word": "ask",
+    "phonetic": "/æsk/",
+    "partOfSpeech": "v",
+    "meaning": "问；要求；邀请",
+    "example": "‘What’s your name?’ she asked.",
+    "translation": "“你叫什么名字？”她问道 。",
+    "phrases": []
+  },
+  {
+    "word": "asleep",
+    "phonetic": "/ə'slip/",
+    "partOfSpeech": "adj",
+    "meaning": "睡着的，睡熟的",
+    "example": "Quiet! The baby’s asleep.",
+    "translation": "安静！ 宝宝在睡觉。",
+    "phrases": [
+      "fall asleep",
+      "fell asleep",
+      "fast asleep",
+      "fallen asleep",
+      "sound asleep",
+      "lay asleep"
+    ]
+  },
+  {
+    "word": "aspect",
+    "phonetic": "/'æspɛkt/",
+    "partOfSpeech": "n",
+    "meaning": "方面；样子，外表；方面； 朝向， 方向； 样子， 外表",
+    "example": "a south-facing aspect",
+    "translation": "朝南方向",
+    "phrases": [
+      "aspect ratio",
+      "negative aspect",
+      "aspect angle",
+      "environmental aspect"
+    ]
+  },
+  {
+    "word": "assemble",
+    "phonetic": "/ə'sɛmbl/",
+    "partOfSpeech": "v",
+    "meaning": "组装；集合；集合，召集；装配；集合， 召集； 装配",
+    "example": "A large crowd had assembled outside the American embassy.",
+    "translation": "一大群人聚集在美国大使馆外。",
+    "phrases": [
+      "assemble language",
+      "assemble line"
+    ]
+  },
+  {
+    "word": "assembly",
+    "phonetic": "/ə'sɛmbli/",
+    "partOfSpeech": "n",
+    "meaning": "装配；集合；集会；装配；立法机构； 议会； 集合； 集会的人们； 装配， 组装",
+    "example": "instructions for assembly",
+    "translation": "装配说明（书）",
+    "phrases": [
+      "assembly line",
+      "general assembly",
+      "assembly language",
+      "assembly process",
+      "national assembly",
+      "assembly room",
+      "assembly plant",
+      "final assembly",
+      "assembly technology",
+      "assembly system",
+      "assembly drawing",
+      "assembly hall",
+      "assembly machine",
+      "valve assembly",
+      "hose assembly",
+      "machine assembly",
+      "cable assembly",
+      "assembly work",
+      "electrode assembly",
+      "assembly time"
+    ]
+  },
+  {
+    "word": "assess",
+    "phonetic": "/ə'sɛs/",
+    "partOfSpeech": "v/vt",
+    "meaning": "评价；对(财产等)估价；对估价； 评价， 评论",
+    "example": "The test was to assess aptitude rather than academic achievement.",
+    "translation": "该测试将评估能力而不是学业成绩。",
+    "phrases": []
+  },
+  {
+    "word": "asset",
+    "phonetic": "/'æsɛt/",
+    "partOfSpeech": "n",
+    "meaning": "有价值的人(或物)资产；资产， 财产； 有价值的特性或技能， 优点",
+    "example": "the value of a company’s assets",
+    "translation": "公司的资产价值",
+    "phrases": [
+      "asset management",
+      "fixed asset",
+      "intangible asset",
+      "asset value",
+      "fixed asset investment",
+      "financial asset",
+      "net asset",
+      "capital asset",
+      "asset class",
+      "net asset value",
+      "asset valuation",
+      "capital asset pricing model",
+      "current asset",
+      "underlying asset",
+      "asset portfolio",
+      "asset account",
+      "tangible asset",
+      "asset ratio",
+      "national asset",
+      "asset turnover"
+    ]
+  },
+  {
+    "word": "assign",
+    "phonetic": "/ə'saɪn/",
+    "partOfSpeech": "v/vt",
+    "meaning": "分配，布置；指派；分配；指定；指派， 分配， 布置； 指定",
+    "example": "When I taught, I would assign a topic to children that they would write about.",
+    "translation": "教书时，我会给孩子们布置个写作题。",
+    "phrases": [
+      "assign work",
+      "assign a value"
+    ]
+  },
+  {
+    "word": "assignment",
+    "phonetic": "/ə'saɪnmənt/",
+    "partOfSpeech": "n",
+    "meaning": "作业；任务，指定的作业；任务， 指定的作业； 分配， 指派",
+    "example": "a history assignment",
+    "translation": "历史作业",
+    "phrases": [
+      "assignment problem",
+      "pole assignment",
+      "assignment method",
+      "school assignment",
+      "channel assignment",
+      "assignment operator",
+      "assignment statement",
+      "value assignment"
+    ]
+  },
+  {
+    "word": "assist",
+    "phonetic": "/ə'sɪst/",
+    "partOfSpeech": "v/vt",
+    "meaning": "援助，帮助；搀扶；援助， 帮助， 协助",
+    "example": "The family decided to assist me with my chores.",
+    "translation": "家人决定分担我的琐事。",
+    "phrases": [
+      "assist in"
+    ]
+  },
+  {
+    "word": "assistance",
+    "phonetic": "/ə'sɪstəns/",
+    "partOfSpeech": "n",
+    "meaning": "协助， 援助",
+    "example": "We offer financial assistance to students.",
+    "translation": "我们向学生提供经济援助。",
+    "phrases": [
+      "technical assistance",
+      "financial assistance",
+      "mutual assistance",
+      "legal assistance",
+      "social assistance",
+      "medical assistance",
+      "development assistance",
+      "judicial assistance",
+      "be of assistance",
+      "public assistance"
+    ]
+  },
+  {
+    "word": "assistant",
+    "phonetic": "/ə'sɪstənt/",
+    "partOfSpeech": "n/adj",
+    "meaning": "助手，助理；助教；助理的， 辅助的；助手，助理，助教",
+    "example": "a clerical assistant",
+    "translation": "文书助理",
+    "phrases": []
+  },
+  {
+    "word": "associate",
+    "phonetic": "/ə'soʃɪet/",
+    "partOfSpeech": "v/n/vi/adj/vt",
+    "meaning": "交往；把……联系起来；交往；伙伴，同事；结合； 交往；副的；把…联系在一起；使联合",
+    "example": "Through science we've got the idea of associating progress with the future.",
+    "translation": "通过科学我们已有了将进步与未来联系起来的观念。",
+    "phrases": [
+      "associate professor",
+      "associate with",
+      "associate degree",
+      "associate director",
+      "research associate",
+      "business associate",
+      "associate member",
+      "associate dean",
+      "associate editor",
+      "associate justice",
+      "associate membership",
+      "associate of arts"
+    ]
+  },
+  {
+    "word": "association",
+    "phonetic": "/ə,soʃɪ'eʃən/",
+    "partOfSpeech": "n",
+    "meaning": "协会，团体；联合；协会， 团体； 联合， 交往",
+    "example": "the Association of Master Builders",
+    "translation": "建筑师协会",
+    "phrases": [
+      "association with",
+      "trade association",
+      "in association with",
+      "medical association",
+      "an association",
+      "articles of association",
+      "business association",
+      "alumni association",
+      "professional association",
+      "bar association",
+      "mortgage bankers association",
+      "national basketball association",
+      "freedom of association",
+      "press association",
+      "american psychological association",
+      "negative association",
+      "free association",
+      "mineral association",
+      "credit association",
+      "word association"
+    ]
+  },
+  {
+    "word": "assume",
+    "phonetic": "/ə'sum/",
+    "partOfSpeech": "v/vt",
+    "meaning": "假定，认为；假定；承担；呈现；假定， 假设， 臆断； 承担， 担任； 呈现",
+    "example": "I think we can safely assume (= it is almost certain ) that interest rates will go up again soon.",
+    "translation": "我想我们几乎可以肯定，利率很快会再次上调。",
+    "phrases": [
+      "assume responsibility",
+      "assume liability",
+      "subjective assume"
+    ]
+  },
+  {
+    "word": "assumption",
+    "phonetic": "/ə'sʌmpʃən/",
+    "partOfSpeech": "n",
+    "meaning": "假定，假设；假定， 臆断； 担任， 承担",
+    "example": "You would be making an assumption that's not based on any fact that you could report.",
+    "translation": "你会做出不以你能报道的任何事实为依据的一种假设。",
+    "phrases": [
+      "on the assumption that",
+      "fundamental assumption"
+    ]
+  },
+  {
+    "word": "assure",
+    "phonetic": "/ə'ʃʊr/",
+    "partOfSpeech": "v/vt",
+    "meaning": "使确信；向…保证；使确信； 确保， 向…保证",
+    "example": "The document is genuine, I can assure you .",
+    "translation": "我能向你保证，这文件是真的。",
+    "phrases": [
+      "assure oneself",
+      "assure of"
+    ]
+  },
+  {
+    "word": "astonish",
+    "phonetic": "/ə'stɑnɪʃ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "使惊讶，使大为吃惊；使惊讶，使吃惊；使惊讶， 使吃惊",
+    "example": "Her reply astonished me.",
+    "translation": "她的回答让我大吃一惊。",
+    "phrases": []
+  },
+  {
+    "word": "astronaut",
+    "phonetic": "/'æstrə'nɔt/",
+    "partOfSpeech": "n",
+    "meaning": "宇宙航行员，宇航员",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "astrophysics",
+    "phonetic": "/,æstro'fɪzɪks/",
+    "partOfSpeech": "n",
+    "meaning": "天体物理学",
+    "example": "We provide courses in the field of physics, astrophysics and mathematics.",
+    "translation": "我们提供物理、 天体物理和数学领域的课程。",
+    "phrases": []
+  },
+  {
+    "word": "at",
+    "phonetic": "/æt; ət/",
+    "partOfSpeech": "prep",
+    "meaning": "在…里；在…时",
+    "example": "They live at 18 Victoria Street.",
+    "translation": "他们住在维多利亚街18 号。",
+    "phrases": [
+      "at all",
+      "be in at",
+      "at it again"
+    ]
+  },
+  {
+    "word": "athlete",
+    "phonetic": "/'æθlit/",
+    "partOfSpeech": "n",
+    "meaning": "运动员；田径运动员；运动员， 体育家",
+    "example": "a professional athlete",
+    "translation": "一位专业运动员",
+    "phrases": []
+  },
+  {
+    "word": "atlantic",
+    "phonetic": "/ət'læntɪk/",
+    "partOfSpeech": "adj/n",
+    "meaning": "大西洋的；大西洋",
+    "example": "They underlaid the Atlantic with a cable.",
+    "translation": "他们在大西洋海底铺设了一条电缆。",
+    "phrases": [
+      "atlantic ocean",
+      "atlantic city",
+      "north atlantic treaty",
+      "north atlantic treaty organization",
+      "atlantic salmon",
+      "virgin atlantic",
+      "atlantic charter"
+    ]
+  },
+  {
+    "word": "atmosphere",
+    "phonetic": "/'ætməsfɪr/",
+    "partOfSpeech": "n",
+    "meaning": "气氛；大气；空气；大气；空气；气氛；大气， 空气； 气氛， 环境",
+    "example": "The hotel had a lovely relaxed atmosphere .",
+    "translation": "那家宾馆的气氛轻松愉快。",
+    "phrases": [
+      "earth's atmosphere",
+      "social atmosphere",
+      "academic atmosphere",
+      "working atmosphere",
+      "upper atmosphere",
+      "controlled atmosphere",
+      "protective atmosphere",
+      "atmosphere pressure",
+      "lower atmosphere",
+      "furnace atmosphere",
+      "oxidizing atmosphere",
+      "gas atmosphere",
+      "explosive atmosphere",
+      "inert atmosphere",
+      "reducing atmosphere",
+      "neutral atmosphere",
+      "standard atmosphere",
+      "tragic atmosphere"
+    ]
+  },
+  {
+    "word": "atmospheric",
+    "phonetic": "/,ætməs'fɛrɪk/",
+    "partOfSpeech": "adj",
+    "meaning": "大气的；大气层的",
+    "example": "atmospheric pressure",
+    "translation": "大气压力",
+    "phrases": [
+      "atmospheric pressure",
+      "atmospheric pollution",
+      "atmospheric temperature",
+      "atmospheric corrosion",
+      "atmospheric turbulence",
+      "atmospheric circulation",
+      "atmospheric pollutant",
+      "atmospheric distillation",
+      "atmospheric research",
+      "atmospheric science",
+      "atmospheric chemistry",
+      "atmospheric precipitation",
+      "atmospheric ozone",
+      "atmospheric condition",
+      "atmospheric air",
+      "atmospheric monitoring",
+      "atmospheric composition",
+      "atmospheric radiation",
+      "atmospheric layer",
+      "atmospheric column"
+    ]
+  },
+  {
+    "word": "atom",
+    "phonetic": "/'ætəm/",
+    "partOfSpeech": "n",
+    "meaning": "原子；微粒；微量",
+    "example": "carbon atoms",
+    "translation": "碳原子",
+    "phrases": [
+      "hydrogen atom",
+      "atom bomb",
+      "bohr atom",
+      "neutral atom"
+    ]
+  },
+  {
+    "word": "atomic",
+    "phonetic": "/ə'tɑmɪk/",
+    "partOfSpeech": "adj",
+    "meaning": "原子的；原子能的；原子的， 原子能的， 原子武器的",
+    "example": "atomic power",
+    "translation": "核动力",
+    "phrases": [
+      "atomic absorption",
+      "atomic absorption spectrometry",
+      "atomic energy",
+      "atomic absorption spectrophotometry",
+      "atomic emission",
+      "atomic bomb",
+      "atomic emission spectrometry",
+      "atomic absorption spectrophotometer",
+      "atomic number",
+      "atomic structure",
+      "atomic physics",
+      "atomic weight",
+      "atomic absorption spectroscopy",
+      "atomic nucleus",
+      "atomic oxygen",
+      "atomic hydrogen",
+      "atomic scale",
+      "atomic clock",
+      "atomic mass",
+      "atomic power"
+    ]
+  },
+  {
+    "word": "attach",
+    "phonetic": "/ə'tætʃ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "缚，系，贴；附加；缚， 系， 贴； 附加； 使依恋， 使喜爱； 使附属； 认为有",
+    "example": "We attach labels to things before we file them away.",
+    "translation": "我们在把东西归档前先给它们贴上标签。",
+    "phrases": [
+      "attached please find",
+      "attach file"
+    ]
+  },
+  {
+    "word": "attack",
+    "phonetic": "/ə'tæk/",
+    "partOfSpeech": "vt&vi&n/n/vt",
+    "meaning": "攻击，进攻；攻击，打击；突然发作；攻击， 进攻",
+    "example": "The king hight them to attack the castle.",
+    "translation": "国王命令他们向城堡发起进攻。",
+    "phrases": [
+      "heart attack",
+      "attack on",
+      "under attack",
+      "main attack",
+      "angle of attack",
+      "surprise attack",
+      "(make a) surprise attack",
+      "air attack",
+      "attack angle",
+      "counter attack",
+      "sudden attack",
+      "suicide attack",
+      "nuclear attack",
+      "personal attack",
+      "panic attack",
+      "chemical attack",
+      "come under attack",
+      "attack on pearl harbor",
+      "cyber attack",
+      "sneak attack"
+    ]
+  },
+  {
+    "word": "attain",
+    "phonetic": "/ə'ten/",
+    "partOfSpeech": "v/vt",
+    "meaning": "达到，获得，完成；达到， 获得， 完成",
+    "example": "More women are attaining positions of power.",
+    "translation": "越来越多的女性获得要职。",
+    "phrases": []
+  },
+  {
+    "word": "attempt",
+    "phonetic": "/ə'tɛmpt/",
+    "partOfSpeech": "n & v/v/n/vt",
+    "meaning": "尝试，试图；企图；尝试， 试图， 努力",
+    "example": "Weather conditions prevented them from attempting the jump.",
+    "translation": "天气状况使他们无法尝试跳伞。",
+    "phrases": [
+      "attempt at",
+      "attempt to do something",
+      "attempt to do",
+      "attempt the impossible",
+      "make an attempt"
+    ]
+  },
+  {
+    "word": "attend",
+    "phonetic": "/ə'tɛnd/",
+    "partOfSpeech": "v",
+    "meaning": "出席；照顾，护理",
+    "example": "Only 12 people attended the meeting.",
+    "translation": "只有12个人出席了会议。",
+    "phrases": [
+      "attend a meeting",
+      "attend school",
+      "attend class",
+      "attend on",
+      "attend a lecture",
+      "attend university",
+      "attend by"
+    ]
+  },
+  {
+    "word": "attendance",
+    "phonetic": "/ə'tɛndəns/",
+    "partOfSpeech": "n",
+    "meaning": "出席，到场",
+    "example": "We have an average attendance of 4,000 fans per game.",
+    "translation": "每场比赛平均有4,000名球迷来观战。",
+    "phrases": [
+      "attendance at",
+      "in attendance",
+      "attendance record",
+      "school attendance",
+      "attendance rate",
+      "check on work attendance"
+    ]
+  },
+  {
+    "word": "attention",
+    "phonetic": "/ə'tɛnʃən/",
+    "partOfSpeech": "n",
+    "meaning": "注意，留心；注意力",
+    "example": "My attention wasn’t really on the game.",
+    "translation": "我的注意力其实不在比赛上。",
+    "phrases": [
+      "pay attention",
+      "pay more attention to",
+      "pay close attention to",
+      "be paid attention to",
+      "give one's attention to",
+      "give attention to",
+      "public attention",
+      "attract attention",
+      "for your attention",
+      "draw attention",
+      "with attention",
+      "medical attention",
+      "immediate attention",
+      "pay no attention to",
+      "matters need attention",
+      "call attention to",
+      "prompt attention",
+      "undivided attention",
+      "attention span",
+      "attention deficit hyperactivity disorder"
+    ]
+  },
+  {
+    "word": "attentive",
+    "phonetic": "/ə'tɛntɪv/",
+    "partOfSpeech": "adj",
+    "meaning": "注意的；有礼貌的",
+    "example": "an attentive audience",
+    "translation": "聚精会神的听众",
+    "phrases": []
+  },
+  {
+    "word": "attitude",
+    "phonetic": "/'ætɪtʊd/",
+    "partOfSpeech": "n",
+    "meaning": "态度，看法；姿势；态度， 看法； 姿势",
+    "example": "As soon as they found out I was a doctor, their whole attitude changed.",
+    "translation": "他们一听说我是医生，态度就完全改变了。",
+    "phrases": [
+      "attitude towards",
+      "positive attitude",
+      "attitude toward",
+      "negative attitude",
+      "attitude is everything",
+      "attitude angle",
+      "attitude measurement",
+      "aesthetic attitude",
+      "attitude to win",
+      "attitude of mind",
+      "aggressive attitude",
+      "social attitude",
+      "attitude change",
+      "attitude survey"
+    ]
+  },
+  {
+    "word": "attorney",
+    "phonetic": "/ə'tɝni/",
+    "partOfSpeech": "n",
+    "meaning": "律师， 代理人",
+    "example": "...a prosecuting attorney.",
+    "translation": "…一位公诉律师。",
+    "phrases": [
+      "power of attorney",
+      "attorney general",
+      "district attorney",
+      "patent attorney",
+      "letter of attorney",
+      "prosecuting attorney",
+      "state attorney",
+      "attorney at law"
+    ]
+  },
+  {
+    "word": "attract",
+    "phonetic": "/ə'trækt/",
+    "partOfSpeech": "v/vt",
+    "meaning": "吸引；引起，诱惑；吸引， 引起…注意",
+    "example": "I’m not usually attracted to blondes.",
+    "translation": "我一般不喜欢金发女子。",
+    "phrases": [
+      "attract foreign investment",
+      "attract investment"
+    ]
+  },
+  {
+    "word": "attraction",
+    "phonetic": "/ə'trækʃən/",
+    "partOfSpeech": "n",
+    "meaning": "吸引；吸引力；引力；吸引， 吸引力； 引力； 具有吸引力的事物",
+    "example": "The beautiful beaches are the island’s main attraction (= most popular place, activity etc ) .",
+    "translation": "美丽的海滩是这个岛上的主要魅力所在。",
+    "phrases": [
+      "tourist attraction",
+      "attraction for",
+      "sexual attraction",
+      "fatal attraction",
+      "magnetic attraction",
+      "electrostatic attraction",
+      "force of attraction",
+      "attraction force"
+    ]
+  },
+  {
+    "word": "attractive",
+    "phonetic": "/ə'træktɪv/",
+    "partOfSpeech": "adj",
+    "meaning": "有吸引力的；有吸引力的， 引起注意的",
+    "example": "an attractive young woman",
+    "translation": "妩媚动人的年轻女子",
+    "phrases": [
+      "attractive appearance",
+      "attractive force",
+      "attractive designs",
+      "attractive and durable"
+    ]
+  },
+  {
+    "word": "attribute",
+    "phonetic": "/ə'trɪbjut/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "归因于；把…归因于；属性",
+    "example": "Women tend to attribute their success to external causes such as luck.",
+    "translation": "女性往往把她们的成功归因于外因，如运气。",
+    "phrases": [
+      "attribute data",
+      "attribute value",
+      "attribute name",
+      "product attribute",
+      "physical attribute"
+    ]
+  },
+  {
+    "word": "audience",
+    "phonetic": "/'ɔdɪəns/",
+    "partOfSpeech": "n",
+    "meaning": "听众，观众，读者；听众， 观众， 读者",
+    "example": "The audience began clapping and cheering.",
+    "translation": "观众开始鼓掌欢呼。",
+    "phrases": [
+      "target audience",
+      "audience rating",
+      "mass audience",
+      "captive audience",
+      "audience share"
+    ]
+  },
+  {
+    "word": "audio",
+    "phonetic": "/'ɔdɪo/",
+    "partOfSpeech": "adj",
+    "meaning": "听觉的， 声音的",
+    "example": "audio and video equipment",
+    "translation": "音频视频设备",
+    "phrases": [
+      "digital audio",
+      "audio signal",
+      "audio frequency",
+      "audio system",
+      "audio file",
+      "audio video",
+      "audio output",
+      "audio device",
+      "audio tape",
+      "audio amplifier",
+      "audio track",
+      "audio recorder",
+      "audio channel",
+      "audio editor",
+      "audio controller",
+      "audio transformer"
+    ]
+  },
+  {
+    "word": "august",
+    "phonetic": "/ɔɡəst/",
+    "partOfSpeech": "n",
+    "meaning": "八月",
+    "example": "The world premiere took place in August 1956.",
+    "translation": "全球首映是在1956年8月。",
+    "phrases": []
+  },
+  {
+    "word": "aunt",
+    "phonetic": "/ænt/",
+    "partOfSpeech": "n",
+    "meaning": "伯母，婶母，姑母",
+    "example": "Aunt Mary",
+    "translation": "玛丽姑妈",
+    "phrases": [
+      "paternal aunt",
+      "agony aunt",
+      "great aunt"
+    ]
+  },
+  {
+    "word": "aural",
+    "phonetic": "/-/",
+    "partOfSpeech": "adj",
+    "meaning": "耳的，听觉的",
+    "example": "an aural stimulus",
+    "translation": "听觉刺激",
+    "phrases": []
+  },
+  {
+    "word": "australia",
+    "phonetic": "/ɔ'streljə/",
+    "partOfSpeech": "n",
+    "meaning": "澳大利亚",
+    "example": "He transplanted his family to Australia.",
+    "translation": "他把家迁到澳大利亚。",
+    "phrases": [
+      "south australia",
+      "western australia",
+      "commonwealth of australia",
+      "reserve bank of australia",
+      "australia day",
+      "commonwealth bank of australia"
+    ]
+  },
+  {
+    "word": "australian",
+    "phonetic": "/ɑ'strelɪən/",
+    "partOfSpeech": "adj",
+    "meaning": "澳大利亚的",
+    "example": "She went solo backpacking for eight months in the Australian outback.",
+    "translation": "她在澳大利亚内陆独自背包旅行了八个月。",
+    "phrases": [
+      "australian national university",
+      "australian dollar",
+      "australian shepherd",
+      "australian football",
+      "australian aborigine"
+    ]
+  },
+  {
+    "word": "author",
+    "phonetic": "/'ɔθɚ/",
+    "partOfSpeech": "n",
+    "meaning": "作者，作家；著作家， 作者",
+    "example": "Nothomb is a Belgian author.",
+    "translation": "诺东是位比利时作家。",
+    "phrases": [
+      "original author",
+      "main author",
+      "corresponding author",
+      "other author"
+    ]
+  },
+  {
+    "word": "authoritative",
+    "phonetic": "/ə'θɔrətetɪv/",
+    "partOfSpeech": "adj",
+    "meaning": "权威的",
+    "example": "the most authoritative work on English surnames",
+    "translation": "有关英语姓氏的最权威著作",
+    "phrases": [
+      "authoritative information",
+      "authoritative source"
+    ]
+  },
+  {
+    "word": "authority",
+    "phonetic": "/ə'θɔrəti/",
+    "partOfSpeech": "n",
+    "meaning": "当局，官方；权力；官方； 权力； 当权者， 行政管理机构； 权威， 专家",
+    "example": "an agreement between the US and Colombian authorities",
+    "translation": "美国和哥伦比亚当局的一份协议",
+    "phrases": [
+      "competent authority",
+      "authority on",
+      "local authority",
+      "administrative authority",
+      "tax authority",
+      "public authority",
+      "in authority",
+      "judicial authority",
+      "legal authority",
+      "central authority",
+      "monetary authority",
+      "port authority",
+      "approval authority",
+      "regulatory authority",
+      "aviation authority",
+      "have authority",
+      "limits of authority",
+      "by the authority of",
+      "certificate authority",
+      "authority control"
+    ]
+  },
+  {
+    "word": "auto",
+    "phonetic": "/'ɔto/",
+    "partOfSpeech": "n",
+    "meaning": "(口语)汽车；汽车",
+    "example": "imported autos",
+    "translation": "进口汽车",
+    "phrases": [
+      "auto parts",
+      "auto industry",
+      "auto sales",
+      "auto insurance",
+      "auto switch",
+      "auto glass",
+      "auto cad",
+      "auto plant",
+      "auto focus",
+      "auto repair shop",
+      "auto theft",
+      "auto feed",
+      "auto lift",
+      "auto repairing"
+    ]
+  },
+  {
+    "word": "automatic",
+    "phonetic": "/'ɔtə'mætɪk/",
+    "partOfSpeech": "adj/n",
+    "meaning": "自动的；自动的；机械的；自动的，机械的；不假思索的，无意识的；必然的，自然的；自动手枪； 有自动装置的汽车",
+    "example": "an automatic weapon",
+    "translation": "自动武器",
+    "phrases": [
+      "automatic control",
+      "automatic control system",
+      "fully automatic",
+      "automatic system",
+      "full automatic",
+      "automatic welding",
+      "automatic transmission",
+      "automatic detection",
+      "automatic machine",
+      "automatic testing",
+      "automatic test system",
+      "automatic equipment",
+      "automatic operation",
+      "automatic tracking",
+      "automatic door",
+      "automatic inspection",
+      "automatic feed",
+      "automatic control theory",
+      "automatic switching",
+      "automatic device"
+    ]
+  },
+  {
+    "word": "automation",
+    "phonetic": "/,ɔtə'meʃən/",
+    "partOfSpeech": "n",
+    "meaning": "自动，自动化",
+    "example": "They phrase in new machinery for increased automation.",
+    "translation": "他们逐步采用新机器以提高自动化程度。",
+    "phrases": [
+      "industrial automation",
+      "office automation",
+      "automation equipment",
+      "degree of automation",
+      "process automation",
+      "building automation",
+      "factory automation",
+      "design automation",
+      "production automation",
+      "test automation",
+      "full automation",
+      "home automation",
+      "department of automation",
+      "flexible automation"
+    ]
+  },
+  {
+    "word": "automobile",
+    "phonetic": "/,ɔtəmə'bil/",
+    "partOfSpeech": "n",
+    "meaning": "汽车，机动车；汽车， 机动车",
+    "example": "the automobile industry",
+    "translation": "汽车工业",
+    "phrases": [
+      "automobile industry",
+      "automobile engine",
+      "automobile insurance",
+      "automobile factory",
+      "electric automobile",
+      "automobile emission",
+      "automobile manufacturer",
+      "automobile clutch",
+      "automobile tire",
+      "automobile part",
+      "automobile club",
+      "automobile plant",
+      "automobile crane"
+    ]
+  },
+  {
+    "word": "autumn",
+    "phonetic": "/'ɔtəm/",
+    "partOfSpeech": "n",
+    "meaning": "秋，秋季",
+    "example": "autumn mists",
+    "translation": "秋天的雾霭",
+    "phrases": [
+      "in autumn",
+      "spring and autumn",
+      "spring and autumn period",
+      "autumn leaves",
+      "autumn wind",
+      "late autumn",
+      "spring and autumn annals"
+    ]
+  },
+  {
+    "word": "auxiliary",
+    "phonetic": "/ɔːɡ'zɪlɪəri/",
+    "partOfSpeech": "adj",
+    "meaning": "辅助的；附属的；辅助的， 附属的； 后备的",
+    "example": "an auxiliary nurse",
+    "translation": "助理护士",
+    "phrases": [
+      "auxiliary equipment",
+      "auxiliary power",
+      "auxiliary system",
+      "auxiliary material",
+      "auxiliary shaft",
+      "auxiliary function",
+      "auxiliary device",
+      "auxiliary machinery",
+      "auxiliary machine",
+      "auxiliary information",
+      "auxiliary service",
+      "auxiliary verb",
+      "auxiliary power supply",
+      "auxiliary engine",
+      "auxiliary circuit",
+      "textile auxiliary",
+      "auxiliary storage",
+      "auxiliary power unit (apu)",
+      "auxiliary operation",
+      "auxiliary pump"
+    ]
+  },
+  {
+    "word": "avail",
+    "phonetic": "/ə'vel/",
+    "partOfSpeech": "v",
+    "meaning": "有益, 有帮助",
+    "example": "",
+    "translation": "",
+    "phrases": [
+      "to no avail",
+      "not avail someone",
+      "of no avail",
+      "avail of",
+      "without avail",
+      "of avail"
+    ]
+  },
+  {
+    "word": "available",
+    "phonetic": "/ə'veləbl/",
+    "partOfSpeech": "adj",
+    "meaning": "可利用的，现有的；可获得的；可利用的；通用的；现成可使用的， 通用的； 可取的； 联系的； 可得到的",
+    "example": "Tickets are available from the box office.",
+    "translation": "售票处有票出售。",
+    "phrases": [
+      "available for",
+      "available on",
+      "available from",
+      "available with",
+      "available resources",
+      "commercially available",
+      "available data",
+      "available information",
+      "make available",
+      "available water",
+      "space available",
+      "available energy",
+      "available time",
+      "available funds",
+      "available memory",
+      "available capacity",
+      "available material",
+      "available work",
+      "available light"
+    ]
+  },
+  {
+    "word": "avenue",
+    "phonetic": "/'ævənu/",
+    "partOfSpeech": "n",
+    "meaning": "林荫道，道路；大街；林荫道， 道路， 大街",
+    "example": "Fifth Avenue",
+    "translation": "第五大街",
+    "phrases": [
+      "fifth avenue",
+      "park avenue",
+      "madison avenue",
+      "pennsylvania avenue",
+      "avenue of stars",
+      "seventh avenue",
+      "avenue to success"
+    ]
+  },
+  {
+    "word": "average",
+    "phonetic": "/'ævərɪdʒ/",
+    "partOfSpeech": "adj/n/v",
+    "meaning": "平常的；平均数；平均的；平均的；平常的；平均；平均数，平均",
+    "example": "The age of the candidates ranged from 29 to 49 with an average age of 37.",
+    "translation": "候选人的年龄29岁至49岁不等，平均37岁。",
+    "phrases": [
+      "an average of",
+      "an average",
+      "on average",
+      "average level",
+      "average price",
+      "moving average",
+      "average temperature",
+      "average age",
+      "above the average",
+      "average value",
+      "on the average",
+      "below the average",
+      "weighted average",
+      "annual average",
+      "average number",
+      "above average",
+      "average cost",
+      "average rate",
+      "average power",
+      "dow jones industrial average"
+    ]
+  },
+  {
+    "word": "aviate",
+    "phonetic": "/'evɪet/",
+    "partOfSpeech": "v",
+    "meaning": "驾驶飞机",
+    "example": "There is long-distance medical system in the boat, aviate board has near one thousand square meters , can help many model copters rise and drop.",
+    "translation": "飞行甲板面积近千平方米，可供多种型号的直升机起降；",
+    "phrases": []
+  },
+  {
+    "word": "aviation",
+    "phonetic": "/,evɪ'eʃən/",
+    "partOfSpeech": "n",
+    "meaning": "航空；航空，航空学",
+    "example": "...the aviation industry.",
+    "translation": "…航空工业。",
+    "phrases": [
+      "civil aviation",
+      "aviation industry",
+      "aviation safety",
+      "aviation authority",
+      "general aviation",
+      "aviation kerosene",
+      "aviation fuel",
+      "commercial aviation",
+      "federal aviation administration",
+      "international civil aviation organization",
+      "aviation accident",
+      "aviation insurance",
+      "aviation medicine"
+    ]
+  },
+  {
+    "word": "avoid",
+    "phonetic": "/ə'vɔɪd/",
+    "partOfSpeech": "v/vt",
+    "meaning": "避免；避免，躲开；撤消；避免， 躲开； 撤销",
+    "example": "Road safety is taught to young children to avoid road accidents.",
+    "translation": "小孩子受到道路安全知识的教育，以避免交通事故。",
+    "phrases": [
+      "avoid doing"
+    ]
+  },
+  {
+    "word": "await",
+    "phonetic": "/ə'wet/",
+    "partOfSpeech": "v/vt",
+    "meaning": "等候，期待；等候； 期待； 将降临到…身上",
+    "example": "Several men are awaiting trial for robbery.",
+    "translation": "几个人因抢劫正在候审。",
+    "phrases": []
+  },
+  {
+    "word": "awake",
+    "phonetic": "/ə'wek/",
+    "partOfSpeech": "adj/v",
+    "meaning": "醒着的；唤醒",
+    "example": "I hope he’s awake now.",
+    "translation": "我希望他现在醒着。",
+    "phrases": [
+      "stay awake",
+      "wide awake",
+      "awake from"
+    ]
+  },
+  {
+    "word": "award",
+    "phonetic": "/ə'wɔrd/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "授予；判给；奖(金)；奖，奖品；判定；授予， 给予； 判给， 裁定",
+    "example": "Moodie has been awarded a golf scholarship at the University of Hawaii.",
+    "translation": "穆迪获授夏威夷大学高尔夫奖学金。",
+    "phrases": [
+      "academy award",
+      "award ceremony",
+      "arbitral award",
+      "arbitration award",
+      "special award",
+      "contract award",
+      "national book award",
+      "final award",
+      "grammy award"
+    ]
+  },
+  {
+    "word": "aware",
+    "phonetic": "/ə'wɛr/",
+    "partOfSpeech": "adj",
+    "meaning": "知道的，意识到的；知道的， 意识到的",
+    "example": "Mr Braley has been made aware of the need for absolute secrecy.",
+    "translation": "布雷利先生被告知需要绝对保密。",
+    "phrases": [
+      "aware of",
+      "become aware of",
+      "acutely aware"
+    ]
+  },
+  {
+    "word": "awareness",
+    "phonetic": "/ə'wɛrnəs/",
+    "partOfSpeech": "n",
+    "meaning": "意识",
+    "example": "Health officials have tried to raise awareness (= improve people’s knowledge ) about AIDS.",
+    "translation": "卫生部官员努力提高人们对艾滋病的认识。",
+    "phrases": [
+      "awareness of",
+      "environmental awareness",
+      "brand awareness",
+      "risk awareness",
+      "strengthen the awareness",
+      "self-protection awareness",
+      "global awareness"
+    ]
+  },
+  {
+    "word": "away",
+    "phonetic": "/əˈwe/",
+    "partOfSpeech": "adv",
+    "meaning": "离开，远离；…去",
+    "example": "Go away!",
+    "translation": "走开！",
+    "phrases": [
+      "away from",
+      "far away",
+      "right away",
+      "away with",
+      "far away from",
+      "go away",
+      "straight away",
+      "do away with",
+      "away from her",
+      "far and away",
+      "away from it all",
+      "out and away"
+    ]
+  },
+  {
+    "word": "awful",
+    "phonetic": "/'ɔfl/",
+    "partOfSpeech": "adj",
+    "meaning": "可怕的，骇人的；令人不愉快的；令人不愉快的， 难过的； 非常的， 极大的",
+    "example": "The weather was awful.",
+    "translation": "天气很糟糕。",
+    "phrases": [
+      "an awful lot",
+      "an awful lot of",
+      "awful weather"
+    ]
+  },
+  {
+    "word": "awfully",
+    "phonetic": "/'ɔfli/",
+    "partOfSpeech": "adv",
+    "meaning": "令人畏惧的；很",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "awkward",
+    "phonetic": "/'ɔkwɚd/",
+    "partOfSpeech": "adj",
+    "meaning": "笨拙的；尴尬的；笨拙的， 尴尬的； 难操纵的， 使用不便的； 不灵巧的",
+    "example": "I hoped he would stop asking awkward questions .",
+    "translation": "我希望他不要再问令人难堪的问题。",
+    "phrases": []
+  },
+  {
+    "word": "ax",
+    "phonetic": "/æks/",
+    "partOfSpeech": "n",
+    "meaning": "斧子",
+    "example": "He grinds ax on the grindstone.",
+    "translation": "他在磨石上磨斧。",
+    "phrases": []
+  },
+  {
+    "word": "axis",
+    "phonetic": "/'æksɪs/",
+    "partOfSpeech": "n",
+    "meaning": "轴，轴线；中心线",
+    "example": "The Earth rotates on an axis between the north and south poles.",
+    "translation": "地球绕着南北两极之间的地轴自转。",
+    "phrases": [
+      "principal axis",
+      "central axis",
+      "vertical axis",
+      "optical axis",
+      "horizontal axis",
+      "long axis",
+      "rotation axis",
+      "major axis",
+      "longitudinal axis",
+      "coordinate axis",
+      "axis of evil",
+      "axis of rotation",
+      "x axis",
+      "minor axis",
+      "time axis",
+      "neutral axis",
+      "optic axis",
+      "symmetry axis",
+      "fiber axis",
+      "real axis"
+    ]
+  },
+  {
+    "word": "baby",
+    "phonetic": "/bebɪ/",
+    "partOfSpeech": "n",
+    "meaning": "婴儿；孩子气的人",
+    "example": "The baby is crying.",
+    "translation": "宝宝在哭。",
+    "phrases": [
+      "baby girl",
+      "have a baby",
+      "baby boy",
+      "baby boom",
+      "baby food",
+      "baby formula",
+      "baby carriage",
+      "baby stroller",
+      "come on baby",
+      "baby teeth",
+      "baby blue",
+      "baby shower",
+      "baby face",
+      "baby talk",
+      "baby sitter",
+      "baby carrier",
+      "baby car",
+      "baby wear",
+      "test-tube baby",
+      "tiny baby"
+    ]
+  },
+  {
+    "word": "back",
+    "phonetic": "/bæk/",
+    "partOfSpeech": "adv",
+    "meaning": "在后；回原处；回",
+    "example": "I’ll be back in a minute.",
+    "translation": "我马上回来。",
+    "phrases": [
+      "go back",
+      "back in",
+      "back of",
+      "back on",
+      "back into",
+      "in the back",
+      "at the back",
+      "back and forth",
+      "back up",
+      "way back",
+      "on the back of",
+      "at the back of",
+      "back down",
+      "in the back of",
+      "back out",
+      "on my back",
+      "on one's back",
+      "back off",
+      "back to back",
+      "go back on"
+    ]
+  },
+  {
+    "word": "background",
+    "phonetic": "/'bækɡraʊnd/",
+    "partOfSpeech": "n",
+    "meaning": "背景；背景，后景，经历；出身背景， 经历； 背景资料； 背景， 底子",
+    "example": "Students with a background in chemistry will probably find the course easier.",
+    "translation": "学过化学的学生可能会觉得这门课程容易些。",
+    "phrases": [
+      "in the background",
+      "cultural background",
+      "educational background",
+      "social background",
+      "background music",
+      "background information",
+      "education background",
+      "family background",
+      "background noise",
+      "background color",
+      "academic background",
+      "background value",
+      "background image",
+      "for background",
+      "white background",
+      "on background",
+      "business background",
+      "political background",
+      "background radiation",
+      "background check"
+    ]
+  },
+  {
+    "word": "backslide",
+    "phonetic": "/,bæk'slaid/",
+    "partOfSpeech": "n & v",
+    "meaning": "倒退，退步",
+    "example": "But if you backslide, Hiram says, “Start over.",
+    "translation": "但假如你倒退了，海勒姆说，“那就重新开始。",
+    "phrases": []
+  },
+  {
+    "word": "backward",
+    "phonetic": "/'bækwɚd/",
+    "partOfSpeech": "adv/adj",
+    "meaning": "向后的；向后的；倒的；倒；[-]倒； 向后， 往回；向后的，倒的；落后的，进步慢的",
+    "example": "The diver flipped over backward into the water.",
+    "translation": "跳水运动员向后翻转跳入水中。",
+    "phrases": [
+      "backward area",
+      "step backward",
+      "backward country",
+      "backward extrusion",
+      "backward compatibility",
+      "backward position",
+      "backward integration",
+      "backward movement",
+      "backward wave oscillator",
+      "backward somersault"
+    ]
+  },
+  {
+    "word": "bacon",
+    "phonetic": "/'bekən/",
+    "partOfSpeech": "n",
+    "meaning": "咸肉",
+    "example": "bacon and eggs",
+    "translation": "咸猪肉煎蛋",
+    "phrases": [
+      "francis bacon",
+      "bring home the bacon"
+    ]
+  },
+  {
+    "word": "bacteria",
+    "phonetic": "/bæk'tɪrɪə/",
+    "partOfSpeech": "n",
+    "meaning": "细菌",
+    "example": "Is it possible to multiply bacteria in the laboratory?",
+    "translation": "有可能在实验室繁殖细菌吗?",
+    "phrases": [
+      "lactic acid bacteria",
+      "pathogenic bacteria",
+      "photosynthetic bacteria",
+      "harmful bacteria",
+      "anaerobic bacteria",
+      "sulfate reducing bacteria",
+      "coliform bacteria",
+      "aerobic bacteria",
+      "heterotrophic bacteria",
+      "acetic acid bacteria",
+      "denitrifying bacteria",
+      "intestinal bacteria",
+      "nitrifying bacteria",
+      "methane bacteria",
+      "iron bacteria",
+      "gram negative bacteria",
+      "symbiotic bacteria",
+      "sulphate reducing bacteria"
+    ]
+  },
+  {
+    "word": "bad",
+    "phonetic": "/bæd/",
+    "partOfSpeech": "adj",
+    "meaning": "坏的，恶的；严重的",
+    "example": "I have some bad news for you.",
+    "translation": "我有坏消息要告诉你。",
+    "phrases": [
+      "in bad",
+      "bad news",
+      "bad weather",
+      "bad at",
+      "to the bad",
+      "bad luck",
+      "bad thing",
+      "bad habit",
+      "go bad",
+      "bad mood",
+      "bad influence",
+      "feel bad",
+      "be bad for",
+      "bad behavior",
+      "bad cold",
+      "bad temper",
+      "bad situation",
+      "not so bad",
+      "in a bad way",
+      "in a bad mood"
+    ]
+  },
+  {
+    "word": "badly",
+    "phonetic": "/'bædli/",
+    "partOfSpeech": "adv",
+    "meaning": "坏，差；严重地",
+    "example": "He’s been limping badly ever since the skiing accident.",
+    "translation": "出了那次滑雪事故以后，他的腿跛得很厉害。",
+    "phrases": [
+      "badly off",
+      "hurt badly"
+    ]
+  },
+  {
+    "word": "badminton",
+    "phonetic": "/'bædmɪntən/",
+    "partOfSpeech": "n",
+    "meaning": "羽毛球",
+    "example": "Can I try you new badminton racket?",
+    "translation": "我可以试用你的羽毛球拍吗？",
+    "phrases": [
+      "badminton court",
+      "badminton racket"
+    ]
+  },
+  {
+    "word": "bag",
+    "phonetic": "/bæɡ/",
+    "partOfSpeech": "n",
+    "meaning": "袋，包，钱包，背包",
+    "example": "She left the hotel carrying a shopping bag.",
+    "translation": "她拎着一个购物袋离开了宾馆。",
+    "phrases": [
+      "bags of",
+      "in the bag",
+      "plastic bag",
+      "paper bag",
+      "bag filter",
+      "shopping bag",
+      "filter bag",
+      "sleeping bag",
+      "air bag",
+      "cosmetic bag",
+      "a bag of nails",
+      "tea bag",
+      "hand bag",
+      "travel bag",
+      "cloth bag",
+      "bags under the eyes",
+      "woven bag",
+      "laundry bag",
+      "vacuum bag",
+      "ice bag"
+    ]
+  },
+  {
+    "word": "baggage",
+    "phonetic": "/'bæɡɪdʒ/",
+    "partOfSpeech": "n",
+    "meaning": "行李",
+    "example": "Check your baggage in at the desk.",
+    "translation": "在服务台托运行李。",
+    "phrases": [
+      "baggage claim",
+      "excess baggage",
+      "hand baggage",
+      "baggage allowance",
+      "baggage check",
+      "baggage claim area",
+      "baggage handler",
+      "baggage car",
+      "baggage elevator"
+    ]
+  },
+  {
+    "word": "bake",
+    "phonetic": "/bek/",
+    "partOfSpeech": "v/vt",
+    "meaning": "烤，烘，焙；烧硬；烤， 烘， 焙",
+    "example": "I’m baking some bread.",
+    "translation": "我在烤一些面包。",
+    "phrases": [
+      "bake bread",
+      "bake a cake"
+    ]
+  },
+  {
+    "word": "bakery",
+    "phonetic": "/'bekəri/",
+    "partOfSpeech": "n",
+    "meaning": "面包店",
+    "example": "A smell of bread drifted from some distant bakery.",
+    "translation": "一股面包的味道从远处的某个面包店飘来。",
+    "phrases": [
+      "bakery and confectionery"
+    ]
+  },
+  {
+    "word": "balance",
+    "phonetic": "/'bæləns/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "使平衡；称；天平；使平衡；称；权衡，比较；天平； 平衡； 结存， 结欠",
+    "example": "Job losses in manufacturing were balanced by job increases in the service sector.",
+    "translation": "制造业职位减少了，而服务行业就业机会却增加了，正好相抵。",
+    "phrases": [
+      "balance of",
+      "in balance",
+      "in the balance",
+      "balance sheet",
+      "on balance",
+      "ecological balance",
+      "hold the balance",
+      "strike a balance",
+      "energy balance",
+      "out of balance",
+      "dynamic balance",
+      "heat balance",
+      "balance method",
+      "material balance",
+      "balance equation",
+      "water balance",
+      "on the balance",
+      "load balance",
+      "balance of power",
+      "mass balance"
+    ]
+  },
+  {
+    "word": "balcony",
+    "phonetic": "/'bælkənɪ/",
+    "partOfSpeech": "n",
+    "meaning": "阳台； 楼厅， 楼座",
+    "example": "Has your flat got a balcony?",
+    "translation": "你的公寓有阳台吗？",
+    "phrases": [
+      "balcony window",
+      "balcony door"
+    ]
+  },
+  {
+    "word": "ball",
+    "phonetic": "/bɔl/",
+    "partOfSpeech": "n",
+    "meaning": "球，球状物；舞会",
+    "example": "a ball of string",
+    "translation": "线团",
+    "phrases": [
+      "ball mill",
+      "on the ball",
+      "ball valve",
+      "ball bearing",
+      "hit the ball",
+      "steel ball",
+      "play ball",
+      "ball screw",
+      "ball milling",
+      "crystal ball",
+      "rubber ball",
+      "ball pen",
+      "golden ball",
+      "tennis ball",
+      "soccer ball",
+      "golf ball",
+      "ball rolling",
+      "cotton ball",
+      "kick the ball",
+      "pass the ball"
+    ]
+  },
+  {
+    "word": "balloon",
+    "phonetic": "/bə'lun/",
+    "partOfSpeech": "n",
+    "meaning": "气球，玩具气球；气球， 玩具气球",
+    "example": "Can you help me blow up these balloons?",
+    "translation": "你帮我把这些气球吹起来好吗？",
+    "phrases": [
+      "air balloon",
+      "hot-air balloon",
+      "weather balloon",
+      "balloon angioplasty",
+      "balloon pump",
+      "balloon borne",
+      "balloon flower",
+      "like a lead balloon",
+      "balloon catheter"
+    ]
+  },
+  {
+    "word": "ban",
+    "phonetic": "/bæn/",
+    "partOfSpeech": "v/vt/n",
+    "meaning": "禁止；取缔，查禁；禁止；禁止， 禁令",
+    "example": "Smoking is banned in the building.",
+    "translation": "大楼内禁止吸烟。",
+    "phrases": [
+      "ban ki-moon",
+      "ban from",
+      "lift the ban"
+    ]
+  },
+  {
+    "word": "banana",
+    "phonetic": "/bə'nænə/",
+    "partOfSpeech": "n",
+    "meaning": "香蕉；芭蕉属植物",
+    "example": "...a bunch of bananas.",
+    "translation": "…一串香蕉。",
+    "phrases": [
+      "banana skin",
+      "top banana",
+      "banana split",
+      "banana republic"
+    ]
+  },
+  {
+    "word": "band",
+    "phonetic": "/bænd/",
+    "partOfSpeech": "n/vt",
+    "meaning": "乐队；带；波段；乐队；群，伙；带；条纹；波段；用带绑扎",
+    "example": "The band was playing old Beatles songs.",
+    "translation": "乐队正在演奏披头士的老歌。",
+    "phrases": [
+      "frequency band",
+      "wide band",
+      "band gap",
+      "broad band",
+      "narrow band",
+      "rock band",
+      "rubber band",
+      "wave band",
+      "band structure",
+      "band width",
+      "energy band",
+      "band saw",
+      "band together",
+      "steel band",
+      "base band",
+      "forbidden band",
+      "marching band",
+      "band pass",
+      "jazz band",
+      "elastic band"
+    ]
+  },
+  {
+    "word": "bang",
+    "phonetic": "/bæŋ/",
+    "partOfSpeech": "n/vi/vt",
+    "meaning": "巨响，枪声；猛击；猛击， 猛撞； 发出砰的一声， 砰砰地响；猛击，猛撞；砰地敲",
+    "example": "a bang on the head",
+    "translation": "头上一记猛烈的撞击",
+    "phrases": [
+      "big bang",
+      "with a bang",
+      "bang on",
+      "bang into",
+      "bang for the buck",
+      "bang up",
+      "bang out"
+    ]
+  },
+  {
+    "word": "bank",
+    "phonetic": "/bæŋk/",
+    "partOfSpeech": "n",
+    "meaning": "银行；库；岩，堤",
+    "example": "the river bank",
+    "translation": "河岸",
+    "phrases": [
+      "central bank",
+      "commercial bank",
+      "bank of china",
+      "world bank",
+      "bank account",
+      "people's bank of china",
+      "investment bank",
+      "development bank",
+      "construction bank",
+      "west bank",
+      "bank credit",
+      "bank loan",
+      "agricultural bank",
+      "industrial and commercial bank",
+      "issuing bank",
+      "river bank",
+      "china construction bank",
+      "in bank",
+      "bank on",
+      "bank of america"
+    ]
+  },
+  {
+    "word": "bankrupt",
+    "phonetic": "/'bæŋkrʌpt/",
+    "partOfSpeech": "adj",
+    "meaning": "破产的，倒闭的；破产的",
+    "example": "The firm went bankrupt before the building work was completed.",
+    "translation": "建筑工程尚未竣工，公司就破产了。",
+    "phrases": [
+      "go bankrupt",
+      "bankrupt of"
+    ]
+  },
+  {
+    "word": "banner",
+    "phonetic": "/'bænɚ/",
+    "partOfSpeech": "n",
+    "meaning": "旗，旗帜，横幅；横幅； 旗， 旗帜",
+    "example": "The onlookers were shouting, cheering, and waving banners.",
+    "translation": "观众挥动着横幅，又是叫喊又是欢呼。",
+    "phrases": [
+      "under the banner of",
+      "banner ads",
+      "star-spangled banner"
+    ]
+  },
+  {
+    "word": "bar",
+    "phonetic": "/bɑr/",
+    "partOfSpeech": "n",
+    "meaning": "酒吧间；条，杆；栅",
+    "example": "houses with bars across the windows",
+    "translation": "窗户上钉有铁条的房屋",
+    "phrases": [
+      "at the bar",
+      "bar code",
+      "steel bar",
+      "behind bars",
+      "status bar",
+      "internet bar",
+      "reinforcing bar",
+      "menu bar",
+      "bar none",
+      "progress bar",
+      "title bar",
+      "coffee bar",
+      "reinforcing steel bar",
+      "iron bar",
+      "snack bar",
+      "scroll bar",
+      "chocolate bar",
+      "oxygen bar",
+      "round bar",
+      "bar association"
+    ]
+  },
+  {
+    "word": "barber",
+    "phonetic": "/'bɑrbɚ/",
+    "partOfSpeech": "n",
+    "meaning": "理发师",
+    "example": "My father marched me over to Otto, the local barber, to have my hair cut short.",
+    "translation": "爸爸把我拽到当地理发师奥托跟前，让他把我的头发剪短。",
+    "phrases": [
+      "barber shop"
+    ]
+  },
+  {
+    "word": "bare",
+    "phonetic": "/bɛr/",
+    "partOfSpeech": "adj/vt",
+    "meaning": "赤裸的；仅仅的；赤裸的；光秃的，无遮盖的；刚刚够的，勉强的；露出， 显露",
+    "example": "a ragged child with bare feet",
+    "translation": "一个衣衫褴褛、光着脚的小孩",
+    "phrases": [
+      "bare of",
+      "lay bare",
+      "bare feet",
+      "bare land",
+      "bare metal",
+      "bare minimum",
+      "go bare",
+      "bare rock",
+      "bare tube"
+    ]
+  },
+  {
+    "word": "barely",
+    "phonetic": "/'bɛrli/",
+    "partOfSpeech": "adv",
+    "meaning": "仅仅，几乎不；仅仅， 只不过， 几乎不",
+    "example": "She was barely aware of his presence.",
+    "translation": "她几乎没有注意到他的存在。",
+    "phrases": []
+  },
+  {
+    "word": "bargain",
+    "phonetic": "/ˈbɑːɡɪn/",
+    "partOfSpeech": "n/v/vi",
+    "meaning": "讨价还价；交易；议价；成交；特价商品；协议，交易",
+    "example": "Is she a bawd that she should bargain?",
+    "translation": "她会是一个要讨价还价的鸨母吗?",
+    "phrases": [
+      "bargain with",
+      "real bargain",
+      "bargain for",
+      "bargain price",
+      "good bargain",
+      "into the bargain",
+      "bargain on",
+      "in the bargain",
+      "no bargain",
+      "bargain hunting",
+      "bargain over the price",
+      "bargain basement",
+      "bargain away",
+      "bargain hunter",
+      "hard bargain"
+    ]
+  },
+  {
+    "word": "bark",
+    "phonetic": "/bɑrk/",
+    "partOfSpeech": "n/vi",
+    "meaning": "吠叫声；吠，叫；吠声， 叫声； 树皮",
+    "example": "Amy’s voice was a hoarse bark.",
+    "translation": "艾美发出的是粗哑的吼声。",
+    "phrases": [
+      "bark at",
+      "tree bark",
+      "cinnamon bark",
+      "pine bark",
+      "cassia bark",
+      "eucommia bark",
+      "bark beetle"
+    ]
+  },
+  {
+    "word": "barn",
+    "phonetic": "/bɑrn/",
+    "partOfSpeech": "n",
+    "meaning": "谷仓；牲口棚；谷仓； 牲口棚",
+    "example": "",
+    "translation": "",
+    "phrases": [
+      "barn door"
+    ]
+  },
+  {
+    "word": "barrel",
+    "phonetic": "/'bærəl/",
+    "partOfSpeech": "n",
+    "meaning": "桶；圆筒；枪管；桶； 圆筒； 枪管",
+    "example": "The wine is aged in oak barrels.",
+    "translation": "这种葡萄酒是用橡木酒桶放陈的。",
+    "phrases": [
+      "in the barrel",
+      "on the barrel",
+      "gun barrel",
+      "pump barrel",
+      "core barrel",
+      "barrel plating",
+      "water barrel",
+      "pork barrel",
+      "barrel theory",
+      "machine barrel",
+      "over a barrel",
+      "barrel distortion"
+    ]
+  },
+  {
+    "word": "barrier",
+    "phonetic": "/'bærɪɚ/",
+    "partOfSpeech": "n",
+    "meaning": "栅栏，屏障；障碍；栅栏； 检票口； 屏障； 障碍， 隔阂",
+    "example": "He advocated the removal of trade barriers.",
+    "translation": "他提倡消除贸易壁垒。",
+    "phrases": [
+      "trade barrier",
+      "language barrier",
+      "barrier reef",
+      "thermal barrier",
+      "great barrier reef",
+      "blood-brain barrier",
+      "tariff barrier",
+      "barrier property",
+      "sound barrier",
+      "barrier layer",
+      "potential barrier",
+      "non-tariff barrier",
+      "noise barrier",
+      "blood brain barrier",
+      "moisture barrier",
+      "natural barrier",
+      "safety barrier",
+      "fire barrier",
+      "protective barrier",
+      "barrier system"
+    ]
+  }
+]
