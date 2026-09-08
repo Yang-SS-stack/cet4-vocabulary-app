@@ -145,13 +145,17 @@ git commit -m "feat: generate lazy word book assets"
 ~~~js
 test('returns the first page before the background search index resolves', async () => {
   let resolveIndex
-  const fetchImpl = vi.fn()
-    .mockResolvedValueOnce(jsonResponse(manifest))
-    .mockResolvedValueOnce(jsonResponse([
+  const fetchImpl = vi.fn(async (url) => {
+    if (url.endsWith('/manifest.json')) return jsonResponse(manifest)
+    if (url.endsWith('/chunks/000.json')) return jsonResponse([
       { word: 'abruptly', meaning: '突然地', partOfSpeech: 'adv',
         phonetic: '/a/', example: '', translation: '', phrases: [] },
-    ]))
-    .mockImplementationOnce(() => new Promise((resolve) => { resolveIndex = resolve }))
+    ])
+    if (url.endsWith('/search-index.json')) {
+      return new Promise((resolve) => { resolveIndex = resolve })
+    }
+    throw new Error(`Unexpected URL: ${url}`)
+  })
 
   const session = await loadWordBook(book, fetchImpl)
   await expect(session.loadPage({ sort: 'alphabetical', page: 1, query: '' }))
@@ -482,4 +486,3 @@ git commit -m "docs: record word book loading verification"
 - 接口一致性：远程和内存会话都实现 loadPage 与 indexReady；VocabularyPage 可接受会话或旧数组；WordCard 继续接收完整词条。
 - 范围检查：只改数据生成、词书加载会话、词表页面状态/展示、相关测试、文档和生成资源。
 - 基线说明：音频清单超时被明确列为验证记录，不会被误当成本任务新引入的失败。
-
