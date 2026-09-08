@@ -255,7 +255,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
         ) : <>
         <ul className="vocabulary-list" aria-label={selectedBook.wordListLabel} key={`${selectedBookId}:${query}:${sort}:${currentPage}`}>
           {pageWords.map((item) => (
-            <WordCard item={item} key={item.word} />
+            <WordCard item={item} showFrequency={selectedBookId === 'cet4-high-frequency'} key={item.word} />
           ))}
         </ul>
 

@@ -4,12 +4,14 @@ import { afterEach, expect, test, vi } from 'vitest'
 import WordCard from './WordCard'
 import { readFileSync } from 'node:fs'
 
-afterEach(() => vi.unstubAllGlobals())
+const nativeAudio = window.Audio
+afterEach(() => { vi.unstubAllGlobals(); window.Audio = nativeAudio })
 
 test('front shows frequency and a full example with separate speech controls that do not flip', async () => {
   const synthesis = { speak: vi.fn(), cancel: vi.fn(), getVoices: () => [{ lang: 'en-GB' }, { lang: 'en-US' }] }
   vi.stubGlobal('speechSynthesis', synthesis)
   vi.stubGlobal('SpeechSynthesisUtterance', class { constructor(text) { this.text = text } })
+  window.Audio = undefined
   const user = userEvent.setup()
   const { container } = render(<WordCard item={word} />)
   const front = within(container.querySelector('.word-card__front'))
@@ -101,9 +103,10 @@ test('shows honest missing-data messages and displays zero frequency as availabl
   const { rerender } = render(<WordCard item={{ word: 'test' }} />)
   await user.click(screen.getByRole('button', { name: 'test，查看详情' }))
   const details = screen.getByRole('region', { name: 'test 的详情' })
-  for (const message of ['暂无释义', '暂无例句', '暂无词组', '暂无词频数据']) {
+  for (const message of ['暂无释义', '暂无例句', '暂无词组']) {
     expect(within(details).getByText(message)).toBeInTheDocument()
   }
+  expect(within(details).queryByText('暂无词频数据')).not.toBeInTheDocument()
   rerender(<WordCard item={{ word: 'test', frequency: 0 }} />)
   expect(within(details).getByText('词频 0')).toBeInTheDocument()
 })
@@ -112,6 +115,7 @@ test('speech does not flip the card and returning stops the active pronunciation
   const synthesis = { speak: vi.fn(), cancel: vi.fn() }
   vi.stubGlobal('speechSynthesis', synthesis)
   vi.stubGlobal('SpeechSynthesisUtterance', class { constructor(text) { this.text = text } })
+  window.Audio = undefined
   const user = userEvent.setup()
   render(<WordCard item={word} />)
   await user.click(screen.getByRole('button', { name: 'absorb，查看详情' }))

@@ -3,7 +3,8 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 import SpeechButton from './SpeechButton'
 
-afterEach(() => vi.unstubAllGlobals())
+const nativeAudio = window.Audio
+afterEach(() => { vi.unstubAllGlobals(); window.Audio = nativeAudio })
 
 function mockSpeech() {
   const synthesis = { cancel: vi.fn(), speak: vi.fn() }
@@ -94,4 +95,27 @@ test('does not silently substitute a different accent and retries when voices be
   synthesis.getVoices = () => [{ lang: 'en-GB' }]
   await user.click(screen.getByRole('button'))
   expect(synthesis.speak).toHaveBeenCalledOnce()
+})
+
+test('plays a pre-generated audio file before using browser speech', async () => {
+  const synthesis = mockSpeech()
+  class AudioMock {
+    static last
+    constructor(src) {
+      this.src = src
+      this.play = vi.fn(() => Promise.resolve())
+      this.pause = vi.fn()
+      this.currentTime = 0
+      AudioMock.last = this
+    }
+  }
+  window.Audio = AudioMock
+  const user = userEvent.setup()
+  render(<SpeechButton word="apple" src="/audio/apple.mp3" accessibleLabel="apple 美音" />)
+  await user.click(screen.getByRole('button', { name: 'apple 美音' }))
+  expect(AudioMock.last.src).toBe('/audio/apple.mp3')
+  expect(AudioMock.last.play).toHaveBeenCalledOnce()
+  expect(synthesis.speak).not.toHaveBeenCalled()
+  act(() => AudioMock.last.onended())
+  expect(screen.getByRole('button')).toHaveTextContent('发音')
 })

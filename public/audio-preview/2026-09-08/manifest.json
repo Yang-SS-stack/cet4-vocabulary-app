@@ -1,0 +1,44 @@
+{
+  "text": "Apple. Water. Tomato. Schedule. Opportunity. Approximately. Could you bring me a glass of water? The walk takes approximately twenty minutes.",
+  "rate": "-10%",
+  "source": "Microsoft Edge online speech, generated with edge-tts 7.2.8",
+  "status": "audition only; awaiting user choice before batch generation",
+  "samples": [
+    {
+      "label": "英音女声 · Sonia",
+      "voice": "en-GB-SoniaNeural",
+      "file": "british-sonia.mp3",
+      "seconds": 13.92,
+      "bytes": 83520,
+      "sampleRate": 24000,
+      "sha256": "3c04ebf11f43d1a2e6251713e6793b018329b38de7f0d11489d185ce6aed4d8f"
+    },
+    {
+      "label": "英音男声 · Ryan",
+      "voice": "en-GB-RyanNeural",
+      "file": "british-ryan.mp3",
+      "seconds": 16.66,
+      "bytes": 99936,
+      "sampleRate": 24000,
+      "sha256": "26eb4edcbdfca6043ffa9f157b142bdc0b5995886e39417760d6c383879fdaeb"
+    },
+    {
+      "label": "美音女声 · Jenny",
+      "voice": "en-US-JennyNeural",
+      "file": "american-jenny.mp3",
+      "seconds": 17.02,
+      "bytes": 102096,
+      "sampleRate": 24000,
+      "sha256": "45843885d793761472a9023ce963acb2b21c08a7e3a6ea6809161cf817ed1646"
+    },
+    {
+      "label": "美音男声 · Guy",
+      "voice": "en-US-GuyNeural",
+      "file": "american-guy.mp3",
+      "seconds": 17.78,
+      "bytes": 106704,
+      "sampleRate": 24000,
+      "sha256": "fd63b417308832c5d35b6be0cfac70a47090e3fb90c7e8e98bd53b77fd1469e7"
+    }
+  ]
+}

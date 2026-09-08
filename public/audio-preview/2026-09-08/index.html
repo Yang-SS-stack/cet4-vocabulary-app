@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>英美发音试听 · LinguaJet</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f3f1ec; color: #23374a; font: 15px/1.75 system-ui, sans-serif; }
+    main { max-width: 920px; margin: auto; padding: 40px 24px 60px; }
+    .brand { color: #8a7549; font-size: 13px; letter-spacing: .08em; }
+    h1 { font-size: clamp(28px, 5vw, 38px); font-weight: 500; margin: 8px 0; }
+    .intro, .note { color: #637080; }
+    .script { margin: 28px 0; padding: 20px 24px; border-left: 2px solid #ab9461; background: #faf9f6; }
+    .script p { margin: 8px 0; }
+    .script p[lang=en] { font: 19px/1.7 Georgia, serif; }
+    .voices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    article { padding: 22px; background: #fffefa; border: 1px solid #ddd9d1; border-radius: 5px; }
+    h2 { font-size: 20px; font-weight: 500; margin: 0 0 4px; }
+    article p { margin: 0 0 18px; color: #637080; font-size: 13px; }
+    audio { display: block; width: 100%; }
+    a { color: #795e28; text-underline-offset: 3px; }
+    .choice { margin-top: 28px; }
+    .note { font-size: 13px; margin-top: 26px; }
+    @media (max-width: 600px) { .voices { grid-template-columns: 1fr; } main { padding: 24px 18px 40px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">LinguaJet · 声音试听</div>
+    <h1>选一组听得清、听得惯的声音</h1>
+    <p class="intro">四段声音使用相同文字，语速均比默认慢 10%。先比较英美口音与男女音色，确认后再批量生成词库音频。</p>
+    <section class="script" aria-label="试听原文">
+      <p lang="en">Apple. Water. Tomato. Schedule. Opportunity. Approximately.</p>
+      <p lang="en">Could you bring me a glass of water?</p>
+      <p>你能给我拿一杯水吗？</p>
+      <p lang="en">The walk takes approximately twenty minutes.</p>
+      <p>步行大约需要二十分钟。</p>
+    </section>
+    <div class="voices">
+      <article>
+        <h2>英音女声 · Sonia</h2>
+        <p>英国英语 · 约 14 秒</p>
+        <audio controls preload="metadata" aria-label="试听英音女声 Sonia" src="british-sonia.mp3"></audio>
+      </article>
+      <article>
+        <h2>英音男声 · Ryan</h2>
+        <p>英国英语 · 约 17 秒</p>
+        <audio controls preload="metadata" aria-label="试听英音男声 Ryan" src="british-ryan.mp3"></audio>
+      </article>
+      <article>
+        <h2>美音女声 · Jenny</h2>
+        <p>美国英语</p>
+        <audio controls preload="metadata" aria-label="试听美音女声 Jenny" src="american-jenny.mp3"></audio>
+      </article>
+      <article>
+        <h2>美音男声 · Guy</h2>
+        <p>美国英语</p>
+        <audio controls preload="metadata" aria-label="试听美音男声 Guy" src="american-guy.mp3"></audio>
+      </article>
+    </div>
+    <p class="choice">试听后在对话中告诉我你选的英音、美音，以及语速是否合适。</p>
+    <p class="note">这四段是预先生成的合成语音文件，播放不依赖系统安装的英语声音。当前仅供试听，尚未替换词卡中的发音，也未开始批量生成。声音来源：Microsoft Edge 在线语音。</p>
+    <a href="/">返回词表应用</a>
+  </main>
+  <script>
+    const players = [...document.querySelectorAll('audio')];
+    for (const player of players) {
+      player.addEventListener('play', () => {
+        for (const other of players) if (other !== player) other.pause();
+      });
+    }
+  </script>
+</body>
+</html>

@@ -67,6 +67,7 @@ function visibleWordNames() {
 test('sorts alphabetically by default and by descending frequency with ties and missing data', async () => {
   const user = await openBrowseBook()
   expect(visibleWordNames()).toEqual(['absent', 'Apple', 'application', 'zebra', 'zero'])
+  expect(screen.queryByText('词频 12')).not.toBeInTheDocument()
   await user.click(screen.getByRole('button', { name: '词频从高到低' }))
   expect(visibleWordNames()).toEqual(['Apple', 'application', 'zebra', 'zero', 'absent'])
   expect(browseWords[0].word).toBe('zebra')

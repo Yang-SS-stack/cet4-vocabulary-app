@@ -2,9 +2,10 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import SpeechButton from './SpeechButton'
 import { describePartOfSpeech } from '../data/partOfSpeech'
 import supplementalExamples from '../data/supplementalExamples.json'
+import audioManifest from '../data/audioManifest.json'
 import './WordCard.css'
 
-export default function WordCard({ item }) {
+export default function WordCard({ item, showFrequency = true }) {
   const [flipped, setFlipped] = useState(false)
   const frontButton = useRef(null)
   const backButton = useRef(null)
@@ -12,19 +13,20 @@ export default function WordCard({ item }) {
   const pointerStart = useRef(null)
   const meaning = item.meaning?.trim() || '暂无释义'
   const briefMeaning = meaning.split(/[；;]/)[0]
-  const hasFrequency = Number.isFinite(item.frequency) && item.frequency >= 0
+  const hasFrequency = showFrequency && Number.isFinite(item.frequency) && item.frequency >= 0
+  const audio = audioManifest.words[item.word.toLowerCase()]
   const supplemental = !item.example?.trim() ? supplementalExamples[item.word.toLowerCase()] : null
   const example = supplemental?.example ?? item.example
   const translation = supplemental?.translation ?? item.translation
-  const frequency = hasFrequency ? `词频 ${item.frequency.toLocaleString('en-US')}` : '暂无词频数据'
+  const frequency = hasFrequency ? `词频 ${item.frequency.toLocaleString('en-US')}` : ''
   const pronunciations = (active) => <div className="word-card__pronunciations">
-    <SpeechButton active={active} word={item.word} lang="en-GB" label="英音" accessibleLabel={`${item.word} 英音`} />
-    <SpeechButton active={active} word={item.word} lang="en-US" label="美音" accessibleLabel={`${item.word} 美音`} />
+    <SpeechButton active={active} src={audio?.['en-GB']} word={item.word} lang="en-GB" label="英音" accessibleLabel={`${item.word} 英音`} />
+    <SpeechButton active={active} src={audio?.['en-US']} word={item.word} lang="en-US" label="美音" accessibleLabel={`${item.word} 美音`} />
   </div>
   const exampleContent = (active) => <div className="word-card__example">
     <div className="word-card__example-heading">
       <span>{supplemental ? '补充例句' : '例句'}</span>
-      {example && <SpeechButton active={active} word={example} label="朗读例句" accessibleLabel={`朗读 ${item.word} 的例句`} />}
+      {example && <SpeechButton active={active} src={audio?.example} word={example} label="朗读例句" accessibleLabel={`朗读 ${item.word} 的例句`} />}
     </div>
     <p lang={example ? 'en' : undefined}>{example || '暂无例句'}</p>
     {translation && <p className="word-card__translation">{translation}</p>}
@@ -69,7 +71,7 @@ export default function WordCard({ item }) {
           <p className="word-card__phonetic">{item.phonetic || '暂无音标'}</p>
           {pronunciations(!flipped)}
           <p className="word-card__brief">{briefMeaning}</p>
-          <p className="word-card__frequency">{frequency}</p>
+          {hasFrequency && <p className="word-card__frequency">{frequency}</p>}
           {exampleContent(!flipped)}
           <button
             ref={frontButton}
@@ -95,7 +97,7 @@ export default function WordCard({ item }) {
               <span>{describePartOfSpeech(item.partOfSpeech)}</span>
             </div>
             <p className="word-card__phonetic">{item.phonetic || '暂无音标'}</p>
-            <p className="word-card__frequency">{frequency}</p>
+            {hasFrequency && <p className="word-card__frequency">{frequency}</p>}
             <h4>释义</h4>
             <p>{meaning}</p>
             {exampleContent(flipped)}
