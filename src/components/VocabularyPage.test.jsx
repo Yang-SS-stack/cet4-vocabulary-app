@@ -354,3 +354,57 @@ test('returns to the catalog when a word book cannot be loaded', async () => {
 
   expect(screen.getByRole('button', { name: 'CET-4' })).toBeInTheDocument()
 })
+
+function deferred() {
+  let resolve
+  let reject
+  const promise = new Promise((promiseResolve, promiseReject) => {
+    resolve = promiseResolve
+    reject = promiseReject
+  })
+  return { promise, resolve, reject }
+}
+
+test('does not load audio before a word book is selected and keeps cards usable while it loads', async () => {
+  const user = userEvent.setup()
+  const audio = deferred()
+  const loadWords = vi.fn().mockResolvedValue([{
+    word: 'apple', phonetic: '/ˈæpəl/', partOfSpeech: 'n', meaning: '苹果',
+    example: 'I ate an apple.', translation: '我吃了一个苹果。', phrases: [],
+  }])
+  const loadAudio = vi.fn(() => audio.promise)
+
+  render(
+    <VocabularyPage
+      books={[{ id: 'cet4', label: 'CET-4', description: '测试词书', wordListLabel: '测试单词', words: [] }]}
+      loadWords={loadWords}
+      loadAudio={loadAudio}
+    />,
+  )
+
+  expect(loadAudio).not.toHaveBeenCalled()
+  await user.click(screen.getByRole('button', { name: 'CET-4' }))
+
+  expect(loadAudio).toHaveBeenCalledOnce()
+  expect(await screen.findByRole('heading', { name: 'apple' })).toBeInTheDocument()
+
+  const front = screen.getByRole('group', { name: 'apple，查看详情' })
+  await user.click(front)
+  expect(screen.getByRole('region', { name: 'apple 的详情' })).toBeInTheDocument()
+})
+
+test('keeps the word book usable when the audio index fails', async () => {
+  const user = userEvent.setup()
+  render(
+    <VocabularyPage
+      books={[{ id: 'cet4', label: 'CET-4', description: '测试词书', wordListLabel: '测试单词', words: [] }]}
+      loadWords={async () => [{ word: 'apple', meaning: '苹果', example: '', translation: '', phrases: [] }]}
+      loadAudio={async () => { throw new Error('audio index failed') }}
+    />,
+  )
+
+  await user.click(screen.getByRole('button', { name: 'CET-4' }))
+  expect(await screen.findByRole('heading', { name: 'apple' })).toBeInTheDocument()
+  await user.click(screen.getByRole('group', { name: 'apple，查看详情' }))
+  expect(screen.getByRole('region', { name: 'apple 的详情' })).toBeInTheDocument()
+})

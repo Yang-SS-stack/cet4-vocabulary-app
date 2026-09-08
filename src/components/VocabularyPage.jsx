@@ -1,5 +1,6 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { wordBooks } from '../data/wordBooks'
+import { loadAudioManifest } from '../data/audioManifest'
 import { loadWordBook } from '../data/loadWordBook'
 import { matchesWordQuery } from '../data/partOfSpeech'
 import WordCard from './WordCard'
@@ -8,10 +9,11 @@ import './VocabularyPage.css'
 const WORDS_PER_PAGE = 21
 const wordOrder = new Intl.Collator('en', { sensitivity: 'base' })
 
-function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
+function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio = loadAudioManifest }) {
   const [selectedBookId, setSelectedBookId] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [words, setWords] = useState(null)
+  const [audioManifest, setAudioManifest] = useState(null)
   const [loadState, setLoadState] = useState('idle')
   const [query, setQuery] = useState('')
   const [sort, setSort] = useState('alphabetical')
@@ -106,6 +108,10 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
       (loadedWords) => ({ loadedWords }),
       () => ({ error: true }),
     )
+    const audioResult = Promise.resolve().then(() => loadAudio()).then(
+      (loadedAudio) => ({ loadedAudio }),
+      () => ({ error: true }),
+    )
     contentRef.current.inert = true
     await fade(1, 0, 160)
     if (loadRequestId.current !== requestId) return
@@ -116,12 +122,17 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
     setSort(book.id === 'cet4-high-frequency' ? 'frequency' : 'alphabetical')
     setCurrentPage(1)
     setWords(null)
+    setAudioManifest(null)
     setLoadState('loading')
 
     const { loadedWords, error } = await result
     if (loadRequestId.current !== requestId) return
     setWords(loadedWords ?? null)
     setLoadState(error ? 'error' : 'ready')
+
+    const { loadedAudio } = await audioResult
+    if (loadRequestId.current !== requestId) return
+    setAudioManifest(loadedAudio ?? null)
   }
 
   const returnToBookList = async () => {
@@ -136,6 +147,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
     setSelectedBookId(null)
     setCurrentPage(1)
     setWords(null)
+    setAudioManifest(null)
     setLoadState('idle')
   }
 
@@ -254,8 +266,13 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
           </div>
         ) : <>
         <ul className="vocabulary-list" aria-label={selectedBook.wordListLabel} key={`${selectedBookId}:${query}:${sort}:${currentPage}`}>
-          {pageWords.map((item) => (
-            <WordCard item={item} showFrequency={selectedBookId === 'cet4-high-frequency'} key={item.word} />
+            {pageWords.map((item) => (
+            <WordCard
+              item={item}
+              audioManifest={audioManifest}
+              showFrequency={selectedBookId === 'cet4-high-frequency'}
+              key={item.word}
+            />
           ))}
         </ul>
 
