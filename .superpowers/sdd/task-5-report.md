@@ -105,4 +105,4 @@ If this is a long-running test, pass a timeout value as the last argument or con
 
 ## 本任务提交
 
-本任务提交仅包含 `src/App.test.jsx` 的 manifest 测试夹具修复与本报告；不包含音频文件，且不合入 main、不推送远程。
+`bc68a2c test: align word book app fixture with manifest loading`：包含 `src/App.test.jsx` 的 manifest 测试夹具修复与本报告；不包含音频文件，且不合入 main、不推送远程。
