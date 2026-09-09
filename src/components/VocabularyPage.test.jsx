@@ -67,8 +67,22 @@ function deferredIndexSession(words) {
   }
 }
 
-function searchableSession(words) {
-  return createInlineWordBookSession(words)
+function deferredPageSession() {
+  const nextPageReady = new Promise(() => {})
+  return {
+    indexReady: Promise.resolve(),
+    loadPage: ({ page }) => page === 1
+      ? Promise.resolve({ words: [{ ...browseWords[0], word: 'abruptly' }], total: 22, totalPages: 2 })
+      : nextPageReady,
+  }
+}
+
+function searchableSession(words, { rejectIndex = false } = {}) {
+  const session = createInlineWordBookSession(words)
+  if (!rejectIndex) return session
+  const indexReady = Promise.reject(new Error('index unavailable'))
+  indexReady.catch(() => {})
+  return { ...session, indexReady }
 }
 
 async function openSessionBook({ session, book = catalogBook }) {
@@ -101,6 +115,25 @@ test('uses the complete index for Chinese and POS search', async () => {
 
   await waitFor(() => expect(visibleWordNames()).toEqual(['listen']))
   expect(screen.getByText('找到 1 个单词')).toBeInTheDocument()
+})
+
+test('keeps visible cards while a later page is loading', async () => {
+  const session = deferredPageSession()
+  const user = await openSessionBook({ session })
+  expect(visibleWordNames()).toEqual(['abruptly'])
+
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+
+  expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  expect(screen.getByText('正在加载当前结果...')).toBeInTheDocument()
+})
+
+test('reports an index failure without removing browseable cards', async () => {
+  const session = searchableSession([{ ...browseWords[0], word: 'abruptly' }], { rejectIndex: true })
+  await openSessionBook({ session })
+
+  expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  expect(await screen.findByText('搜索索引读取失败，词卡浏览仍可继续。')).toBeInTheDocument()
 })
 
 async function openBrowseBook(words = browseWords) {
