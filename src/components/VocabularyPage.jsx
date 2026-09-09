@@ -30,6 +30,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
   const contentRef = useRef(null)
   const animationRef = useRef(null)
   const isLeaving = useRef(false)
+  const entryFadePending = useRef(false)
   const currentView = useRef({ bookId: null, session: null, page: 1, query: '', sort: 'alphabetical' })
   const selectedBook = books.find((book) => book.id === selectedBookId)
 
@@ -103,6 +104,11 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
   }, [currentPage])
 
   useLayoutEffect(() => {
+    if (entryFadePending.current) {
+      entryFadePending.current = false
+      if (animationRef.current) fade(0, 1, 240)
+      return
+    }
     if (animationRef.current && (!hasLoadedPage || pageLoadState === 'error')) fade(0, 1, 240)
   }, [selectedBookId, pageLoadState, hasLoadedPage])
 
@@ -137,6 +143,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
     if (loadRequestId.current !== transitionId) return
     contentRef.current.inert = false
     isLeaving.current = false
+    entryFadePending.current = true
     setSelectedBookId(book.id)
     setBookSession(null)
     setAudioManifest(null)

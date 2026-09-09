@@ -336,6 +336,31 @@ test('clears the search on changing books and restores each book default sort', 
   expect(screen.getByRole('button', { name: '字母顺序 A–Z' })).toHaveAttribute('aria-pressed', 'true')
 })
 
+test('fades back in when a cached word book is reopened after returning to the catalog', async () => {
+  const cachedSession = createInlineWordBookSession(browseWords)
+  const loadWords = vi.fn(() => cachedSession)
+  const user = userEvent.setup()
+  render(<VocabularyPage books={[{ id: 'cet4', label: 'CET-4', wordListLabel: '测试单词' }]} loadWords={loadWords} loadAudio={() => Promise.resolve({})} />)
+  await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
+  await screen.findByRole('heading', { name: 'CET-4', exact: true })
+  const root = document.querySelector('.vocabulary-transition')
+  root.animate = vi.fn(() => ({ cancel: vi.fn(), finished: Promise.resolve() }))
+
+  await user.click(screen.getByRole('button', { name: '返回词书' }))
+  await screen.findByRole('button', { name: 'CET-4', exact: true })
+  root.animate.mockClear()
+
+  await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
+  await screen.findByRole('heading', { name: 'CET-4', exact: true })
+
+  expect(loadWords).toHaveBeenCalledTimes(2)
+  expect(loadWords.mock.results[0].value).toBe(loadWords.mock.results[1].value)
+  expect(root.animate).toHaveBeenCalledWith(
+    [{ opacity: 0 }, { opacity: 1 }],
+    expect.objectContaining({ duration: 240 }),
+  )
+})
+
 test('offers two visible sort choices with keyboard operation and an explicit selected state', async () => {
   const user = await openBrowseBook()
   const group = screen.getByRole('group', { name: '排序方式' })
