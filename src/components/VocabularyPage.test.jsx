@@ -77,6 +77,15 @@ function deferredPageSession() {
   }
 }
 
+function failedPageSession() {
+  return {
+    indexReady: Promise.resolve(),
+    loadPage: ({ page }) => page === 1
+      ? Promise.resolve({ words: [{ ...browseWords[0], word: 'abruptly' }], total: 22, totalPages: 2 })
+      : Promise.reject(new Error('page unavailable')),
+  }
+}
+
 function searchableSession(words, { rejectIndex = false } = {}) {
   const session = createInlineWordBookSession(words)
   if (!rejectIndex) return session
@@ -134,6 +143,16 @@ test('reports an index failure without removing browseable cards', async () => {
 
   expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
   expect(await screen.findByText('搜索索引读取失败，词卡浏览仍可继续。')).toHaveAttribute('role', 'status')
+})
+
+test('reports a later page failure without removing visible cards', async () => {
+  const user = await openSessionBook({ session: failedPageSession() })
+  expect(visibleWordNames()).toEqual(['abruptly'])
+
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+
+  expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  expect(await screen.findByText('当前结果加载失败，请重试或返回词书。')).toHaveAttribute('role', 'status')
 })
 
 async function openBrowseBook(words = browseWords) {
