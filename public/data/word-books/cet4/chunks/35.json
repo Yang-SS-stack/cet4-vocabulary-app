@@ -1,0 +1,1083 @@
+[
+  {
+    "word": "weave",
+    "phonetic": "/wiv/",
+    "partOfSpeech": "v",
+    "meaning": "织，编；纺织；织， 编",
+    "example": "hand-woven scarves",
+    "translation": "手织围巾",
+    "phrases": [
+      "plain weave",
+      "twill weave",
+      "satin weave",
+      "weave structure",
+      "weave through",
+      "weave into"
+    ]
+  },
+  {
+    "word": "wedding",
+    "phonetic": "/'wɛdɪŋ/",
+    "partOfSpeech": "n",
+    "meaning": "婚礼",
+    "example": "She’s busy planning her daughter’s wedding.",
+    "translation": "她正忙着筹备女儿的婚礼。",
+    "phrases": [
+      "wedding ceremony",
+      "wedding dress",
+      "wedding day",
+      "wedding anniversary",
+      "wedding ring",
+      "wedding party",
+      "wedding gown",
+      "wedding photo",
+      "wedding cake",
+      "wedding night",
+      "wedding reception",
+      "white wedding",
+      "wedding vows",
+      "wedding march",
+      "golden wedding",
+      "silver wedding",
+      "wedding dinner",
+      "wedding band",
+      "wedding feast",
+      "wedding and funeral"
+    ]
+  },
+  {
+    "word": "weed",
+    "phonetic": "/wid/",
+    "partOfSpeech": "n/v",
+    "meaning": "杂草，野草；除草",
+    "example": "the constant battle against weeds",
+    "translation": "对付杂草的长期斗争",
+    "phrases": [
+      "weed control",
+      "weed out",
+      "weed killer",
+      "sea weed"
+    ]
+  },
+  {
+    "word": "weekly",
+    "phonetic": "/'wikli/",
+    "partOfSpeech": "adv/adj",
+    "meaning": "每周；每周的",
+    "example": "The group meets weekly.",
+    "translation": "小组每周见面一次。",
+    "phrases": [
+      "weekly magazine",
+      "weekly report",
+      "entertainment weekly",
+      "weekly newspapers",
+      "weekly assembly",
+      "weekly journal"
+    ]
+  },
+  {
+    "word": "weep",
+    "phonetic": "/wip/",
+    "partOfSpeech": "v",
+    "meaning": "哭泣，流泪；哭泣， 流泪； 渗出",
+    "example": "James broke down and wept.",
+    "translation": "詹姆斯控制不住感情，哭了起来。",
+    "phrases": [
+      "weep for",
+      "weep over"
+    ]
+  },
+  {
+    "word": "weld",
+    "phonetic": "/wɛld/",
+    "partOfSpeech": "vt&n/n&vt",
+    "meaning": "焊接，熔接；焊接， 熔接",
+    "example": "The new handle will have to be welded on.",
+    "translation": "新的把手得焊上去。",
+    "phrases": [
+      "weld seam",
+      "weld metal",
+      "weld pool",
+      "weld joint",
+      "butt weld",
+      "spot weld",
+      "weld penetration",
+      "weld line",
+      "fillet weld",
+      "weld bead",
+      "arc weld",
+      "appearance of weld",
+      "weld zone",
+      "backing weld",
+      "girth weld",
+      "weld strength",
+      "spiral weld",
+      "groove weld",
+      "corner weld",
+      "weld wire"
+    ]
+  },
+  {
+    "word": "welfare",
+    "phonetic": "/'wɛl'fɛr/",
+    "partOfSpeech": "n",
+    "meaning": "福利；幸福，福利；幸福； 福利， 福利救济",
+    "example": "Our only concern is the children’s welfare.",
+    "translation": "我们唯一关心的是孩子们的幸福。",
+    "phrases": [
+      "social welfare",
+      "public welfare",
+      "welfare system",
+      "welfare state",
+      "welfare economics",
+      "economic welfare",
+      "welfare lottery",
+      "general welfare",
+      "child welfare",
+      "on welfare",
+      "welfare work",
+      "welfare fund",
+      "public welfare forest",
+      "welfare facilities",
+      "social welfare function",
+      "welfare cost"
+    ]
+  },
+  {
+    "word": "well-known",
+    "phonetic": "/,wɛl'non/",
+    "partOfSpeech": "adj",
+    "meaning": "众所周知的， 著名的",
+    "example": "This is probably their best-known song.",
+    "translation": "这可能是他们最有名的歌曲。",
+    "phrases": [
+      "well-known mark"
+    ]
+  },
+  {
+    "word": "whale",
+    "phonetic": "/wel/",
+    "partOfSpeech": "n",
+    "meaning": "鲸",
+    "example": "The whale nearest to the photographer is releasing air to aid its descent.",
+    "translation": "这只离摄影师最近的白鲸正呼出空气以帮助其下潜。",
+    "phrases": [
+      "a whale of a",
+      "blue whale",
+      "sperm whale",
+      "killer whale",
+      "white whale",
+      "whale meat",
+      "right whale",
+      "humpback whale",
+      "whale shark",
+      "beaked whale"
+    ]
+  },
+  {
+    "word": "whatever",
+    "phonetic": "/wət'ɛvɚ/",
+    "partOfSpeech": "adv",
+    "meaning": "[用于否定句中以加强语气]任何； 无论什么",
+    "example": "She has shown no interest whatever in anything scientific.",
+    "translation": "凡是与科学有关的她都没有表现出任何兴趣。",
+    "phrases": [
+      "or whatever"
+    ]
+  },
+  {
+    "word": "wheat",
+    "phonetic": "/wit/",
+    "partOfSpeech": "n",
+    "meaning": "小麦",
+    "example": "a field of wheat",
+    "translation": "小麦地",
+    "phrases": [
+      "wheat flour",
+      "winter wheat",
+      "wheat straw",
+      "wheat germ",
+      "wheat bran",
+      "wheat gluten",
+      "wheat starch",
+      "wheat germ oil",
+      "whole wheat",
+      "soft wheat",
+      "wheat bread",
+      "durum wheat",
+      "whole wheat flour",
+      "wheat meal"
+    ]
+  },
+  {
+    "word": "wheel",
+    "phonetic": "/wil/",
+    "partOfSpeech": "n",
+    "meaning": "轮，车轮",
+    "example": "Shall I take the wheel (= drive instead of someone else )?",
+    "translation": "我来开车好吗？",
+    "phrases": [
+      "grinding wheel",
+      "steering wheel",
+      "wheel in",
+      "front wheel",
+      "at the wheel",
+      "gear wheel",
+      "wheel hub",
+      "rear wheel",
+      "ferris wheel",
+      "driving wheel",
+      "behind the wheel",
+      "worm wheel",
+      "chain wheel",
+      "fifth wheel",
+      "hand wheel",
+      "diamond wheel",
+      "wheel rim",
+      "wheel loader",
+      "big wheel",
+      "diamond grinding wheel"
+    ]
+  },
+  {
+    "word": "whereas",
+    "phonetic": "/'wɛr'æz/",
+    "partOfSpeech": "conj",
+    "meaning": "然而， 但是， 尽管",
+    "example": "The old system was fairly complicated whereas the new system is really very simple.",
+    "translation": "旧系统相当复杂，而新系统却很简单。",
+    "phrases": []
+  },
+  {
+    "word": "whichever",
+    "phonetic": "/wɪtʃ'ɛvɚ/",
+    "partOfSpeech": "pron&adj",
+    "meaning": "无论哪个， 无论哪些",
+    "example": "Letting taxes rise abruptly would hurt not only the recovery but also whichever party the electorate ended up blaming.",
+    "translation": "突然的增税不但会妨害经济复苏，而且无论哪个政党这样做都会受到选民指责。",
+    "phrases": []
+  },
+  {
+    "word": "whilst",
+    "phonetic": "/hwailst/",
+    "partOfSpeech": "conj&n/conj",
+    "meaning": "当…的时候",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "whip",
+    "phonetic": "/wɪp/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "鞭笞；搅打；鞭子；鞭笞；猛地移动；搅打成糊状",
+    "example": "He whipped the horse into a canter.",
+    "translation": "他抽了一下鞭子，马儿就小跑起来。",
+    "phrases": [
+      "whip and spur",
+      "whip up",
+      "whip in",
+      "crack the whip",
+      "whip out"
+    ]
+  },
+  {
+    "word": "whisper",
+    "phonetic": "/'wɪspɚ/",
+    "partOfSpeech": "v/n",
+    "meaning": "低声地讲；低语；低语， 耳语",
+    "example": "You don’t have to whisper, no one can hear us.",
+    "translation": "你不必轻声轻语，没人听得到我们说话。",
+    "phrases": [
+      "in a whisper"
+    ]
+  },
+  {
+    "word": "whistle",
+    "phonetic": "/'wɪsl/",
+    "partOfSpeech": "n/v",
+    "meaning": "口哨；吹口哨；吹口哨， 鸣笛声； 呼啸而过；口哨；呼啸而过",
+    "example": "The lifeguard blew his whistle.",
+    "translation": "救生员吹响哨子。",
+    "phrases": [
+      "blow the whistle",
+      "clean as a whistle"
+    ]
+  },
+  {
+    "word": "whoever",
+    "phonetic": "/hʊ'ɛvɚ/",
+    "partOfSpeech": "pron",
+    "meaning": "谁； 无论谁； 究竟是谁",
+    "example": "I’ll take whoever wants to go.",
+    "translation": "谁想去我就带谁去。",
+    "phrases": []
+  },
+  {
+    "word": "wholly",
+    "phonetic": "/'holli/",
+    "partOfSpeech": "adv",
+    "meaning": "完全地，全部；完全地， 全部地",
+    "example": "a wholly satisfactory solution",
+    "translation": "完全令人满意的解决办法",
+    "phrases": [
+      "wholly owned subsidiary"
+    ]
+  },
+  {
+    "word": "wicked",
+    "phonetic": "/'wɪkɪd/",
+    "partOfSpeech": "adj",
+    "meaning": "坏的；令人厌恶的；坏的， 令人厌恶的； 淘气的， 顽皮的",
+    "example": "the wicked stepmother in ‘Hansel and Gretel’",
+    "translation": "《糖果屋》中那个恶毒的继母",
+    "phrases": []
+  },
+  {
+    "word": "widen",
+    "phonetic": "/'waɪdn/",
+    "partOfSpeech": "v",
+    "meaning": "加宽；变宽；加宽， 变宽",
+    "example": "They’re widening the road.",
+    "translation": "他们正在拓宽马路。",
+    "phrases": []
+  },
+  {
+    "word": "widespread",
+    "phonetic": "/ˈwʌɪdsprɛd/",
+    "partOfSpeech": "adj",
+    "meaning": "普遍的，广泛的；分布广的， 普遍的",
+    "example": "the widespread use of chemicals in agriculture",
+    "translation": "化学品在农业中的广泛使用",
+    "phrases": []
+  },
+  {
+    "word": "widow",
+    "phonetic": "/'wɪdo/",
+    "partOfSpeech": "n",
+    "meaning": "寡妇",
+    "example": "an elderly widow who was attacked and robbed last month",
+    "translation": "上个月遭到行凶抢劫的一位寡居老妇",
+    "phrases": [
+      "black widow",
+      "grass widow"
+    ]
+  },
+  {
+    "word": "width",
+    "phonetic": "/wɪdθ/",
+    "partOfSpeech": "n",
+    "meaning": "宽阔，广阔；宽度；宽阔， 广阔； 宽度",
+    "example": "a covered terrace extending the full width of the house",
+    "translation": "和房子同宽的有顶露台",
+    "phrases": [
+      "pulse width",
+      "pulse width modulation",
+      "band width",
+      "crack width",
+      "in width",
+      "beam width",
+      "line width",
+      "strip width",
+      "full width",
+      "gap width",
+      "effective width",
+      "cutting width",
+      "waist width",
+      "peak width",
+      "slit width",
+      "groove width",
+      "slot width",
+      "flange width",
+      "fabric width",
+      "shoulder width"
+    ]
+  },
+  {
+    "word": "willing",
+    "phonetic": "/'wɪlɪŋ/",
+    "partOfSpeech": "adj",
+    "meaning": "愿意的，心甘情愿的",
+    "example": "I soon had an army of willing helpers.",
+    "translation": "我很快就拥有了一批热心的帮手。",
+    "phrases": [
+      "be willing to do",
+      "god willing",
+      "a willing horse",
+      "show willing"
+    ]
+  },
+  {
+    "word": "wind",
+    "phonetic": "/wɪnd; (for v.) waɪnd/",
+    "partOfSpeech": "v",
+    "meaning": "绕，缠绕；卷曲",
+    "example": "a winding path",
+    "translation": "蜿蜒的小路",
+    "phrases": [
+      "wind power",
+      "with the wind",
+      "in the wind",
+      "wind tunnel",
+      "wind speed",
+      "wind turbine",
+      "wind energy",
+      "strong wind",
+      "east wind",
+      "wind in",
+      "wind load",
+      "wind up",
+      "wind pressure",
+      "wind velocity",
+      "to the wind",
+      "wind farm",
+      "wind direction",
+      "by the wind",
+      "wind field",
+      "wind power generation"
+    ]
+  },
+  {
+    "word": "wing",
+    "phonetic": "/wɪŋ/",
+    "partOfSpeech": "n",
+    "meaning": "翼，翅膀，翅",
+    "example": "The bird flapped its wings furiously.",
+    "translation": "那只鸟使劲地拍打着翅膀。",
+    "phrases": [
+      "left wing",
+      "right wing",
+      "on the wing",
+      "in the wings",
+      "chicken wing",
+      "white wings",
+      "on wings",
+      "take wing",
+      "wing tip",
+      "wing area",
+      "wing commander",
+      "get one's wings",
+      "wing section",
+      "wing span",
+      "wing panel",
+      "hind wing"
+    ]
+  },
+  {
+    "word": "wire",
+    "phonetic": "/'waɪɚ/",
+    "partOfSpeech": "n",
+    "meaning": "金属线；电缆；电信",
+    "example": "copper wire",
+    "translation": "铜丝",
+    "phrases": [
+      "steel wire",
+      "wire rope",
+      "wire netting",
+      "wire rod",
+      "by wire",
+      "wire mesh",
+      "hot wire",
+      "wire drawing",
+      "copper wire",
+      "stainless steel wire",
+      "electric wire",
+      "wire in",
+      "wire cutting",
+      "steel wire rope",
+      "welding wire",
+      "barbed wire",
+      "iron wire",
+      "live wire",
+      "enameled wire",
+      "welded wire mesh"
+    ]
+  },
+  {
+    "word": "wisdom",
+    "phonetic": "/'wɪzdəm/",
+    "partOfSpeech": "n",
+    "meaning": "智慧， 才智； 名言",
+    "example": "a man of great wisdom",
+    "translation": "一个有大智慧的男人",
+    "phrases": [
+      "conventional wisdom",
+      "great wisdom",
+      "wisdom teeth",
+      "wisdom tooth",
+      "practical wisdom",
+      "folk wisdom"
+    ]
+  },
+  {
+    "word": "wise",
+    "phonetic": "/waɪz/",
+    "partOfSpeech": "adj",
+    "meaning": "聪明的，有智慧的",
+    "example": "a wise precaution",
+    "translation": "明智的预防措施",
+    "phrases": [
+      "wise choice",
+      "wise guy",
+      "get wise",
+      "in no wise",
+      "wise after the event",
+      "three wise men",
+      "in any wise",
+      "wise up",
+      "step wise"
+    ]
+  },
+  {
+    "word": "wit",
+    "phonetic": "/wɪt/",
+    "partOfSpeech": "n",
+    "meaning": "智力，才智，智能；风趣； 妙语； 智力， 才智， 智能",
+    "example": "The information is there and waiting to be accessed by anyone with the wit to use it.",
+    "translation": "信息是现成的，等着有头脑的人去获取和利用。",
+    "phrases": [
+      "mother wit",
+      "at one's wit's end"
+    ]
+  },
+  {
+    "word": "withdraw",
+    "phonetic": "/wɪð'drɔ/",
+    "partOfSpeech": "v",
+    "meaning": "收回；撤回vi撤退；收回， 撤回； 撤退",
+    "example": "calls for Britain to withdraw from the European Union",
+    "translation": "要求英国退出欧盟的呼声",
+    "phrases": [
+      "withdraw from",
+      "withdraw money",
+      "withdraw cash",
+      "withdraw troops"
+    ]
+  },
+  {
+    "word": "withstand",
+    "phonetic": "/wɪð'stænd/",
+    "partOfSpeech": "v/vt",
+    "meaning": "抵挡，反抗；抵挡， 反抗",
+    "example": "The Chancellor has withstood the criticism and held firm.",
+    "translation": "总理顶住批评，坚持立场。",
+    "phrases": [
+      "withstand voltage",
+      "voltage withstand",
+      "withstand test",
+      "withstand voltage test"
+    ]
+  },
+  {
+    "word": "witness",
+    "phonetic": "/ˈwɪtnɪs/",
+    "partOfSpeech": "n/v/vt",
+    "meaning": "目击者，目击；证据；证人；目击；证据；目击者，证人；目击； 为…作证， 证明",
+    "example": "Police have appealed for witnesses to come forward.",
+    "translation": "警方呼吁目击者站出来。",
+    "phrases": [
+      "bear witness",
+      "as witness",
+      "in witness whereof",
+      "expert witness",
+      "material witness",
+      "with a witness",
+      "star witness",
+      "eye witness",
+      "witness stand",
+      "witness box"
+    ]
+  },
+  {
+    "word": "wolf",
+    "phonetic": "/wʊlf/",
+    "partOfSpeech": "n",
+    "meaning": "狼",
+    "example": "a pack of wolves",
+    "translation": "一群狼",
+    "phrases": [
+      "the big bad wolf",
+      "lone wolf",
+      "grey wolf",
+      "wolf down",
+      "sea wolf",
+      "cry wolf"
+    ]
+  },
+  {
+    "word": "wooden",
+    "phonetic": "/'wʊdn/",
+    "partOfSpeech": "adj",
+    "meaning": "木制的；呆板的",
+    "example": "a wooden bench",
+    "translation": "木制长椅",
+    "phrases": [
+      "wooden furniture",
+      "wooden box",
+      "wooden floor",
+      "wooden door",
+      "wooden case",
+      "wooden frame",
+      "wooden house",
+      "wooden horse",
+      "wooden toy",
+      "wooden spoon",
+      "wooden pallet",
+      "wooden crate",
+      "wooden boat",
+      "wooden tray",
+      "wooden peg",
+      "wooden shoes",
+      "wooden leg",
+      "wooden hammer",
+      "wooden comb",
+      "wooden fish"
+    ]
+  },
+  {
+    "word": "wool",
+    "phonetic": "/wʊl/",
+    "partOfSpeech": "n",
+    "meaning": "羊毛；毛线，绒线；羊毛； 毛线， 绒线",
+    "example": "a ball of wool",
+    "translation": "一团毛线",
+    "phrases": [
+      "wool fabric",
+      "wool spinning",
+      "glass wool",
+      "in the wool",
+      "pure wool",
+      "cotton wool",
+      "wool yarn",
+      "fine wool",
+      "steel wool",
+      "rock wool",
+      "mineral wool",
+      "dyed in the wool",
+      "long wool",
+      "wool felt",
+      "merino wool",
+      "wool blend",
+      "wool top",
+      "greasy wool",
+      "wool carpet",
+      "wood wool"
+    ]
+  },
+  {
+    "word": "workman",
+    "phonetic": "/'wɝkmən/",
+    "partOfSpeech": "n",
+    "meaning": "工人，劳动者，工匠；工人， 劳动者， 工匠",
+    "example": "In University Square workmen are building a steel fence.",
+    "translation": "在大学广场工人们正在筑一个钢栅栏。",
+    "phrases": []
+  },
+  {
+    "word": "workshop",
+    "phonetic": "/'wɝkʃɑp/",
+    "partOfSpeech": "n",
+    "meaning": "车间，工场；创作室；车间， 作坊， 创作室； 研讨会， 讲习班",
+    "example": "...a modestly equipped workshop.",
+    "translation": "…一个装备普通的车间。",
+    "phrases": [
+      "processing workshop",
+      "workshop section",
+      "workshop building",
+      "repair workshop",
+      "workshop director",
+      "workshop manager",
+      "painting workshop"
+    ]
+  },
+  {
+    "word": "world-wide",
+    "phonetic": "/'wɜːldwaɪd/",
+    "partOfSpeech": "adj",
+    "meaning": "遍及全球的",
+    "example": "Today, doctors are fearing a worldwide epidemic.",
+    "translation": "如今，医生们在担心一次世界性的流行。",
+    "phrases": []
+  },
+  {
+    "word": "worldwide",
+    "phonetic": "/'wɝldwaɪd/",
+    "partOfSpeech": "adv",
+    "meaning": "全世界范围地",
+    "example": "His books have sold more than 20 million copies worldwide.",
+    "translation": "他的书在全世界卖出了两千多万本。",
+    "phrases": []
+  },
+  {
+    "word": "worm",
+    "phonetic": "/wɝm/",
+    "partOfSpeech": "n",
+    "meaning": "虫，蠕虫；虫， 蠕虫",
+    "example": "...a new computer worm that disables security software.",
+    "translation": "…一种使安全软件失灵的新型计算机蠕虫病毒。",
+    "phrases": [
+      "worm gear",
+      "worm wheel",
+      "worm drive",
+      "worm reducer",
+      "worm gearing",
+      "cylindrical worm",
+      "worm oneself into",
+      "guinea worm",
+      "worm shaft",
+      "worm and worm gear",
+      "silk worm"
+    ]
+  },
+  {
+    "word": "worsen",
+    "phonetic": "/'wɝsn/",
+    "partOfSpeech": "v",
+    "meaning": "（使）变得更坏",
+    "example": "A lot of teachers expect the situation to worsen over the next few years.",
+    "translation": "许多老师认为接下来的几年情形会更糟。",
+    "phrases": []
+  },
+  {
+    "word": "worship",
+    "phonetic": "/'wɝʃɪp/",
+    "partOfSpeech": "n/v/vt",
+    "meaning": "礼拜；崇拜；崇拜；礼拜；崇拜；信奉",
+    "example": "The ceremony must take place in a recognized place of worship .",
+    "translation": "该仪式必须在获得认可的敬拜场所举行。",
+    "phrases": [
+      "nature worship",
+      "money worship",
+      "ancestor worship",
+      "hero worship",
+      "idol worship",
+      "freedom of worship"
+    ]
+  },
+  {
+    "word": "worst",
+    "phonetic": "/wɝst/",
+    "partOfSpeech": "adj/adv",
+    "meaning": "最坏的；最坏地",
+    "example": "This is the worst recession for fifty years.",
+    "translation": "这是50年来最严重的一次经济衰退。",
+    "phrases": [
+      "the worst way",
+      "prepare for the worst",
+      "worst of all",
+      "worst case",
+      "at worst",
+      "at the worst"
+    ]
+  },
+  {
+    "word": "worth",
+    "phonetic": "/wɝθ/",
+    "partOfSpeech": "adj/n",
+    "meaning": "值…的；价值",
+    "example": "You should not deprecate your own worth.",
+    "translation": "你不应该贬低你自己的价值。",
+    "phrases": [
+      "well worth",
+      "worth doing",
+      "worth while",
+      "net worth",
+      "present worth",
+      "fort worth",
+      "personal worth",
+      "sense of worth",
+      "money's worth",
+      "of great worth"
+    ]
+  },
+  {
+    "word": "worthless",
+    "phonetic": "/ˈwərthləs/",
+    "partOfSpeech": "adj",
+    "meaning": "无价值的，无用的；无价值的， 无用的",
+    "example": "The house was full of worthless junk.",
+    "translation": "这房子里堆满了没有用的东西。",
+    "phrases": []
+  },
+  {
+    "word": "worthwhile",
+    "phonetic": "/'wɝθ'waɪl/",
+    "partOfSpeech": "adj",
+    "meaning": "有价值的；值得花时间的；值得花时间的， 值得做的",
+    "example": "He wanted to do a worthwhile job.",
+    "translation": "他想做有意义的工作。",
+    "phrases": []
+  },
+  {
+    "word": "worthy",
+    "phonetic": "/wɜði/",
+    "partOfSpeech": "adj",
+    "meaning": "有价值的；值得的；有价值的， 值得的",
+    "example": "Leeds United were worthy winners of the competition.",
+    "translation": "利兹联队是比赛当之无愧的获胜者。",
+    "phrases": [
+      "worthy of"
+    ]
+  },
+  {
+    "word": "wound",
+    "phonetic": "/wund/",
+    "partOfSpeech": "n/v",
+    "meaning": "创伤，伤；使受伤",
+    "example": "A nurse cleaned and bandaged the wound.",
+    "translation": "护士把伤口清洗包扎好。",
+    "phrases": [
+      "wound healing",
+      "wound up",
+      "wound dressing",
+      "spiral wound",
+      "wire wound",
+      "wound gasket",
+      "open wound",
+      "spiral wound gasket",
+      "flesh wound",
+      "wound rotor",
+      "puncture wound"
+    ]
+  },
+  {
+    "word": "wrap",
+    "phonetic": "/ræp/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "裹，包，捆；披肩",
+    "example": "I’ve still got a few Christmas presents to wrap up.",
+    "translation": "我还有一些圣诞礼物要包起来。",
+    "phrases": [
+      "wrap up",
+      "under wraps",
+      "wrap around",
+      "plastic wrap",
+      "gift wrap",
+      "bubble wrap",
+      "wrap angle",
+      "word wrap",
+      "shrink wrap"
+    ]
+  },
+  {
+    "word": "wreck",
+    "phonetic": "/rɛk/",
+    "partOfSpeech": "n/v/vt",
+    "meaning": "失事；残骸；破坏；失事；残骸；精神或身体已垮的人",
+    "example": "...the wreck of a sailing ship.",
+    "translation": "…一艘帆船的残骸。",
+    "phrases": [
+      "train wreck"
+    ]
+  },
+  {
+    "word": "wrist",
+    "phonetic": "/rɪst/",
+    "partOfSpeech": "n",
+    "meaning": "腕，腕关节；腕， 腕关节",
+    "example": "He broke his wrist climbing rocks for a cigarette ad.",
+    "translation": "他为了一个香烟广告攀岩折断了手腕。",
+    "phrases": [
+      "wrist watch",
+      "wrist strap"
+    ]
+  },
+  {
+    "word": "writer",
+    "phonetic": "/'raɪtɚ/",
+    "partOfSpeech": "n",
+    "meaning": "作者， 作家",
+    "example": "She’s one of my favourite writers.",
+    "translation": "她是我最喜欢的作家之一。",
+    "phrases": [
+      "freelance writer",
+      "ghost writer",
+      "staff writer",
+      "script writer"
+    ]
+  },
+  {
+    "word": "writing",
+    "phonetic": "/'raɪtɪŋ/",
+    "partOfSpeech": "n",
+    "meaning": "书写， 写； 著作",
+    "example": "Some of his most powerful writing is based on his childhood experiences.",
+    "translation": "他的一些最震慑人心的作品是根据儿时经历写成的。",
+    "phrases": [
+      "in writing",
+      "writing ability",
+      "writing skill",
+      "style of writing",
+      "writing system",
+      "writing paper",
+      "creative writing",
+      "practical writing",
+      "letter writing",
+      "academic writing",
+      "writing desk",
+      "thesis writing",
+      "writing brush",
+      "writing materials",
+      "direct writing",
+      "writing table",
+      "writing board",
+      "alphabetic writing",
+      "writing pad",
+      "writing case"
+    ]
+  },
+  {
+    "word": "x-ray",
+    "phonetic": "/'eksreɪ/",
+    "partOfSpeech": "n",
+    "meaning": "X射线， X光",
+    "example": "The X-ray showed that her leg was not broken.",
+    "translation": "X光片显示她的腿没有骨折。",
+    "phrases": [
+      "x-ray diffraction",
+      "x-ray photoelectron spectroscopy",
+      "x-ray machine",
+      "chest x-ray",
+      "x-ray film",
+      "x-ray tube",
+      "x-ray crystallography"
+    ]
+  },
+  {
+    "word": "yard",
+    "phonetic": "/jɑrd/",
+    "partOfSpeech": "n",
+    "meaning": "院子，庭院；场地",
+    "example": "a builder’s yard",
+    "translation": "建筑工地",
+    "phrases": [
+      "back yard",
+      "front yard",
+      "storage yard",
+      "container yard",
+      "goods yard",
+      "marshalling yard",
+      "school yard",
+      "freight yard",
+      "coal yard",
+      "scotland yard",
+      "yard sale",
+      "stock yard",
+      "navy yard"
+    ]
+  },
+  {
+    "word": "yawn",
+    "phonetic": "/jɔn/",
+    "partOfSpeech": "v/n/vi",
+    "meaning": "打呵欠；呵欠",
+    "example": "Alan stretched and yawned.",
+    "translation": "艾伦伸伸懒腰，打了个呵欠。",
+    "phrases": []
+  },
+  {
+    "word": "yearly",
+    "phonetic": "/'jɪrli/",
+    "partOfSpeech": "adj/adv",
+    "meaning": "每年的；一年一度；一年一度地",
+    "example": "Salary levels are reviewed on a yearly basis.",
+    "translation": "工资水平每年都要审查。",
+    "phrases": [
+      "yearly output",
+      "yearly income",
+      "yearly report"
+    ]
+  },
+  {
+    "word": "yield",
+    "phonetic": "/jild/",
+    "partOfSpeech": "v/n/vt&vi",
+    "meaning": "屈服，产出；产量；出产；出产；让出，放弃；屈服，顺从；倒塌，垮掉",
+    "example": "Our research has only recently begun to yield important results.",
+    "translation": "直到最近我们的研究才开始取得重要成果。",
+    "phrases": [
+      "high yield",
+      "yield strength",
+      "low yield",
+      "product yield",
+      "crop yield",
+      "yield rate",
+      "yield stress",
+      "yield curve",
+      "sediment yield",
+      "yield per unit",
+      "extraction yield",
+      "water yield",
+      "yield point",
+      "yield ratio",
+      "quantum yield",
+      "yield loss",
+      "yield limit",
+      "dividend yield",
+      "yield surface",
+      "yield up"
+    ]
+  },
+  {
+    "word": "youngster",
+    "phonetic": "/'jʌŋstɚ/",
+    "partOfSpeech": "n",
+    "meaning": "青年， 年轻人， 孩子",
+    "example": "Other youngsters are not so lucky.",
+    "translation": "其他的年轻人没有这么幸运。",
+    "phrases": []
+  },
+  {
+    "word": "youth",
+    "phonetic": "/jʊθ/",
+    "partOfSpeech": "n",
+    "meaning": "青春；青年们；青年",
+    "example": "Despite his youth, he had travelled alone.",
+    "translation": "他虽然年纪还小，却已独自旅行过了。",
+    "phrases": [
+      "youth league",
+      "youth hostel",
+      "the communist youth league",
+      "youth culture",
+      "youth day",
+      "youth group",
+      "youth club",
+      "fountain of youth",
+      "youth movement",
+      "youth center",
+      "chinese communist youth league",
+      "youth is a blunder",
+      "youth centre"
+    ]
+  },
+  {
+    "word": "zone",
+    "phonetic": "/zon/",
+    "partOfSpeech": "n",
+    "meaning": "地区，区域，范围；地区， 区域， 范围",
+    "example": "San Francisco and Tokyo are both located in earthquake zones.",
+    "translation": "旧金山和东京都位于地震带。",
+    "phrases": [
+      "development zone",
+      "economic zone",
+      "industrial zone",
+      "in the zone",
+      "economic development zone",
+      "special economic zone",
+      "special economic zone (sez)",
+      "fault zone",
+      "shear zone",
+      "free trade zone",
+      "fracture zone",
+      "time zone",
+      "transition zone",
+      "temperate zone",
+      "contact zone",
+      "dead zone",
+      "oxidation zone",
+      "transitional zone",
+      "export processing zone",
+      "pay zone"
+    ]
+  }
+]

@@ -1,0 +1,2137 @@
+[
+  {
+    "word": "naturally",
+    "phonetic": "/'nætʃrəli/",
+    "partOfSpeech": "adv",
+    "meaning": "自然地；天然地；当然； 天然地； 天生地",
+    "example": "Naturally, you’ll want to discuss this with your wife.",
+    "translation": "当然，你一定想和你妻子商量一下这件事。",
+    "phrases": []
+  },
+  {
+    "word": "nature",
+    "phonetic": "/'netʃɚ/",
+    "partOfSpeech": "n",
+    "meaning": "大自然；本性；性质；大自然； 本性； 性质",
+    "example": "We grew up in the countryside, surrounded by the beauties of nature.",
+    "translation": "我们在乡村长大，周围是美丽的大自然。",
+    "phrases": [
+      "in nature",
+      "human nature",
+      "by nature",
+      "nature reserve",
+      "second nature",
+      "true nature",
+      "in the nature of",
+      "mother nature",
+      "back to nature",
+      "beauty of nature",
+      "good nature",
+      "law of nature",
+      "against nature",
+      "all nature",
+      "physical nature",
+      "nature protection",
+      "dual nature",
+      "sounds of nature",
+      "balance of nature",
+      "nature conservation"
+    ]
+  },
+  {
+    "word": "naughty",
+    "phonetic": "/'nɔti/",
+    "partOfSpeech": "adj",
+    "meaning": "顽皮的，淘气的",
+    "example": "You’re a very naughty boy! Look what you’ve done!",
+    "translation": "你真是个淘气鬼！瞧你干了些什么！",
+    "phrases": []
+  },
+  {
+    "word": "naval",
+    "phonetic": "/'nevl/",
+    "partOfSpeech": "adj",
+    "meaning": "海军的，军舰的；海军的",
+    "example": "The harbour is an important naval base.",
+    "translation": "该港是一个重要的海军基地。",
+    "phrases": [
+      "naval vessel",
+      "naval base",
+      "naval officer",
+      "naval ship",
+      "naval architecture",
+      "naval academy",
+      "naval power",
+      "united states naval academy",
+      "naval port",
+      "naval architect"
+    ]
+  },
+  {
+    "word": "navigation",
+    "phonetic": "/'nævə'geʃən/",
+    "partOfSpeech": "n",
+    "meaning": "航行；航海术；导航；航行， 航海， 航空； 导航， 领航",
+    "example": "compasses and other instruments of navigation",
+    "translation": "罗盘及其他导航仪器",
+    "phrases": [
+      "inertial navigation",
+      "inertial navigation system",
+      "satellite navigation",
+      "navigation bar",
+      "navigation equipment",
+      "navigation channel",
+      "maritime navigation",
+      "navigation mark",
+      "navigation satellite",
+      "celestial navigation",
+      "air navigation",
+      "navigation lock",
+      "inland navigation",
+      "marine navigation",
+      "navigation aid"
+    ]
+  },
+  {
+    "word": "navy",
+    "phonetic": "/'nevi/",
+    "partOfSpeech": "n",
+    "meaning": "海军",
+    "example": "the British Navy",
+    "translation": "英国海军",
+    "phrases": [
+      "navy blue",
+      "royal navy",
+      "united states navy",
+      "navy yard"
+    ]
+  },
+  {
+    "word": "near",
+    "phonetic": "/nɪr/",
+    "partOfSpeech": "adv/adj",
+    "meaning": "近，接近；近的",
+    "example": "They live near London.",
+    "translation": "他们住在伦敦附近。",
+    "phrases": [
+      "come near",
+      "far and near",
+      "near by",
+      "nowhere near",
+      "near at hand",
+      "nearest and dearest",
+      "as near as",
+      "near of kin"
+    ]
+  },
+  {
+    "word": "nearby",
+    "phonetic": "/,nɪr'baɪ/",
+    "partOfSpeech": "adj/adv",
+    "meaning": "附近的；在附近",
+    "example": "Lucy was staying in the nearby town of Hamilton.",
+    "translation": "露西当时住在附近的汉密尔顿镇。",
+    "phrases": []
+  },
+  {
+    "word": "nearly",
+    "phonetic": "/'nɪrli/",
+    "partOfSpeech": "adv",
+    "meaning": "差不多；密切地",
+    "example": "It took nearly two hours to get here.",
+    "translation": "到这里花了将近两小时。",
+    "phrases": [
+      "nearly every day",
+      "nearly ready"
+    ]
+  },
+  {
+    "word": "neat",
+    "phonetic": "/nit/",
+    "partOfSpeech": "adj",
+    "meaning": "整洁的；熟练的",
+    "example": "neat handwriting",
+    "translation": "工整的笔迹",
+    "phrases": [
+      "neat cement"
+    ]
+  },
+  {
+    "word": "necessarily",
+    "phonetic": "/,nɛsə'sɛrəli/",
+    "partOfSpeech": "adv",
+    "meaning": "必然，必定；必要地； 必然",
+    "example": "The care of old people necessarily involves quite a lot of heavy lifting.",
+    "translation": "照顾老年人必定要干很多搬重物的活儿。",
+    "phrases": []
+  },
+  {
+    "word": "necessary",
+    "phonetic": "/ˈnɛsəˌsɛri/",
+    "partOfSpeech": "adj",
+    "meaning": "必要的；必然的",
+    "example": "The booklet provides all the necessary information about the college.",
+    "translation": "这本小册子提供了关于那所学院的所有必需信息。",
+    "phrases": [
+      "if necessary",
+      "necessary for",
+      "necessary condition",
+      "when necessary",
+      "as necessary",
+      "absolutely necessary",
+      "necessary and sufficient condition",
+      "where necessary",
+      "sufficient and necessary condition",
+      "necessary evil",
+      "necessary connection"
+    ]
+  },
+  {
+    "word": "necessity",
+    "phonetic": "/nə'sɛsəti/",
+    "partOfSpeech": "n",
+    "meaning": "必要性；必然性；必需品； 必要性， 需要",
+    "example": "I’m afraid it’s become a matter of economic necessity.",
+    "translation": "恐怕这已成了一个经济需求的问题。",
+    "phrases": [
+      "of necessity",
+      "out of necessity",
+      "by necessity",
+      "logical necessity"
+    ]
+  },
+  {
+    "word": "neck",
+    "phonetic": "/nɛk/",
+    "partOfSpeech": "n",
+    "meaning": "颈，脖子",
+    "example": "Mike rubbed the back of his neck.",
+    "translation": "迈克揉了揉后颈。",
+    "phrases": [
+      "neck and neck",
+      "bottle neck",
+      "pain in the neck",
+      "stiff neck",
+      "neck of the woods",
+      "up to one's neck",
+      "neck down",
+      "neck and crop",
+      "by a neck",
+      "welding neck",
+      "roll neck",
+      "neck ring",
+      "axle neck",
+      "welding neck flange",
+      "shaft neck"
+    ]
+  },
+  {
+    "word": "necklace",
+    "phonetic": "/'nɛkləs/",
+    "partOfSpeech": "n",
+    "meaning": "项链，项圈",
+    "example": "...a diamond necklace and matching earrings.",
+    "translation": "…一条钻石项链和与之相配的耳环。",
+    "phrases": [
+      "diamond necklace",
+      "pearl necklace"
+    ]
+  },
+  {
+    "word": "need",
+    "phonetic": "/nid/",
+    "partOfSpeech": "v",
+    "meaning": "需要；aux需要",
+    "example": "You don’t really need a car.",
+    "translation": "你其实并不需要一辆车。",
+    "phrases": [
+      "in need",
+      "need for",
+      "in need of",
+      "no need",
+      "need to do",
+      "urgent need",
+      "need help",
+      "actual need",
+      "what do you need",
+      "if need be",
+      "matters need attention",
+      "meet one's need",
+      "basic need",
+      "in dire need of",
+      "have need of",
+      "need analysis",
+      "psychological need",
+      "have need to",
+      "financial need",
+      "at need"
+    ]
+  },
+  {
+    "word": "needle",
+    "phonetic": "/'nidl/",
+    "partOfSpeech": "n",
+    "meaning": "针，缝补，编织针",
+    "example": "She carried hypodermic needles and syringes in her bag.",
+    "translation": "她包里带着皮下注射针和针筒。",
+    "phrases": [
+      "pins and needles",
+      "needle valve",
+      "on the needle",
+      "needle roller",
+      "needle bar",
+      "needle biopsy",
+      "pine needle",
+      "thread the needle",
+      "needle work",
+      "acupuncture needle",
+      "needle bearing",
+      "needle therapy",
+      "needle roller bearing",
+      "needle plate",
+      "compass needle",
+      "suture needle",
+      "needle hole",
+      "needle point",
+      "puncture needle",
+      "needle tube"
+    ]
+  },
+  {
+    "word": "needless",
+    "phonetic": "/-/",
+    "partOfSpeech": "adj",
+    "meaning": "不需要的",
+    "example": "The report caused needless anxiety to women who have attended the clinic.",
+    "translation": "那份报告让去那家诊所就诊过的妇女产生了不必要的忧虑。",
+    "phrases": []
+  },
+  {
+    "word": "needy",
+    "phonetic": "/'nidi/",
+    "partOfSpeech": "adj",
+    "meaning": "贫穷的",
+    "example": "a needy family",
+    "translation": "贫困家庭",
+    "phrases": [
+      "needy student"
+    ]
+  },
+  {
+    "word": "negative",
+    "phonetic": "/'nɛɡətɪv/",
+    "partOfSpeech": "adj/n",
+    "meaning": "否定的；消积的；否定的；消极的；否定的，消极的；负的；阴性的；负片， 底片； 负数",
+    "example": "students with a negative attitude to school",
+    "translation": "对上学抱消极态度的学生",
+    "phrases": [
+      "negative effect",
+      "positive and negative",
+      "negative influence",
+      "negative pressure",
+      "in the negative",
+      "negative correlation",
+      "negative feedback",
+      "negative ion",
+      "negative growth",
+      "negative attitude",
+      "positive and negative effects",
+      "negative transfer",
+      "negative factor",
+      "negative sequence",
+      "negative electrode",
+      "negative temperature",
+      "negative charge",
+      "negative value",
+      "gram negative",
+      "false negative"
+    ]
+  },
+  {
+    "word": "neglect",
+    "phonetic": "/nɪ'glɛkt/",
+    "partOfSpeech": "v/n",
+    "meaning": "忽视；忽视，忽略；疏忽；疏于照料；疏忽；疏忽",
+    "example": "She smoked and drank, neglected the children, and left the clothes unmended.",
+    "translation": "她抽烟喝酒，既不照顾孩子，也不缝补衣服。",
+    "phrases": [
+      "neglect of",
+      "neglect of duty"
+    ]
+  },
+  {
+    "word": "negotiate",
+    "phonetic": "/nɪ'ɡoʃɪet/",
+    "partOfSpeech": "v",
+    "meaning": "谈判，协商，交涉；洽谈， 协商； 顺利通过， 成功越过； 协商， 谈判",
+    "example": "His first aim is to get the warring parties back to the negotiating table (= discussing something ).",
+    "translation": "他的首要目标就是把交战各方拉回到谈判桌上。",
+    "phrases": [
+      "negotiate about"
+    ]
+  },
+  {
+    "word": "negro",
+    "phonetic": "/'nigro/",
+    "partOfSpeech": "n",
+    "meaning": "黑人",
+    "example": "\"I do not accept the Negro as my equal, \" Douglas said. \"And I deny that he is my brother.",
+    "translation": "“我不会接受黑人与我平等的思想，”道格拉斯说，“而且我拒绝把黑人当成我的兄弟。",
+    "phrases": [
+      "negro spiritual"
+    ]
+  },
+  {
+    "word": "neighborhood",
+    "phonetic": "/'nebɚ,hʊd/",
+    "partOfSpeech": "n",
+    "meaning": "地区",
+    "example": "Iterates may be categorized into stable and unstable sets depending on whether a neighborhood under iteration converges or diverges. Some move toward stability, others away.",
+    "translation": "根据一个受迭代影响的社区是聚合还是发散，迭代可以被归类到稳定和不稳定集。有些转向稳定，有些转离。",
+    "phrases": [
+      "in the neighborhood of",
+      "neighborhood committee",
+      "neighborhood park",
+      "residential neighborhood"
+    ]
+  },
+  {
+    "word": "neighbour",
+    "phonetic": "/'neɪbə(r); 'neɪbɚ/",
+    "partOfSpeech": "n",
+    "meaning": "邻居，邻国，邻人",
+    "example": "One of the neighbors complained about the noise from the party.",
+    "translation": "有位邻居抱怨聚会太吵。",
+    "phrases": []
+  },
+  {
+    "word": "neighbourhood",
+    "phonetic": "/nebɚˌhʊd/",
+    "partOfSpeech": "n",
+    "meaning": "邻居关系；邻近；四邻； 附近； 接近",
+    "example": "...a suburban Boston neighbourhood close to where I live.",
+    "translation": "…离我住处较近的波士顿城郊。",
+    "phrases": [
+      "in the neighbourhood of"
+    ]
+  },
+  {
+    "word": "neither",
+    "phonetic": "/ˈniðɚ; ˈnaɪðɚ/",
+    "partOfSpeech": "adj",
+    "meaning": "(两者)都不的",
+    "example": "She lives in retirement, neither making nor receiving visits.",
+    "translation": "她过着隐退的生活， 既不访客， 也不见客。",
+    "phrases": [
+      "neither one",
+      "neither do i",
+      "me neither"
+    ]
+  },
+  {
+    "word": "nephew",
+    "phonetic": "/'nɛfju/",
+    "partOfSpeech": "n",
+    "meaning": "侄子，外甥；侄子， 外甥",
+    "example": "I am planning a 25th birthday party for my nephew.",
+    "translation": "我正在为侄子筹划他25岁的生日聚会。",
+    "phrases": []
+  },
+  {
+    "word": "nerve",
+    "phonetic": "/nɝv/",
+    "partOfSpeech": "n",
+    "meaning": "神经；勇敢，胆量；神经； 勇敢， 胆量",
+    "example": "a condition which affects the nerves in the back",
+    "translation": "影响背部神经的疾病",
+    "phrases": [
+      "nerve oneself",
+      "optic nerve",
+      "peripheral nerve",
+      "facial nerve",
+      "sciatic nerve",
+      "nerve cell",
+      "nerve root",
+      "nerve fiber",
+      "sensory nerve",
+      "sympathetic nerve",
+      "vagus nerve",
+      "motor nerve",
+      "ulnar nerve",
+      "cranial nerve",
+      "median nerve",
+      "radial nerve",
+      "trigeminal nerve",
+      "nerve center",
+      "nerve tissue",
+      "have no nerves"
+    ]
+  },
+  {
+    "word": "nervous",
+    "phonetic": "/'nɝvəs/",
+    "partOfSpeech": "adj",
+    "meaning": "神经的；易激动的",
+    "example": "I wish you’d stop looking at me like that. You’re making me nervous.",
+    "translation": "我希望你不要再那样看着我了，你让我紧张。",
+    "phrases": [
+      "nervous system",
+      "central nervous system",
+      "autonomic nervous system",
+      "feel nervous",
+      "get nervous",
+      "nervous breakdown",
+      "sympathetic nervous system",
+      "peripheral nervous system",
+      "nervous tension",
+      "nervous tissue"
+    ]
+  },
+  {
+    "word": "nest",
+    "phonetic": "/nɛst/",
+    "partOfSpeech": "n/v",
+    "meaning": "巢，窝，穴；筑巢",
+    "example": "a bird’s nest",
+    "translation": "鸟窝",
+    "phrases": [
+      "bird's nest",
+      "bird nest",
+      "empty nest",
+      "nest egg",
+      "hornet's nest",
+      "mare's nest",
+      "empty nest syndrome"
+    ]
+  },
+  {
+    "word": "net",
+    "phonetic": "/nɛt/",
+    "partOfSpeech": "n",
+    "meaning": "网，网状物；通信网",
+    "example": "Bruce spends most evenings surfing the Net (= looking at information in different places on the Internet ).",
+    "translation": "布鲁斯晚上大多在网上浏览信息。",
+    "phrases": [
+      "on the net",
+      "net of",
+      "net profit",
+      "net income",
+      "on net",
+      "safety net",
+      "net worth",
+      "net work",
+      "net present value",
+      "net weight",
+      "net friend",
+      "net cash",
+      "net sales",
+      "power net",
+      "net framework",
+      "net asset",
+      "net value",
+      "fishing net",
+      "net effect",
+      "surf the net"
+    ]
+  },
+  {
+    "word": "network",
+    "phonetic": "/'nɛtwɝk/",
+    "partOfSpeech": "n",
+    "meaning": "网状物；网络；网状物； 广播网， 电视网； 网络",
+    "example": "Hungary’s telephone network",
+    "translation": "匈牙利的电话网",
+    "phrases": [
+      "neural network",
+      "computer network",
+      "network environment",
+      "network system",
+      "network security",
+      "sales network",
+      "information network",
+      "network management",
+      "distribution network",
+      "network structure",
+      "communication network",
+      "power network",
+      "service network",
+      "road network",
+      "marketing network",
+      "campus network",
+      "network communication",
+      "network planning",
+      "local area network",
+      "fuzzy neural network"
+    ]
+  },
+  {
+    "word": "neutral",
+    "phonetic": "/'nʊtrəl/",
+    "partOfSpeech": "adj",
+    "meaning": "中立的；中立的；中性的；中立的； 中性的",
+    "example": "I always tried to remain neutral when they started arguing.",
+    "translation": "他们争论起来的时候我总是努力保持中立。",
+    "phrases": [
+      "neutral point",
+      "neutral grounding",
+      "neutral salt",
+      "neutral position",
+      "neutral axis",
+      "neutral detergent",
+      "neutral protease",
+      "neutral red",
+      "risk neutral",
+      "neutral line",
+      "carbon neutral",
+      "neutral plane",
+      "neutral atmosphere",
+      "neutral surface",
+      "neutral wire",
+      "neutral current",
+      "neutral beam",
+      "neutral ground",
+      "neutral atom"
+    ]
+  },
+  {
+    "word": "never",
+    "phonetic": "/'nɛvɚ/",
+    "partOfSpeech": "adv",
+    "meaning": "永不，决不；不",
+    "example": "He’s never been to Australia.",
+    "translation": "他从未去过澳大利亚。",
+    "phrases": [
+      "never forget",
+      "never do",
+      "never mind",
+      "never before",
+      "never again",
+      "never ever",
+      "almost never",
+      "never fear",
+      "better late than never",
+      "never so",
+      "never fail to",
+      "now or never",
+      "never say die",
+      "never without",
+      "as never before",
+      "tomorrow never comes",
+      "never for a moment",
+      "never heard of it",
+      "never to be forgotten",
+      "never so much as"
+    ]
+  },
+  {
+    "word": "nevertheless",
+    "phonetic": "/,nɛvɚðə'lɛs/",
+    "partOfSpeech": "conj/adv",
+    "meaning": "然而；仍然；仍然， 然而",
+    "example": "The news may be unexpected; nevertheless, it is true.",
+    "translation": "这消息可能是出乎意料的，然而是真实的。",
+    "phrases": []
+  },
+  {
+    "word": "new",
+    "phonetic": "/nu/",
+    "partOfSpeech": "adj",
+    "meaning": "新的；新近出现的",
+    "example": "the city’s new hospital",
+    "translation": "市里新建的医院",
+    "phrases": [
+      "new type",
+      "new year",
+      "new york",
+      "new products",
+      "new development",
+      "new generation",
+      "new zealand",
+      "new approach",
+      "happy new year",
+      "new era",
+      "new concept",
+      "new model",
+      "new idea",
+      "new technique",
+      "new world",
+      "brand new",
+      "new life",
+      "new process",
+      "new design",
+      "new year's"
+    ]
+  },
+  {
+    "word": "newly",
+    "phonetic": "/'nuli/",
+    "partOfSpeech": "adv",
+    "meaning": "新近，最近",
+    "example": "She was young at the time, and newly married.",
+    "translation": "那时她还年轻，刚结婚。",
+    "phrases": []
+  },
+  {
+    "word": "news",
+    "phonetic": "/nuz/",
+    "partOfSpeech": "n",
+    "meaning": "新闻，消息",
+    "example": "I hope to have some good news for you soon.",
+    "translation": "我希望很快就能给你好消息。",
+    "phrases": [
+      "good news",
+      "bad news",
+      "news agency",
+      "xinhua news agency",
+      "news conference",
+      "news report",
+      "latest news",
+      "in the news",
+      "on the news",
+      "news service",
+      "news release",
+      "economic news",
+      "china news",
+      "news network",
+      "news briefing",
+      "international news",
+      "news broadcast",
+      "news story",
+      "local news",
+      "world news"
+    ]
+  },
+  {
+    "word": "newspaper",
+    "phonetic": "/'nuzpepɚ/",
+    "partOfSpeech": "n",
+    "meaning": "报纸，报",
+    "example": "She had read about it in the newspapers.",
+    "translation": "关于这件事她已经在报纸上看到了。",
+    "phrases": [
+      "in the newspaper",
+      "newspaper reporter",
+      "newspaper office",
+      "english newspaper",
+      "read the newspaper",
+      "newspaper advertising",
+      "newspaper stand",
+      "sunday newspaper",
+      "newspaper boy",
+      "wall newspaper"
+    ]
+  },
+  {
+    "word": "newsstand",
+    "phonetic": "/'njʊz,stænd/",
+    "partOfSpeech": "n",
+    "meaning": "报摊， 杂志摊",
+    "example": "Eight new national newspapers have appeared on the newsstands since 1981.",
+    "translation": "自1981年以来，有八家全国性报纸已在报摊上有售。",
+    "phrases": []
+  },
+  {
+    "word": "next",
+    "phonetic": "/nɛkst/",
+    "partOfSpeech": "adj",
+    "meaning": "紧接的；贴近的",
+    "example": "Grace sighed so heavily that Trish could hear it in the next room.",
+    "translation": "格雷丝沉重地叹气，特蕾什在隔壁房间都听到了。",
+    "phrases": [
+      "come next",
+      "the next world",
+      "get next to someone"
+    ]
+  },
+  {
+    "word": "nice",
+    "phonetic": "/naɪs/",
+    "partOfSpeech": "adj",
+    "meaning": "美好的，令人愉快的",
+    "example": "They’ve got a very nice house.",
+    "translation": "他们的房子真漂亮。",
+    "phrases": [
+      "nice and",
+      "nice to meet you",
+      "nice day",
+      "nice to see you",
+      "have a nice day",
+      "how nice",
+      "nice guy",
+      "make nice",
+      "nice thing",
+      "nice looking",
+      "nice meeting you",
+      "have a nice weekend",
+      "have a nice trip",
+      "have a nice time",
+      "nice talking to you",
+      "nice work",
+      "what a nice day",
+      "nice try"
+    ]
+  },
+  {
+    "word": "niece",
+    "phonetic": "/nis/",
+    "partOfSpeech": "n",
+    "meaning": "侄女，外甥女；侄女， 外甥女",
+    "example": "...his niece, the daughter of his eldest sister.",
+    "translation": "…他的外甥女，他大姐的女儿。",
+    "phrases": []
+  },
+  {
+    "word": "night",
+    "phonetic": "/naɪt/",
+    "partOfSpeech": "n",
+    "meaning": "夜，夜间",
+    "example": "It was a cold moonlit night.",
+    "translation": "那是个寒冷的月夜。",
+    "phrases": [
+      "at night",
+      "last night",
+      "in the night",
+      "by night",
+      "all night",
+      "every night",
+      "into the night",
+      "good night",
+      "night sky",
+      "the night before",
+      "night after night",
+      "late at night",
+      "from morning till night",
+      "night and day",
+      "tomorrow night",
+      "the other night",
+      "all night long",
+      "late night",
+      "night vision",
+      "night out"
+    ]
+  },
+  {
+    "word": "nightmare",
+    "phonetic": "/'naɪt'mɛr/",
+    "partOfSpeech": "n",
+    "meaning": "噩梦； 可怕的事物， 无法摆脱的恐惧",
+    "example": "a recurring nightmare",
+    "translation": "一再出现的噩梦",
+    "phrases": []
+  },
+  {
+    "word": "nine",
+    "phonetic": "/naɪn/",
+    "partOfSpeech": "num",
+    "meaning": "九，九个",
+    "example": "He’s only been in this job for nine months.",
+    "translation": "他干这份工作才九个月。",
+    "phrases": [
+      "nine out of ten",
+      "cloud nine",
+      "nine to five",
+      "whole nine yards",
+      "on cloud nine",
+      "nine years old"
+    ]
+  },
+  {
+    "word": "nineteen",
+    "phonetic": "/,naɪn'tin/",
+    "partOfSpeech": "num",
+    "meaning": "十九，十九个",
+    "example": "It was nineteen minutes past seven.",
+    "translation": "当时是7点19分。",
+    "phrases": []
+  },
+  {
+    "word": "ninety",
+    "phonetic": "/'naɪnti/",
+    "partOfSpeech": "num",
+    "meaning": "九十，九十个",
+    "example": "America was far richer in the nineties.",
+    "translation": "90年代的美国要富裕得多。",
+    "phrases": []
+  },
+  {
+    "word": "ninth",
+    "phonetic": "/naɪnθ/",
+    "partOfSpeech": "num",
+    "meaning": "第九；九分之一",
+    "example": "In that region, Chile went from ninth to first, overall, as Chilean mobile web use increased by 3200% over the past year.",
+    "translation": "智利从这一地区的第九跃升到第一位，因为智利的移动网络用户在过去一年增长了 3200% 。",
+    "phrases": [
+      "double ninth festival"
+    ]
+  },
+  {
+    "word": "nitrogen",
+    "phonetic": "/'naɪtrədʒən/",
+    "partOfSpeech": "n",
+    "meaning": "氮",
+    "example": "Well, we know nitrogen has what?",
+    "translation": "对于氮气我们知道什么？",
+    "phrases": [
+      "ammonia nitrogen",
+      "nitrogen content",
+      "total nitrogen",
+      "nitrogen fertilizer",
+      "liquid nitrogen",
+      "nitrogen oxide",
+      "nitrogen source",
+      "nitrogen fixation",
+      "nitrate nitrogen",
+      "urea nitrogen",
+      "nitrogen metabolism",
+      "nitrogen concentration",
+      "amino nitrogen",
+      "nitrogen dioxide",
+      "nitrogen supply",
+      "nitrogen balance",
+      "biological nitrogen fixation",
+      "nitrogen cycle",
+      "nitrogen flow",
+      "nitrogen treatment"
+    ]
+  },
+  {
+    "word": "no",
+    "phonetic": "/no/",
+    "partOfSpeech": "adv/adj",
+    "meaning": "不；并不；没有",
+    "example": "‘Are you Italian?’ ‘No, I’m Spanish.’",
+    "translation": "“你是意大利人吗？”“不，我是西班牙人。”",
+    "phrases": [
+      "no longer",
+      "no more",
+      "no less than"
+    ]
+  },
+  {
+    "word": "noble",
+    "phonetic": "/'nobl/",
+    "partOfSpeech": "adj",
+    "meaning": "贵族的；高尚的",
+    "example": "It’s very noble of you to spend all your weekends helping the old folk.",
+    "translation": "你心地真好，周末的时间全都用来帮助老人。",
+    "phrases": [
+      "noble metal",
+      "noble gas",
+      "of noble birth",
+      "noble group"
+    ]
+  },
+  {
+    "word": "nobody",
+    "phonetic": "/'nəubədi, -bɔdi/",
+    "partOfSpeech": "pron",
+    "meaning": "谁也不；无人",
+    "example": "I knocked on the door but nobody answered.",
+    "translation": "我敲了敲门，但没人应门。",
+    "phrases": [
+      "nobody could",
+      "nobody else",
+      "nobody home",
+      "nobody can stop",
+      "a mere nobody"
+    ]
+  },
+  {
+    "word": "nod",
+    "phonetic": "/nɑd/",
+    "partOfSpeech": "v",
+    "meaning": "点(头)；点头表示",
+    "example": "I asked her if she was ready to go, and she nodded.",
+    "translation": "我问她是否已准备好出发，她点了点头。",
+    "phrases": [
+      "get the nod",
+      "on the nod",
+      "nod off",
+      "land of nod"
+    ]
+  },
+  {
+    "word": "noise",
+    "phonetic": "/nɔɪz/",
+    "partOfSpeech": "n",
+    "meaning": "喧闹声；响声；噪声",
+    "example": "What’s that noise?",
+    "translation": "那是什么声音？",
+    "phrases": [
+      "low noise",
+      "noise reduction",
+      "noise ratio",
+      "noise control",
+      "white noise",
+      "traffic noise",
+      "noise level",
+      "signal to noise ratio",
+      "background noise",
+      "big noise",
+      "phase noise",
+      "random noise",
+      "environmental noise",
+      "gaussian noise",
+      "make a noise",
+      "noise elimination",
+      "noise suppression",
+      "ambient noise",
+      "impulse noise",
+      "additive noise"
+    ]
+  },
+  {
+    "word": "noisy",
+    "phonetic": "/'nɔɪzi/",
+    "partOfSpeech": "adj",
+    "meaning": "嘈杂的；喧闹的",
+    "example": "The kids have been really noisy today.",
+    "translation": "孩子们今天实在是吵。",
+    "phrases": [
+      "noisy channel"
+    ]
+  },
+  {
+    "word": "none",
+    "phonetic": "/nʌn/",
+    "partOfSpeech": "pron/adv",
+    "meaning": "没有人；毫不",
+    "example": "I wish I could offer you some cake but there’s none left.",
+    "translation": "我真想能请你吃些蛋糕，但一点也没剩的了。",
+    "phrases": []
+  },
+  {
+    "word": "nonsense",
+    "phonetic": "/'nɑnsɛns/",
+    "partOfSpeech": "n",
+    "meaning": "胡说，废话；胡说， 废话； 冒失的行动",
+    "example": "‘I’m a prisoner in my own home.’ ‘Nonsense!’",
+    "translation": "“我在自己家里就像个囚犯。”“胡说！”",
+    "phrases": [
+      "talk nonsense",
+      "sheer nonsense"
+    ]
+  },
+  {
+    "word": "noon",
+    "phonetic": "/nun/",
+    "partOfSpeech": "n",
+    "meaning": "正午，中午",
+    "example": "We met at 12 noon.",
+    "translation": "我们中午12点见了面。",
+    "phrases": [
+      "at noon",
+      "high noon"
+    ]
+  },
+  {
+    "word": "nor",
+    "phonetic": "/nɔr/",
+    "partOfSpeech": "conj",
+    "meaning": "也不；不",
+    "example": "He can neither read nor write (= he cannot read or write ).",
+    "translation": "他既不会读也不会写。",
+    "phrases": [
+      "nor yet"
+    ]
+  },
+  {
+    "word": "normal",
+    "phonetic": "/'nɔrml/",
+    "partOfSpeech": "adj",
+    "meaning": "正常的，普通的；正常的， 平常的； 正规的， 规范的",
+    "example": "A normal working week is 40 hours.",
+    "translation": "一个正常的工作周是40小时。",
+    "phrases": [
+      "normal university",
+      "normal operation",
+      "normal temperature",
+      "normal distribution",
+      "normal pressure",
+      "normal school",
+      "normal college",
+      "beijing normal university",
+      "normal stress",
+      "normal running",
+      "normal state",
+      "return to normal",
+      "normal condition",
+      "normal function",
+      "normal form",
+      "normal value",
+      "normal level",
+      "normal mode",
+      "normal phenomenon",
+      "normal vector"
+    ]
+  },
+  {
+    "word": "normally",
+    "phonetic": "/'nɔrmli/",
+    "partOfSpeech": "adv",
+    "meaning": "通常，正常地；通常； 正常地",
+    "example": "The journey normally takes about two hours.",
+    "translation": "这段旅程通常需要大约两小时。",
+    "phrases": [
+      "normally open",
+      "normally closed"
+    ]
+  },
+  {
+    "word": "north",
+    "phonetic": "/nɔrθ/",
+    "partOfSpeech": "n/adj",
+    "meaning": "北，北方；北方的",
+    "example": "Which way is north?",
+    "translation": "哪边是北？",
+    "phrases": [
+      "north america",
+      "north of",
+      "north korea",
+      "in the north",
+      "north china",
+      "north and south",
+      "to the north",
+      "north carolina",
+      "on the north",
+      "north sea",
+      "north pole",
+      "north africa",
+      "to the north of",
+      "north wind",
+      "north slope",
+      "north dakota",
+      "north point",
+      "north star",
+      "north island",
+      "north latitude"
+    ]
+  },
+  {
+    "word": "northeast",
+    "phonetic": "/'nɔrθ'ist/",
+    "partOfSpeech": "n/adj",
+    "meaning": "东北；位于东北的",
+    "example": "...the warm waters of Salt Springs Island to the northeast.",
+    "translation": "…流向东北方向的盐泉岛的温泉水。",
+    "phrases": []
+  },
+  {
+    "word": "northern",
+    "phonetic": "/'nɔrðɚn/",
+    "partOfSpeech": "adj",
+    "meaning": "北方的，北部的",
+    "example": "a man with a northern accent",
+    "translation": "带有北方口音的男子",
+    "phrases": [
+      "northern ireland",
+      "northern hemisphere",
+      "northern slope",
+      "northern territory",
+      "northern light",
+      "northern latitude",
+      "northern island"
+    ]
+  },
+  {
+    "word": "northwest",
+    "phonetic": "/'nɔrθ'wɛst/",
+    "partOfSpeech": "n/adj",
+    "meaning": "西北；位于西北的",
+    "example": "...four miles to the northwest.",
+    "translation": "…西北方向4英里。",
+    "phrases": [
+      "northwest airlines",
+      "northwest territory"
+    ]
+  },
+  {
+    "word": "nose",
+    "phonetic": "/noz/",
+    "partOfSpeech": "n",
+    "meaning": "鼻子；突出部分",
+    "example": "Someone punched him on the nose.",
+    "translation": "有人一拳打在他的鼻子上。",
+    "phrases": [
+      "on the nose",
+      "runny nose",
+      "by a nose",
+      "pay through the nose",
+      "nose for",
+      "long nose",
+      "nose into",
+      "nose out",
+      "stuffy nose",
+      "red nose",
+      "running nose",
+      "bloody nose",
+      "blow your nose",
+      "bridge of the nose",
+      "run at the nose",
+      "nose job",
+      "nose piece",
+      "nose up",
+      "have a nose for",
+      "nose to nose"
+    ]
+  },
+  {
+    "word": "not",
+    "phonetic": "/nɑt/",
+    "partOfSpeech": "adv",
+    "meaning": "不，没有",
+    "example": "Most of the stores do not open until 10 am.",
+    "translation": "大多数商店要到上午10点才开始营业。",
+    "phrases": [
+      "so as not to",
+      "if not for",
+      "not a thing",
+      "be not in"
+    ]
+  },
+  {
+    "word": "note",
+    "phonetic": "/not/",
+    "partOfSpeech": "n",
+    "meaning": "笔记；便条；注释",
+    "example": "Can I borrow your lecture notes?",
+    "translation": "我能不能借用一下你的课堂笔记？",
+    "phrases": [
+      "please note",
+      "of note",
+      "editor's note",
+      "take note",
+      "note on",
+      "take note of",
+      "lecture note",
+      "bank note",
+      "explanatory note",
+      "note down",
+      "make a note",
+      "promissory note",
+      "personal note",
+      "note book",
+      "thank-you note",
+      "make a note of",
+      "debit note",
+      "advice note",
+      "taste note",
+      "high note"
+    ]
+  },
+  {
+    "word": "notebook",
+    "phonetic": "/'notbʊk/",
+    "partOfSpeech": "n",
+    "meaning": "笔记本，期票簿；笔记本",
+    "example": "He brought out a notebook and pen from his pocket.",
+    "translation": "他从口袋里掏出了一个笔记本和一支钢笔。",
+    "phrases": [
+      "notebook computer",
+      "notebook pc"
+    ]
+  },
+  {
+    "word": "nothing",
+    "phonetic": "/'nʌθɪŋ/",
+    "partOfSpeech": "n/adv",
+    "meaning": "没有东西；毫不",
+    "example": "Nothing ever happens in this town.",
+    "translation": "这镇上从来都不会发生什么特别的事。",
+    "phrases": [
+      "nothing but",
+      "have nothing",
+      "nothing to do",
+      "nothing in",
+      "do nothing",
+      "nothing to do with",
+      "for nothing",
+      "have nothing to do",
+      "nothing at all",
+      "nothing like",
+      "do nothing but",
+      "nothing less than",
+      "nothing much",
+      "nothing short of",
+      "next to nothing",
+      "nothing in life",
+      "little or nothing",
+      "come to nothing",
+      "mean nothing to",
+      "no nothing"
+    ]
+  },
+  {
+    "word": "notice",
+    "phonetic": "/'notɪs/",
+    "partOfSpeech": "v/n",
+    "meaning": "注意；通知；注意",
+    "example": "He noticed a woman in a black dress sitting across from him.",
+    "translation": "他看到有位黑衣女子坐在他的对面。",
+    "phrases": [
+      "without notice",
+      "prior notice",
+      "take notice",
+      "give notice",
+      "written notice",
+      "further notice",
+      "on notice",
+      "short notice",
+      "advance notice",
+      "take notice of",
+      "public notice",
+      "at short notice",
+      "until further notice",
+      "at a moment's notice",
+      "on short notice",
+      "notice board",
+      "copyright notice",
+      "payment notice",
+      "on such short notice",
+      "take no notice of"
+    ]
+  },
+  {
+    "word": "noticeable",
+    "phonetic": "/'notɪsəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "显而易见的；重要的；显而易见的",
+    "example": "Alcohol has a noticeable effect on the body.",
+    "translation": "酒精对身体有明显的影响。",
+    "phrases": []
+  },
+  {
+    "word": "notify",
+    "phonetic": "/'notə'fai/",
+    "partOfSpeech": "vt",
+    "meaning": "通知， 告知， 报告",
+    "example": "The skipper notified the coastguard of the tragedy.",
+    "translation": "船长通知了海岸警卫队这一灾难。",
+    "phrases": [
+      "notify party",
+      "also notify"
+    ]
+  },
+  {
+    "word": "notion",
+    "phonetic": "/'noʃən/",
+    "partOfSpeech": "n",
+    "meaning": "概念， 观念； 意图， 想法， 念头",
+    "example": "She had no notion what he meant.",
+    "translation": "她根本不明白他是什么意思。",
+    "phrases": []
+  },
+  {
+    "word": "noun",
+    "phonetic": "/naʊn/",
+    "partOfSpeech": "n",
+    "meaning": "名词",
+    "example": "An adjective must agree with its noun in mumber and case.",
+    "translation": "形容词在数和格方面必须符合其所修饰的名词。",
+    "phrases": [
+      "noun phrase",
+      "abstract noun",
+      "proper noun",
+      "uncountable noun",
+      "plural noun",
+      "collective noun"
+    ]
+  },
+  {
+    "word": "nourish",
+    "phonetic": "/'nɜrɪʃ/",
+    "partOfSpeech": "vt",
+    "meaning": "提供养分， 养育",
+    "example": "The food she eats nourishes both her and the baby.",
+    "translation": "她吃的食物为她和婴儿提供营养。",
+    "phrases": []
+  },
+  {
+    "word": "novel",
+    "phonetic": "/ˈnɑːvl/",
+    "partOfSpeech": "n/adj",
+    "meaning": "小说；新的",
+    "example": "a novel by Jane Austen",
+    "translation": "简·奥斯丁的小说",
+    "phrases": [
+      "historical novel",
+      "gothic novel",
+      "river novel",
+      "saga novel",
+      "full-length novel"
+    ]
+  },
+  {
+    "word": "november",
+    "phonetic": "/no'vɛmbɚ/",
+    "partOfSpeech": "n",
+    "meaning": "十一月",
+    "example": "And again in November.",
+    "translation": "在十一月又一次。",
+    "phrases": []
+  },
+  {
+    "word": "now",
+    "phonetic": "/naʊ/",
+    "partOfSpeech": "adv",
+    "meaning": "现在；立刻；于是",
+    "example": "She's a widow now.",
+    "translation": "她现在是一个寡妇。",
+    "phrases": [
+      "up to now",
+      "just now",
+      "for now",
+      "from now on",
+      "by now",
+      "until now",
+      "even now",
+      "till now",
+      "now and then",
+      "now what",
+      "there now",
+      "here and now",
+      "now then",
+      "do it now",
+      "every now and then",
+      "as of now",
+      "now or never",
+      "before now",
+      "where are you now",
+      "apply now"
+    ]
+  },
+  {
+    "word": "nowadays",
+    "phonetic": "/'naʊədez/",
+    "partOfSpeech": "adv",
+    "meaning": "现今，现在",
+    "example": "Nowadays people are rarely shocked by the sex they see on television.",
+    "translation": "如今人们在电视上看见性爱镜头不太会感到吃惊了。",
+    "phrases": []
+  },
+  {
+    "word": "nowhere",
+    "phonetic": "/'no'wɛr/",
+    "partOfSpeech": "adv",
+    "meaning": "任何地方都不",
+    "example": "Nowhere is drug abuse more of a problem than in the US.",
+    "translation": "没有什么地方的吸毒问题比美国更严重。",
+    "phrases": [
+      "out of nowhere",
+      "nowhere near",
+      "get nowhere"
+    ]
+  },
+  {
+    "word": "nuclear",
+    "phonetic": "/'nuklɪɚ/",
+    "partOfSpeech": "adj",
+    "meaning": "原子核的；核心的；核子的， 核能的， 核武器的； 核心的",
+    "example": "France’s reliance on nuclear energy",
+    "translation": "法国对核能的依赖",
+    "phrases": [
+      "nuclear power",
+      "nuclear power plant",
+      "nuclear energy",
+      "nuclear magnetic resonance",
+      "nuclear power station",
+      "nuclear test",
+      "nuclear reactor",
+      "nuclear weapon",
+      "nuclear fuel",
+      "nuclear medicine",
+      "nuclear war",
+      "nuclear waste",
+      "nuclear disarmament",
+      "nuclear physics",
+      "nuclear bomb",
+      "nuclear transfer",
+      "nuclear fusion",
+      "nuclear explosion",
+      "nuclear fission",
+      "nuclear radiation"
+    ]
+  },
+  {
+    "word": "nucleus",
+    "phonetic": "/'nuklɪəs/",
+    "partOfSpeech": "n",
+    "meaning": "核，核心；(原子)核；核心； 核",
+    "example": "Neutrons and protons are bound together in the nucleus of an atom.",
+    "translation": "在一个原子的核内，中子和质子聚合在一起。",
+    "phrases": [
+      "cell nucleus",
+      "nucleus pulposus",
+      "atomic nucleus",
+      "crystal nucleus",
+      "caudate nucleus",
+      "paraventricular nucleus",
+      "suprachiasmatic nucleus",
+      "lateral geniculate nucleus",
+      "raphe nucleus",
+      "amygdaloid nucleus",
+      "arcuate nucleus"
+    ]
+  },
+  {
+    "word": "nuisance",
+    "phonetic": "/'nusns/",
+    "partOfSpeech": "n",
+    "meaning": "讨厌的东西",
+    "example": "He could be a bit of a nuisance when he was drunk.",
+    "translation": "他喝醉时会是一个有点令人讨厌的人。",
+    "phrases": [
+      "public nuisance",
+      "noise nuisance"
+    ]
+  },
+  {
+    "word": "number",
+    "phonetic": "/'nʌmbɚ/",
+    "partOfSpeech": "n",
+    "meaning": "数，数字；号码",
+    "example": "They wrote various numbers on a large sheet of paper.",
+    "translation": "他们在一张大纸上写下了很多不同的数字。",
+    "phrases": [
+      "number of",
+      "numbers of",
+      "large number",
+      "large number of",
+      "in number",
+      "to the number of",
+      "number of people",
+      "phone number",
+      "number one",
+      "telephone number",
+      "small number",
+      "any number of",
+      "a great number of",
+      "total number",
+      "a small number of",
+      "serial number",
+      "any number",
+      "account number",
+      "by the numbers",
+      "room number"
+    ]
+  },
+  {
+    "word": "numerous",
+    "phonetic": "/'numərəs/",
+    "partOfSpeech": "adj",
+    "meaning": "为数众多的；许多；众多的",
+    "example": "Numerous attempts have been made to hide the truth.",
+    "translation": "为掩盖事实作了很多尝试。",
+    "phrases": []
+  },
+  {
+    "word": "nurse",
+    "phonetic": "/nɝs/",
+    "partOfSpeech": "n/v",
+    "meaning": "保姆；护士；看护",
+    "example": "The nurse is coming to give you an injection.",
+    "translation": "护士会来给你打针。",
+    "phrases": [
+      "head nurse",
+      "at nurse",
+      "wet nurse",
+      "male nurse",
+      "registered nurse",
+      "nurse station",
+      "nurse practitioner",
+      "student nurse",
+      "charge nurse"
+    ]
+  },
+  {
+    "word": "nursery",
+    "phonetic": "/'nɝsəri/",
+    "partOfSpeech": "n",
+    "meaning": "托儿所；苗圃；托儿所， 保育室； 苗圃",
+    "example": "She puts her baby in this nursery and then goes back to work.",
+    "translation": "她把孩子送到这家托儿所然后回去上班。",
+    "phrases": [
+      "nursery stock",
+      "nursery school",
+      "nursery tale",
+      "nursery rhyme",
+      "seedling nursery",
+      "nursery garden",
+      "day nursery"
+    ]
+  },
+  {
+    "word": "nut",
+    "phonetic": "/nʌt/",
+    "partOfSpeech": "n",
+    "meaning": "坚果，干果；螺母",
+    "example": "a pine nut",
+    "translation": "松子",
+    "phrases": [
+      "nuts and bolts",
+      "for nuts",
+      "betel nut",
+      "pine nut",
+      "from soup to nuts",
+      "cashew nut",
+      "screw nut",
+      "lock nut",
+      "macadamia nut",
+      "brazil nut",
+      "locking nut",
+      "nut shell",
+      "tough nut",
+      "areca nut",
+      "nut cracker",
+      "hexagonal nut",
+      "adjusting nut",
+      "hex nut",
+      "kola nut"
+    ]
+  },
+  {
+    "word": "nutritious",
+    "phonetic": "/nʊ'trɪʃəs/",
+    "partOfSpeech": "adj",
+    "meaning": "营养的",
+    "example": "Wholemeal bread is more nutritious than white bread.",
+    "translation": "全麦面包比白面包更有营养。",
+    "phrases": []
+  },
+  {
+    "word": "nylon",
+    "phonetic": "/'naɪlɑn/",
+    "partOfSpeech": "n",
+    "meaning": "尼龙，耐纶；尼龙",
+    "example": "nylon fabric",
+    "translation": "尼龙织物",
+    "phrases": [
+      "nylon bag",
+      "nylon fiber",
+      "nylon cord",
+      "nylon tube",
+      "nylon yarn",
+      "nylon cable ties",
+      "nylon resin"
+    ]
+  },
+  {
+    "word": "oak",
+    "phonetic": "/ok/",
+    "partOfSpeech": "n",
+    "meaning": "栎属植物；栎木",
+    "example": "an oak door",
+    "translation": "橡木门",
+    "phrases": [
+      "white oak",
+      "red oak",
+      "oak ridge",
+      "cork oak",
+      "oak ridge national laboratory"
+    ]
+  },
+  {
+    "word": "oar",
+    "phonetic": "/ɔr/",
+    "partOfSpeech": "n",
+    "meaning": "浆，橹",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "obey",
+    "phonetic": "/ə'be/",
+    "partOfSpeech": "v",
+    "meaning": "顺从；服从；顺从， 服从",
+    "example": "The little boy made no effort to obey.",
+    "translation": "这小男孩不肯服从。",
+    "phrases": [
+      "obey the order"
+    ]
+  },
+  {
+    "word": "object",
+    "phonetic": "/'ɑbdʒɛkt/",
+    "partOfSpeech": "n/vi",
+    "meaning": "物，物体；目的；反对， 不赞成；实物， 物体； 目的， 目标； 对象， 客体； 宾语",
+    "example": "an everyday object such as a spoon",
+    "translation": "调羹之类的日常用品",
+    "phrases": [
+      "object oriented",
+      "object of study",
+      "object function",
+      "controlled object",
+      "material object",
+      "single object",
+      "object code",
+      "object oriented programming",
+      "object detection",
+      "data object",
+      "no object",
+      "direct object",
+      "component object model",
+      "test object",
+      "source object",
+      "object space",
+      "object type",
+      "object file",
+      "object identification",
+      "solid object"
+    ]
+  },
+  {
+    "word": "objection",
+    "phonetic": "/əb'dʒɛkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "反对；反对，异议；不喜欢；反对， 异议； 反对的理由",
+    "example": "Her objection was that he was too young.",
+    "translation": "她反对的理由是他太小。",
+    "phrases": []
+  },
+  {
+    "word": "objective",
+    "phonetic": "/əb'dʒɛktɪv/",
+    "partOfSpeech": "adj/n",
+    "meaning": "客观的；无偏见的；客观的， 无偏见的；目标，目的",
+    "example": "Scientists need to be objective when doing research.",
+    "translation": "科学家做研究时要客观。",
+    "phrases": [
+      "objective function",
+      "objective analysis",
+      "objective evaluation",
+      "strategic objective",
+      "ultimate objective",
+      "objective laws",
+      "objective evidence",
+      "objective condition",
+      "objective factor",
+      "objective lens",
+      "general objective",
+      "job objective",
+      "management by objective",
+      "objective value",
+      "objective test",
+      "investment objective",
+      "objective knowledge",
+      "objective cause",
+      "performance objective",
+      "social objective"
+    ]
+  },
+  {
+    "word": "obligation",
+    "phonetic": "/,ɑblɪ'ɡeʃən/",
+    "partOfSpeech": "n",
+    "meaning": "义务， 责任",
+    "example": "Employers have an obligation to treat all employees equally.",
+    "translation": "雇主有责任对所有员工一视同仁。",
+    "phrases": [
+      "no obligation",
+      "moral obligation",
+      "legal obligation",
+      "contractual obligation",
+      "without obligation",
+      "financial obligation"
+    ]
+  },
+  {
+    "word": "oblige",
+    "phonetic": "/ə'blaɪdʒ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "迫使；施恩惠于；迫使； 施恩于， 帮…的忙； 使感激",
+    "example": "The storm got worse and worse. Finally, I was obliged to abandon the car and continue on foot.",
+    "translation": "暴风雨越来越猛烈。最终，我被迫弃车徒步前行。",
+    "phrases": []
+  },
+  {
+    "word": "observation",
+    "phonetic": "/,ɑbzɚ'veʃən/",
+    "partOfSpeech": "n",
+    "meaning": "注意；观察；观察力；注意， 观察； 言论， 评论； 观察资料",
+    "example": "He spent two nights under close observation in hospital.",
+    "translation": "他在医院接受了两个晚上的严密观察。",
+    "phrases": [
+      "field observation",
+      "observation system",
+      "observation method",
+      "experimental observation",
+      "meteorological observation",
+      "microscopic observation",
+      "observation station",
+      "settlement observation",
+      "visual observation",
+      "observation period",
+      "participant observation",
+      "observation point",
+      "observation window",
+      "under observation",
+      "observation deck",
+      "sampling observation",
+      "observation error",
+      "observation post",
+      "systematic observation",
+      "observation well"
+    ]
+  },
+  {
+    "word": "observe",
+    "phonetic": "/əb'zɝv/",
+    "partOfSpeech": "v/vt",
+    "meaning": "遵守；遵守；看到；说；注意到， 观察； 评说； 遵守",
+    "example": "So far the ceasefire has been observed by both sides.",
+    "translation": "到目前为止，双方都遵守着停火协定。",
+    "phrases": [
+      "observe on"
+    ]
+  },
+  {
+    "word": "observer",
+    "phonetic": "/əb'zɝvɚ/",
+    "partOfSpeech": "n",
+    "meaning": "观察员，观测者；观察员， 观察者",
+    "example": "political observers",
+    "translation": "政治观察员",
+    "phrases": [
+      "observer pattern",
+      "observer status"
+    ]
+  },
+  {
+    "word": "obstacle",
+    "phonetic": "/'ɑbstəkl/",
+    "partOfSpeech": "n",
+    "meaning": "阻碍；障碍，障碍物，妨害；障碍， 障碍物， 妨碍",
+    "example": "The tax puts obstacles in the way of companies trying to develop trade overseas.",
+    "translation": "这项税收为想在海外发展贸易的公司设置了障碍。",
+    "phrases": [
+      "obstacle course"
+    ]
+  },
+  {
+    "word": "obtain",
+    "phonetic": "/əb'ten/",
+    "partOfSpeech": "v",
+    "meaning": "获得；获得，得到，买到；获得； 通用， 流行； 存在",
+    "example": "Evans was trying to obtain a false passport and other documents.",
+    "translation": "埃文斯当时正试图获取假护照和其他文件。",
+    "phrases": [
+      "obtain employment",
+      "obtain information",
+      "obtain evidence"
+    ]
+  },
+  {
+    "word": "obvious",
+    "phonetic": "/'ɑbvɪəs/",
+    "partOfSpeech": "adj",
+    "meaning": "明显的，显而易见的；明显的",
+    "example": "The obvious way of reducing pollution is to use cars less.",
+    "translation": "减少污染显而易见的办法就是少用汽车。",
+    "phrases": []
+  },
+  {
+    "word": "obviously",
+    "phonetic": "/'ɑbvɪəsli/",
+    "partOfSpeech": "adv",
+    "meaning": "明显地，显然地",
+    "example": "We’re obviously going to need more help.",
+    "translation": "显然我们将需要更多的帮助。",
+    "phrases": []
+  },
+  {
+    "word": "occasion",
+    "phonetic": "/ə'keʒn/",
+    "partOfSpeech": "n/vt",
+    "meaning": "场合；场合，时刻；时机；场合，时刻；重大活动；时机；起因；引起",
+    "example": "I often think fondly of an occasion some years ago in New Orleans.",
+    "translation": "我经常深情地想起一些年前在新奥尔良所发生的一幕。",
+    "phrases": [
+      "on the occasion",
+      "special occasion",
+      "on the occasion of",
+      "on occasion",
+      "on this occasion",
+      "on one occasion",
+      "on that occasion",
+      "rise to the occasion"
+    ]
+  },
+  {
+    "word": "occasional",
+    "phonetic": "/ə'keʒənl/",
+    "partOfSpeech": "adj",
+    "meaning": "偶然的；临时的；偶尔的， 间或发生的",
+    "example": "He made occasional visits to London.",
+    "translation": "他有时候会去伦敦。",
+    "phrases": []
+  },
+  {
+    "word": "occasionally",
+    "phonetic": "/-/",
+    "partOfSpeech": "adv",
+    "meaning": "偶然；非经常地",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "occupation",
+    "phonetic": "/,ɑkju'peʃən/",
+    "partOfSpeech": "n",
+    "meaning": "职业，工作；占领，占据；职业；占领， 占据； 职业； 从事的活动， 消遣",
+    "example": "Please state your name, address and occupation.",
+    "translation": "请写明你的姓名、地址和职业。",
+    "phrases": [
+      "take up an occupation"
+    ]
+  },
+  {
+    "word": "occupy",
+    "phonetic": "/'ɑkjupaɪ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "占领；占，占有；占领， 占， 占有",
+    "example": "Football occupies most of my leisure time.",
+    "translation": "足球占去了我大部分的闲暇时间。",
+    "phrases": [
+      "occupy in"
+    ]
+  },
+  {
+    "word": "occur",
+    "phonetic": "/ə'kɝ/",
+    "partOfSpeech": "v/vi",
+    "meaning": "发生；出现，存在；发生， 出现， 存在； 被想起， 被想到",
+    "example": "A third of accidental deaths occur in the home.",
+    "translation": "有三分之一的意外死亡发生在家里。",
+    "phrases": [
+      "occur as",
+      "occur for"
+    ]
+  },
+  {
+    "word": "occurrence",
+    "phonetic": "/ə'kʌrəns/",
+    "partOfSpeech": "n",
+    "meaning": "发生，出现；事件；发生， 出现； 发生的事件",
+    "example": "Complaints seemed to be an everyday occurrence.",
+    "translation": "投诉似乎成了天天发生的事。",
+    "phrases": [
+      "probability of occurrence"
+    ]
+  },
+  {
+    "word": "ocean",
+    "phonetic": "/-/",
+    "partOfSpeech": "n",
+    "meaning": "海洋；洋",
+    "example": "The cape extends far into the ocean.",
+    "translation": "那海岬伸向海洋远处。",
+    "phrases": []
+  },
+  {
+    "word": "oceania",
+    "phonetic": "/,oʃɪ'ænɪə/",
+    "partOfSpeech": "n",
+    "meaning": "大洋洲",
+    "example": "The Mummies Of The World exhibition brings together a collection of mummies and related artefacts from South America, Europe, Asia, Oceania and Egypt.",
+    "translation": "汇集了来自南美，欧洲，亚洲，大洋洲和埃及的一系列干尸和艺术品将举办全球巡回展览。",
+    "phrases": []
+  },
+  {
+    "word": "october",
+    "phonetic": "/ɑk'tobɚ/",
+    "partOfSpeech": "n",
+    "meaning": "十月",
+    "example": "Most seasonal hiring is done in early October.",
+    "translation": "多数季节性招聘是在10月初进行。",
+    "phrases": [
+      "october revolution"
+    ]
+  },
+  {
+    "word": "odd",
+    "phonetic": "/ɑd/",
+    "partOfSpeech": "adj",
+    "meaning": "奇数的；单只的；奇特的； 临时的； 奇数的； 单只的； 剩余的， 挂零的",
+    "example": "It was an odd thing to say.",
+    "translation": "这话说得很奇怪。",
+    "phrases": [
+      "odd number",
+      "odd couple",
+      "at odd",
+      "odd one out",
+      "odd lot"
+    ]
+  },
+  {
+    "word": "odour",
+    "phonetic": "/'əudə/",
+    "partOfSpeech": "n",
+    "meaning": "气味，香气；味道",
+    "example": "...the lingering odour of car exhaust.",
+    "translation": "…挥之不去的汽车尾气的独特气味。",
+    "phrases": []
+  },
+  {
+    "word": "of",
+    "phonetic": "/ʌv; əv/",
+    "partOfSpeech": "prep",
+    "meaning": "…的；由于",
+    "example": "the back of the house",
+    "translation": "房子的后部",
+    "phrases": [
+      "of oneself",
+      "of all",
+      "of itself"
+    ]
+  },
+  {
+    "word": "off",
+    "phonetic": "/ɔf/",
+    "partOfSpeech": "adv",
+    "meaning": "(离)开；(停)止",
+    "example": "How are you off for sports equipment? (= do you have enough? )",
+    "translation": "你的体育运动装备够不够？",
+    "phrases": [
+      "off and",
+      "off with",
+      "off of",
+      "go off",
+      "right off",
+      "from off",
+      "off and on",
+      "on off",
+      "straight off",
+      "from the off"
+    ]
+  },
+  {
+    "word": "offend",
+    "phonetic": "/ə'fɛnd/",
+    "partOfSpeech": "v/vt",
+    "meaning": "冒犯；犯过错；冒犯， 伤害…的感情； 使厌恶； 违反",
+    "example": "His remarks deeply offended many Scottish people.",
+    "translation": "他的话严重冒犯了许多苏格兰人。",
+    "phrases": [
+      "offend against"
+    ]
+  },
+  {
+    "word": "offense",
+    "phonetic": "/ə'fɛns/",
+    "partOfSpeech": "n",
+    "meaning": "过错，犯罪；犯规， 违法行为； 冒犯， 得罪",
+    "example": "These efforts have led to a growing confidence among the public that corruption is a serious punishable offense in Albania.",
+    "translation": "这些努力增强了公众的信心，即人们相信，腐败在阿尔巴尼亚是严重犯罪，能够受到惩罚。",
+    "phrases": [
+      "no offense",
+      "criminal offense",
+      "take offense",
+      "offense and defense"
+    ]
+  },
+  {
+    "word": "offensive",
+    "phonetic": "/ə'fɛnsɪv/",
+    "partOfSpeech": "adj/n",
+    "meaning": "冒犯的，无礼的；进攻的，攻击性的；进攻， 攻势",
+    "example": "I found her remarks deeply offensive.",
+    "translation": "我觉得她的话令人非常恼火。",
+    "phrases": [
+      "offensive player",
+      "offensive team",
+      "offensive weapons"
+    ]
+  },
+  {
+    "word": "offer",
+    "phonetic": "/'ɔfɚ/",
+    "partOfSpeech": "v/n",
+    "meaning": "提供；提出；提供",
+    "example": "A number of groups offer their services free of charge.",
+    "translation": "一些团体免费提供服务。",
+    "phrases": [
+      "offer for",
+      "on offer",
+      "make an offer",
+      "special offer",
+      "job offer",
+      "offer help",
+      "offer up",
+      "best offer",
+      "offer one's service",
+      "firm offer",
+      "tender offer",
+      "offer to buy",
+      "offer to sell",
+      "offer price",
+      "counter offer",
+      "offer firm",
+      "offer letter",
+      "offer sheet",
+      "offer a reward",
+      "public offer"
+    ]
+  },
+  {
+    "word": "office",
+    "phonetic": "/'ɔfɪs/",
+    "partOfSpeech": "n",
+    "meaning": "办公室；处，局，社",
+    "example": "The department occupies an office just a mile from the White House.",
+    "translation": "该部门就在离白宫一英里远的地方有个办公楼。",
+    "phrases": [
+      "in the office",
+      "in office",
+      "head office",
+      "post office",
+      "office building",
+      "office furniture",
+      "office automation",
+      "representative office",
+      "office equipment",
+      "office space",
+      "general office",
+      "branch office",
+      "box office",
+      "government office",
+      "administrative office",
+      "home office",
+      "office work",
+      "editorial office",
+      "patent office",
+      "information office"
+    ]
+  },
+  {
+    "word": "officer",
+    "phonetic": "/'ɔfɪsɚ/",
+    "partOfSpeech": "n",
+    "meaning": "官员；干事；军官",
+    "example": "a commanding officer of the SAS",
+    "translation": "英国空军特种部队的一名指挥官",
+    "phrases": [
+      "police officer",
+      "executive officer",
+      "chief executive officer",
+      "customs officer",
+      "military officer",
+      "chief financial officer",
+      "commanding officer",
+      "senior officer",
+      "operating officer",
+      "chief operating officer",
+      "naval officer",
+      "security officer",
+      "medical officer",
+      "loan officer",
+      "chief officer",
+      "staff officer",
+      "immigration officer",
+      "authorized officer",
+      "superior officer",
+      "first officer"
+    ]
+  }
+]

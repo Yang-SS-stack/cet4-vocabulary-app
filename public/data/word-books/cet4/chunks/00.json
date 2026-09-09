@@ -1,0 +1,2170 @@
+[
+  {
+    "word": "a",
+    "phonetic": "/ə; e/",
+    "partOfSpeech": "art",
+    "meaning": "一(个)；每一(个)",
+    "example": "We have a problem.",
+    "translation": "我们遇到了一个麻烦。",
+    "phrases": []
+  },
+  {
+    "word": "abandon",
+    "phonetic": "/ə'bændən/",
+    "partOfSpeech": "v/vt/n",
+    "meaning": "丢弃；放弃，抛弃；离弃，丢弃；遗弃，抛弃；放弃；放任； 纵情",
+    "example": "How could she abandon her own child?",
+    "translation": "她怎么能抛弃自己的孩子？",
+    "phrases": [
+      "with abandon",
+      "abandon ship"
+    ]
+  },
+  {
+    "word": "ability",
+    "phonetic": "/ə'bɪləti/",
+    "partOfSpeech": "n",
+    "meaning": "能力；能耐，本领；能力， 本领； 才能， 才智",
+    "example": "The test measures your mathematical ability.",
+    "translation": "这种测试考查的是数学能力。",
+    "phrases": [
+      "innovation ability",
+      "ability for",
+      "learning ability",
+      "practical ability",
+      "technical ability",
+      "reading ability",
+      "management ability",
+      "writing ability",
+      "working ability",
+      "physical ability",
+      "cognitive ability",
+      "service ability",
+      "ability to pay",
+      "combining ability",
+      "develop ability",
+      "executive ability",
+      "natural ability",
+      "administrative ability",
+      "unique ability",
+      "adaptive ability"
+    ]
+  },
+  {
+    "word": "able",
+    "phonetic": "/'ebl/",
+    "partOfSpeech": "adj",
+    "meaning": "有能力的；出色的",
+    "example": "one of my more able students",
+    "translation": "我班上能力比较强的学生之一",
+    "phrases": [
+      "will be able to",
+      "be able to do",
+      "be able to take",
+      "able person",
+      "spell able",
+      "able seaman"
+    ]
+  },
+  {
+    "word": "abnormal",
+    "phonetic": "/æbˈnɔːrml/",
+    "partOfSpeech": "adj",
+    "meaning": "不正常的；变态的",
+    "example": "abnormal behaviour",
+    "translation": "反常行为",
+    "phrases": [
+      "abnormal phenomena",
+      "abnormal behavior",
+      "abnormal condition",
+      "abnormal psychology",
+      "abnormal sound",
+      "abnormal return",
+      "abnormal situation",
+      "abnormal distribution",
+      "abnormal menstruation"
+    ]
+  },
+  {
+    "word": "aboard",
+    "phonetic": "/ə'bɔrd/",
+    "partOfSpeech": "adv/adv&prep",
+    "meaning": "在船(车)上；上船；在船上， 上船",
+    "example": "The plane crashed, killing all 200 people aboard.",
+    "translation": "飞机失事，机上200人全部遇难。",
+    "phrases": [
+      "go aboard",
+      "all aboard"
+    ]
+  },
+  {
+    "word": "about",
+    "phonetic": "/ə'baʊt/",
+    "partOfSpeech": "prep",
+    "meaning": "关于；在…周围",
+    "example": "a book about politics",
+    "translation": "一本有关政治的书",
+    "phrases": [
+      "how about",
+      "what about",
+      "all about",
+      "about us",
+      "do about",
+      "go about",
+      "about to do",
+      "about of",
+      "out and about",
+      "up and about",
+      "on or about"
+    ]
+  },
+  {
+    "word": "above",
+    "phonetic": "/ə'bʌv/",
+    "partOfSpeech": "prep",
+    "meaning": "在…上面；高于",
+    "example": "He lived in a flat above the shop.",
+    "translation": "他住在那商店上面的一套房间里。",
+    "phrases": [
+      "above oneself",
+      "above all",
+      "from above",
+      "all above",
+      "all of the above",
+      "well above",
+      "over and above",
+      "above and beyond",
+      "get above oneself"
+    ]
+  },
+  {
+    "word": "abroad",
+    "phonetic": "/ə'brɔd/",
+    "partOfSpeech": "adv",
+    "meaning": "(在)国外；到处；到国外； 在传播， 在流传",
+    "example": "I’ve never lived abroad before.",
+    "translation": "我以前从未在国外生活过。",
+    "phrases": [
+      "home and abroad",
+      "at home and abroad",
+      "study abroad",
+      "go abroad",
+      "studying abroad",
+      "went abroad",
+      "travel abroad",
+      "spread abroad",
+      "market abroad",
+      "student abroad",
+      "consumption abroad"
+    ]
+  },
+  {
+    "word": "abruptly",
+    "phonetic": "/ə'brʌptli/",
+    "partOfSpeech": "adv",
+    "meaning": "突然地",
+    "example": "The path ends off abruptly.",
+    "translation": "这条路突然到头了。",
+    "phrases": []
+  },
+  {
+    "word": "absence",
+    "phonetic": "/'æbsns/",
+    "partOfSpeech": "n",
+    "meaning": "缺席，不在场；缺乏；缺席， 不在； 缺席的时间， 外出期； 缺乏， 不存在",
+    "example": "In the absence of any evidence, the police had to let Myers go.",
+    "translation": "警察没有证据，只好把迈尔斯放了。",
+    "phrases": [
+      "absence of",
+      "in the absence of",
+      "absence from",
+      "in absence",
+      "in absence of",
+      "absence of mind"
+    ]
+  },
+  {
+    "word": "absent",
+    "phonetic": "/ˈæbsənt/",
+    "partOfSpeech": "adj",
+    "meaning": "缺席的；不在场的；缺乏的；缺席的， 不在场的； 缺乏的， 不存在的； 心不在焉的",
+    "example": "He has been absent from his desk for two weeks.",
+    "translation": "他已经两个星期没来了。",
+    "phrases": [
+      "absent from",
+      "absent minded",
+      "absent from work"
+    ]
+  },
+  {
+    "word": "absolute",
+    "phonetic": "/'æbsəlut/",
+    "partOfSpeech": "adj",
+    "meaning": "绝对的；纯粹的；十足的， 地道的； 绝对的， 完全的； 不受任何限制的",
+    "example": "Some of the stuff on TV is absolute rubbish.",
+    "translation": "电视上播放的有些东西简直就是垃圾。",
+    "phrases": [
+      "absolute value",
+      "absolute advantage",
+      "absolute power",
+      "absolute error",
+      "absolute freedom",
+      "absolute zero",
+      "absolute alcohol",
+      "absolute discretion",
+      "absolute deviation",
+      "absolute majority",
+      "absolute monarchy",
+      "absolute right",
+      "absolute minimum",
+      "absolute number",
+      "absolute control",
+      "absolute difference",
+      "absolute path",
+      "absolute pressure",
+      "absolute temperature",
+      "absolute poverty"
+    ]
+  },
+  {
+    "word": "absolutely",
+    "phonetic": "/'æbsəlutli/",
+    "partOfSpeech": "adv",
+    "meaning": "完全地；绝对地",
+    "example": "He made his reasons for resigning absolutely clear.",
+    "translation": "他把辞职的理由讲得一清二楚。",
+    "phrases": [
+      "absolutely necessary"
+    ]
+  },
+  {
+    "word": "absorb",
+    "phonetic": "/æbˈsɔrb; æbˈzɔrb; əbˈsɔrb/",
+    "partOfSpeech": "v/vt",
+    "meaning": "吸收（液体、气体等）；吸收；使专心；吸收； 吸引…的注意， 使全神贯注； 把…并入， 同化",
+    "example": "Plants absorb nutrients from the soil.",
+    "translation": "植物从土壤中吸收养分。",
+    "phrases": [
+      "absorb in"
+    ]
+  },
+  {
+    "word": "abstract",
+    "phonetic": "/'æbstrækt/",
+    "partOfSpeech": "adj/n/vt",
+    "meaning": "抽象的；摘要；抽象的，抽象派的；摘要， 梗概； 抽象派艺术作品；做…的摘要； 提取",
+    "example": "By the age of seven, children are capable of thinking in abstract terms .",
+    "translation": "儿童到了七岁就具有抽象思维的能力。",
+    "phrases": [
+      "in the abstract",
+      "abstract art",
+      "abstract class",
+      "abstract thinking",
+      "abstract painting",
+      "abstract noun",
+      "abstract factory",
+      "abstract data type",
+      "abstract expressionism",
+      "abstract idea",
+      "abstract algebra",
+      "abstract away from"
+    ]
+  },
+  {
+    "word": "abundant",
+    "phonetic": "/ə'bʌndənt/",
+    "partOfSpeech": "adj",
+    "meaning": "大量的，丰富的；丰富的；大量的；丰富的， 富裕的； 大量的， 充足的",
+    "example": "an abundant supply of fresh water",
+    "translation": "充足的淡水供应",
+    "phrases": [
+      "abundant in",
+      "abundant rainfall"
+    ]
+  },
+  {
+    "word": "abuse",
+    "phonetic": "/ə'bjus/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "滥用，虐待；滥用；虐待；滥用；滥用； 虐待， 伤害； 辱骂， 毁谤",
+    "example": "Williams abused his position as Mayor to give jobs to his friends.",
+    "translation": "威廉斯滥用市长权力，给不少朋友安排了工作。",
+    "phrases": [
+      "drug abuse",
+      "child abuse",
+      "substance abuse",
+      "sexual abuse",
+      "abuse of power",
+      "alcohol abuse",
+      "physical abuse",
+      "verbal abuse",
+      "sex abuse",
+      "emotional abuse"
+    ]
+  },
+  {
+    "word": "academic",
+    "phonetic": "/,ækə'dɛmɪk/",
+    "partOfSpeech": "adj",
+    "meaning": "学校(院)的，学术的；学院的；学术的；学院的； 学术的； 纯理论的， 不切实际的",
+    "example": "He possessed no academic qualifications.",
+    "translation": "他没有学历。",
+    "phrases": [
+      "academic research",
+      "academic circles",
+      "academic year",
+      "academic achievement",
+      "academic performance",
+      "academic study",
+      "academic exchange",
+      "academic problem",
+      "academic background",
+      "academic world",
+      "academic freedom",
+      "academic community",
+      "academic journal",
+      "academic degree",
+      "academic atmosphere",
+      "academic education",
+      "academic work",
+      "academic writing",
+      "academic record",
+      "academic discipline"
+    ]
+  },
+  {
+    "word": "academy",
+    "phonetic": "/ə'kædəmi/",
+    "partOfSpeech": "n",
+    "meaning": "私立中学；专科院校；研究会， 学会； 专门学校",
+    "example": "a military academy",
+    "translation": "军事学院",
+    "phrases": [
+      "academy of sciences",
+      "chinese academy of sciences",
+      "academy of fine arts",
+      "academy award",
+      "military academy",
+      "royal academy",
+      "academy of music",
+      "naval academy",
+      "imperial academy",
+      "academy of management",
+      "national academy of science",
+      "air force academy",
+      "united states naval academy"
+    ]
+  },
+  {
+    "word": "accelerate",
+    "phonetic": "/əkˈsɛləˌret/",
+    "partOfSpeech": "v/vt",
+    "meaning": "加速；(使)加快；促进；使加快， 使增速",
+    "example": "measures to accelerate the rate of economic growth",
+    "translation": "加快经济增长速度的措施",
+    "phrases": []
+  },
+  {
+    "word": "acceleration",
+    "phonetic": "/ək'sɛlə'reʃən/",
+    "partOfSpeech": "n",
+    "meaning": "加速；加速度",
+    "example": "The latest model has excellent acceleration.",
+    "translation": "这款最新型号加速性能优异。",
+    "phrases": [
+      "angular acceleration",
+      "peak acceleration",
+      "constant acceleration",
+      "lateral acceleration",
+      "maximum acceleration",
+      "acceleration time",
+      "acceleration of gravity",
+      "acceleration transducer",
+      "gravitational acceleration",
+      "seismic acceleration",
+      "earthquake acceleration",
+      "particle acceleration",
+      "coriolis acceleration",
+      "acceleration period"
+    ]
+  },
+  {
+    "word": "accent",
+    "phonetic": "/'æksɛnt/",
+    "partOfSpeech": "n",
+    "meaning": "口音，腔调；重音；口音， 腔调； 重音",
+    "example": "He had a strong Irish accent",
+    "translation": "他有浓重的爱尔兰口音。",
+    "phrases": []
+  },
+  {
+    "word": "accept",
+    "phonetic": "/ækˈsɛpt; əkˈsɛpt/",
+    "partOfSpeech": "v",
+    "meaning": "接受；同意",
+    "example": "Rick accepted her offer of coffee.",
+    "translation": "她请里克喝咖啡，他接受了。",
+    "phrases": [
+      "accept of"
+    ]
+  },
+  {
+    "word": "acceptable",
+    "phonetic": "/ək'sɛptəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "可接受的，合意的",
+    "example": "Students who achieve an acceptable standard will progress to degree studies.",
+    "translation": "达到一定程度的学生可以进一步攻读学位。",
+    "phrases": [
+      "acceptable level",
+      "acceptable quality",
+      "acceptable performance",
+      "acceptable risk"
+    ]
+  },
+  {
+    "word": "acceptance",
+    "phonetic": "/ək'sɛptəns/",
+    "partOfSpeech": "n",
+    "meaning": "接受，验收；承认；接受； 承认； 容忍",
+    "example": "He wrote a letter of acceptance (= a letter in which you agree to accept a job, university place etc ) to the university.",
+    "translation": "他给那所大学写了一封接受函。",
+    "phrases": [
+      "final acceptance",
+      "acceptance test",
+      "acceptance criteria",
+      "acceptance check",
+      "inspection and acceptance",
+      "acceptance rate",
+      "wide acceptance",
+      "public acceptance",
+      "acceptance certificate",
+      "general acceptance",
+      "acceptance testing",
+      "acceptance speech",
+      "letter of acceptance",
+      "acceptance standard",
+      "acceptance inspection",
+      "acceptance level",
+      "bank acceptance",
+      "conditional acceptance",
+      "banker's acceptance",
+      "acceptance report"
+    ]
+  },
+  {
+    "word": "access",
+    "phonetic": "/'æksɛs/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "获取；接近，入口；接近；通道，入口；接近；通道，入口；接近的机会；存取",
+    "example": "Users can access their voice mail remotely.",
+    "translation": "用户可以远程获取语音邮件。",
+    "phrases": [
+      "access control",
+      "have access to",
+      "internet access",
+      "easy access",
+      "market access",
+      "data access",
+      "multiple access",
+      "open access",
+      "direct access",
+      "access network",
+      "broadband access",
+      "network access",
+      "gain access",
+      "free access",
+      "remote access",
+      "get access to",
+      "code division multiple access",
+      "random access",
+      "public access",
+      "database access"
+    ]
+  },
+  {
+    "word": "accessary",
+    "phonetic": "/æk'sɛsəri/",
+    "partOfSpeech": "n",
+    "meaning": "同谋，从犯",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "accessible",
+    "phonetic": "/ək'sɛsəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "易接近的",
+    "example": "The island is only accessible by boat.",
+    "translation": "这个岛只有坐船才能到。",
+    "phrases": [
+      "readily accessible"
+    ]
+  },
+  {
+    "word": "accident",
+    "phonetic": "/'æksədənt/",
+    "partOfSpeech": "n",
+    "meaning": "意外的；事故；意外， 事故",
+    "example": "Over 70,000 people are seriously injured every year in road accidents.",
+    "translation": "每年在道路事故中受重伤的有七万多人。",
+    "phrases": [
+      "traffic accident",
+      "by accident",
+      "car accident",
+      "accident insurance",
+      "accident prevention",
+      "fire accident",
+      "accident rate",
+      "road accident",
+      "fatal accident",
+      "nuclear accident",
+      "industrial accident",
+      "have an accident",
+      "cerebrovascular accident",
+      "personal accident insurance",
+      "collision accident",
+      "vehicle accident",
+      "aviation accident",
+      "transportation accident",
+      "minor accident",
+      "unexpected accident"
+    ]
+  },
+  {
+    "word": "accidental",
+    "phonetic": "/,æksɪ'dɛntl/",
+    "partOfSpeech": "adj",
+    "meaning": "偶然的；非本质的；偶然的， 意外的",
+    "example": "an accidental discharge of toxic waste",
+    "translation": "有毒废料的意外排放",
+    "phrases": [
+      "accidental death",
+      "accidental damage",
+      "accidental explosion",
+      "accidental error"
+    ]
+  },
+  {
+    "word": "accommodate",
+    "phonetic": "/ə'kɑmədet/",
+    "partOfSpeech": "v",
+    "meaning": "适合， 提供住宿；容纳；供应，供给",
+    "example": "The island was used to accommodate child refugees.",
+    "translation": "该岛用于收容儿童难民。",
+    "phrases": [
+      "accommodate with"
+    ]
+  },
+  {
+    "word": "accommodation",
+    "phonetic": "/ə,kɑmə'deʃən/",
+    "partOfSpeech": "n",
+    "meaning": "招待设备；预定铺位；住处； 膳宿",
+    "example": "The price for the holiday includes flights and accommodation.",
+    "translation": "度假的价格包括机票和住宿。",
+    "phrases": [
+      "accommodation space",
+      "hostel accommodation"
+    ]
+  },
+  {
+    "word": "accompany",
+    "phonetic": "/ə'kʌmpəni/",
+    "partOfSpeech": "v/vt",
+    "meaning": "陪伴；陪伴，陪同；伴随；陪伴， 陪同， 伴随； 为…伴奏",
+    "example": "Children under 14 must be accompanied by an adult.",
+    "translation": "14岁以下儿童必须有成人陪同。",
+    "phrases": [
+      "accompany with",
+      "accompany by"
+    ]
+  },
+  {
+    "word": "accomplish",
+    "phonetic": "/ə'kɑmplɪʃ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "完成；达到(目的)；完成；达到； 完成",
+    "example": "We have accomplished all we set out to do.",
+    "translation": "所有计划要做的事情，我们都已完成。",
+    "phrases": [
+      "accomplish nothing"
+    ]
+  },
+  {
+    "word": "accord",
+    "phonetic": "/ə'kɔrd/",
+    "partOfSpeech": "v/vi/n/vt",
+    "meaning": "使一致；给予；相符合； 相一致；一致，符合；谅解，协议；使符合；使一致；调节；授予，赠与，给予",
+    "example": "You will not be accorded any special treatment.",
+    "translation": "你不会得到任何特殊待遇。",
+    "phrases": [
+      "accord with",
+      "in accord with",
+      "with one accord",
+      "out of accord with",
+      "accord development",
+      "of its own accord",
+      "honda accord"
+    ]
+  },
+  {
+    "word": "accordance",
+    "phonetic": "/ə'kɔrdns/",
+    "partOfSpeech": "n",
+    "meaning": "一致；和谐；授予；一致； 和谐",
+    "example": "I am in accordance with him in this matter.",
+    "translation": "在这件事情上我同他是一致的。",
+    "phrases": [
+      "in accordance",
+      "in accordance with"
+    ]
+  },
+  {
+    "word": "according",
+    "phonetic": "/ə'kɔrdɪŋ/",
+    "partOfSpeech": "adj",
+    "meaning": "相等的， 一致的， 依…而定的",
+    "example": "",
+    "translation": "",
+    "phrases": [
+      "according as",
+      "according to statistics",
+      "according to plan"
+    ]
+  },
+  {
+    "word": "accordingly",
+    "phonetic": "/ə'kɔrdɪŋli/",
+    "partOfSpeech": "adv",
+    "meaning": "因此，所以；照着；因此， 所以； 照着",
+    "example": "Some of the laws were contradictory. Accordingly, measures were taken to clarify them.",
+    "translation": "有些法律相互矛盾，因此，采取了措施将其阐明。",
+    "phrases": [
+      "act accordingly",
+      "accordingly as"
+    ]
+  },
+  {
+    "word": "account",
+    "phonetic": "/ə'kaʊnt/",
+    "partOfSpeech": "n/vi",
+    "meaning": "记述；解释；帐目；说明原因； 占；记述；解释；账目",
+    "example": "The accounts for last year showed a profit of $2 million.",
+    "translation": "去年的账目显示利润为200万美元。",
+    "phrases": [
+      "account of",
+      "account for",
+      "your account",
+      "take into account",
+      "on account",
+      "on account of",
+      "bank account",
+      "be taken into account",
+      "current account",
+      "account number",
+      "of account",
+      "savings account",
+      "no account",
+      "account management",
+      "capital account",
+      "open an account",
+      "take account of",
+      "deposit account",
+      "new account",
+      "checking account"
+    ]
+  },
+  {
+    "word": "accountancy",
+    "phonetic": "/ə'kaʊntənsi/",
+    "partOfSpeech": "n",
+    "meaning": "会计工作； 会计学",
+    "example": "He is studying accountancy or he is an accountancy student.",
+    "translation": "他正在学习会计学或他是一名会计专业的学生。",
+    "phrases": [
+      "accountancy profession"
+    ]
+  },
+  {
+    "word": "accountant",
+    "phonetic": "/ə'kaʊntənt/",
+    "partOfSpeech": "n",
+    "meaning": "会计人员， 会计师",
+    "example": "Do you want me to invite your accountant to this meeting?",
+    "translation": "你想让我把你的会计师也邀请到会议里么？",
+    "phrases": [
+      "certified public accountant",
+      "public accountant",
+      "chief accountant",
+      "chartered accountant",
+      "professional accountant",
+      "certified accountant",
+      "tax accountant",
+      "assistant accountant",
+      "senior accountant",
+      "junior accountant",
+      "qualified accountant"
+    ]
+  },
+  {
+    "word": "accumulate",
+    "phonetic": "/ə'kjumjəlet/",
+    "partOfSpeech": "v",
+    "meaning": "积累，增加；积累；堆积；积累， 堆积",
+    "example": "It is unjust that a privileged few should continue to accumulate wealth.",
+    "translation": "少数特权阶级继续积聚财富，这是不公平的。",
+    "phrases": []
+  },
+  {
+    "word": "accuracy",
+    "phonetic": "/'ækjərəsi/",
+    "partOfSpeech": "n",
+    "meaning": "准确(性)；准确度；准确， 精确",
+    "example": "He passes the ball with unerring accuracy.",
+    "translation": "他传球准确无误。",
+    "phrases": [
+      "high accuracy",
+      "measurement accuracy",
+      "measuring accuracy",
+      "machining accuracy",
+      "control accuracy",
+      "positioning accuracy",
+      "calculation accuracy",
+      "tracking accuracy",
+      "degree of accuracy",
+      "accuracy of measurement",
+      "dimensional accuracy",
+      "location accuracy",
+      "accuracy control",
+      "accuracy test",
+      "calibration accuracy",
+      "accuracy of measuring",
+      "dynamic accuracy",
+      "alignment accuracy",
+      "relative accuracy",
+      "accuracy grade"
+    ]
+  },
+  {
+    "word": "accurate",
+    "phonetic": "/'ækjərət/",
+    "partOfSpeech": "adj",
+    "meaning": "精确的，准确的；准确的，正确无误的；准确的， 正确无误的",
+    "example": "The brochure tries to give a fair and accurate description of each hotel.",
+    "translation": "该手册尽量公正、准确地介绍每一家酒店。",
+    "phrases": [
+      "accurate measurement",
+      "accurate positioning",
+      "accurate model",
+      "accurate simulation",
+      "accurate at",
+      "accurate calibration",
+      "accurate record",
+      "accurate adjustment",
+      "accurate grinding"
+    ]
+  },
+  {
+    "word": "accusation",
+    "phonetic": "/,ækju'zeʃən/",
+    "partOfSpeech": "n",
+    "meaning": "谴责； 【律】 指控",
+    "example": "The main accusation levelled against him was that he tried to avoid military service.",
+    "translation": "对他提出的主要指控是他想逃避兵役。",
+    "phrases": []
+  },
+  {
+    "word": "accuse",
+    "phonetic": "/ə'kjuz/",
+    "partOfSpeech": "v/vt",
+    "meaning": "指责；归咎于；指责， 归咎于",
+    "example": "The professor stands accused of (= has been accused of ) stealing his student’s ideas and publishing them.",
+    "translation": "那位教授被指控剽窃学生的观点拿去发表。",
+    "phrases": [
+      "accuse of"
+    ]
+  },
+  {
+    "word": "accustom",
+    "phonetic": "/ə'kʌstəm/",
+    "partOfSpeech": "v",
+    "meaning": "使习惯",
+    "example": "She tried to accustom herself to the tight bandages.",
+    "translation": "她尝试着使自己习惯那些紧绷的绷带。",
+    "phrases": []
+  },
+  {
+    "word": "accustomed",
+    "phonetic": "/ə'kʌstəmd/",
+    "partOfSpeech": "adj",
+    "meaning": "惯常的；习惯的；惯常的， 习惯的",
+    "example": "The pans were in their accustomed places.",
+    "translation": "那些锅在老地方。",
+    "phrases": [
+      "become accustomed to",
+      "get accustomed to",
+      "became accustomed to sth"
+    ]
+  },
+  {
+    "word": "ache",
+    "phonetic": "/ek/",
+    "partOfSpeech": "v/n/vi",
+    "meaning": "痛；想念；疼痛；疼痛；渴望",
+    "example": "His feet were aching from standing so long.",
+    "translation": "他站了那么久，双脚隐隐作痛。",
+    "phrases": [
+      "aches and pains",
+      "stomach ache",
+      "ache for",
+      "tooth ache",
+      "ache all over"
+    ]
+  },
+  {
+    "word": "achieve",
+    "phonetic": "/ə'tʃiv/",
+    "partOfSpeech": "v",
+    "meaning": "完成，实现；完成，实现；达到",
+    "example": "Frances achieved very good exam results.",
+    "translation": "弗朗西丝考试取得了优异成绩。",
+    "phrases": [
+      "achieve success",
+      "achieve one's goals"
+    ]
+  },
+  {
+    "word": "achievement",
+    "phonetic": "/ə'tʃivmənt/",
+    "partOfSpeech": "n",
+    "meaning": "完成；成就，成绩；完成； 成就， 成绩",
+    "example": "His great achievement is to make all the players into a united team.",
+    "translation": "他的伟大成就在于把所有选手组织成一支团结的队伍。",
+    "phrases": [
+      "outstanding achievement",
+      "academic achievement",
+      "achievement motivation",
+      "lifetime achievement",
+      "school achievement",
+      "achievement test",
+      "need for achievement"
+    ]
+  },
+  {
+    "word": "acid",
+    "phonetic": "/'æsɪd/",
+    "partOfSpeech": "n/adj",
+    "meaning": "酸；酸的，酸性的；酸的， 酸性的；酸",
+    "example": "sulphuric acid",
+    "translation": "硫酸",
+    "phrases": [
+      "amino acid",
+      "acetic acid",
+      "sulfuric acid",
+      "fatty acid",
+      "lactic acid",
+      "phosphoric acid",
+      "acrylic acid",
+      "hydrochloric acid",
+      "citric acid",
+      "nitric acid",
+      "sulphuric acid",
+      "acid rain",
+      "hyaluronic acid",
+      "organic acid",
+      "nucleic acid",
+      "benzoic acid",
+      "acid solution",
+      "lactic acid bacteria",
+      "acid content",
+      "oxalic acid"
+    ]
+  },
+  {
+    "word": "acknowledge",
+    "phonetic": "/ək'nɑlɪdʒ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "承认(…的权威)；承认， 承认…的权威； 告知收到， 确认； 对…表示感谢， 报偿",
+    "example": "The family acknowledge the need for change.",
+    "translation": "全家人都承认需要改变一下。",
+    "phrases": [
+      "acknowledge receipt",
+      "acknowledge receipt of"
+    ]
+  },
+  {
+    "word": "acquaint",
+    "phonetic": "/ə'kwent/",
+    "partOfSpeech": "vt",
+    "meaning": "使认识， 使了解",
+    "example": "Have steps been taken to acquaint breeders with their right to apply for licenses?",
+    "translation": "已经采取措施让饲养动物者了解他们申请执照的权利了吗？",
+    "phrases": [
+      "acquaint with"
+    ]
+  },
+  {
+    "word": "acquaintance",
+    "phonetic": "/ə'kwentəns/",
+    "partOfSpeech": "n",
+    "meaning": "认识；了解；熟人；认识， 了解； 熟人",
+    "example": "She was a casual acquaintance of my family in Vienna.",
+    "translation": "她是我们家在维也纳的一个交情不深的朋友。",
+    "phrases": [
+      "acquaintance with",
+      "acquaintance with someone",
+      "nodding acquaintance",
+      "make the acquaintance of"
+    ]
+  },
+  {
+    "word": "acquire",
+    "phonetic": "/ə'kwaɪr/",
+    "partOfSpeech": "v/vt",
+    "meaning": "获得；取得；获得；学到；取得， 获得， 学到",
+    "example": "Manning hoped to acquire valuable works of art as cheaply as possible.",
+    "translation": "曼宁希望以尽可能低的价格买到有价值的艺术品。",
+    "phrases": []
+  },
+  {
+    "word": "acquisition",
+    "phonetic": "/,ækwɪ'zɪʃən/",
+    "partOfSpeech": "n",
+    "meaning": "取得， 获得， 习得； 获得物， 增添的人",
+    "example": "the acquisition of language",
+    "translation": "语言的习得",
+    "phrases": [
+      "data acquisition",
+      "data acquisition system",
+      "language acquisition",
+      "land acquisition",
+      "merger and acquisition",
+      "knowledge acquisition",
+      "information acquisition",
+      "acquisition time",
+      "target acquisition",
+      "acquisition cost",
+      "acquisition and merger",
+      "acquisition of land",
+      "acquisition of assets",
+      "data acquisition unit",
+      "acquisition agreement",
+      "acquisition price"
+    ]
+  },
+  {
+    "word": "acre",
+    "phonetic": "/'ekɚ/",
+    "partOfSpeech": "n",
+    "meaning": "英亩(=607亩)；英亩",
+    "example": "They own 200 acres of farmland.",
+    "translation": "他们拥有200英亩农田。",
+    "phrases": []
+  },
+  {
+    "word": "across",
+    "phonetic": "/ə'krɔs/",
+    "partOfSpeech": "prep",
+    "meaning": "横过；在…对面",
+    "example": "",
+    "translation": "",
+    "phrases": [
+      "across the board",
+      "across from",
+      "go across",
+      "back across"
+    ]
+  },
+  {
+    "word": "act",
+    "phonetic": "/ækt/",
+    "partOfSpeech": "v/n",
+    "meaning": "行动；见效；行为",
+    "example": "The company acted correctly in sacking him.",
+    "translation": "公司解雇他做得对。",
+    "phrases": [
+      "act as",
+      "act on",
+      "act in",
+      "act like",
+      "act for",
+      "in act",
+      "speech act",
+      "act out",
+      "act with",
+      "act upon",
+      "act against",
+      "in the act of",
+      "legal act",
+      "education act",
+      "juristic act",
+      "criminal act",
+      "act of god",
+      "act accordingly",
+      "balancing act",
+      "illegal act"
+    ]
+  },
+  {
+    "word": "action",
+    "phonetic": "/'ækʃən/",
+    "partOfSpeech": "n",
+    "meaning": "行动；作用；功能；行动； 已做的事； 作用， 功能； 情节",
+    "example": "The government must take action (= do something ) now to stop the rise in violent crime.",
+    "translation": "政府现在必须采取行动遏止暴力犯罪的上升。",
+    "phrases": [
+      "take action",
+      "action on",
+      "in action",
+      "action plan",
+      "mechanism of action",
+      "course of action",
+      "legal action",
+      "action research",
+      "civil action",
+      "pharmacological action",
+      "corrective action",
+      "administrative action",
+      "joint action",
+      "collective action",
+      "combined action",
+      "direct action",
+      "action potential",
+      "out of action",
+      "control action",
+      "disciplinary action"
+    ]
+  },
+  {
+    "word": "active",
+    "phonetic": "/'æktɪv/",
+    "partOfSpeech": "adj",
+    "meaning": "活跃的；积极的；活跃的， 积极的； 主动的； 起作用的",
+    "example": "games for active youngsters",
+    "translation": "活跃好动的年轻人玩的游戏",
+    "phrases": [
+      "active in",
+      "active role",
+      "active part",
+      "active power",
+      "active carbon",
+      "surface active",
+      "active ingredient",
+      "active participation",
+      "active agent",
+      "active component",
+      "surface active agent",
+      "active service",
+      "active oxygen",
+      "active fault",
+      "active learning",
+      "active substance",
+      "active suspension",
+      "active material",
+      "active network",
+      "active member"
+    ]
+  },
+  {
+    "word": "activity",
+    "phonetic": "/æk'tɪviti/",
+    "partOfSpeech": "n",
+    "meaning": "活动；活力；行动；活动； 活力； 行动",
+    "example": "Everyone is free to engage in peaceful political activity.",
+    "translation": "每个人都可以自由参加和平的政治活动。",
+    "phrases": [
+      "economic activity",
+      "catalytic activity",
+      "physical activity",
+      "biological activity",
+      "enzyme activity",
+      "business activity",
+      "social activity",
+      "brain activity",
+      "sexual activity",
+      "seismic activity",
+      "antimicrobial activity",
+      "volcanic activity",
+      "electrical activity",
+      "enzymatic activity",
+      "practical activity",
+      "solar activity",
+      "water activity",
+      "marketing activity",
+      "outdoor activity",
+      "activity level"
+    ]
+  },
+  {
+    "word": "actor",
+    "phonetic": "/'æktɚ/",
+    "partOfSpeech": "n",
+    "meaning": "男演员；演剧的人",
+    "example": "His father was an actor in the Cantonese Opera Company.",
+    "translation": "他父亲曾是粤剧团的一名演员。",
+    "phrases": [
+      "best actor",
+      "leading actor",
+      "supporting actor",
+      "best supporting actor",
+      "film actor",
+      "character actor",
+      "a bad actor"
+    ]
+  },
+  {
+    "word": "actress",
+    "phonetic": "/'æktrɪs/",
+    "partOfSpeech": "n",
+    "meaning": "女演员",
+    "example": "She's not only a great dramatic actress but she's also very funny.",
+    "translation": "她不仅是一位伟大的女戏剧演员，而且也很幽默。",
+    "phrases": []
+  },
+  {
+    "word": "actual",
+    "phonetic": "/'æktʃuəl/",
+    "partOfSpeech": "adj",
+    "meaning": "实际的；现行的",
+    "example": "I’m not joking. Those were his actual words.",
+    "translation": "我没开玩笑，那都是他的原话。",
+    "phrases": [
+      "actual situation",
+      "actual strength",
+      "actual condition",
+      "actual production",
+      "actual effect",
+      "actual state",
+      "actual use",
+      "actual demand",
+      "actual value",
+      "actual measurement",
+      "actual life",
+      "your actual",
+      "actual cost",
+      "actual need",
+      "actual practice",
+      "actual result",
+      "actual performance",
+      "actual test",
+      "actual number",
+      "actual size"
+    ]
+  },
+  {
+    "word": "actually",
+    "phonetic": "/'æktʃuəli/",
+    "partOfSpeech": "adv",
+    "meaning": "实际上；竟然",
+    "example": "I’ve known Barbara for years. Since we were babies, actually.",
+    "translation": "我认识芭芭拉很多年了，实际上我们从小就认识。",
+    "phrases": []
+  },
+  {
+    "word": "acute",
+    "phonetic": "/ə'kjut/",
+    "partOfSpeech": "adj",
+    "meaning": "敏锐的；尖的，锐的；敏锐的；严重的； 急性的； 灵敏的， 敏锐的； 精明的",
+    "example": "Young children have a particularly acute sense of smell.",
+    "translation": "幼儿的嗅觉特别灵敏。",
+    "phrases": [
+      "acute myocardial infarction",
+      "acute pancreatitis",
+      "acute toxicity",
+      "acute leukemia",
+      "severe acute respiratory syndrome",
+      "acute appendicitis",
+      "acute phase",
+      "acute abdomen",
+      "acute angle",
+      "acute disease",
+      "acute pain",
+      "acute gastroenteritis",
+      "acute bronchitis",
+      "acute infection",
+      "acute lymphocytic leukemia",
+      "acute care",
+      "acute pyelonephritis",
+      "acute gastritis",
+      "acute tonsillitis",
+      "acute exposure"
+    ]
+  },
+  {
+    "word": "ad",
+    "phonetic": "/'e 'di/",
+    "partOfSpeech": "n",
+    "meaning": "广告",
+    "example": "She replied to a lonely hearts ad she spotted in the New York Times.",
+    "translation": "她回复了在《纽约时报》上看到的一则求友广告。",
+    "phrases": [
+      "ad hoc",
+      "ad in",
+      "ad valorem",
+      "print ad",
+      "ad litem",
+      "ad hoc committee",
+      "ad converter",
+      "want ad",
+      "agent ad litem",
+      "ad infinitum",
+      "job ad",
+      "classified ad",
+      "ad hoc basis",
+      "ad valorem tax",
+      "ad lib",
+      "ad valorem tariff",
+      "ad rem",
+      "ad libitum"
+    ]
+  },
+  {
+    "word": "adapt",
+    "phonetic": "/ə'dæpt/",
+    "partOfSpeech": "v/vt",
+    "meaning": "适应于；使适应；改编；使适应； 改编",
+    "example": "The ability to adapt is a definite asset in this job.",
+    "translation": "适应能力是做这份工作的绝对有利条件。",
+    "phrases": [
+      "adapt to something",
+      "adapt for"
+    ]
+  },
+  {
+    "word": "add",
+    "phonetic": "/æd/",
+    "partOfSpeech": "v",
+    "meaning": "添加，附加，掺加",
+    "example": "If the mixture seems dry, add water.",
+    "translation": "如果混合物看上去干，加点水。",
+    "phrases": [
+      "add up",
+      "add in",
+      "add value",
+      "add on",
+      "add noise",
+      "add weight to"
+    ]
+  },
+  {
+    "word": "addiction",
+    "phonetic": "/ə'dɪkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "上瘾",
+    "example": "She helped him fight his drug addiction.",
+    "translation": "她帮助了他对抗自己的毒瘾。",
+    "phrases": [
+      "drug addiction",
+      "addiction to drugs"
+    ]
+  },
+  {
+    "word": "addition",
+    "phonetic": "/ə'dɪʃən/",
+    "partOfSpeech": "n",
+    "meaning": "加，加法；附加物；加， 加法； 附加物",
+    "example": "This is a fine book; a worthy addition to the series.",
+    "translation": "这是一本好书——是对这套丛书有价值的增补。",
+    "phrases": [
+      "in addition",
+      "addition to sth",
+      "with the addition of",
+      "addition reaction",
+      "addition agent",
+      "heat addition",
+      "addition process",
+      "nucleophilic addition",
+      "michael addition",
+      "addition polymerization"
+    ]
+  },
+  {
+    "word": "additional",
+    "phonetic": "/ə'dɪʃənl/",
+    "partOfSpeech": "adj",
+    "meaning": "额外的；附加的，追加的；附加的， 追加的",
+    "example": "Additional information can be obtained from the centre.",
+    "translation": "可以从中心获取更多信息。",
+    "phrases": [
+      "additional information",
+      "additional cost",
+      "additional premium",
+      "additional charge",
+      "additional investment",
+      "additional fee",
+      "additional insurance",
+      "additional security",
+      "additional services",
+      "additional equipment",
+      "additional load",
+      "additional benefit",
+      "additional pressure",
+      "additional condition",
+      "additional payment",
+      "additional product",
+      "additional requirement",
+      "additional tax",
+      "additional item",
+      "additional layer"
+    ]
+  },
+  {
+    "word": "address",
+    "phonetic": "/ə'drɛs/",
+    "partOfSpeech": "v/n",
+    "meaning": "解决；地址；演说；谈吐",
+    "example": "The address is 2025 M Street, NW, Washington, DC, 20036.",
+    "translation": "地址是华盛顿哥伦比亚特区，华盛顿西北，M街2025号，邮编20036。",
+    "phrases": [
+      "email address",
+      "ip address",
+      "address book",
+      "home address",
+      "mailing address",
+      "network address",
+      "address space",
+      "address as",
+      "e-mail address",
+      "public address",
+      "address system",
+      "inaugural address",
+      "address translation",
+      "public address system",
+      "correspondence address",
+      "specific address",
+      "full address",
+      "physical address",
+      "permanent address",
+      "mail address"
+    ]
+  },
+  {
+    "word": "adequate",
+    "phonetic": "/ˈædɪkwət/",
+    "partOfSpeech": "adj",
+    "meaning": "足够的；足够的；可以胜任的；足够的； 可以胜任的",
+    "example": "Farmers have been slow to make adequate provision for their retirement.",
+    "translation": "农民们迟迟没有为退休做好适当安排。",
+    "phrases": [
+      "adequate for",
+      "adequate consideration",
+      "adequate preparation",
+      "adequate housing",
+      "adequate and systematic service"
+    ]
+  },
+  {
+    "word": "adjective",
+    "phonetic": "/'ædʒɪktɪv/",
+    "partOfSpeech": "n/adj",
+    "meaning": "形容词；形容词的",
+    "example": "In “the black cat” the adjective “black”modifies the noun “cat”.",
+    "translation": "在“那只黑猫”中，形容词“黑的”修饰名词“猫”。",
+    "phrases": []
+  },
+  {
+    "word": "adjust",
+    "phonetic": "/ə'dʒʌst/",
+    "partOfSpeech": "v/vt",
+    "meaning": "调整，调节；校正；调整， 调节， 校正",
+    "example": "Check and adjust the brakes regularly.",
+    "translation": "经常检查并调节刹车装置。",
+    "phrases": [
+      "adjust and control",
+      "adjust price"
+    ]
+  },
+  {
+    "word": "administration",
+    "phonetic": "/əd,mɪnɪ'streʃən/",
+    "partOfSpeech": "n",
+    "meaning": "管理，政府；管理；管理部门；管理； 管理部门， 行政机关； 实行， 执行",
+    "example": "We’re looking for someone with experience in administration.",
+    "translation": "我们正在寻找一个有管理经验的人。",
+    "phrases": [
+      "administration of",
+      "business administration",
+      "public administration",
+      "general administration",
+      "food and drug administration",
+      "administration department",
+      "educational administration",
+      "civil administration",
+      "tax administration",
+      "administration of justice",
+      "school administration",
+      "oral administration",
+      "state environmental protection administration",
+      "personnel administration",
+      "administration office",
+      "administration fee",
+      "financial administration",
+      "administration structure",
+      "foreign exchange administration",
+      "administration building"
+    ]
+  },
+  {
+    "word": "administrative",
+    "phonetic": "/əd'mɪnɪstretɪv/",
+    "partOfSpeech": "adj",
+    "meaning": "管理的",
+    "example": "The job is mainly administrative.",
+    "translation": "这份工作主要是行政方面的。",
+    "phrases": [
+      "administrative region",
+      "administrative law",
+      "special administrative region",
+      "administrative management",
+      "administrative office",
+      "administrative division",
+      "administrative measure",
+      "administrative procedure",
+      "administrative organ",
+      "administrative staff",
+      "administrative personnel",
+      "administrative action",
+      "administrative authority",
+      "administrative penalty",
+      "administrative rules",
+      "administrative function",
+      "administrative organization",
+      "administrative cost",
+      "administrative licensing",
+      "administrative proceedings"
+    ]
+  },
+  {
+    "word": "admiration",
+    "phonetic": "/,ædmə'reʃən/",
+    "partOfSpeech": "n",
+    "meaning": "钦佩，称赞",
+    "example": "Daniel gazed at her in admiration .",
+    "translation": "丹尼尔用爱慕的眼神注视着她。",
+    "phrases": [
+      "admiration for"
+    ]
+  },
+  {
+    "word": "admire",
+    "phonetic": "/ədˈmaɪr/",
+    "partOfSpeech": "v/vt",
+    "meaning": "钦佩，称赞；钦佩，羡慕，赞赏；钦佩， 羡慕； 赞赏， 称赞， 夸奖",
+    "example": "I really admire the way she brings up those kids all on her own.",
+    "translation": "我十分佩服她独力把那些孩子抚养大。",
+    "phrases": [
+      "admire for"
+    ]
+  },
+  {
+    "word": "admission",
+    "phonetic": "/əd'mɪʃən/",
+    "partOfSpeech": "n",
+    "meaning": "准许进(加)入；入场费；承认；允许进入；承认；允许进入； 承认； 入场费， 入场券",
+    "example": "Reese, by his own admission , lacks the necessary experience.",
+    "translation": "里斯自己也承认缺乏必要的经验。",
+    "phrases": [
+      "admission of sth",
+      "admission ticket",
+      "free admission",
+      "admission fee",
+      "call admission control",
+      "no admission",
+      "admission office",
+      "air admission",
+      "admission is free",
+      "letter of admission",
+      "admission of liability",
+      "admission criteria",
+      "admission free",
+      "admission charge"
+    ]
+  },
+  {
+    "word": "admit",
+    "phonetic": "/əd'mɪt/",
+    "partOfSpeech": "v/vt",
+    "meaning": "承认，容许；承认；准许…进入；承认， 供认； 准许…进入",
+    "example": "‘Okay, so maybe I was a little bit scared,’ Jenny admitted.",
+    "translation": "“行了，也许我是有点害怕。”珍妮承认道。",
+    "phrases": [
+      "admit of"
+    ]
+  },
+  {
+    "word": "adopt",
+    "phonetic": "/ə'dɑpt/",
+    "partOfSpeech": "v/vt",
+    "meaning": "收养；采用；采取；收养； 采用， 采取； 正式通过， 批准",
+    "example": "Sally was adopted when she was four.",
+    "translation": "莎莉四岁时被人收养。",
+    "phrases": [
+      "adopt various methods"
+    ]
+  },
+  {
+    "word": "adoptive",
+    "phonetic": "/ə'dɑptɪv/",
+    "partOfSpeech": "adj",
+    "meaning": "收养关系的； 采用的",
+    "example": "He was brought up by adoptive parents in Kentucky.",
+    "translation": "他是被他在肯塔基州的养父母抚养大的。",
+    "phrases": [
+      "adoptive father"
+    ]
+  },
+  {
+    "word": "adult",
+    "phonetic": "/'ædʌlt/",
+    "partOfSpeech": "n/adj",
+    "meaning": "成年人；成年的；成年的； 成年人的， 适宜于成年人的",
+    "example": "Some children find it difficult to talk to adults.",
+    "translation": "一些孩子觉得与大人很难谈得来。",
+    "phrases": [
+      "adult education",
+      "young adult",
+      "adult population",
+      "adult learning",
+      "mature adult",
+      "adult school",
+      "adult movie",
+      "adult respiratory distress syndrome"
+    ]
+  },
+  {
+    "word": "advance",
+    "phonetic": "/əd'væns/",
+    "partOfSpeech": "v & n/v/n",
+    "meaning": "前进，提前；前进；提高；进展",
+    "example": "I should warn you in advance that I’m not a very good dancer.",
+    "translation": "我要先提醒你，我跳舞不是很好。",
+    "phrases": [
+      "in advance",
+      "in advance of",
+      "advance in",
+      "with the advance of",
+      "an advance",
+      "on the advance",
+      "advance payment",
+      "advance notice",
+      "advance with the times",
+      "advance booking",
+      "payment in advance",
+      "make advances",
+      "well in advance",
+      "advance warning",
+      "advance development",
+      "cash advance",
+      "advance towards",
+      "spark advance",
+      "advance guard",
+      "advance with times"
+    ]
+  },
+  {
+    "word": "advanced",
+    "phonetic": "/əd'vænst/",
+    "partOfSpeech": "adj",
+    "meaning": "高级的；先进的；高级的；先进的； 高级的； 年迈的； 后阶段的",
+    "example": "advanced learners of English",
+    "translation": "高级程度的英语学习者",
+    "phrases": [
+      "advanced technology",
+      "advanced level",
+      "advanced science",
+      "advanced control",
+      "advanced research",
+      "advanced stage",
+      "advanced treatment",
+      "advanced education",
+      "advanced course",
+      "advanced mathematics",
+      "advanced country",
+      "advanced study",
+      "advanced development",
+      "advanced age",
+      "advanced training",
+      "advanced cancer",
+      "advanced economy",
+      "advanced search",
+      "advanced model",
+      "advanced material"
+    ]
+  },
+  {
+    "word": "advancement",
+    "phonetic": "/əd'vænsmənt/",
+    "partOfSpeech": "n",
+    "meaning": "进步，提升",
+    "example": "career advancement",
+    "translation": "职业发展",
+    "phrases": []
+  },
+  {
+    "word": "advantage",
+    "phonetic": "/əd'væntɪdʒ/",
+    "partOfSpeech": "n",
+    "meaning": "优点，优势；好处；优点， 优势， 好处",
+    "example": "Younger workers tend to be at an advantage (= have an advantage ) when applying for jobs.",
+    "translation": "年轻点的工人申请工作时往往处于优势地位。",
+    "phrases": [
+      "take advantage of",
+      "competitive advantage",
+      "advantage in",
+      "comparative advantage",
+      "have the advantage of",
+      "advantage over",
+      "take full advantage of",
+      "competition advantage",
+      "economic advantage",
+      "absolute advantage",
+      "to the advantage of",
+      "to the best advantage",
+      "sustainable competitive advantage",
+      "unfair advantage",
+      "relative advantage",
+      "at an advantage",
+      "have an advantage over",
+      "advantage in competition",
+      "mechanical advantage"
+    ]
+  },
+  {
+    "word": "adventure",
+    "phonetic": "/əd'vɛntʃɚ/",
+    "partOfSpeech": "n",
+    "meaning": "冒险；惊险活动；奇遇； 冒险， 冒险活动",
+    "example": "Come on – where’s your sense of adventure?",
+    "translation": "来吧——你的冒险精神哪里去了？",
+    "phrases": [
+      "adventure film"
+    ]
+  },
+  {
+    "word": "adverb",
+    "phonetic": "/'ædvɝb/",
+    "partOfSpeech": "n",
+    "meaning": "副词",
+    "example": "Will you please compare the adverb “well”?",
+    "translation": "请你说出副词“well”的原级、比较级和最高级好吗?",
+    "phrases": []
+  },
+  {
+    "word": "adversity",
+    "phonetic": "/əd'vɝsəti/",
+    "partOfSpeech": "n",
+    "meaning": "逆境，不幸",
+    "example": "his courage in the face of adversity",
+    "translation": "他面对逆境的勇气",
+    "phrases": []
+  },
+  {
+    "word": "advertise",
+    "phonetic": "/'ædvɚtaɪz/",
+    "partOfSpeech": "vt",
+    "meaning": "为…做广告， 宣传； 公告； 登广告",
+    "example": "They no longer advertise alcohol or cigarettes at sporting events.",
+    "translation": "他们不再在体育赛事上做烟酒广告了。",
+    "phrases": [
+      "advertise for"
+    ]
+  },
+  {
+    "word": "advertisement",
+    "phonetic": "/,ædvɚ'taɪzmənt/",
+    "partOfSpeech": "n",
+    "meaning": "广告；公告；登广告；广告， 公告， 登广告； 广告活动， 宣传",
+    "example": "They put an advertisement in ‘The Morning News’, offering a high salary for the right person.",
+    "translation": "他们在《晨报》上刊登了一则启事，出高薪寻找合适的人选。",
+    "phrases": [
+      "advertisement company",
+      "commercial advertisement",
+      "advertisement plan",
+      "classified advertisement"
+    ]
+  },
+  {
+    "word": "advice",
+    "phonetic": "/ædˈvaɪs; əd'vaɪs/",
+    "partOfSpeech": "n",
+    "meaning": "建议；劝告；忠告；意见",
+    "example": "You should have followed my advice.",
+    "translation": "你真该听我的建议。",
+    "phrases": [
+      "seek advice",
+      "good advice",
+      "give advice",
+      "legal advice",
+      "expert advice",
+      "medical advice",
+      "shipping advice",
+      "take advice",
+      "sound advice",
+      "advice note",
+      "take the advice",
+      "advice of shipment",
+      "advice of credit"
+    ]
+  },
+  {
+    "word": "advisable",
+    "phonetic": "/əd'vaɪzəbl/",
+    "partOfSpeech": "n/adj",
+    "meaning": "明智的；可取的；明智的， 可取的",
+    "example": "I deem it advisable to buy property now.",
+    "translation": "我认为现在购置房地产是明智的。",
+    "phrases": []
+  },
+  {
+    "word": "advise",
+    "phonetic": "/əd'vaɪz/",
+    "partOfSpeech": "v",
+    "meaning": "劝告；建议；通知",
+    "example": "She needed someone to advise her.",
+    "translation": "她需要有个人给她出主意。",
+    "phrases": [
+      "please advise",
+      "advise of"
+    ]
+  },
+  {
+    "word": "advisory",
+    "phonetic": "/əd'vaɪzəri/",
+    "partOfSpeech": "n",
+    "meaning": "报告",
+    "example": "The State Department issues travel advisories about conditions overseas.",
+    "translation": "国务院就海外局势发布旅游警报。",
+    "phrases": [
+      "advisory committee",
+      "advisory service",
+      "advisory board",
+      "advisory council",
+      "advisory body",
+      "advisory panel",
+      "advisory opinion",
+      "advisory engineer"
+    ]
+  },
+  {
+    "word": "advocate",
+    "phonetic": "/ˈædvəkeɪt；-et/",
+    "partOfSpeech": "n & v/vt/n",
+    "meaning": "倡导；拥护， 提倡， 主张；拥护者， 提倡者； 辩护者， 律师",
+    "example": "Mr. Williams is a conservative who advocates fewer government controls on business.",
+    "translation": "威廉斯先生是一位提倡减少政府对商业的控制的保守人士。",
+    "phrases": [
+      "devil's advocate"
+    ]
+  },
+  {
+    "word": "advocator",
+    "phonetic": "/'ædvəkeɪtə/",
+    "partOfSpeech": "n",
+    "meaning": "主张者，倡导者",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "aeroplane",
+    "phonetic": "/'ɛrə'plen/",
+    "partOfSpeech": "n",
+    "meaning": "飞机",
+    "example": "The aeroplane landed us at the airport in Barcelona.",
+    "translation": "飞机把我们降落在巴塞罗那机场。",
+    "phrases": []
+  },
+  {
+    "word": "affair",
+    "phonetic": "/ə'fɛr/",
+    "partOfSpeech": "n",
+    "meaning": "事情，事件；事务",
+    "example": "Are you interested in world affairs?",
+    "translation": "你对世界大事感兴趣吗？",
+    "phrases": [
+      "state of affairs",
+      "love affair",
+      "have an affair",
+      "private affair",
+      "business affair",
+      "civil affair"
+    ]
+  },
+  {
+    "word": "affect",
+    "phonetic": "/ə'fɛkt/",
+    "partOfSpeech": "v/vt",
+    "meaning": "影响；感动；影响； 感动",
+    "example": "the areas affected by the hurricane",
+    "translation": "受飓风影响的地区",
+    "phrases": []
+  },
+  {
+    "word": "affection",
+    "phonetic": "/ə'fɛkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "慈爱，爱；爱慕；感情； 爱， 爱慕",
+    "example": "She looked back on those days with affection .",
+    "translation": "她深情地回顾那些日子。",
+    "phrases": []
+  },
+  {
+    "word": "affectionate",
+    "phonetic": "/ə'fɛkʃənət/",
+    "partOfSpeech": "adj",
+    "meaning": "深情的，柔情的",
+    "example": "an affectionate hug",
+    "translation": "亲切的拥抱",
+    "phrases": []
+  },
+  {
+    "word": "affirm",
+    "phonetic": "/ə'fɝm/",
+    "partOfSpeech": "v",
+    "meaning": "断言，声明",
+    "example": "The general affirmed rumors of an attack.",
+    "translation": "将军证实了袭击的传闻。",
+    "phrases": []
+  },
+  {
+    "word": "affirmation",
+    "phonetic": "/,æfɚ'meʃən/",
+    "partOfSpeech": "n",
+    "meaning": "断言，肯定",
+    "example": "On the other hand, when he/she is being positive, reply in affirmation and enthusiasm.",
+    "translation": "另一方面，当他处于积极状态时，要用肯定和热情的话语来答复。",
+    "phrases": []
+  },
+  {
+    "word": "afford",
+    "phonetic": "/ə'fɔrd/",
+    "partOfSpeech": "v/vt",
+    "meaning": "负担得起；担负得起…；提供；担负得起； 提供",
+    "example": "I couldn’t afford the rent on my own.",
+    "translation": "我单靠自己付不起房租。",
+    "phrases": [
+      "can afford"
+    ]
+  },
+  {
+    "word": "afraid",
+    "phonetic": "/ə'fred/",
+    "partOfSpeech": "adj",
+    "meaning": "害怕的；担心的",
+    "example": "There’s no need to be afraid.",
+    "translation": "没有必要害怕。",
+    "phrases": [
+      "afraid of",
+      "i'm afraid"
+    ]
+  },
+  {
+    "word": "africa",
+    "phonetic": "/ˈæfrɪkə/",
+    "partOfSpeech": "n",
+    "meaning": "非洲",
+    "example": "The giraffe ranges in Africa.",
+    "translation": "长颈鹿生长在非洲。",
+    "phrases": [
+      "south africa",
+      "north africa",
+      "west africa",
+      "sub-saharan africa",
+      "east africa",
+      "republic of south africa"
+    ]
+  },
+  {
+    "word": "african",
+    "phonetic": "/'æfrɪkən/",
+    "partOfSpeech": "adj/n",
+    "meaning": "非洲的；非洲人",
+    "example": "...the African continent.",
+    "translation": "…非洲大陆。",
+    "phrases": [
+      "south african",
+      "african american",
+      "central african republic",
+      "african national congress",
+      "african elephant",
+      "african swine fever"
+    ]
+  },
+  {
+    "word": "after",
+    "phonetic": "/'æftɚ/",
+    "partOfSpeech": "prep",
+    "meaning": "在…以后；次于",
+    "example": "After the war many soldiers stayed in France.",
+    "translation": "战后，许多士兵留在法国。",
+    "phrases": [
+      "after all",
+      "go after",
+      "ever after",
+      "after hours"
+    ]
+  },
+  {
+    "word": "afternoon",
+    "phonetic": "/,æftɚ'nun/",
+    "partOfSpeech": "n",
+    "meaning": "下午，午后",
+    "example": "There’s a meeting on Thursday afternoon .",
+    "translation": "星期四下午有个会议。",
+    "phrases": [
+      "in the afternoon",
+      "good afternoon",
+      "tomorrow afternoon",
+      "every afternoon",
+      "afternoon tea",
+      "on sunday afternoon",
+      "afternoon off",
+      "lazy afternoon",
+      "of an afternoon"
+    ]
+  },
+  {
+    "word": "afterward",
+    "phonetic": "/ˈæftərwərd/",
+    "partOfSpeech": "adv",
+    "meaning": "后来，以后；后来， 以后",
+    "example": "Shortly afterward, police arrested four suspects.",
+    "translation": "之后不久，警方逮捕了４名嫌疑犯。",
+    "phrases": []
+  },
+  {
+    "word": "again",
+    "phonetic": "/ə'ɡɛn/",
+    "partOfSpeech": "adv",
+    "meaning": "又一次；而且",
+    "example": "Can you say that again? I didn’t hear.",
+    "translation": "你能再说一遍吗？ 我没听见。",
+    "phrases": [
+      "again and again",
+      "try again",
+      "over again",
+      "come again",
+      "over and over again",
+      "never again",
+      "time and again",
+      "rise again",
+      "yet again",
+      "on again",
+      "begin again",
+      "time and time again",
+      "start all over again",
+      "but then again",
+      "now and again",
+      "breathe again",
+      "please say it again",
+      "start over again",
+      "every now and again",
+      "give again"
+    ]
+  },
+  {
+    "word": "against",
+    "phonetic": "/ə'ɡɛnst/",
+    "partOfSpeech": "prep",
+    "meaning": "倚在；逆，对着",
+    "example": "There was a ladder propped up against the wall.",
+    "translation": "有一把梯子靠在墙边。",
+    "phrases": [
+      "up against",
+      "go against",
+      "over against",
+      "as against",
+      "back against"
+    ]
+  },
+  {
+    "word": "age",
+    "phonetic": "/edʒ/",
+    "partOfSpeech": "n/v",
+    "meaning": "年龄；时代；变老",
+    "example": "Francis is the same age as me.",
+    "translation": "弗朗西斯和我同年岁。",
+    "phrases": [
+      "at the age of",
+      "of age",
+      "old age",
+      "at one's age",
+      "information age",
+      "years of age",
+      "new age",
+      "with age",
+      "for one's age",
+      "age group",
+      "middle age",
+      "average age",
+      "young age",
+      "golden age",
+      "ice age",
+      "modern age",
+      "stone age",
+      "digital age",
+      "age structure",
+      "retirement age"
+    ]
+  },
+  {
+    "word": "agency",
+    "phonetic": "/'edʒənsi/",
+    "partOfSpeech": "n",
+    "meaning": "机构；经办；代理；代理处；经办， 代理； 代理处； 专门行政部门",
+    "example": "a UN agency responsible for helping refugees",
+    "translation": "负责为难民提供帮助的联合国机构",
+    "phrases": [
+      "news agency",
+      "xinhua news agency",
+      "travel agency",
+      "agency business",
+      "advertising agency",
+      "government agency",
+      "sole agency",
+      "space agency",
+      "shipping agency",
+      "environmental protection agency",
+      "environmental protection agency (epa)",
+      "agency agreement",
+      "agency cost",
+      "intelligence agency",
+      "real estate agency",
+      "insurance agency",
+      "agency theory",
+      "exclusive agency",
+      "employment agency",
+      "regulatory agency"
+    ]
+  },
+  {
+    "word": "agenda",
+    "phonetic": "/ə'dʒɛndə/",
+    "partOfSpeech": "n",
+    "meaning": "议事日程",
+    "example": "The Republicans have stuck to their conservative agenda.",
+    "translation": "共和党人坚持自己的保守议题。",
+    "phrases": [
+      "item on the agenda",
+      "hidden agenda",
+      "agenda setting"
+    ]
+  },
+  {
+    "word": "agent",
+    "phonetic": "/'edʒənt/",
+    "partOfSpeech": "n",
+    "meaning": "代理商；代理人，代理商；代理人， 代理商； 政府代表； 动因， 原因； 剂",
+    "example": "Our agent in Rio deals with all our Brazilian business.",
+    "translation": "我们在里约热内卢的业务代表处理我们在巴西的全部业务。",
+    "phrases": [
+      "coupling agent",
+      "curing agent",
+      "sales agent",
+      "reducing agent",
+      "sole agent",
+      "cleaning agent",
+      "travel agent",
+      "active agent",
+      "general agent",
+      "foaming agent",
+      "finishing agent",
+      "surface active agent",
+      "estate agent",
+      "free agent",
+      "sizing agent",
+      "control agent",
+      "business agent",
+      "emulsifying agent",
+      "insurance agent",
+      "dispersing agent"
+    ]
+  },
+  {
+    "word": "aggressive",
+    "phonetic": "/ə'ɡrɛsɪv/",
+    "partOfSpeech": "adj",
+    "meaning": "挑衅的，好斗的；有上进心的；侵略的；好斗的；侵略的， 好斗的； 敢做敢为的； 有进取心的",
+    "example": "Jim’s voice became aggressive.",
+    "translation": "吉姆的声音凶了起来。",
+    "phrases": [
+      "aggressive behavior",
+      "aggressive action",
+      "aggressive attitude",
+      "aggressive growth"
+    ]
+  },
+  {
+    "word": "ago",
+    "phonetic": "/ə'ɡo/",
+    "partOfSpeech": "adv",
+    "meaning": "以前",
+    "example": "They moved to a new house some time ago (= a fairly long time ago ) .",
+    "translation": "他们搬进新居已有些日子了。",
+    "phrases": []
+  },
+  {
+    "word": "agony",
+    "phonetic": "/'æɡəni/",
+    "partOfSpeech": "n",
+    "meaning": "极度痛苦",
+    "example": "the agony of arthritis",
+    "translation": "关节炎的剧烈疼痛",
+    "phrases": [
+      "agony of",
+      "in agony",
+      "agony aunt"
+    ]
+  },
+  {
+    "word": "agree",
+    "phonetic": "/ə'ɡri/",
+    "partOfSpeech": "v",
+    "meaning": "同意；持相同意见",
+    "example": "Teenagers and their parents rarely agree.",
+    "translation": "十几岁的孩子跟父母意见很少一致。",
+    "phrases": [
+      "agree with",
+      "agree on",
+      "agree in",
+      "agree about",
+      "agree upon",
+      "agree to do sth",
+      "agree to do something",
+      "agree to disagree",
+      "agree up sth"
+    ]
+  },
+  {
+    "word": "agreement",
+    "phonetic": "/ə'grimənt/",
+    "partOfSpeech": "n",
+    "meaning": "协定，协议；同意",
+    "example": "It is easier for two parties to reach agreement than for three.",
+    "translation": "两方达成一致比三方达成一致容易。",
+    "phrases": [
+      "agreement with",
+      "agreement on",
+      "in agreement",
+      "in agreement with",
+      "trade agreement",
+      "reach an agreement",
+      "come to an agreement",
+      "general agreement",
+      "agency agreement",
+      "by agreement",
+      "mutual agreement",
+      "written agreement",
+      "arbitration agreement",
+      "service agreement",
+      "contract agreement",
+      "license agreement",
+      "international agreement",
+      "entire agreement",
+      "loan agreement",
+      "bilateral agreement"
+    ]
+  }
+]

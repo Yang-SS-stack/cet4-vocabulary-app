@@ -171,6 +171,14 @@
   font-variant-numeric: tabular-nums;
 }
 
+.vocabulary-load-status {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.vocabulary-load-status--error { color: #9b3326; }
+
 .vocabulary-empty {
   padding: 40px 0;
   border-block: 1px solid var(--line);

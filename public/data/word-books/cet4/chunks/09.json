@@ -1,0 +1,2251 @@
+[
+  {
+    "word": "deceit",
+    "phonetic": "/dɪ'sit/",
+    "partOfSpeech": "n",
+    "meaning": "欺骗，欺诈",
+    "example": "an atmosphere of hypocrisy and deceit",
+    "translation": "充满虚伪和欺骗的氛围",
+    "phrases": []
+  },
+  {
+    "word": "deceive",
+    "phonetic": "/dɪ'siv/",
+    "partOfSpeech": "v/vt",
+    "meaning": "欺骗，蒙蔽，行骗；欺骗， 蒙蔽， 行骗",
+    "example": "He had been deceived by a young man claiming to be the son of a millionaire.",
+    "translation": "他被一个自称是百万富翁之子的年轻人骗了。",
+    "phrases": [
+      "deceive oneself"
+    ]
+  },
+  {
+    "word": "december",
+    "phonetic": "/dɪ'sɛmbɚ/",
+    "partOfSpeech": "n",
+    "meaning": "十二月",
+    "example": "In the dark of December.",
+    "translation": "在十二月的黑夜里。",
+    "phrases": []
+  },
+  {
+    "word": "decent",
+    "phonetic": "/'disnt/",
+    "partOfSpeech": "adj",
+    "meaning": "正派的，体面的；正派的；体面的；像样的， 过得去的， 体面的； 宽厚的， 大方的； 正派的； 合乎礼仪的， 得体的",
+    "example": "a decent burial",
+    "translation": "得体的葬礼",
+    "phrases": []
+  },
+  {
+    "word": "deception",
+    "phonetic": "/dɪ'sɛpʃən/",
+    "partOfSpeech": "n",
+    "meaning": "欺骗； 诡计， 骗局",
+    "example": "She didn’t have the courage to admit to her deception.",
+    "translation": "她没有勇气承认自己的欺骗行为。",
+    "phrases": []
+  },
+  {
+    "word": "decide",
+    "phonetic": "/dɪ'saɪd/",
+    "partOfSpeech": "v",
+    "meaning": "决定，决心；解决",
+    "example": "Has anything been decided yet?",
+    "translation": "已经作出什么决定了吗？",
+    "phrases": [
+      "decide on",
+      "decide for",
+      "decide to do",
+      "decide upon",
+      "decide against"
+    ]
+  },
+  {
+    "word": "decision",
+    "phonetic": "/dɪ'sɪʒn/",
+    "partOfSpeech": "n",
+    "meaning": "决定，决心；果断",
+    "example": "Do you ever wonder if you made the right decision?",
+    "translation": "你怀疑过自己所作的决定是否正确吗？",
+    "phrases": [
+      "decision making",
+      "decision support",
+      "make a decision",
+      "decision support system",
+      "final decision",
+      "decision tree",
+      "decision model",
+      "make decision",
+      "strategic decision",
+      "management decision",
+      "decision maker",
+      "decision table",
+      "decision method",
+      "policy decision",
+      "decision analysis",
+      "decision process",
+      "decision theory",
+      "court decision",
+      "decision problem",
+      "group decision making"
+    ]
+  },
+  {
+    "word": "deck",
+    "phonetic": "/dɛk/",
+    "partOfSpeech": "n",
+    "meaning": "甲板；舱面；层面；甲板， 舱面； 层面",
+    "example": "Eddie returned to the flight deck (= the part of an aircraft where the pilot sits ) .",
+    "translation": "埃迪回到了驾驶舱。",
+    "phrases": [
+      "double deck",
+      "bridge deck",
+      "on the deck",
+      "on deck",
+      "steel deck",
+      "deck with",
+      "upper deck",
+      "deck of cards",
+      "flight deck",
+      "deck machinery",
+      "main deck",
+      "observation deck",
+      "deck hand",
+      "deck plate",
+      "tape deck",
+      "deck structure",
+      "poop deck",
+      "top deck",
+      "deck chair",
+      "screen deck"
+    ]
+  },
+  {
+    "word": "declaration",
+    "phonetic": "/,dɛklə'reʃən/",
+    "partOfSpeech": "n",
+    "meaning": "宣布， 宣告； 宣言， 声明； 申报",
+    "example": "a ceasefire declaration",
+    "translation": "停火声明",
+    "phrases": [
+      "customs declaration",
+      "declaration of independence",
+      "declaration form",
+      "tax declaration",
+      "export declaration",
+      "joint declaration",
+      "customs declaration form",
+      "import declaration",
+      "declaration of war",
+      "custom declaration",
+      "variable declaration",
+      "final declaration",
+      "declaration of conformity",
+      "function declaration"
+    ]
+  },
+  {
+    "word": "declare",
+    "phonetic": "/dɪ'klɛr/",
+    "partOfSpeech": "v",
+    "meaning": "断言；声明；表明",
+    "example": "A state of emergency has been declared.",
+    "translation": "已宣布进入紧急状态。",
+    "phrases": [
+      "declare oneself",
+      "declare for",
+      "nothing to declare",
+      "declare bankruptcy",
+      "declare war on",
+      "declare on"
+    ]
+  },
+  {
+    "word": "decline",
+    "phonetic": "/dɪ'klaɪn/",
+    "partOfSpeech": "v/n",
+    "meaning": "下降，减少；拒绝；下降， 减少； 衰退， 衰落； 谢绝， 拒绝；下降，减少；衰退",
+    "example": "Spending on information technology has declined.",
+    "translation": "用于信息技术的支出减少了。",
+    "phrases": [
+      "on the decline",
+      "decline and fall",
+      "in decline",
+      "economic decline",
+      "rate of decline",
+      "decline stage"
+    ]
+  },
+  {
+    "word": "decorate",
+    "phonetic": "/'dɛkəret/",
+    "partOfSpeech": "v/vt",
+    "meaning": "装饰；装饰，装璜，修饰；装饰， 装潢， 修饰",
+    "example": "The bathroom is decorated in green and yellow.",
+    "translation": "浴室里是用绿色和黄色装潢的。",
+    "phrases": [
+      "decorate with",
+      "decorate the house"
+    ]
+  },
+  {
+    "word": "decrease",
+    "phonetic": "/dɪ'kris/",
+    "partOfSpeech": "vi&n/v/n",
+    "meaning": "减少，减少；减少",
+    "example": "The number of people who have the disease has decreased significantly in recent years.",
+    "translation": "近年来，这种病的患者人数明显下降。",
+    "phrases": [
+      "on the decrease",
+      "decrease by"
+    ]
+  },
+  {
+    "word": "deduce",
+    "phonetic": "/dɪ'dʊs/",
+    "partOfSpeech": "v",
+    "meaning": "演绎，推论，推断",
+    "example": "Alison cleverly deduced that I was the author of the letter.",
+    "translation": "艾莉森聪明地推断出我是这封信的作者。",
+    "phrases": [
+      "deduce from"
+    ]
+  },
+  {
+    "word": "deed",
+    "phonetic": "/did/",
+    "partOfSpeech": "n",
+    "meaning": "行为；功绩；契约",
+    "example": "After the morning’s good deeds he deserved a rest.",
+    "translation": "上午做了好事之后，他理应休息一下。",
+    "phrases": [
+      "good deed",
+      "in deed",
+      "title deed",
+      "trust deed",
+      "do a good deed",
+      "deed tax",
+      "do the deed",
+      "by deed"
+    ]
+  },
+  {
+    "word": "deep",
+    "phonetic": "/dip/",
+    "partOfSpeech": "adj",
+    "meaning": "深的；纵深的",
+    "example": "a deep wound",
+    "translation": "很深的伤口",
+    "phrases": [
+      "in deep",
+      "deep in",
+      "deep water",
+      "deep analysis",
+      "deep foundation",
+      "deep down",
+      "deep well",
+      "deep love",
+      "deep sea",
+      "deep drawing",
+      "deep breath",
+      "deep inside",
+      "deep red",
+      "deep excavation",
+      "deep blue",
+      "take a deep breath",
+      "deep ocean",
+      "deep level",
+      "deep sleep",
+      "deep structure"
+    ]
+  },
+  {
+    "word": "deepen",
+    "phonetic": "/'dipən/",
+    "partOfSpeech": "v/vt/vi",
+    "meaning": "使加深，加剧；加深；深化",
+    "example": "The recession continues to deepen.",
+    "translation": "经济衰退继续加剧。",
+    "phrases": [
+      "deepen the reform"
+    ]
+  },
+  {
+    "word": "deer",
+    "phonetic": "/dɪr/",
+    "partOfSpeech": "n",
+    "meaning": "鹿",
+    "example": "The hunter wounded the deer.",
+    "translation": "猎人打伤了鹿。",
+    "phrases": [
+      "red deer",
+      "sika deer",
+      "musk deer",
+      "roe deer",
+      "mule deer",
+      "deer park",
+      "spotted deer",
+      "deer antler"
+    ]
+  },
+  {
+    "word": "defeat",
+    "phonetic": "/dɪ'fit/",
+    "partOfSpeech": "v/n&vt",
+    "meaning": "战胜，击败；挫败；战胜， 挫败",
+    "example": "They hoped to defeat the enemy at sea.",
+    "translation": "他们希望在海上击败敌人。",
+    "phrases": [
+      "suffer defeat"
+    ]
+  },
+  {
+    "word": "defect",
+    "phonetic": "/‘dɪfɛkt/",
+    "partOfSpeech": "n/v",
+    "meaning": "缺点，缺陷，欠缺；变节， 叛变；缺点， 缺陷， 欠缺",
+    "example": "All the cars are tested for defects before they leave the factory.",
+    "translation": "所有汽车在出厂前都经过品质检验。",
+    "phrases": [
+      "zero defect",
+      "surface defect",
+      "ventricular septal defect",
+      "birth defect",
+      "atrial septal defect",
+      "no defect",
+      "genetic defect",
+      "defect rate",
+      "fabric defect",
+      "filling defect",
+      "point defect",
+      "inherent defect",
+      "internal defect",
+      "line defect",
+      "congenital defect",
+      "major defect",
+      "material defect",
+      "defect density",
+      "minor defect",
+      "coating defect"
+    ]
+  },
+  {
+    "word": "defence",
+    "phonetic": "/di'fens/",
+    "partOfSpeech": "n",
+    "meaning": "防御；防务；辩护",
+    "example": "The land was flat, giving no scope for defence.",
+    "translation": "土地非常平坦，无法做防卫之用。",
+    "phrases": [
+      "national defence",
+      "air defence",
+      "defence against",
+      "in defence of",
+      "defence construction",
+      "civil defence",
+      "defence mechanism",
+      "counsel for the defence",
+      "defence budget"
+    ]
+  },
+  {
+    "word": "defend",
+    "phonetic": "/dɪ'fɛnd/",
+    "partOfSpeech": "v",
+    "meaning": "保卫，防守",
+    "example": "a struggle to defend our homeland",
+    "translation": "保卫我们祖国的斗争",
+    "phrases": [
+      "defend oneself",
+      "defend against",
+      "defend with"
+    ]
+  },
+  {
+    "word": "define",
+    "phonetic": "/dɪ'faɪn/",
+    "partOfSpeech": "v/vt",
+    "meaning": "下定义，确定；给…下定义；限定；给…下定义， 限定",
+    "example": "the ability to define clients’ needs",
+    "translation": "确定客户需求的能力",
+    "phrases": [
+      "define as"
+    ]
+  },
+  {
+    "word": "definite",
+    "phonetic": "/'dɛfɪnət/",
+    "partOfSpeech": "adj",
+    "meaning": "明确的；肯定的；明确的， 肯定的",
+    "example": "It’s impossible for me to give you a definite answer.",
+    "translation": "我不可能给你明确的答复。",
+    "phrases": [
+      "definite integral",
+      "positive definite",
+      "definite time",
+      "definite value",
+      "positive definite matrix",
+      "definite condition",
+      "definite article",
+      "definite form",
+      "definite quantity"
+    ]
+  },
+  {
+    "word": "definitely",
+    "phonetic": "/'dɛfɪnətli/",
+    "partOfSpeech": "adv",
+    "meaning": "一定地，明确地；一定地， 明确地",
+    "example": "‘Do you reckon Margot will be there?’ ‘ Definitely not .’",
+    "translation": "“你估计玛戈会在那里吗？” “肯定不会。”",
+    "phrases": []
+  },
+  {
+    "word": "definition",
+    "phonetic": "/,dɛfɪ'nɪʃən/",
+    "partOfSpeech": "n",
+    "meaning": "定义；定义，释义；定界；定义， 释义， 定界； 清晰， 鲜明",
+    "example": "a dictionary definition",
+    "translation": "词典里的释义",
+    "phrases": [
+      "definition of",
+      "by definition",
+      "high definition",
+      "formal definition",
+      "class definition",
+      "standard definition",
+      "original definition",
+      "operational definition",
+      "definition phase",
+      "definition of image",
+      "high definition television",
+      "problem definition",
+      "macro definition",
+      "working definition"
+    ]
+  },
+  {
+    "word": "degree",
+    "phonetic": "/dɪ'ɡri/",
+    "partOfSpeech": "n",
+    "meaning": "程度；程度；度；学位",
+    "example": "Preheat the oven to 425 degrees.",
+    "translation": "把烘箱预热至425度。",
+    "phrases": [
+      "degree of",
+      "high degree",
+      "bachelor degree",
+      "a certain degree",
+      "in some degree",
+      "master degree",
+      "bachelor's degree",
+      "master's degree",
+      "college degree",
+      "to some degree",
+      "university degree",
+      "to a degree",
+      "in one's degree",
+      "degree of freedom",
+      "to what degree",
+      "degree of automation",
+      "degree of difficulty",
+      "degree of satisfaction",
+      "vacuum degree",
+      "degree of accuracy"
+    ]
+  },
+  {
+    "word": "delay",
+    "phonetic": "/dɪ'le/",
+    "partOfSpeech": "v",
+    "meaning": "推迟，延期；推迟；耽搁；延误",
+    "example": "Don’t delay – send off for the information now.",
+    "translation": "别犹豫——即刻去函索取信息。",
+    "phrases": [
+      "without delay",
+      "time delay",
+      "delay time",
+      "transmission delay",
+      "long delay",
+      "group delay",
+      "delay line",
+      "phase delay",
+      "short delay",
+      "propagation delay",
+      "packet delay",
+      "delay payment",
+      "delay in payment",
+      "delay spread",
+      "undue delay",
+      "delay circuit",
+      "delay senility",
+      "delay period",
+      "admit of no delay"
+    ]
+  },
+  {
+    "word": "delegate",
+    "phonetic": "/ˈdɛləgɪt; (for v.,) ˈdɛləˌgeɪt/",
+    "partOfSpeech": "n/vt",
+    "meaning": "代表， 代表团成员；委派…为代表； 授 ， 把…委托给",
+    "example": "Around 350 delegates attended the conference.",
+    "translation": "大约有350名代表参加了大会。",
+    "phrases": [
+      "chief delegate"
+    ]
+  },
+  {
+    "word": "delegation",
+    "phonetic": "/,dɛlɪ'ɡeʃən/",
+    "partOfSpeech": "n",
+    "meaning": "代表团",
+    "example": "A trade delegation will visit Kuwait.",
+    "translation": "一个贸易代表团将访问科威特。",
+    "phrases": [
+      "delegation of authority"
+    ]
+  },
+  {
+    "word": "delete",
+    "phonetic": "/dɪ'lit/",
+    "partOfSpeech": "v/vt",
+    "meaning": "删除；擦掉；删除， 擦掉",
+    "example": "His name was deleted from the list.",
+    "translation": "他的名字从名单上删掉了。",
+    "phrases": [
+      "delete all",
+      "delete from",
+      "delete key"
+    ]
+  },
+  {
+    "word": "deliberate",
+    "phonetic": "/dɪ'lɪbərət/",
+    "partOfSpeech": "adj/v",
+    "meaning": "故意的；故意的， 蓄意的； 慎重的， 深思熟虑的；仔细考虑， 思考",
+    "example": "a deliberate attempt to humiliate her",
+    "translation": "对她的故意羞辱",
+    "phrases": [
+      "take time to deliberate",
+      "deliberate on"
+    ]
+  },
+  {
+    "word": "delicate",
+    "phonetic": "/ˈdɛlɪkɪt/",
+    "partOfSpeech": "adj",
+    "meaning": "纤细的；易碎的；纤细的， 易碎的； 微妙的； 精美的",
+    "example": "delicate hand-cut glass",
+    "translation": "易碎的手工刻花玻璃",
+    "phrases": [
+      "delicate balance"
+    ]
+  },
+  {
+    "word": "delicious",
+    "phonetic": "/dɪ'lɪʃəs/",
+    "partOfSpeech": "adj",
+    "meaning": "美味的，怡人的；美味的； 芬芳的， 怡人的； 有趣的",
+    "example": "‘The meal was absolutely delicious,’ she said politely.",
+    "translation": "“这顿饭味道好极了。” 她礼貌地说道。",
+    "phrases": [
+      "delicious food",
+      "golden delicious"
+    ]
+  },
+  {
+    "word": "delight",
+    "phonetic": "/dɪ'laɪt/",
+    "partOfSpeech": "n/v",
+    "meaning": "高兴；快乐；使高兴",
+    "example": "Throughout the house, the views are a constant source of surprise and delight.",
+    "translation": "整个房子，目之所及不停带来惊奇和欣喜。",
+    "phrases": [
+      "delight in",
+      "with delight",
+      "take delight in",
+      "delight at",
+      "to the delight of",
+      "turkish delight"
+    ]
+  },
+  {
+    "word": "delightful",
+    "phonetic": "/dɪ'laɪtfl/",
+    "partOfSpeech": "adj",
+    "meaning": "高兴的",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "deliver",
+    "phonetic": "/dɪ'lɪvɚ/",
+    "partOfSpeech": "v",
+    "meaning": "发表；投递，送交；发表",
+    "example": "The king delivered a televised speech to the nation on November 5.",
+    "translation": "国王在11月5日向全国发表了电视讲话。",
+    "phrases": [
+      "deliver the goods",
+      "deliver goods",
+      "deliver a speech",
+      "deliver up",
+      "deliver from"
+    ]
+  },
+  {
+    "word": "delivery",
+    "phonetic": "/dɪ'lɪvəri/",
+    "partOfSpeech": "n",
+    "meaning": "投递；交付；分娩；投递， 交付； 分娩； 讲话方式； 投递的邮件",
+    "example": "Most Indian restaurants offer free delivery.",
+    "translation": "大多数印度餐馆提供免费外送服务。",
+    "phrases": [
+      "delivery time",
+      "delivery system",
+      "prompt delivery",
+      "delivery date",
+      "express delivery",
+      "delivery service",
+      "service delivery",
+      "on-time delivery",
+      "cash on delivery",
+      "delivery of goods",
+      "time of delivery",
+      "date of delivery",
+      "free delivery",
+      "take delivery of",
+      "document delivery",
+      "delivery status",
+      "home delivery",
+      "mail delivery",
+      "delivery status notification",
+      "take delivery"
+    ]
+  },
+  {
+    "word": "demand",
+    "phonetic": "/dɪ'mænd/",
+    "partOfSpeech": "v & n/v/vt",
+    "meaning": "需求，要求；要求；需要；询问；要求， 需要； 查问",
+    "example": "Production is still increasing faster than demand.",
+    "translation": "生产仍比需求增长快。",
+    "phrases": [
+      "demand of",
+      "demand for",
+      "market demand",
+      "supply and demand",
+      "meet the demand",
+      "in demand",
+      "customer demand",
+      "on demand",
+      "domestic demand",
+      "consumer demand",
+      "demand and supply",
+      "demand analysis",
+      "water demand",
+      "in great demand",
+      "strong demand",
+      "actual demand",
+      "power demand",
+      "traffic demand",
+      "energy demand",
+      "demand side"
+    ]
+  },
+  {
+    "word": "democracy",
+    "phonetic": "/dɪˈmɑkrəsi/",
+    "partOfSpeech": "n",
+    "meaning": "民主，民主制；民主， 民主制； 民主国家",
+    "example": "a return to democracy after 16 years of military rule",
+    "translation": "16年军人统治后民主制度的恢复",
+    "phrases": [
+      "social democracy",
+      "deliberative democracy",
+      "liberal democracy",
+      "representative democracy",
+      "parliamentary democracy",
+      "participatory democracy"
+    ]
+  },
+  {
+    "word": "democratic",
+    "phonetic": "/'dɛmə'krætɪk/",
+    "partOfSpeech": "adj",
+    "meaning": "民主的；民主的，民主政体的；民主的， 民主政体的",
+    "example": "a democratic government",
+    "translation": "民主政府",
+    "phrases": [
+      "democratic party",
+      "democratic centralism",
+      "democratic revolution",
+      "democratic progressive party",
+      "democratic republic of congo",
+      "democratic government",
+      "democratic reform",
+      "democratic supervision",
+      "democratic party of japan",
+      "democratic leader",
+      "liberal democratic party",
+      "social democratic",
+      "democratic state",
+      "social democratic party",
+      "democratic socialism",
+      "democratic leadership"
+    ]
+  },
+  {
+    "word": "demonstrate",
+    "phonetic": "/'dɛmən'stret/",
+    "partOfSpeech": "v/vt",
+    "meaning": "证明；展示；说明；论证；表露；说明； 论证； 表露",
+    "example": "The study demonstrates the link between poverty and malnutrition.",
+    "translation": "这项研究证明了贫困与营养不良之间的联系。",
+    "phrases": []
+  },
+  {
+    "word": "dense",
+    "phonetic": "/dɛns/",
+    "partOfSpeech": "adj",
+    "meaning": "密集的；浓厚的；密集的， 浓厚的； 密度大的",
+    "example": "a dense rurally-based population",
+    "translation": "居住在乡村的密集人口",
+    "phrases": [
+      "dense fog",
+      "dense population",
+      "dense packing",
+      "dense concrete"
+    ]
+  },
+  {
+    "word": "density",
+    "phonetic": "/'dɛnsəti/",
+    "partOfSpeech": "n",
+    "meaning": "密度；密集，稠密；密度；密集， 稠密； 密度",
+    "example": "areas of high population density",
+    "translation": "人口密度高的地区",
+    "phrases": [
+      "high density",
+      "current density",
+      "low density",
+      "power density",
+      "energy density",
+      "population density",
+      "density function",
+      "probability density",
+      "bulk density",
+      "relative density",
+      "density distribution",
+      "flux density",
+      "spectral density",
+      "probability density function",
+      "charge density",
+      "power spectral density",
+      "high density polyethylene",
+      "electron density",
+      "dry density",
+      "linear density"
+    ]
+  },
+  {
+    "word": "dental",
+    "phonetic": "/'dɛntl/",
+    "partOfSpeech": "adj",
+    "meaning": "牙齿的， 牙科的",
+    "example": "Good oral hygiene and regular dental care are important, whatever your age.",
+    "translation": "无论年龄大小，良好的口腔卫生和定期的牙齿保健都非常重要。",
+    "phrases": [
+      "dental caries",
+      "dental pulp",
+      "dental implant",
+      "dental clinic",
+      "dental plaque",
+      "dental hygiene",
+      "dental floss",
+      "dental chair",
+      "dental surgery",
+      "dental assistant",
+      "dental drill",
+      "dental amalgam",
+      "dental lamina"
+    ]
+  },
+  {
+    "word": "deny",
+    "phonetic": "/dɪ'nai/",
+    "partOfSpeech": "v/vt",
+    "meaning": "否定；拒绝相信；否定， 否认； 拒绝…的要求",
+    "example": "The government denied the existence of poverty among 16- and 17-year-olds.",
+    "translation": "政府否认十六七岁的青少年当中存在贫困问题。",
+    "phrases": [
+      "deny oneself",
+      "deny something to someone",
+      "deny access"
+    ]
+  },
+  {
+    "word": "depart",
+    "phonetic": "/dɪ'pɑrt/",
+    "partOfSpeech": "v/vi",
+    "meaning": "离开，起程；出发；离开， 起程， 出发",
+    "example": "Flights by Air Europe depart Gatwick on Tuesdays.",
+    "translation": "欧洲航空公司的航班每逢周二从盖特威克机场起飞。",
+    "phrases": [
+      "depart from",
+      "depart for"
+    ]
+  },
+  {
+    "word": "department",
+    "phonetic": "/dɪ'pɑrtmənt/",
+    "partOfSpeech": "n",
+    "meaning": "部门；部，司，局，处，系",
+    "example": "the personnel department",
+    "translation": "人事部",
+    "phrases": [
+      "department store",
+      "state department",
+      "sales department",
+      "administration department",
+      "engineering department",
+      "marketing department",
+      "government department",
+      "service department",
+      "education department",
+      "finance department",
+      "production department",
+      "development department",
+      "department manager",
+      "design department",
+      "business department",
+      "financial department",
+      "health department",
+      "department of education",
+      "police department",
+      "competent department"
+    ]
+  },
+  {
+    "word": "departure",
+    "phonetic": "/dɪ'pɑrtʃɚ/",
+    "partOfSpeech": "n",
+    "meaning": "离开，出发，起程；离开， 起程， 出发； 背离， 违背",
+    "example": "There are several departures for New York every day.",
+    "translation": "每天有好几个班次去纽约。",
+    "phrases": [
+      "departure from",
+      "point of departure",
+      "departure time",
+      "departure date",
+      "departure point",
+      "a new departure",
+      "departure lounge",
+      "port of departure",
+      "angle of departure",
+      "departure gate",
+      "airport of departure"
+    ]
+  },
+  {
+    "word": "depend",
+    "phonetic": "/dɪ'pɛnd/",
+    "partOfSpeech": "v",
+    "meaning": "依靠，依赖；相信",
+    "example": "He depended on his writing for his income.",
+    "translation": "他靠写作谋生。",
+    "phrases": [
+      "depend on",
+      "depend upon",
+      "depend on yourself"
+    ]
+  },
+  {
+    "word": "dependent",
+    "phonetic": "/dɪ'pɛndənt/",
+    "partOfSpeech": "adj",
+    "meaning": "依靠的，依赖的；依靠的， 依赖的； 取决于…的",
+    "example": "Jan’s mother was dependent on her for physical care.",
+    "translation": "简的母亲要靠简来照顾。",
+    "phrases": [
+      "dependent on",
+      "time dependent",
+      "dependent variable",
+      "dependent children",
+      "linearly dependent",
+      "dependent child",
+      "dependent demand",
+      "dependent clause"
+    ]
+  },
+  {
+    "word": "deposit",
+    "phonetic": "/dɪ'pɑzɪt/",
+    "partOfSpeech": "v/vt/n",
+    "meaning": "使沉淀；存放；使沉淀；存放，储蓄；定金， 押金； 存款； 矿藏",
+    "example": "The female deposits her eggs directly into the water.",
+    "translation": "雌性把卵直接产在水中。",
+    "phrases": [
+      "ore deposit",
+      "deposit insurance",
+      "deposit account",
+      "bank deposit",
+      "time deposit",
+      "mineral deposit",
+      "savings deposit",
+      "iron deposit",
+      "deposit money",
+      "oil deposit",
+      "deposit certificate",
+      "certificates of deposit",
+      "deposit rate",
+      "safe deposit",
+      "salt deposit",
+      "security deposit",
+      "on deposit",
+      "deposit slip",
+      "federal deposit insurance corporation",
+      "scale deposit"
+    ]
+  },
+  {
+    "word": "depress",
+    "phonetic": "/dɪ'prɛs/",
+    "partOfSpeech": "v/vt",
+    "meaning": "使沮丧；按下；使沮丧； 使不景气； 削弱， 抑制",
+    "example": "The thought of taking the exam again depressed him.",
+    "translation": "想到要补考，他就心情沮丧。",
+    "phrases": []
+  },
+  {
+    "word": "depressed",
+    "phonetic": "/dɪ'prɛst/",
+    "partOfSpeech": "adj",
+    "meaning": "沮丧的；萧条的",
+    "example": "Britain’s depressed housing market",
+    "translation": "英国不景气的房产市场",
+    "phrases": [
+      "depressed area",
+      "depressed market"
+    ]
+  },
+  {
+    "word": "depressing",
+    "phonetic": "/dɪ'prɛsɪŋ/",
+    "partOfSpeech": "adj",
+    "meaning": "令人沮丧的",
+    "example": "It’s a depressing thought.",
+    "translation": "这是个令人沮丧的想法。",
+    "phrases": []
+  },
+  {
+    "word": "depression",
+    "phonetic": "/dɪ'prɛʃən/",
+    "partOfSpeech": "n",
+    "meaning": "抑郁， 沮丧； 不景气， 萧条； 洼地， 凹陷",
+    "example": "Mr. Thomas was suffering from depression.",
+    "translation": "托马斯先生当时正受抑郁症折磨。",
+    "phrases": [
+      "great depression",
+      "economic depression",
+      "postpartum depression",
+      "clinical depression",
+      "tropical depression",
+      "freezing point depression",
+      "manic depression",
+      "chronic depression",
+      "depression area",
+      "prosperity and depression",
+      "mental depression",
+      "spreading depression"
+    ]
+  },
+  {
+    "word": "deprive",
+    "phonetic": "/dɪ'praɪv/",
+    "partOfSpeech": "v",
+    "meaning": "剥夺，夺去，使丧失",
+    "example": "They've been deprived of the fuel necessary to heat their homes.",
+    "translation": "他们无法得到住房取暖必需的燃料。",
+    "phrases": [
+      "deprive of"
+    ]
+  },
+  {
+    "word": "depth",
+    "phonetic": "/dɛpθ/",
+    "partOfSpeech": "n",
+    "meaning": "深度；深厚；深处",
+    "example": "Astronomers may one day travel to the depths of space.",
+    "translation": "天文学家也许有一天可以到太空深处去。",
+    "phrases": [
+      "in depth",
+      "in the depth of",
+      "buried depth",
+      "cutting depth",
+      "penetration depth",
+      "burial depth",
+      "depth analysis",
+      "depth of field",
+      "depth of water",
+      "depth of cut",
+      "color depth",
+      "critical depth",
+      "depth profile",
+      "layer depth",
+      "focal depth",
+      "hole depth",
+      "depth perception",
+      "depth interview",
+      "excavation depth",
+      "optical depth"
+    ]
+  },
+  {
+    "word": "deputy",
+    "phonetic": "/'dɛpjuti/",
+    "partOfSpeech": "n",
+    "meaning": "副职， 副手； 代表， 代理人",
+    "example": "...Jack Lang, France's minister for culture, and his deputy, Catherine Tasca.",
+    "translation": "…法国文化部长杰克·朗和他的副手凯瑟琳·塔斯卡。",
+    "phrases": [
+      "deputy director",
+      "deputy secretary",
+      "deputy director general",
+      "deputy mayor",
+      "deputy chief",
+      "deputy general manager",
+      "deputy prime minister",
+      "deputy head",
+      "deputy chairman",
+      "deputy president",
+      "deputy commander",
+      "deputy manager",
+      "deputy commissioner"
+    ]
+  },
+  {
+    "word": "derive",
+    "phonetic": "/dɪ'raɪv/",
+    "partOfSpeech": "v",
+    "meaning": "得到，导出；取得；起源；取得； 起源",
+    "example": "Mr. Ying is one of those happy people who derive pleasure from helping others.",
+    "translation": "英先生是那种助人为乐的快活人。",
+    "phrases": [
+      "derive from"
+    ]
+  },
+  {
+    "word": "descend",
+    "phonetic": "/dɪ'sɛnd/",
+    "partOfSpeech": "v/vi",
+    "meaning": "下来，下降；下倾；下来， 下降； 下倾",
+    "example": "Our plane started to descend.",
+    "translation": "我们的飞机开始下降。",
+    "phrases": [
+      "descend from",
+      "descend on",
+      "descend upon"
+    ]
+  },
+  {
+    "word": "describe",
+    "phonetic": "/dɪ'skraɪb/",
+    "partOfSpeech": "v/vt",
+    "meaning": "形容；描写，描绘；形容； 描写； 画出",
+    "example": "The police asked her to describe the man.",
+    "translation": "警察叫她描述一下那名男子。",
+    "phrases": [
+      "describe as",
+      "describe with"
+    ]
+  },
+  {
+    "word": "description",
+    "phonetic": "/dɪ'skrɪpʃən/",
+    "partOfSpeech": "n",
+    "meaning": "描写，形容；种类",
+    "example": "The booklet gives a brief description of each place.",
+    "translation": "这本小册子对每一个地方都作了简短的介绍。",
+    "phrases": [
+      "detailed description",
+      "job description",
+      "brief description",
+      "general description",
+      "product description",
+      "physical description",
+      "formal description",
+      "full description",
+      "beyond description",
+      "vivid description",
+      "complete description",
+      "problem description",
+      "short description",
+      "functional description",
+      "technical description",
+      "give a description of",
+      "item description",
+      "description of goods"
+    ]
+  },
+  {
+    "word": "desert",
+    "phonetic": "/(for v.) dɪˈzɝ​t; (for n.) 'dɛzɚt/",
+    "partOfSpeech": "v/n",
+    "meaning": "抛弃；沙漠；离弃；擅离",
+    "example": "Helen was deserted by her husband.",
+    "translation": "海伦被丈夫遗弃了。",
+    "phrases": [
+      "desert island",
+      "sahara desert",
+      "gobi desert",
+      "taklimakan desert",
+      "desert landscape",
+      "arabian desert",
+      "desert soil",
+      "rocky desert",
+      "desert storm",
+      "sandy desert",
+      "desert climate",
+      "cold desert",
+      "kalahari desert",
+      "atacama desert",
+      "namib desert"
+    ]
+  },
+  {
+    "word": "deserve",
+    "phonetic": "/dɪ'zɝv/",
+    "partOfSpeech": "v/vt",
+    "meaning": "值得；应受，值得；应受， 值得",
+    "example": "What have I done to deserve this?",
+    "translation": "我做了什么事，要得到这样的报应？",
+    "phrases": []
+  },
+  {
+    "word": "design",
+    "phonetic": "/dɪ'zaɪn/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "设计；设计；图样；设计；预定，指定；设计， 构想； 图样； 企图",
+    "example": "The tower was designed by Gilbert Scott.",
+    "translation": "这座塔楼是吉尔伯特·斯科特设计的。",
+    "phrases": [
+      "design method",
+      "design for",
+      "system design",
+      "product design",
+      "engineering design",
+      "structure design",
+      "software design",
+      "design process",
+      "design principle",
+      "structural design",
+      "new design",
+      "design scheme",
+      "optimal design",
+      "design idea",
+      "optimization design",
+      "optimum design",
+      "landscape design",
+      "architectural design",
+      "professional design",
+      "interior design"
+    ]
+  },
+  {
+    "word": "desirable",
+    "phonetic": "/dɪ'zaɪərəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "值得相望的；可取的；值得向往的， 令人满意的",
+    "example": "The ability to speak a foreign language is highly desirable .",
+    "translation": "能说一门外语是非常理想的。",
+    "phrases": []
+  },
+  {
+    "word": "desire",
+    "phonetic": "/dɪ'zaɪɚ/",
+    "partOfSpeech": "n/v/vt",
+    "meaning": "渴望，欲望；相望；要求；愿望；渴望；要求；愿望； 欲望",
+    "example": "female sexual desire",
+    "translation": "女性的性欲",
+    "phrases": [
+      "desire for",
+      "sexual desire",
+      "a burning desire",
+      "sincere desire",
+      "desire under the elms"
+    ]
+  },
+  {
+    "word": "desk",
+    "phonetic": "/-/",
+    "partOfSpeech": "n",
+    "meaning": "书桌，办公桌",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "despair",
+    "phonetic": "/dɪ'spɛr/",
+    "partOfSpeech": "n/v",
+    "meaning": "绝望；绝望，感到无望",
+    "example": "The noise from the neighbours used to drive him to despair .",
+    "translation": "过去，邻居的噪音常常吵得他心烦意乱。",
+    "phrases": [
+      "in despair",
+      "despair of"
+    ]
+  },
+  {
+    "word": "desperate",
+    "phonetic": "/'dɛspərət/",
+    "partOfSpeech": "adj",
+    "meaning": "拼死的；绝望的；拼死的， 不顾一切的； 绝望的； 极需要的",
+    "example": "I had no money left and was desperate.",
+    "translation": "我身无分文，已经走投无路了。",
+    "phrases": []
+  },
+  {
+    "word": "despise",
+    "phonetic": "/dɪ'spaɪz/",
+    "partOfSpeech": "v",
+    "meaning": "鄙视，蔑视",
+    "example": "She despised her neighbours.",
+    "translation": "她看不起她的邻居。",
+    "phrases": []
+  },
+  {
+    "word": "despite",
+    "phonetic": "/dɪ'spaɪt/",
+    "partOfSpeech": "prep",
+    "meaning": "不管；不管，不顾；不管， 不顾",
+    "example": "Despite all our efforts to save the school, the authorities decided to close it.",
+    "translation": "尽管我们竭力想保住这所学校，当局还是决定把它关闭。",
+    "phrases": [
+      "despite of",
+      "in despite of",
+      "despite all that"
+    ]
+  },
+  {
+    "word": "dessert",
+    "phonetic": "/dɪ'zɝt/",
+    "partOfSpeech": "n",
+    "meaning": "甜点；甜食， 点心",
+    "example": "She had homemade ice cream for dessert.",
+    "translation": "她吃了些自制冰淇淋当餐后甜点。",
+    "phrases": [
+      "dessert wine"
+    ]
+  },
+  {
+    "word": "destination",
+    "phonetic": "/,dɛstɪ'neʃən/",
+    "partOfSpeech": "n",
+    "meaning": "目的地，终点；目标；目的地， 终点， 目标",
+    "example": "Ellis Island has become one of America's most popular tourist destinations.",
+    "translation": "埃利斯岛已经成为美国最受欢迎的游览地之一。",
+    "phrases": [
+      "tourist destination",
+      "port of destination",
+      "final destination",
+      "destination port",
+      "ultimate destination",
+      "destination airport",
+      "destination node",
+      "country of destination",
+      "destination country",
+      "destination address",
+      "place of destination",
+      "destination folder",
+      "destination directory",
+      "destination file"
+    ]
+  },
+  {
+    "word": "destroy",
+    "phonetic": "/dɪ'strɔɪ/",
+    "partOfSpeech": "v",
+    "meaning": "破坏；消灭；打破",
+    "example": "companies that are polluting and destroying the environment",
+    "translation": "污染和破坏环境的公司",
+    "phrases": []
+  },
+  {
+    "word": "destruction",
+    "phonetic": "/dɪ'strʌkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "破坏；破坏，毁灭，消灭；破坏， 毁灭， 消灭",
+    "example": "{\"COLLOINEXA\":[\"weapons of mass destruction\"]}",
+    "translation": "大规模杀伤性武器",
+    "phrases": [
+      "destruction of",
+      "weapons of mass destruction",
+      "environmental destruction",
+      "habitat destruction",
+      "creative destruction",
+      "destruction test",
+      "assured destruction"
+    ]
+  },
+  {
+    "word": "detail",
+    "phonetic": "/'ditel/",
+    "partOfSpeech": "n/vt",
+    "meaning": "细节；细节；枝节；零件；细节，枝节；零件；详细说明",
+    "example": "This issue will be discussed in more detail in Chapter 5.",
+    "translation": "这个问题将在第五章里作更为详细的论述。",
+    "phrases": [
+      "in detail",
+      "in more detail",
+      "detail design",
+      "for further details",
+      "in some detail",
+      "detail oriented",
+      "detail drawing",
+      "technical detail",
+      "go into detail",
+      "detail list",
+      "detail account",
+      "detail data",
+      "detail survey",
+      "detail plan"
+    ]
+  },
+  {
+    "word": "detailed",
+    "phonetic": "/dɪ'teld/",
+    "partOfSpeech": "adj",
+    "meaning": "细节的，详细的",
+    "example": "a beautifully detailed carving",
+    "translation": "漂亮精致的雕刻",
+    "phrases": [
+      "detailed information",
+      "detailed description",
+      "detailed design",
+      "detailed list",
+      "detailed planning",
+      "detailed plan",
+      "detailed survey",
+      "detailed statement",
+      "detailed schedule",
+      "detailed engineering",
+      "detailed specification",
+      "detailed packing list",
+      "detailed drawing"
+    ]
+  },
+  {
+    "word": "detect",
+    "phonetic": "/dɪ'tɛkt/",
+    "partOfSpeech": "v/vt",
+    "meaning": "觉察;检测；察觉，发觉；侦察；察觉， 发觉； 侦查出",
+    "example": "Many forms of cancer can be cured if detected early.",
+    "translation": "如果发现得早，许多种癌症都可以治愈。",
+    "phrases": []
+  },
+  {
+    "word": "detection",
+    "phonetic": "/dɪ'tɛkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "侦查；察觉；察觉，发觉；侦察；察觉， 发觉； 侦查， 探测",
+    "example": "...the early detection of breast cancer.",
+    "translation": "…乳腺癌的早期发现。",
+    "phrases": [
+      "detection system",
+      "edge detection",
+      "fault detection",
+      "early detection",
+      "intrusion detection system",
+      "target detection",
+      "signal detection",
+      "detection rate",
+      "automatic detection",
+      "collision detection",
+      "detection limit",
+      "leak detection",
+      "fire detection",
+      "flaw detection",
+      "error detection",
+      "detection circuit",
+      "detection probability",
+      "object detection",
+      "detection sensitivity",
+      "failure detection"
+    ]
+  },
+  {
+    "word": "detective",
+    "phonetic": "/dɪ'tɛktɪv/",
+    "partOfSpeech": "n",
+    "meaning": "侦探；侦探， 私人侦探",
+    "example": "She hired a detective to find out if her husband was having an affair.",
+    "translation": "她雇了一个私人侦探调查她丈夫是否有外遇。",
+    "phrases": [
+      "detective story",
+      "private detective",
+      "detective film"
+    ]
+  },
+  {
+    "word": "determination",
+    "phonetic": "/dɪˌtɜːrmɪˈneɪʃn/",
+    "partOfSpeech": "n",
+    "meaning": "意志；决心；决定；确定；决心， 决定； 确定",
+    "example": "his dogged determination (= very strong determination ) to succeed",
+    "translation": "他想要成功的坚定决心",
+    "phrases": [
+      "quantitative determination",
+      "orbit determination",
+      "sex determination",
+      "final determination",
+      "experimental determination",
+      "age determination",
+      "position determination",
+      "determination coefficient",
+      "determination limit"
+    ]
+  },
+  {
+    "word": "determine",
+    "phonetic": "/dɪ'tɝmɪn/",
+    "partOfSpeech": "v/vi/vt",
+    "meaning": "决定；下决心；决定；查明；决心；决意；决定；查明；使下决心",
+    "example": "The amount of available water determines the number of houses that can be built.",
+    "translation": "可用的水量决定可以建造多少房子。",
+    "phrases": []
+  },
+  {
+    "word": "develop",
+    "phonetic": "/dɪ'vɛləp/",
+    "partOfSpeech": "v",
+    "meaning": "发展；形成；开发",
+    "example": "Knowledge in the field of genetics has been developing very rapidly.",
+    "translation": "遗传学领域的知识发展非常迅速。",
+    "phrases": [
+      "(begin to) develop",
+      "develop into",
+      "develop from",
+      "develop simultaneously",
+      "develop ability",
+      "develop new product",
+      "strive to develop",
+      "torch program（a plan to develop new and high technology）",
+      "develop a habit",
+      "develop confidence in sb"
+    ]
+  },
+  {
+    "word": "development",
+    "phonetic": "/dɪ'vɛləpmənt/",
+    "partOfSpeech": "n",
+    "meaning": "发展；开发；生长",
+    "example": "child development",
+    "translation": "儿童发育",
+    "phrases": [
+      "sustainable development",
+      "economic development",
+      "with the development of",
+      "research and development",
+      "rapid development",
+      "product development",
+      "social development",
+      "development strategy",
+      "future development",
+      "development process",
+      "further development",
+      "real estate development",
+      "new development",
+      "software development",
+      "development zone",
+      "business development",
+      "market development",
+      "development tendency",
+      "industrial development",
+      "development history"
+    ]
+  },
+  {
+    "word": "developmental",
+    "phonetic": "/dɪ,vɛləp'mɛntl/",
+    "partOfSpeech": "adj",
+    "meaning": "发展的",
+    "example": "the developmental stages of childhood",
+    "translation": "儿童时期的各个发育阶段",
+    "phrases": [
+      "developmental biology",
+      "developmental stage",
+      "developmental psychology",
+      "developmental pattern",
+      "developmental state",
+      "developmental disorder",
+      "developmental phase"
+    ]
+  },
+  {
+    "word": "device",
+    "phonetic": "/dɪ'vaɪs/",
+    "partOfSpeech": "n",
+    "meaning": "装置，设备；器械，装置；设计；器械， 装置， 设备； 手段， 策略",
+    "example": "The recording device has activated.",
+    "translation": "录音装置已开动起来。",
+    "phrases": [
+      "control device",
+      "medical device",
+      "protection device",
+      "electronic device",
+      "storage device",
+      "measuring device",
+      "mechanical device",
+      "test device",
+      "testing device",
+      "device driver",
+      "safety device",
+      "display device",
+      "protective device",
+      "mobile device",
+      "driving device",
+      "monitoring device",
+      "feeding device",
+      "input device",
+      "power device",
+      "semiconductor device"
+    ]
+  },
+  {
+    "word": "devil",
+    "phonetic": "/'dɛvl/",
+    "partOfSpeech": "n",
+    "meaning": "魔鬼，恶魔；魔鬼， 恶魔； 家伙， 人",
+    "example": "The villagers believed a devil had taken control of his body.",
+    "translation": "村民们认为他被邪魔附身了。",
+    "phrases": [
+      "like the devil",
+      "a devil of a",
+      "the devil to pay",
+      "the devil of a",
+      "speak of the devil",
+      "play the devil with",
+      "as the devil",
+      "the devil's own job",
+      "raise the devil",
+      "dust devil",
+      "the devil and all"
+    ]
+  },
+  {
+    "word": "devise",
+    "phonetic": "/dɪ'vaɪz/",
+    "partOfSpeech": "v/vt",
+    "meaning": "设计，发明；设计， 发明",
+    "example": "She devised a method for quicker communications between offices.",
+    "translation": "她想出一种加快办公室之间通信联络的方法。",
+    "phrases": []
+  },
+  {
+    "word": "devote",
+    "phonetic": "/dɪ'vot/",
+    "partOfSpeech": "v/vt",
+    "meaning": "奉献，致力于；将…奉献，致力于；将…奉献给； 把…专用",
+    "example": "He decided to devote the rest of his life to scientific investigation.",
+    "translation": "他决定把余生奉献给科学研究。",
+    "phrases": []
+  },
+  {
+    "word": "devotion",
+    "phonetic": "/dɪ'voʃən/",
+    "partOfSpeech": "n",
+    "meaning": "献身， 奉献； 忠实； 热爱； 虔诚",
+    "example": "At first she was flattered by his devotion.",
+    "translation": "最初他的挚爱使她感到受宠若惊。",
+    "phrases": [
+      "devotion to duty",
+      "devotion aura"
+    ]
+  },
+  {
+    "word": "dew",
+    "phonetic": "/du/",
+    "partOfSpeech": "n",
+    "meaning": "露，露水",
+    "example": "The dew gathered on the leaves.",
+    "translation": "露水在叶片上聚集。",
+    "phrases": [
+      "dew point",
+      "morning dew",
+      "dew point pressure",
+      "mountain dew"
+    ]
+  },
+  {
+    "word": "diagnose",
+    "phonetic": "/,daɪəɡ'nos/",
+    "partOfSpeech": "vt",
+    "meaning": "诊断",
+    "example": "He could diagnose an engine problem simply by listening.",
+    "translation": "他仅靠听就能判断发动机出了什么问题。",
+    "phrases": []
+  },
+  {
+    "word": "diagram",
+    "phonetic": "/'daɪəɡræm/",
+    "partOfSpeech": "n",
+    "meaning": "图解，图表，简图；图解， 图表， 简图",
+    "example": "This is a simpler diagram than the one I just showed you but the principles are the same.",
+    "translation": "这是一个比我刚展示的还要更简单的图解，但是原理是一样的。",
+    "phrases": [
+      "block diagram",
+      "phase diagram",
+      "flow diagram",
+      "circuit diagram",
+      "schematic diagram",
+      "ladder diagram",
+      "wiring diagram",
+      "network diagram",
+      "structure diagram",
+      "system diagram",
+      "sequence diagram",
+      "data flow diagram",
+      "state diagram",
+      "indicator diagram",
+      "activity diagram",
+      "forming limit diagram",
+      "control diagram",
+      "diagram paper",
+      "force diagram",
+      "frame diagram"
+    ]
+  },
+  {
+    "word": "dial",
+    "phonetic": "/'daɪəl/",
+    "partOfSpeech": "n/v",
+    "meaning": "钟面；拨号盘；拨",
+    "example": "The lighted dial of her watch said 1.20.",
+    "translation": "她手表上的夜光表面显示时间为1点20分。",
+    "phrases": [
+      "dial the number",
+      "dial telephone",
+      "dial indicator",
+      "dial up",
+      "dial phone",
+      "dial plate",
+      "speed dial",
+      "dial tone",
+      "dial caliper",
+      "dial gauge",
+      "meter dial"
+    ]
+  },
+  {
+    "word": "dialect",
+    "phonetic": "/'daɪə'lɛkt/",
+    "partOfSpeech": "n",
+    "meaning": "方言，土语，地方话；方言， 土语， 地方话",
+    "example": "the local dialect",
+    "translation": "当地方言",
+    "phrases": [
+      "chinese dialect",
+      "local dialect"
+    ]
+  },
+  {
+    "word": "dialog",
+    "phonetic": "/'daɪə,lɑg/",
+    "partOfSpeech": "n",
+    "meaning": "对话，对白",
+    "example": "In this dialog, you can only open an artifact in the editor.",
+    "translation": "在这个对话框中，您只可以在编辑器中打开一个工件。",
+    "phrases": [
+      "dialog box"
+    ]
+  },
+  {
+    "word": "diameter",
+    "phonetic": "/daɪ'æmɪtɚ/",
+    "partOfSpeech": "n",
+    "meaning": "直径",
+    "example": "...a tube less than a fifth of the diameter of a human hair.",
+    "translation": "…一根直径不到头发五分之一的微管。",
+    "phrases": [
+      "particle diameter",
+      "pipe diameter",
+      "inner diameter",
+      "hole diameter",
+      "pore diameter",
+      "outside diameter",
+      "outer diameter",
+      "inside diameter",
+      "diameter ratio",
+      "average diameter",
+      "internal diameter",
+      "pitch diameter",
+      "mean diameter",
+      "major diameter",
+      "bore diameter",
+      "external diameter",
+      "grain diameter",
+      "wire diameter",
+      "nominal diameter",
+      "equivalent diameter"
+    ]
+  },
+  {
+    "word": "diamond",
+    "phonetic": "/'daɪəmənd/",
+    "partOfSpeech": "n",
+    "meaning": "金钢石，钻石；菱形",
+    "example": "a diamond engagement ring",
+    "translation": "订婚钻戒",
+    "phrases": [
+      "diamond ring",
+      "synthetic diamond",
+      "diamond tool",
+      "diamond saw",
+      "polycrystalline diamond",
+      "diamond bit",
+      "diamond wheel",
+      "diamond necklace",
+      "rough diamond",
+      "diamond powder",
+      "diamond grinding wheel",
+      "diamond drilling",
+      "natural diamond",
+      "diamond turning",
+      "black diamond",
+      "diamond in the rough",
+      "diamond drill",
+      "diamond cutter",
+      "white diamond",
+      "diamond sutra"
+    ]
+  },
+  {
+    "word": "diary",
+    "phonetic": "/'daɪəri/",
+    "partOfSpeech": "n",
+    "meaning": "日记，日记簿",
+    "example": "Inge kept a diary (= wrote in a diary ) during the war years.",
+    "translation": "英奇在战争年代里一直写日记。",
+    "phrases": [
+      "keep a diary",
+      "personal diary",
+      "keep one's diary"
+    ]
+  },
+  {
+    "word": "dictate",
+    "phonetic": "/'dɪktet/",
+    "partOfSpeech": "v & n/vt&vi/v/n",
+    "meaning": "命令，规定；口授；命令；口授； 命令， 规定， 要求；命令， 指挥",
+    "example": "Federal funds have to be used as dictated by Washington.",
+    "translation": "联邦款项得按照华盛顿规定的途径使用。",
+    "phrases": []
+  },
+  {
+    "word": "dictation",
+    "phonetic": "/dɪk'teʃən/",
+    "partOfSpeech": "n",
+    "meaning": "口授笔录，听写；口授； 听写",
+    "example": "There were no secretaries available to take dictation (= write down what someone is saying ) .",
+    "translation": "身边没有秘书记录口授内容。",
+    "phrases": []
+  },
+  {
+    "word": "dictator",
+    "phonetic": "/'dɪktetɚ/",
+    "partOfSpeech": "n",
+    "meaning": "独裁者；专制者",
+    "example": "the downfall of the hated dictator",
+    "translation": "遭人痛恨的独裁者的垮台",
+    "phrases": []
+  },
+  {
+    "word": "dictionary",
+    "phonetic": "/'dɪkʃə'nɛri/",
+    "partOfSpeech": "n",
+    "meaning": "词典，字典",
+    "example": "a German-English dictionary",
+    "translation": "一本德英词典",
+    "phrases": [
+      "chinese-english dictionary",
+      "electronic dictionary",
+      "english-chinese dictionary",
+      "data dictionary",
+      "oxford english dictionary",
+      "walking dictionary",
+      "bilingual dictionary",
+      "picture dictionary",
+      "dictionary attack",
+      "english-english dictionary"
+    ]
+  },
+  {
+    "word": "die",
+    "phonetic": "/daɪ/",
+    "partOfSpeech": "v",
+    "meaning": "死，死亡；灭亡",
+    "example": "He died in 1985 at the age of 76.",
+    "translation": "他1985年去世，终年76岁。",
+    "phrases": [
+      "die for",
+      "die casting",
+      "die of",
+      "progressive die",
+      "die from",
+      "die forging",
+      "die out",
+      "extrusion die",
+      "drawing die",
+      "never say die",
+      "stamping die",
+      "die steel",
+      "die a natural death",
+      "forging die",
+      "compound die",
+      "die on",
+      "punching die",
+      "die by",
+      "die hard",
+      "die cutting"
+    ]
+  },
+  {
+    "word": "differ",
+    "phonetic": "/'dɪfɚ/",
+    "partOfSpeech": "v/vi",
+    "meaning": "不同，相异；不同， 相异； 发生分歧",
+    "example": "The two systems differ in many respects.",
+    "translation": "这两个系统在许多方面不同。",
+    "phrases": [
+      "differ from",
+      "differ in",
+      "differ with",
+      "opinions differ",
+      "beg to differ"
+    ]
+  },
+  {
+    "word": "difference",
+    "phonetic": "/'dɪfrəns/",
+    "partOfSpeech": "n",
+    "meaning": "差别；差；分歧",
+    "example": "(= there’s a very big difference ) between us.",
+    "translation": "我们之间有着天壤之别。",
+    "phrases": [
+      "difference in",
+      "significant difference",
+      "finite difference",
+      "temperature difference",
+      "difference method",
+      "make a difference",
+      "finite difference method",
+      "pressure difference",
+      "difference from",
+      "time difference",
+      "color difference",
+      "phase difference",
+      "cultural difference",
+      "price difference",
+      "make the difference",
+      "potential difference",
+      "essential difference",
+      "difference equation",
+      "make a big difference",
+      "difference in temperature"
+    ]
+  },
+  {
+    "word": "different",
+    "phonetic": "/'dɪfrənt/",
+    "partOfSpeech": "adj",
+    "meaning": "差异的；各种的",
+    "example": "The place looks completely different now.",
+    "translation": "这地方现在完全变了。",
+    "phrases": [
+      "different from",
+      "different kinds",
+      "in different ways",
+      "totally different",
+      "different than",
+      "different responses",
+      "different in kind"
+    ]
+  },
+  {
+    "word": "difficult",
+    "phonetic": "/'dɪfɪkəlt/",
+    "partOfSpeech": "adj",
+    "meaning": "困难的；难对付的",
+    "example": "a difficult question",
+    "translation": "难解的问题",
+    "phrases": [
+      "difficult problem",
+      "difficult point",
+      "difficult thing",
+      "difficult of access",
+      "difficult choice",
+      "difficult ground"
+    ]
+  },
+  {
+    "word": "difficulty",
+    "phonetic": "/'dɪfɪkəlti/",
+    "partOfSpeech": "adj",
+    "meaning": "困难；难事；困境",
+    "example": "",
+    "translation": "",
+    "phrases": [
+      "with difficulty",
+      "have difficulty",
+      "in difficulty",
+      "degree of difficulty",
+      "have difficulty in",
+      "technical difficulty",
+      "without difficulty",
+      "financial difficulty",
+      "difficulty in breathing",
+      "difficulty level",
+      "learning difficulty",
+      "have difficulty with"
+    ]
+  },
+  {
+    "word": "dig",
+    "phonetic": "/dɪɡ/",
+    "partOfSpeech": "v",
+    "meaning": "掘，挖；采掘",
+    "example": "freshly dug carrots",
+    "translation": "刚挖出来的胡萝卜",
+    "phrases": [
+      "dig out",
+      "dig deep",
+      "dig up",
+      "dig in",
+      "dig into",
+      "dig a hole",
+      "dig at",
+      "dig down"
+    ]
+  },
+  {
+    "word": "digest",
+    "phonetic": "/daɪ'dʒɛst/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "消化；领会；文摘；消化； 领会；文摘； 摘要",
+    "example": "Most babies can digest a wide range of food easily.",
+    "translation": "大多数婴儿能轻易地消化很多种食物。",
+    "phrases": []
+  },
+  {
+    "word": "digital",
+    "phonetic": "/'dɪdʒɪtl/",
+    "partOfSpeech": "adj",
+    "meaning": "数字的，计数的；数字的， 数位的",
+    "example": "digital TV",
+    "translation": "数字电视",
+    "phrases": [
+      "digital library",
+      "digital image",
+      "digital signal",
+      "digital camera",
+      "digital technology",
+      "digital control",
+      "digital image processing",
+      "digital video",
+      "digital signal processing",
+      "digital information",
+      "digital display",
+      "digital signature",
+      "digital simulation",
+      "digital media",
+      "digital signal processor",
+      "digital communication",
+      "digital television",
+      "digital filter",
+      "digital audio",
+      "digital circuit"
+    ]
+  },
+  {
+    "word": "dilemma",
+    "phonetic": "/dɪˈlemə/",
+    "partOfSpeech": "n",
+    "meaning": "困境",
+    "example": "a moral dilemma",
+    "translation": "道德上进退两难的窘境",
+    "phrases": [
+      "in a dilemma",
+      "prisoner's dilemma",
+      "moral dilemma",
+      "ethical dilemma"
+    ]
+  },
+  {
+    "word": "diligent",
+    "phonetic": "/'dɪlɪdʒənt/",
+    "partOfSpeech": "adj",
+    "meaning": "勤奋的；勤勉的，勤奋的",
+    "example": "a diligent student",
+    "translation": "勤勉的学生",
+    "phrases": [
+      "diligent in"
+    ]
+  },
+  {
+    "word": "dim",
+    "phonetic": "/dɪm/",
+    "partOfSpeech": "adj/v",
+    "meaning": "昏暗的；朦胧的；昏暗的；朦胧的；模糊不清的；变暗淡",
+    "example": "in the dim light of the early dawn",
+    "translation": "在微弱的晨曦里",
+    "phrases": [
+      "dim sum",
+      "dim light"
+    ]
+  },
+  {
+    "word": "dimension",
+    "phonetic": "/dɪ'mɛnʃ(ə)n; daɪ-/",
+    "partOfSpeech": "n",
+    "meaning": "尺寸，尺度；面积；尺寸， 尺度； 方面， 特点； 面积， 规模",
+    "example": "a rectangle with the dimensions 5cm × 2cm",
+    "translation": "长五厘米、宽两厘米的长方形",
+    "phrases": [
+      "fractal dimension",
+      "one dimension",
+      "two dimension",
+      "third dimension",
+      "dimension stability",
+      "time dimension",
+      "physical dimension",
+      "single dimension",
+      "vertical dimension",
+      "linear dimension",
+      "characteristic dimension",
+      "fourth dimension",
+      "critical dimension",
+      "basic dimension",
+      "sectional dimension",
+      "overall dimension",
+      "external dimension",
+      "temporal dimension",
+      "dimension stone",
+      "size dimension"
+    ]
+  },
+  {
+    "word": "dinner",
+    "phonetic": "/'dɪnɚ/",
+    "partOfSpeech": "n",
+    "meaning": "正餐，主餐；宴会",
+    "example": "What time do you usually have dinner?",
+    "translation": "你通常什么时候吃饭？",
+    "phrases": [
+      "after dinner",
+      "have dinner",
+      "dinner party",
+      "dinner table",
+      "at dinner",
+      "eat dinner",
+      "family dinner",
+      "thanksgiving dinner",
+      "cooking dinner",
+      "annual dinner",
+      "have a dinner",
+      "gala dinner",
+      "cook dinner",
+      "buffet dinner",
+      "make dinner",
+      "stay for dinner",
+      "candlelight dinner",
+      "farewell dinner",
+      "dinner set",
+      "welcome dinner"
+    ]
+  },
+  {
+    "word": "dip",
+    "phonetic": "/dɪp/",
+    "partOfSpeech": "v/n",
+    "meaning": "浸，蘸；浸一浸；蘸，浸；游一会儿泳",
+    "example": "Dip each apple in the syrup until thickly coated.",
+    "translation": "把每个苹果在糖浆里蘸一下，直到被厚厚地裹上糖浆。",
+    "phrases": [
+      "hot dip",
+      "dip angle",
+      "dip in",
+      "dip into",
+      "hot dip galvanizing",
+      "take a dip",
+      "dip coating",
+      "steep dip",
+      "gentle dip",
+      "voltage dip",
+      "dip switch",
+      "lab dip",
+      "dip dyeing",
+      "go for a dip",
+      "dip process",
+      "dip soldering"
+    ]
+  },
+  {
+    "word": "diploma",
+    "phonetic": "/dɪ'plomə/",
+    "partOfSpeech": "n",
+    "meaning": "文凭",
+    "example": "...a new two-year course leading to a diploma in social work.",
+    "translation": "...一门可以获得社会工作文凭的2年制的新课程。",
+    "phrases": [
+      "college diploma",
+      "high school diploma",
+      "postgraduate diploma",
+      "graduate diploma",
+      "university diploma",
+      "diploma mill"
+    ]
+  },
+  {
+    "word": "diplomatic",
+    "phonetic": "/,dɪplə'mætɪk/",
+    "partOfSpeech": "adj",
+    "meaning": "外交的；外交的， 从事外交的； 策略的， 有手腕的",
+    "example": "Diplomatic efforts to end the fighting began on October 25.",
+    "translation": "停战的外交努力于10月25日开始。",
+    "phrases": [
+      "diplomatic relations",
+      "diplomatic ties",
+      "diplomatic mission",
+      "establishment of diplomatic relations",
+      "diplomatic immunity",
+      "diplomatic channels",
+      "diplomatic recognition",
+      "diplomatic service",
+      "diplomatic practice",
+      "diplomatic courier"
+    ]
+  },
+  {
+    "word": "direct",
+    "phonetic": "/dɪˈrɛkt; daɪˈrɛkt/",
+    "partOfSpeech": "adj",
+    "meaning": "直接的；直率的",
+    "example": "Experienced users have direct access to the main data files.",
+    "translation": "高级用户可直接浏览主数据文档。",
+    "phrases": [
+      "direct investment",
+      "direct current",
+      "foreign direct investment",
+      "direct effect",
+      "direct influence",
+      "direct contact",
+      "direct access",
+      "direct marketing",
+      "direct relation",
+      "direct selling",
+      "direct sunlight",
+      "direct control",
+      "direct relationship",
+      "direct connection",
+      "direct proportion",
+      "direct drive",
+      "direct action",
+      "direct bearing",
+      "direct manipulation",
+      "direct injection"
+    ]
+  },
+  {
+    "word": "direction",
+    "phonetic": "/-/",
+    "partOfSpeech": "n",
+    "meaning": "方向，方位；指导",
+    "example": "",
+    "translation": "",
+    "phrases": []
+  },
+  {
+    "word": "directly",
+    "phonetic": "/dəˈrektli/",
+    "partOfSpeech": "adv",
+    "meaning": "直接地；立即；直接地； 正好地， 截然； 立即",
+    "example": "The new property tax law won’t directly affect us.",
+    "translation": "新的财产税法不会直接影响到我们。",
+    "phrases": [
+      "directly proportional",
+      "directly address"
+    ]
+  },
+  {
+    "word": "director",
+    "phonetic": "/dɪˈrɛktɚ; daɪˈrɛktɚ/",
+    "partOfSpeech": "n",
+    "meaning": "指导者；理事；导演",
+    "example": "The company is run by a board of directors (= a group of directors ) .",
+    "translation": "这家公司由董事会管理。",
+    "phrases": [
+      "deputy director",
+      "managing director",
+      "vice director",
+      "executive director",
+      "director general",
+      "independent director",
+      "factory director",
+      "deputy director general",
+      "assistant director",
+      "film director",
+      "best director",
+      "sales director",
+      "marketing director",
+      "department director",
+      "art director",
+      "standing director",
+      "finance director",
+      "artistic director",
+      "board of director",
+      "company director"
+    ]
+  },
+  {
+    "word": "dirt",
+    "phonetic": "/dɝt/",
+    "partOfSpeech": "n",
+    "meaning": "尘，土；污物，污垢；灰尘， 土； 污物， 污垢",
+    "example": "You should have seen the dirt on that car!",
+    "translation": "你没看见那车上沾了多少泥！",
+    "phrases": [
+      "dirt road",
+      "eat dirt",
+      "dirt bike",
+      "hit the dirt",
+      "dirt cheap",
+      "dirt band",
+      "throw dirt at",
+      "dirt proof"
+    ]
+  },
+  {
+    "word": "dirty",
+    "phonetic": "/ˈdɝ​tɪ/",
+    "partOfSpeech": "adj",
+    "meaning": "脏的；下流的",
+    "example": "a stack of dirty dishes in the sink",
+    "translation": "洗涤槽里的一堆脏碟子",
+    "phrases": [
+      "dirty water",
+      "dirty laundry",
+      "dirty air",
+      "dirty mark",
+      "dirty trick",
+      "dirty money",
+      "dirty hands",
+      "dirty linen",
+      "dirty dog",
+      "dirty look",
+      "quick and dirty"
+    ]
+  }
+]

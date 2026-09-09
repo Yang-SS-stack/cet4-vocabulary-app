@@ -1,11 +1,37 @@
+import { createInlineWordBookSession, createRemoteWordBookSession, isValidWordBookManifest } from './wordBookSession'
+
+const sessions = new Map()
+
+export function clearWordBookCache() {
+  sessions.clear()
+}
+
 export async function loadWordBook(book, fetchImpl = fetch) {
-  if (Array.isArray(book.words)) return book.words
+  if (Array.isArray(book.words)) return createInlineWordBookSession(book.words)
 
-  const response = await fetchImpl(book.dataUrl)
-  if (!response.ok) throw new Error('Unable to load word book')
+  if (!sessions.has(book.dataUrl)) {
+    const sessionPromise = (async () => {
+      let response
+      try {
+        response = await fetchImpl(book.dataUrl)
+      } catch {
+        throw new Error('Unable to load word book manifest')
+      }
+      if (!response?.ok) throw new Error('Unable to load word book manifest')
+      let manifest
+      try {
+        manifest = await response.json()
+      } catch {
+        throw new Error('Unable to load word book manifest')
+      }
+      if (!isValidWordBookManifest(manifest)) throw new Error('Unable to load word book manifest')
+      return createRemoteWordBookSession(manifest, book.dataUrl, fetchImpl)
+    })().catch((error) => {
+      sessions.delete(book.dataUrl)
+      throw error
+    })
+    sessions.set(book.dataUrl, sessionPromise)
+  }
 
-  const words = await response.json()
-  if (!Array.isArray(words)) throw new Error('Word book data must be an array')
-
-  return words
+  return sessions.get(book.dataUrl)
 }

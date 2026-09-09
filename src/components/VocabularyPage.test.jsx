@@ -1,6 +1,7 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
+import { createInlineWordBookSession } from '../data/wordBookSession'
 import VocabularyPage from './VocabularyPage'
 
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals() })
@@ -12,11 +13,11 @@ test('filters by Chinese and abbreviated POS including mixed labels without fill
     { word: 'listen', meaning: '听', partOfSpeech: 'vi' },
     { word: 'take', meaning: '拿', partOfSpeech: 'n/vt' },
   ])
-  const search = screen.getByRole('searchbox')
   for (const [query, expected] of [['名词', ['apple', 'take']], ['vt.', ['take']], ['不及物动词', ['listen']], ['动词', ['listen', 'take']]]) {
+    const search = screen.getByRole('searchbox')
     await user.clear(search)
     await user.type(search, query)
-    expect(visibleWordNames()).toEqual(expected)
+    await waitFor(() => expect(visibleWordNames()).toEqual(expected))
     expect(screen.getByRole('button', { name: '下一页' })).toBeDisabled()
   }
 })
@@ -49,6 +50,218 @@ const browseWords = [
   { word: 'zero', meaning: '零', frequency: 0 },
 ].map((item) => ({ phonetic: '/test/', partOfSpeech: 'n', example: '', translation: '', phrases: [], ...item }))
 
+const catalogBook = {
+  id: 'cet4',
+  label: 'CET-4',
+  description: '测试词书',
+  wordListLabel: '测试单词',
+}
+
+function deferredIndexSession(words) {
+  let resolveIndex
+  const indexReady = new Promise((resolve) => { resolveIndex = resolve })
+  return {
+    indexReady,
+    resolveIndex,
+    loadPage: createInlineWordBookSession(words).loadPage,
+  }
+}
+
+function deferredPageSession() {
+  const nextPageReady = new Promise(() => {})
+  return {
+    indexReady: Promise.resolve(),
+    loadPage: ({ page }) => page === 1
+      ? Promise.resolve({ words: [{ ...browseWords[0], word: 'abruptly' }], total: 22, totalPages: 2 })
+      : nextPageReady,
+  }
+}
+
+function failedPageSession() {
+  return {
+    indexReady: Promise.resolve(),
+    loadPage: ({ page }) => page === 1
+      ? Promise.resolve({ words: [{ ...browseWords[0], word: 'abruptly' }], total: 22, totalPages: 2 })
+      : Promise.reject(new Error('page unavailable')),
+  }
+}
+
+function deferredSearchSession() {
+  let resolveSearch
+  return {
+    indexReady: Promise.resolve(),
+    resolveSearch: () => resolveSearch({ words: [{ ...browseWords[0], word: 'needle' }], total: 1, totalPages: 1 }),
+    loadPage: ({ query }) => query
+      ? new Promise((resolve) => { resolveSearch = resolve })
+      : Promise.resolve({ words: Array.from({ length: 43 }, (_, index) => ({ ...browseWords[0], word: `word-${String(index + 1).padStart(2, '0')}` })), total: 43, totalPages: 3 }),
+  }
+}
+
+function retryableIndexSession(words) {
+  let attempts = 0
+  return {
+    indexReady: Promise.resolve(),
+    loadIndex: vi.fn(() => {
+      attempts += 1
+      return attempts === 1 ? Promise.reject(new Error('index unavailable')) : Promise.resolve()
+    }),
+    loadPage: createInlineWordBookSession(words).loadPage,
+  }
+}
+
+function retryableSearchIndexSession(words) {
+  let attempts = 0
+  const inlineSession = createInlineWordBookSession(words)
+  const indexReady = Promise.reject(new Error('index unavailable'))
+  indexReady.catch(() => {})
+  const loadIndex = vi.fn(() => {
+    attempts += 1
+    return attempts === 1 ? Promise.reject(new Error('index unavailable')) : Promise.resolve()
+  })
+  return {
+    indexReady,
+    loadIndex,
+    loadPage: async (options) => {
+      if (options.query.trim()) await loadIndex()
+      return inlineSession.loadPage(options)
+    },
+  }
+}
+
+function retryablePageSession() {
+  let attempts = 0
+  return {
+    indexReady: Promise.resolve(),
+    loadPage: ({ page }) => page === 1
+      ? Promise.resolve({ words: [{ ...browseWords[0], word: 'abruptly' }], total: 22, totalPages: 2 })
+      : attempts++ === 0
+        ? Promise.reject(new Error('page unavailable'))
+        : Promise.resolve({ words: [{ ...browseWords[0], word: 'again' }], total: 22, totalPages: 2 }),
+  }
+}
+
+function searchableSession(words, { rejectIndex = false } = {}) {
+  const session = createInlineWordBookSession(words)
+  if (!rejectIndex) return session
+  const indexReady = Promise.reject(new Error('index unavailable'))
+  indexReady.catch(() => {})
+  const loadIndex = () => Promise.reject(new Error('index unavailable'))
+  return { ...session, indexReady, loadIndex }
+}
+
+async function openSessionBook({ session, book = catalogBook }) {
+  const user = userEvent.setup()
+  render(<VocabularyPage books={[book]} loadWords={async () => session} />)
+  await user.click(screen.getByRole('button', { name: book.label, exact: true }))
+  await screen.findAllByRole('heading', { level: 3 })
+  return user
+}
+
+test('shows the first page while the search index is still loading', async () => {
+  const session = deferredIndexSession([{ ...browseWords[0], word: 'abruptly' }])
+  const user = userEvent.setup()
+  render(<VocabularyPage books={[catalogBook]} loadWords={async () => session} />)
+
+  await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
+
+  expect(await screen.findByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  expect(screen.getByText('正在准备搜索')).toBeInTheDocument()
+})
+
+test('uses the complete index for Chinese and POS search', async () => {
+  const user = await openSessionBook({ session: searchableSession([
+    { ...browseWords[0], word: 'apple', meaning: '苹果', partOfSpeech: 'n' },
+    { ...browseWords[0], word: 'listen', meaning: '听', partOfSpeech: 'vi' },
+    { ...browseWords[0], word: 'take', meaning: '拿', partOfSpeech: 'n/vt' },
+  ]) })
+
+  await user.type(screen.getByRole('searchbox'), '不及物动词')
+
+  await waitFor(() => expect(visibleWordNames()).toEqual(['listen']))
+  expect(screen.getByText('找到 1 个单词')).toBeInTheDocument()
+})
+
+test('keeps visible cards while a later page is loading', async () => {
+  const session = deferredPageSession()
+  const user = await openSessionBook({ session })
+  expect(visibleWordNames()).toEqual(['abruptly'])
+
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+
+  expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  expect(screen.getByText('正在加载当前结果...')).toHaveAttribute('role', 'status')
+})
+
+test('recovers a failed index when direct search retries it without hiding cards', async () => {
+  const session = retryableSearchIndexSession([
+    { ...browseWords[0], word: 'abruptly', meaning: '突然地' },
+    { ...browseWords[0], word: 'quickly', meaning: '快速地' },
+  ])
+  const user = await openSessionBook({ session })
+
+  expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  await waitFor(() => expect(statusContaining('搜索索引读取失败')).toBeTruthy())
+  await user.type(screen.getByRole('searchbox'), '突然')
+
+  expect(await screen.findByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  await waitFor(() => expect(statusContaining('搜索索引读取失败')).toBeUndefined())
+})
+
+test('reports a later page failure without removing visible cards', async () => {
+  const user = await openSessionBook({ session: failedPageSession() })
+  expect(visibleWordNames()).toEqual(['abruptly'])
+
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+
+  expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  await waitFor(() => expect(statusContaining('当前结果加载失败')).toBeTruthy())
+  expect(statusContaining('当前结果加载失败')).toHaveAttribute('role', 'status')
+  expect(screen.getByText('第 1 / 2 页')).toBeInTheDocument()
+})
+
+test('keeps displayed cards and pagination metadata together while a search is loading', async () => {
+  const session = deferredSearchSession()
+  await openSessionBook({ session })
+  const search = screen.getByRole('searchbox')
+
+  fireEvent.change(search, { target: { value: 'needle' } })
+
+  expect(screen.getByRole('heading', { name: 'word-01' })).toBeInTheDocument()
+  expect(screen.getByText('共 43 个单词')).toBeInTheDocument()
+  expect(screen.getByText('第 1 / 3 页')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '下一页' })).toBeDisabled()
+  expect(screen.queryByText('找到 1 个单词')).not.toBeInTheDocument()
+
+  await act(async () => session.resolveSearch())
+
+  expect(await screen.findByRole('heading', { name: 'needle' })).toBeInTheDocument()
+  expect(screen.getByText('找到 1 个单词')).toBeInTheDocument()
+  expect(screen.queryByText('共 43 个单词')).not.toBeInTheDocument()
+})
+
+test('retries a failed page request without changing the displayed page until success', async () => {
+  const user = await openSessionBook({ session: retryablePageSession() })
+  await user.click(screen.getByRole('button', { name: '下一页' }))
+
+  await waitFor(() => expect(statusContaining('当前结果加载失败')).toBeTruthy())
+  expect(screen.getByText('第 1 / 2 页')).toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: '重试当前结果' }))
+  expect(await screen.findByRole('heading', { name: 'again' })).toBeInTheDocument()
+  expect(screen.getByText('第 2 / 2 页')).toBeInTheDocument()
+})
+
+test('retries the search index and announces recovery without hiding cards', async () => {
+  const session = retryableIndexSession([{ ...browseWords[0], word: 'abruptly' }])
+  const user = await openSessionBook({ session })
+
+  await waitFor(() => expect(statusContaining('搜索索引读取失败')).toBeTruthy())
+  await user.click(screen.getByRole('button', { name: '重试搜索' }))
+
+  await waitFor(() => expect(session.loadIndex).toHaveBeenCalledTimes(2))
+  expect(statusContaining('搜索索引读取失败')).toBeUndefined()
+  expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+})
+
 async function openBrowseBook(words = browseWords) {
   const user = userEvent.setup()
   render(<VocabularyPage books={[
@@ -62,6 +275,10 @@ async function openBrowseBook(words = browseWords) {
 function visibleWordNames() {
   return within(screen.getByRole('list', { name: '测试单词' }))
     .getAllByRole('heading', { level: 3 }).map((heading) => heading.textContent)
+}
+
+function statusContaining(text) {
+  return screen.getAllByRole('status').find((status) => status.textContent.includes(text))
 }
 
 test('sorts alphabetically by default and by descending frequency with ties and missing data', async () => {
@@ -298,6 +515,10 @@ test('opens the CET-4 high-frequency book in descending frequency order and retu
     expect.stringContaining('affect'),
     expect.stringContaining('achieve'),
   ])
+
+  await user.type(screen.getByRole('searchbox'), '不存在')
+  expect(await screen.findByText('没有找到匹配的单词')).toBeInTheDocument()
+  expect(screen.queryByText('本词书暂无词频数据，当前按字母顺序显示。')).not.toBeInTheDocument()
 
   await user.click(screen.getByRole('button', { name: '返回词书' }))
 

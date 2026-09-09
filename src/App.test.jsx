@@ -94,10 +94,15 @@ test('clicking vocabulary navigation shows the vocabulary page', async () => {
 
 test('vocabulary page displays the first study words', async () => {
   const user = userEvent.setup()
-  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
-    ok: true,
-    json: async () => JSON.parse(readFileSync('public/data/cet4.json', 'utf8')),
-  }))
+  const assetPaths = {
+    '/data/word-books/cet4/manifest.json': 'public/data/word-books/cet4/manifest.json',
+    '/data/word-books/cet4/chunks/00.json': 'public/data/word-books/cet4/chunks/00.json',
+    '/data/word-books/cet4/search-index.json': 'public/data/word-books/cet4/search-index.json',
+  }
+  vi.stubGlobal('fetch', vi.fn(async (url) => ({
+    ok: Boolean(assetPaths[url]),
+    json: async () => JSON.parse(readFileSync(assetPaths[url], 'utf8')),
+  })))
   render(<App />)
   await enterApp(user)
 

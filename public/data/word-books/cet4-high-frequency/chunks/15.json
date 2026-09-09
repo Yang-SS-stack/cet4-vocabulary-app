@@ -1,0 +1,1474 @@
+[
+  {
+    "word": "asleep",
+    "phonetic": "/ə'slip/",
+    "partOfSpeech": "adj",
+    "meaning": "睡着的，睡熟的",
+    "example": "Quiet! The baby’s asleep.",
+    "translation": "安静！ 宝宝在睡觉。",
+    "phrases": [
+      "fall asleep",
+      "fell asleep",
+      "fast asleep",
+      "fallen asleep",
+      "sound asleep",
+      "lay asleep"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "behalf",
+    "phonetic": "/bɪ'hæf/",
+    "partOfSpeech": "n",
+    "meaning": "利益，维护，支持；利益",
+    "example": "",
+    "translation": "",
+    "phrases": [
+      "behalf of",
+      "on one's behalf",
+      "on behalf of",
+      "on our behalf",
+      "on the behalf of",
+      "in behalf of",
+      "on somebody's behalf"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "breakthrough",
+    "phonetic": "/'brek'θrʊ/",
+    "partOfSpeech": "n",
+    "meaning": "突破",
+    "example": "The company looks poised to make a significant breakthrough in China.",
+    "translation": "该公司看上去稳将在中国实现一次重大突破。",
+    "phrases": [
+      "breakthrough point",
+      "make a breakthrough",
+      "breakthrough technology"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "cast",
+    "phonetic": "/kæst/",
+    "partOfSpeech": "v/vt/n",
+    "meaning": "投，扔，抛；浇铸；演员表， 全体演员； 石膏绷带； 铸型， 铸件； 投， 抛",
+    "example": "the shade cast by low-hanging branches",
+    "translation": "低垂的树枝投下的阴影",
+    "phrases": [
+      "cast iron",
+      "cast off",
+      "cast steel",
+      "cast in",
+      "white cast iron",
+      "cast out",
+      "nodular cast iron",
+      "cast by",
+      "cast away",
+      "cast aside",
+      "cast on",
+      "cast down",
+      "gray cast iron",
+      "die cast",
+      "ductile cast iron",
+      "as cast",
+      "grey cast iron",
+      "cast slab",
+      "cast lots",
+      "cast iron pipe"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "chat",
+    "phonetic": "/tʃæt/",
+    "partOfSpeech": "v",
+    "meaning": "聊天",
+    "example": "John and I sat up until the early hours chatting.",
+    "translation": "我和约翰聊到凌晨才睡。",
+    "phrases": [
+      "chat with",
+      "chat room",
+      "have a chat",
+      "chat about",
+      "chat show",
+      "have a chat with",
+      "live chat",
+      "chat up",
+      "free chat",
+      "group chat",
+      "chat and other"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "cheer",
+    "phonetic": "/tʃɪr/",
+    "partOfSpeech": "v",
+    "meaning": "使振作；欢呼",
+    "example": "Everybody cheered when the firemen arrived.",
+    "translation": "消防员到达时，大家都欢呼起来。",
+    "phrases": [
+      "cheer up",
+      "cheer for",
+      "good cheer",
+      "cheer you up",
+      "cheer on"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "consensus",
+    "phonetic": "/kən'sɛnsəs/",
+    "partOfSpeech": "n",
+    "meaning": "一致意见",
+    "example": "The EU Council of Finance Ministers failed to reach a consensus on the pace of integration.",
+    "translation": "欧盟财政部长会议未能就一体化的进度达成共识。",
+    "phrases": [
+      "reach a consensus"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "cotton",
+    "phonetic": "/'kɑtn/",
+    "partOfSpeech": "n",
+    "meaning": "棉；棉线；棉布",
+    "example": "a white cotton shirt",
+    "translation": "白色棉布衬衫",
+    "phrases": [
+      "cotton fabric",
+      "cotton yarn",
+      "cotton fiber",
+      "cotton spinning",
+      "cotton cloth",
+      "cotton textile",
+      "raw cotton",
+      "cotton ball",
+      "cotton wool",
+      "cotton fibre",
+      "cotton goods",
+      "cotton thread",
+      "white cotton",
+      "cotton pad",
+      "cotton piece goods",
+      "combed cotton",
+      "organic cotton",
+      "cotton mill",
+      "cotton canvas",
+      "cotton bollworm"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "esteem",
+    "phonetic": "/ɪ'stim/",
+    "partOfSpeech": "n",
+    "meaning": "自尊",
+    "example": "After that, we could go for esteem and respect.",
+    "translation": "而再往上，我们可能需要自尊和尊重。",
+    "phrases": [
+      "self esteem"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "fate",
+    "phonetic": "/fet/",
+    "partOfSpeech": "n",
+    "meaning": "命运；命运，天数；命运， 天数",
+    "example": "I wouldn’t wish such a fate on my worst enemy.",
+    "translation": "就算是我不共戴天的仇敌，我也不希望他遭遇这样的命运。",
+    "phrases": [
+      "as sure as fate"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "forbid",
+    "phonetic": "/fɚ'bɪd/",
+    "partOfSpeech": "v/vt",
+    "meaning": "禁止，不许；阻止；禁止， 不许， 阻止",
+    "example": "Lack of space forbids listing the names of all those who contributed.",
+    "translation": "由于篇幅限制，无法列出所有捐款人的姓名。",
+    "phrases": [],
+    "frequency": 32
+  },
+  {
+    "word": "forty",
+    "phonetic": "/'fɔrti/",
+    "partOfSpeech": "num",
+    "meaning": "四十，第四十",
+    "example": "The place was built as a casino in the forties.",
+    "translation": "这个地方建于20世纪40年代，起初是一座赌场。",
+    "phrases": [
+      "forty thousand"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "heel",
+    "phonetic": "/hil/",
+    "partOfSpeech": "n",
+    "meaning": "脚后跟，踵，后跟；脚后跟， 踵； 后跟",
+    "example": "black boots with high heels",
+    "translation": "有高跟的黑靴子",
+    "phrases": [
+      "achilles heel",
+      "high heel",
+      "achilles' heel",
+      "at heel",
+      "under the heel of",
+      "the heel of achilles",
+      "wedge heel",
+      "high heel shoes",
+      "stiletto heel"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "liberate",
+    "phonetic": "/'lɪbə'ret/",
+    "partOfSpeech": "v/vt",
+    "meaning": "解放；释放；解放， 释放",
+    "example": "A few days later, our armies liberated the city.",
+    "translation": "几天以后，我军解放了这座城市。",
+    "phrases": [],
+    "frequency": 32
+  },
+  {
+    "word": "mutual",
+    "phonetic": "/'mjutʃuəl/",
+    "partOfSpeech": "adj",
+    "meaning": "相互的；相互的；共同的；相互的； 共同的",
+    "example": "I didn’t like Dev, and the feeling seemed to be mutual.",
+    "translation": "我不喜欢德夫，他好像也不喜欢我。",
+    "phrases": [
+      "mutual benefit",
+      "mutual understanding",
+      "mutual trust",
+      "equality and mutual benefit",
+      "mutual information",
+      "mutual fund",
+      "mutual cooperation",
+      "mutual assistance",
+      "mutual recognition",
+      "mutual aid",
+      "mutual inductance",
+      "mutual agreement",
+      "mutual exchange",
+      "mutual interference",
+      "mutual effect",
+      "mutual consent",
+      "mutual interaction",
+      "mutual exclusion",
+      "reciprocity and mutual benefit",
+      "washington mutual"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "nerve",
+    "phonetic": "/nɝv/",
+    "partOfSpeech": "n",
+    "meaning": "神经；勇敢，胆量；神经； 勇敢， 胆量",
+    "example": "a condition which affects the nerves in the back",
+    "translation": "影响背部神经的疾病",
+    "phrases": [
+      "nerve oneself",
+      "optic nerve",
+      "peripheral nerve",
+      "facial nerve",
+      "sciatic nerve",
+      "nerve cell",
+      "nerve root",
+      "nerve fiber",
+      "sensory nerve",
+      "sympathetic nerve",
+      "vagus nerve",
+      "motor nerve",
+      "ulnar nerve",
+      "cranial nerve",
+      "median nerve",
+      "radial nerve",
+      "trigeminal nerve",
+      "nerve center",
+      "nerve tissue",
+      "have no nerves"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "outlook",
+    "phonetic": "/'aʊtlʊk/",
+    "partOfSpeech": "n",
+    "meaning": "观点，看法；展望；观点， 看法； 展望， 前景",
+    "example": "Exercise will improve your looks and your outlook.",
+    "translation": "运动将会改善你的外在形象和人生态度。",
+    "phrases": [
+      "outlook on",
+      "world outlook",
+      "outlook for",
+      "outlook on life",
+      "market outlook",
+      "economic outlook",
+      "mental outlook",
+      "positive outlook",
+      "optimistic outlook",
+      "microsoft outlook",
+      "on the outlook for"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "peculiar",
+    "phonetic": "/pɪ'kjulɪɚ/",
+    "partOfSpeech": "adj",
+    "meaning": "特有的；特别的；奇怪的， 古怪的； 特有的",
+    "example": "He’s been a little peculiar lately.",
+    "translation": "最近他有点怪异。",
+    "phrases": [
+      "peculiar institution"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "persist",
+    "phonetic": "/pɚ'sɪst/",
+    "partOfSpeech": "v/vi",
+    "meaning": "坚持，固执；持续；坚持， 持续",
+    "example": "‘I don’t think it’s right,’ John persisted.",
+    "translation": "“我认为那不对。”约翰坚持说道。",
+    "phrases": [
+      "persist in"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "pure",
+    "phonetic": "/pjʊr/",
+    "partOfSpeech": "adj",
+    "meaning": "纯粹的；纯洁的",
+    "example": "rings made of pure gold",
+    "translation": "纯金制成的戒指",
+    "phrases": [
+      "pure water",
+      "pure white",
+      "pure gold",
+      "pure love",
+      "pure land",
+      "pure copper",
+      "pure and simple",
+      "pure oxygen",
+      "pure wool",
+      "pure iron",
+      "pure silk",
+      "pure color",
+      "pure science",
+      "pure silver",
+      "pure form",
+      "pure light",
+      "pure metal",
+      "pure mathematics",
+      "pure culture",
+      "pure state"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "rational",
+    "phonetic": "/'ræʃnəl/",
+    "partOfSpeech": "adj",
+    "meaning": "神智清楚的；理性的；出于理性的；理性的， 理智的； 合理的",
+    "example": "Did he come across as a sane, rational person?",
+    "translation": "他看上去是不是一个头脑清醒而理智的人？",
+    "phrases": [
+      "rational design",
+      "rational choice",
+      "rational analysis",
+      "rational thinking",
+      "rational construction",
+      "rational function",
+      "rational number",
+      "rational behavior",
+      "rational expectation",
+      "rational formula",
+      "rational being",
+      "rational index"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "rear",
+    "phonetic": "/rɪr/",
+    "partOfSpeech": "n/adj/vt",
+    "meaning": "后部，后面；背面；后部的，背后的；后部，背面；后方；抚养， 饲养； 种植",
+    "example": "Carole was left to bring up the rear.",
+    "translation": "卡萝尔被落在最后。",
+    "phrases": [
+      "front and rear",
+      "rear axle",
+      "rear wheel",
+      "rear end",
+      "rear area",
+      "rear view",
+      "rear view mirror",
+      "rear seat",
+      "rear suspension",
+      "rear door",
+      "in the rear of",
+      "rear bumper",
+      "rear side",
+      "rear spoiler",
+      "rear projection",
+      "rear guard",
+      "rear brake",
+      "rear admiral",
+      "rear window",
+      "rear axle housing"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "row",
+    "phonetic": "/ro/",
+    "partOfSpeech": "n",
+    "meaning": "(一)排，(一)行",
+    "example": "(= many rows ) of shelves stacked with books",
+    "translation": "一排又一排堆满书的架子",
+    "phrases": [
+      "in a row",
+      "front row",
+      "single row",
+      "in row",
+      "death row",
+      "row over",
+      "row spacing",
+      "row out",
+      "skid row",
+      "row a boat",
+      "row space",
+      "row house"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "spur",
+    "phonetic": "/spɝ/",
+    "partOfSpeech": "n/v/vt",
+    "meaning": "刺激物；刺激；刺激， 鞭策， 激励",
+    "example": "The band were spurred on by the success of their last two singles.",
+    "translation": "乐队因最近两张单曲唱片的成功而深受鼓舞。",
+    "phrases": [
+      "spur gear",
+      "spur on",
+      "spur dike",
+      "spur track",
+      "spur line"
+    ],
+    "frequency": 32
+  },
+  {
+    "word": "tolerate",
+    "phonetic": "/'tɑləret/",
+    "partOfSpeech": "v/vt",
+    "meaning": "忍受，容忍，宽恕；忍受， 容忍； 容许， 承认",
+    "example": "We simply will not tolerate vigilante groups on our streets.",
+    "translation": "我们决不容许有自行惩办犯罪的组织出现在我们的街头。",
+    "phrases": [],
+    "frequency": 32
+  },
+  {
+    "word": "undergo",
+    "phonetic": "/,ʌndɚ'ɡo/",
+    "partOfSpeech": "v/vt",
+    "meaning": "承受；经历，经受，忍受；经历， 经受， 忍受； 接受",
+    "example": "The country has undergone massive changes recently.",
+    "translation": "这个国家最近经历了巨大的变化。",
+    "phrases": [],
+    "frequency": 32
+  },
+  {
+    "word": "adventure",
+    "phonetic": "/əd'vɛntʃɚ/",
+    "partOfSpeech": "n",
+    "meaning": "冒险；惊险活动；奇遇； 冒险， 冒险活动",
+    "example": "Come on – where’s your sense of adventure?",
+    "translation": "来吧——你的冒险精神哪里去了？",
+    "phrases": [
+      "adventure film"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "affection",
+    "phonetic": "/ə'fɛkʃən/",
+    "partOfSpeech": "n",
+    "meaning": "慈爱，爱；爱慕；感情； 爱， 爱慕",
+    "example": "She looked back on those days with affection .",
+    "translation": "她深情地回顾那些日子。",
+    "phrases": [],
+    "frequency": 31
+  },
+  {
+    "word": "appoint",
+    "phonetic": "/ə'pɔɪnt/",
+    "partOfSpeech": "v/vt",
+    "meaning": "任命，委派；约定，确定，指定；任命，委任；约定；任命， 委任； 约定， 指定",
+    "example": "officials appointed by the government",
+    "translation": "政府任命的官员",
+    "phrases": [],
+    "frequency": 31
+  },
+  {
+    "word": "architect",
+    "phonetic": "/'ɑrkɪtɛkt/",
+    "partOfSpeech": "n",
+    "meaning": "建筑师；建筑师， 设计师； 缔造者",
+    "example": "But I am an architect.",
+    "translation": "但是我是一名建筑师。",
+    "phrases": [
+      "landscape architect",
+      "chief architect",
+      "system architect",
+      "naval architect"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "attain",
+    "phonetic": "/ə'ten/",
+    "partOfSpeech": "v/vt",
+    "meaning": "达到，获得，完成；达到， 获得， 完成",
+    "example": "More women are attaining positions of power.",
+    "translation": "越来越多的女性获得要职。",
+    "phrases": [],
+    "frequency": 31
+  },
+  {
+    "word": "ball",
+    "phonetic": "/bɔl/",
+    "partOfSpeech": "n",
+    "meaning": "球，球状物；舞会",
+    "example": "a ball of string",
+    "translation": "线团",
+    "phrases": [
+      "ball mill",
+      "on the ball",
+      "ball valve",
+      "ball bearing",
+      "hit the ball",
+      "steel ball",
+      "play ball",
+      "ball screw",
+      "ball milling",
+      "crystal ball",
+      "rubber ball",
+      "ball pen",
+      "golden ball",
+      "tennis ball",
+      "soccer ball",
+      "golf ball",
+      "ball rolling",
+      "cotton ball",
+      "kick the ball",
+      "pass the ball"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "boast",
+    "phonetic": "/bost/",
+    "partOfSpeech": "v/vi/vt/n",
+    "meaning": "自夸；吹嘘；自夸；自豪；自夸，吹嘘；以拥有…而自豪；自吹自擂， 自夸的话",
+    "example": "‘I wouldn’t be afraid,’ she boasted.",
+    "translation": "“我才不怕呢。”她吹嘘道。",
+    "phrases": [
+      "boast of",
+      "boast about"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "cathedral",
+    "phonetic": "/kə'θidrəl/",
+    "partOfSpeech": "n",
+    "meaning": "总教堂；大教堂",
+    "example": "St Paul’s Cathedral",
+    "translation": "圣保罗大教堂",
+    "phrases": [],
+    "frequency": 31
+  },
+  {
+    "word": "clue",
+    "phonetic": "/klʊ/",
+    "partOfSpeech": "n",
+    "meaning": "线索；线索，暗示，提示；线索， 暗示， 提示",
+    "example": "Police have found a vital clue .",
+    "translation": "警方发现了至关重要的线索。",
+    "phrases": [
+      "clue in",
+      "get a clue",
+      "clue on",
+      "not have a clue"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "decent",
+    "phonetic": "/'disnt/",
+    "partOfSpeech": "adj",
+    "meaning": "正派的，体面的；正派的；体面的；像样的， 过得去的， 体面的； 宽厚的， 大方的； 正派的； 合乎礼仪的， 得体的",
+    "example": "a decent burial",
+    "translation": "得体的葬礼",
+    "phrases": [],
+    "frequency": 31
+  },
+  {
+    "word": "defeat",
+    "phonetic": "/dɪ'fit/",
+    "partOfSpeech": "v/n&vt",
+    "meaning": "战胜，击败；挫败；战胜， 挫败",
+    "example": "They hoped to defeat the enemy at sea.",
+    "translation": "他们希望在海上击败敌人。",
+    "phrases": [
+      "suffer defeat"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "drama",
+    "phonetic": "/'drɑmə/",
+    "partOfSpeech": "n",
+    "meaning": "一出戏剧，剧本；戏剧， 剧本； 戏剧性事件",
+    "example": "the great traditions of ancient Greek drama",
+    "translation": "古希腊戏剧的伟大传统",
+    "phrases": [
+      "tv drama",
+      "modern drama",
+      "drama club",
+      "dance drama",
+      "drama queen",
+      "drama school",
+      "song and dance drama",
+      "music drama"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "gasoline",
+    "phonetic": "/'gæsəlin/",
+    "partOfSpeech": "n",
+    "meaning": "(美)汽油；汽油",
+    "example": "A gasoline engine drives the motorboat.",
+    "translation": "汽油引擎推动汽船。",
+    "phrases": [
+      "gasoline engine",
+      "unleaded gasoline",
+      "gasoline tank",
+      "gasoline station",
+      "gasoline consumption",
+      "leaded gasoline",
+      "regular gasoline",
+      "premium gasoline",
+      "gasoline tax"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "greet",
+    "phonetic": "/ɡrit/",
+    "partOfSpeech": "v",
+    "meaning": "问候，招呼；反应",
+    "example": "Belinda greeted her warmly.",
+    "translation": "贝琳达热情地招呼她。",
+    "phrases": [
+      "greet something with something"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "headache",
+    "phonetic": "/ˈhɛdˌek/",
+    "partOfSpeech": "n",
+    "meaning": "头痛；头痛的事",
+    "example": "If you have a headache, you should take some aspirin.",
+    "translation": "要是头痛，你该吃点阿司匹林。",
+    "phrases": [
+      "have a headache",
+      "migraine headache",
+      "get a headache",
+      "cluster headache",
+      "tension headache"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "hesitate",
+    "phonetic": "/'hɛzɪtet/",
+    "partOfSpeech": "v/vi",
+    "meaning": "犹豫，踌躇；含糊；犹豫， 踌躇； 含糊； 不情愿",
+    "example": "I hesitate.",
+    "translation": "我犹豫。",
+    "phrases": [
+      "don't hesitate",
+      "hesitate in"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "index",
+    "phonetic": "/'ɪndɛks/",
+    "partOfSpeech": "n",
+    "meaning": "索引；指数；指标；索引； 指数， 指标",
+    "example": "...the consumer price index.",
+    "translation": "…消费价格指数。",
+    "phrases": [
+      "index system",
+      "refractive index",
+      "performance index",
+      "price index",
+      "quality index",
+      "stock index",
+      "body mass index",
+      "composite index",
+      "pollution index",
+      "index finger",
+      "consumer price index",
+      "diversity index",
+      "viscosity index",
+      "oxygen index",
+      "index number",
+      "quantitative index",
+      "financial index",
+      "permanganate index",
+      "refraction index",
+      "hang seng index"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "knock",
+    "phonetic": "/nɑk/",
+    "partOfSpeech": "vi&vt&n",
+    "meaning": "敲，击，打",
+    "example": "I knocked and knocked but nobody answered.",
+    "translation": "我把门敲了又敲，但无人回应。",
+    "phrases": [
+      "knock on",
+      "knock at",
+      "knock off",
+      "knock down",
+      "knock at the door",
+      "knock out",
+      "knock it off",
+      "knock on the door",
+      "knock over",
+      "knock in",
+      "knock on wood",
+      "knock up",
+      "knock back",
+      "knock against",
+      "knock sensor",
+      "knock into",
+      "knock off work"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "opera",
+    "phonetic": "/'ɑprə/",
+    "partOfSpeech": "n",
+    "meaning": "歌剧",
+    "example": "We go to the opera (= go to a performance of opera ) regularly.",
+    "translation": "我们常去听歌剧。",
+    "phrases": [
+      "opera house",
+      "beijing opera",
+      "peking opera",
+      "soap opera",
+      "chinese opera",
+      "sydney opera house",
+      "grand opera",
+      "cantonese opera",
+      "chinese traditional opera",
+      "shaoxing opera",
+      "comic opera",
+      "metropolitan opera",
+      "yue opera"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "oxygen",
+    "phonetic": "/'ɑksɪdʒən/",
+    "partOfSpeech": "n",
+    "meaning": "氧， 氧气",
+    "example": "The human brain needs to be without oxygen for only four minutes before permanent damage occurs.",
+    "translation": "人脑缺氧只需4分钟就会造成永久性损伤。",
+    "phrases": [
+      "oxygen content",
+      "dissolved oxygen",
+      "dissolved oxygen (DO)",
+      "dissolved oxygen (do)",
+      "oxygen consumption",
+      "oxygen supply",
+      "oxygen demand",
+      "hyperbaric oxygen",
+      "oxygen saturation",
+      "active oxygen",
+      "oxygen index",
+      "chemical oxygen demand (cod)",
+      "chemical oxygen demand (COD)",
+      "chemical oxygen demand",
+      "oxygen sensor",
+      "pure oxygen",
+      "oxygen therapy",
+      "oxygen enrichment",
+      "oxygen lance",
+      "oxygen bar"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "plunge",
+    "phonetic": "/plʌndʒ/",
+    "partOfSpeech": "v/n&v",
+    "meaning": "使投入；使陷入；纵身投入， 猛冲； 猛跌",
+    "example": "The government's political and economic reforms threaten to plunge the country into chaos.",
+    "translation": "该政府的政治和经济改革有可能使这个国家陷入混乱之中。",
+    "phrases": [
+      "plunge into",
+      "take the plunge",
+      "plunge pool"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "reception",
+    "phonetic": "/rɪ'sɛpʃən/",
+    "partOfSpeech": "n/adj",
+    "meaning": "接待；接待；招待会；接受；招待会， 欢迎会； 接受； 接待； 接收效果",
+    "example": "She was unsure of her reception after everything that had happened.",
+    "translation": "发生了这些事后，她对自己是否还受欢迎没把握。",
+    "phrases": [
+      "warm reception",
+      "reception desk",
+      "reception area",
+      "reception room",
+      "wedding reception",
+      "reception centre"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "seminar",
+    "phonetic": "/'sɛmɪnɑr/",
+    "partOfSpeech": "n",
+    "meaning": "研究班， 研讨会",
+    "example": "a Shakespeare seminar",
+    "translation": "莎士比亚研讨班",
+    "phrases": [
+      "seminar course"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "stereotype",
+    "phonetic": "/'stɛrɪətaɪp/",
+    "partOfSpeech": "n/vt",
+    "meaning": "老套，固定模式；陈规，老套，固定的模式；铅版；把…浇铸成铅版； 对…形成固定看法",
+    "example": "There's always been a stereotype about successful businessmen.",
+    "translation": "对成功的商人们总有一种成见。",
+    "phrases": [],
+    "frequency": 31
+  },
+  {
+    "word": "twin",
+    "phonetic": "/twɪn/",
+    "partOfSpeech": "adj/n",
+    "meaning": "孪生的；孪生儿",
+    "example": "I always confounded him with his twin brother.",
+    "translation": "我总分不清他和他的孪生兄弟。",
+    "phrases": [
+      "twin screw",
+      "twin sister",
+      "twin brother",
+      "twin towers",
+      "twin room",
+      "twin cities",
+      "identical twin",
+      "deformation twin",
+      "twin bed"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "underground",
+    "phonetic": "/ʌndɚˈɡraʊnd/",
+    "partOfSpeech": "adv/adj/n",
+    "meaning": "在地下，往地下；秘密地，不公开地；地下的；秘密的，不公开的；地铁； 地下组织",
+    "example": "This animal spends most of its life underground.",
+    "translation": "这种动物一生中的大部分时间都待在地下。",
+    "phrases": [
+      "underground water",
+      "underground space",
+      "underground mining",
+      "an underground",
+      "underground mine",
+      "underground garage",
+      "underground pipeline",
+      "underground structure",
+      "underground parking",
+      "underground tunnel",
+      "underground construction",
+      "underground railway",
+      "underground excavation",
+      "underground river",
+      "underground station",
+      "underground gasification",
+      "underground passage",
+      "underground car park",
+      "underground cable",
+      "underground system"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "upward",
+    "phonetic": "/'ʌpwɚd/",
+    "partOfSpeech": "adj",
+    "meaning": "向上的，上升的",
+    "example": "upward pressure on bank interest rates",
+    "translation": "针对银行利率的越来越大的压力",
+    "phrases": [
+      "upward pressure",
+      "upward tendency",
+      "upward mobility",
+      "upward flow",
+      "move upward",
+      "upward movement",
+      "upward thrust"
+    ],
+    "frequency": 31
+  },
+  {
+    "word": "annoy",
+    "phonetic": "/ə'nɔɪ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "使反感，厌烦；使恼怒；打搅；使恼怒； 打搅",
+    "example": "Try making a note of the things that annoy you.",
+    "translation": "试着把让你心烦的事记下来。",
+    "phrases": [],
+    "frequency": 30
+  },
+  {
+    "word": "brick",
+    "phonetic": "/brɪk/",
+    "partOfSpeech": "n",
+    "meaning": "砖，砖块；砖状物；砖， 砖块， 砖状物",
+    "example": "a brick wall",
+    "translation": "砖墙",
+    "phrases": [
+      "brick wall",
+      "red brick",
+      "brick by brick",
+      "clay brick",
+      "brick masonry",
+      "hollow brick",
+      "refractory brick",
+      "brick house",
+      "brick red",
+      "brick tea",
+      "air brick",
+      "silica brick",
+      "concrete brick",
+      "wall brick",
+      "brick kiln",
+      "cement brick",
+      "porous brick",
+      "fire brick",
+      "the bricks and mortar",
+      "insulating brick"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "bush",
+    "phonetic": "/bʊʃ/",
+    "partOfSpeech": "n",
+    "meaning": "灌木，灌木丛，矮树",
+    "example": "a rose bush",
+    "translation": "玫瑰丛",
+    "phrases": [
+      "george bush",
+      "around the bush",
+      "beat about the bush",
+      "bearing bush",
+      "beat around the bush",
+      "bush bearing",
+      "drill bush",
+      "copper bush"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "chef",
+    "phonetic": "/ʃɛf/",
+    "partOfSpeech": "n",
+    "meaning": "厨师",
+    "example": "a master chef",
+    "translation": "手艺高超的厨师长",
+    "phrases": [
+      "sous chef"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "constitution",
+    "phonetic": "/'kɑnstə'tʊʃən/",
+    "partOfSpeech": "n",
+    "meaning": "章程；体质；构造；宪法， 章程； 组成； 设立",
+    "example": "The right to speak freely is written into the Constitution of the United States.",
+    "translation": "言论自由的权利被写入美国宪法。",
+    "phrases": [
+      "chemical constitution",
+      "physical constitution",
+      "written constitution",
+      "amendments to the constitution",
+      "federal constitution",
+      "economic constitution",
+      "genetic constitution"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "definite",
+    "phonetic": "/'dɛfɪnət/",
+    "partOfSpeech": "adj",
+    "meaning": "明确的；肯定的；明确的， 肯定的",
+    "example": "It’s impossible for me to give you a definite answer.",
+    "translation": "我不可能给你明确的答复。",
+    "phrases": [
+      "definite integral",
+      "positive definite",
+      "definite time",
+      "definite value",
+      "positive definite matrix",
+      "definite condition",
+      "definite article",
+      "definite form",
+      "definite quantity"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "dictate",
+    "phonetic": "/'dɪktet/",
+    "partOfSpeech": "v & n/vt&vi/v/n",
+    "meaning": "命令，规定；口授；命令；口授； 命令， 规定， 要求；命令， 指挥",
+    "example": "Federal funds have to be used as dictated by Washington.",
+    "translation": "联邦款项得按照华盛顿规定的途径使用。",
+    "phrases": [],
+    "frequency": 30
+  },
+  {
+    "word": "drift",
+    "phonetic": "/drɪft/",
+    "partOfSpeech": "v/n/vi",
+    "meaning": "漂流，漂泊；漂流；漂流； 大意， 主旨； 趋势",
+    "example": "Smoke drifted up from the jungle ahead of us.",
+    "translation": "我们前方的丛林里有烟升起。",
+    "phrases": [
+      "temperature drift",
+      "genetic drift",
+      "zero drift",
+      "drift into",
+      "drift along",
+      "drift away",
+      "baseline drift",
+      "drift sand",
+      "drift tube",
+      "drift apart",
+      "drift angle",
+      "frequency drift",
+      "wind drift",
+      "drift velocity",
+      "drift region",
+      "continental drift",
+      "low drift",
+      "drift out",
+      "drift off",
+      "on the drift"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "enlarge",
+    "phonetic": "/ɪn'lɑrdʒ/",
+    "partOfSpeech": "v/vt",
+    "meaning": "扩大，扩展；放大；扩大， 扩展， 放大",
+    "example": "an operation to enlarge her breasts",
+    "translation": "她的丰胸手术",
+    "phrases": [
+      "enlarge on"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "flourish",
+    "phonetic": "/ˈflɜːrɪʃ/",
+    "partOfSpeech": "v/vi/vt",
+    "meaning": "繁荣，茂盛，兴旺；挥动",
+    "example": "The economy is booming and small businesses are flourishing.",
+    "translation": "经济繁荣，小企业蒸蒸日上。",
+    "phrases": [
+      "a flourish of trumpets",
+      "in full flourish"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "frame",
+    "phonetic": "/frem/",
+    "partOfSpeech": "n/vt",
+    "meaning": "框架；框架，框子；构架；框架，框子，构架；给…镶框； 陷害， 诬告； 制定； 表达",
+    "example": "They removed the picture from its wooden frame.",
+    "translation": "他们把画从木镜框中取下来。",
+    "phrases": [
+      "frame structure",
+      "steel frame",
+      "frame in",
+      "photo frame",
+      "reference frame",
+      "rigid frame",
+      "time frame",
+      "concrete frame",
+      "spinning frame",
+      "frame of reference",
+      "picture frame",
+      "frame of mind",
+      "main frame",
+      "structural frame",
+      "machine frame",
+      "frame rate",
+      "frame work",
+      "rigid frame bridge",
+      "frame construction",
+      "window frame"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "gaze",
+    "phonetic": "/ɡeɪz/",
+    "partOfSpeech": "v/n&vi",
+    "meaning": "凝视，盯，注视；凝视， 盯， 注视",
+    "example": "Patrick sat gazing into space (= looking straight in front, not at any particular person or thing ).",
+    "translation": "帕特里克坐着，茫然地看着前方。",
+    "phrases": [
+      "gaze at",
+      "at gaze",
+      "gaze out"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "inch",
+    "phonetic": "/ɪntʃ/",
+    "partOfSpeech": "n",
+    "meaning": "英寸",
+    "example": "The curtains were an inch too short.",
+    "translation": "窗帘短了一英寸。",
+    "phrases": [
+      "every inch",
+      "inch by",
+      "square inch",
+      "inch by inch",
+      "within an inch of",
+      "by inches",
+      "pounds per square inch"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "incredible",
+    "phonetic": "/ɪn'krɛdəbl/",
+    "partOfSpeech": "adj",
+    "meaning": "不可思议的；不能相信的， 不可信的； 难以置信的， 不可思议的； 惊人的",
+    "example": "It’s incredible that he survived the fall.",
+    "translation": "他跌下去竟然能够生还，真不可思议。",
+    "phrases": [],
+    "frequency": 30
+  },
+  {
+    "word": "junior",
+    "phonetic": "/'dʒunɪɚ/",
+    "partOfSpeech": "adj/n",
+    "meaning": "年少的；晚辈；年少的；资历较浅的；晚辈； 三年级学生",
+    "example": "the junior football club",
+    "translation": "青少年足球俱乐部",
+    "phrases": [
+      "junior high",
+      "junior high school",
+      "junior middle school",
+      "junior college",
+      "junior school",
+      "junior student",
+      "super junior",
+      "junior college student",
+      "junior staff",
+      "junior partner",
+      "junior clerk",
+      "junior accountant"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "lung",
+    "phonetic": "/lʌŋ/",
+    "partOfSpeech": "n",
+    "meaning": "肺脏，肺；肺",
+    "example": "Smoking can cause lung cancer.",
+    "translation": "吸烟会引起肺癌。",
+    "phrases": [
+      "lung cancer",
+      "lung transplantation",
+      "lung volume",
+      "lung capacity",
+      "green lung",
+      "lung plague",
+      "wet lung",
+      "black lung"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "mature",
+    "phonetic": "/mə'tʃʊr/",
+    "partOfSpeech": "adj/v/vt",
+    "meaning": "成熟的；使成熟；成熟的；成年人的；深思熟虑的；到期的，应支付的",
+    "example": "Laura is very mature for her age .",
+    "translation": "相对她的年龄来说劳拉是很成熟的。",
+    "phrases": [
+      "mature market",
+      "mature stage",
+      "mature market economy",
+      "mature embryo",
+      "mature adult"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "mechanic",
+    "phonetic": "/mə'kænɪk/",
+    "partOfSpeech": "n",
+    "meaning": "机械师；技工，机械，机修工；技工， 机修工； 力学， 机械学； 过程， 方法， 技术性细节",
+    "example": "a garage mechanic",
+    "translation": "汽车修理厂的技工",
+    "phrases": [
+      "mechanic design",
+      "car mechanic"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "organ",
+    "phonetic": "/'ɔrɡən/",
+    "partOfSpeech": "n",
+    "meaning": "器官；器官；机构；管风琴；器官； 机构； 管风琴； 新闻媒介",
+    "example": "the liver, heart, and other internal organs",
+    "translation": "肝脏、心脏及其他内脏器官",
+    "phrases": [
+      "administrative organ",
+      "organ transplantation",
+      "sense organ",
+      "organ transplant",
+      "procuratorial organ",
+      "target organ",
+      "reproductive organ",
+      "government organ",
+      "electronic organ",
+      "organ system",
+      "sex organ",
+      "sensory organ",
+      "internal organ",
+      "pipe organ",
+      "hollow organ",
+      "part organ",
+      "genital organ",
+      "organ pipe",
+      "floral organ",
+      "artificial organ"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "pack",
+    "phonetic": "/pæk/",
+    "partOfSpeech": "v/n/vt",
+    "meaning": "捆扎；挤满；包；捆扎，把…打包；使挤在一起，塞满；包， 小盒",
+    "example": "Hundreds of people packed into the mosque.",
+    "translation": "成百上千的人挤进了清真寺。",
+    "phrases": [
+      "a pack of",
+      "pack up",
+      "battery pack",
+      "pack in",
+      "pack with",
+      "power pack",
+      "gravel pack",
+      "pack it in",
+      "ice pack",
+      "a pack of cigarettes",
+      "pack into",
+      "pack ice",
+      "service pack",
+      "blister pack",
+      "pack rat",
+      "face pack",
+      "jet pack",
+      "hot pack",
+      "back pack",
+      "pack it up"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "piano",
+    "phonetic": "/pɪ'æno/",
+    "partOfSpeech": "n",
+    "meaning": "钢琴",
+    "example": "Jean accompanied her on the piano .",
+    "translation": "琼为她钢琴伴奏。",
+    "phrases": [
+      "play the piano",
+      "piano music",
+      "play piano",
+      "piano concerto",
+      "piano lessons",
+      "grand piano",
+      "piano keyboard",
+      "electronic piano"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "poem",
+    "phonetic": "/'poəm/",
+    "partOfSpeech": "n",
+    "meaning": "诗，韵文，诗体文；诗",
+    "example": "...a book of love poems.",
+    "translation": "…一本爱情诗集。",
+    "phrases": [
+      "love poem",
+      "narrative poem",
+      "prose poem",
+      "symphonic poem"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "profile",
+    "phonetic": "/'profaɪl/",
+    "partOfSpeech": "n/vt",
+    "meaning": "侧面；人物简介；轮廓，形象；姿态，引人注目的状态；为…描绘； 写…的传略",
+    "example": "Dani has a lovely profile.",
+    "translation": "达尼的侧面轮廓很好看。",
+    "phrases": [
+      "high profile",
+      "low profile",
+      "company profile",
+      "tooth profile",
+      "temperature profile",
+      "surface profile",
+      "cam profile",
+      "profile error",
+      "user profile",
+      "velocity profile",
+      "profile modification",
+      "soil profile",
+      "profile modeling",
+      "involute profile",
+      "profile analysis",
+      "blade profile",
+      "keep a low profile",
+      "depth profile",
+      "roll profile",
+      "personal profile"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "pump",
+    "phonetic": "/pʌmp/",
+    "partOfSpeech": "n/v/vt",
+    "meaning": "泵；用抽机抽；抽， 泵送， 打气",
+    "example": "...pumps that circulate the fuel around in the engine.",
+    "translation": "…使燃料在发动机内循环的压泵。",
+    "phrases": [
+      "heat pump",
+      "water pump",
+      "centrifugal pump",
+      "pump in",
+      "oil pump",
+      "vacuum pump",
+      "pump station",
+      "screw pump",
+      "hydraulic pump",
+      "gear pump",
+      "submersible pump",
+      "jet pump",
+      "fuel pump",
+      "injection pump",
+      "piston pump",
+      "pump power",
+      "pump body",
+      "air pump",
+      "pump unit",
+      "pump efficiency"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "remedy",
+    "phonetic": "/'rɛmədi/",
+    "partOfSpeech": "n/n&vt/vt",
+    "meaning": "药物；治疗；补救；补救办法，纠正办法；药品；治疗法；补救， 纠正； 医治， 治疗",
+    "example": "a home remedy (= one that you make at home ) for sore throats",
+    "translation": "治疗喉咙疼痛的家庭疗法",
+    "phrases": [
+      "remedy for",
+      "sovereign remedy",
+      "legal remedy",
+      "folk remedy"
+    ],
+    "frequency": 30
+  },
+  {
+    "word": "scatter",
+    "phonetic": "/'skætɚ/",
+    "partOfSpeech": "v",
+    "meaning": "使消散；撒；散播；撒， 散播； 散开， 驱散",
+    "example": "The sound of gunfire made the crowd scatter in all directions.",
+    "translation": "枪声使人群四散奔逃。",
+    "phrases": [],
+    "frequency": 30
+  },
+  {
+    "word": "subway",
+    "phonetic": "/'sʌbwe/",
+    "partOfSpeech": "n",
+    "meaning": "地道；地下铁路；地道； 地铁",
+    "example": "the New York City subway",
+    "translation": "纽约市的地铁",
+    "phrases": [
+      "subway station",
+      "take the subway",
+      "subway system",
+      "by subway",
+      "pedestrian subway"
+    ],
+    "frequency": 30
+  }
+]
