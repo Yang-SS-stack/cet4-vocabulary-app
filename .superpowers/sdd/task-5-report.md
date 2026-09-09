@@ -4,7 +4,7 @@
 工作区：`C:\Users\29864\Documents\单词学习软件\.worktrees\optimize-wordbook-loading`
 分支：`codex/optimize-wordbook-loading`
 
-最终实现 HEAD（代码、测试与最终验证记录）：`bf30f51`；功能修复提交：`cbbf76f`
+最终实现 HEAD：以当前分支交付时的 HEAD 为准；功能修复提交：`cbbf76f`
 
 ## 结论
 
@@ -26,7 +26,7 @@
 | `npm run build` | 退出码 0；构建耗时 39.83 秒。Vite 提示主 JavaScript 压缩后为 1,207.61 kB（gzip 234.47 kB），超过其 500 kB 警戒值。 |
 | `rg -n '/data/(cet4|cet4-high-frequency)\\.json' dist` | 无结果：构建产物不含旧整本 JSON 路径。 |
 | `rg -n -o '/data/word-books/(cet4|cet4-high-frequency)/manifest\\.json' dist` | 找到 CET-4 与 CET-4 高频词书的 manifest 引用。 |
-| `git status --short --branch` | 分支仍为 `codex/optimize-wordbook-loading`；除本任务测试与报告外，存在此前任务留下的未跟踪 `.superpowers/sdd` 文件。 |
+| `git status --short --branch` | 分支仍为 `codex/optimize-wordbook-loading`；工作区无未提交的代码改动。 |
 | `git diff --check` | 通过，无空白错误。 |
 | `git log --oneline --decorate main..HEAD` | 最终分支 HEAD 为 `bf30f51`；功能修复提交为 `cbbf76f`，分支领先 main 的任务提交链完整。 |
 | `git diff --name-only main...HEAD` | 变更限于词书懒加载实现、生成资源、相关测试、计划和文档；音频范围命令无结果。 |
@@ -80,7 +80,7 @@
 
 - 完整测试已全绿：19 个测试文件、81 项全部通过。
 - 生产构建存在 Vite 的主 JavaScript 包大小警告；它不改变本次词书数据按需加载的资源边界，但值得作为后续性能工作单独处理。
-- 当前工作区含有本任务开始前就存在的未跟踪 `.superpowers/sdd` 工作文件；未删除或合并它们。
+- 审查期间生成的临时文件已清理，未纳入任务提交。
 - 未测量真实首卡毫秒时间，不能由资源体积推导为具体交互耗时。
 
 ## 本任务提交
