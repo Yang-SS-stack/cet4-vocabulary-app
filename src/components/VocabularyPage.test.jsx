@@ -125,7 +125,7 @@ test('keeps visible cards while a later page is loading', async () => {
   await user.click(screen.getByRole('button', { name: '下一页' }))
 
   expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
-  expect(screen.getByText('正在加载当前结果...')).toBeInTheDocument()
+  expect(screen.getByText('正在加载当前结果...')).toHaveAttribute('role', 'status')
 })
 
 test('reports an index failure without removing browseable cards', async () => {
@@ -133,7 +133,7 @@ test('reports an index failure without removing browseable cards', async () => {
   await openSessionBook({ session })
 
   expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
-  expect(await screen.findByText('搜索索引读取失败，词卡浏览仍可继续。')).toBeInTheDocument()
+  expect(await screen.findByText('搜索索引读取失败，词卡浏览仍可继续。')).toHaveAttribute('role', 'status')
 })
 
 async function openBrowseBook(words = browseWords) {
