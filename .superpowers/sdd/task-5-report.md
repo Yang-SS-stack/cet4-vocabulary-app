@@ -4,7 +4,7 @@
 工作区：`C:\Users\29864\Documents\单词学习软件\.worktrees\optimize-wordbook-loading`
 分支：`codex/optimize-wordbook-loading`
 
-最终实现 HEAD（代码与测试）：`cbbf76f`
+最终实现 HEAD（代码、测试与最终验证记录）：`a78d697`；功能修复提交：`cbbf76f`
 
 ## 结论
 
@@ -28,7 +28,7 @@
 | `rg -n -o '/data/word-books/(cet4|cet4-high-frequency)/manifest\\.json' dist` | 找到 CET-4 与 CET-4 高频词书的 manifest 引用。 |
 | `git status --short --branch` | 分支仍为 `codex/optimize-wordbook-loading`；除本任务测试与报告外，存在此前任务留下的未跟踪 `.superpowers/sdd` 文件。 |
 | `git diff --check` | 通过，无空白错误。 |
-| `git log --oneline --decorate main..HEAD` | 代码与测试最终验证提交为 `cbbf76f`，分支领先 main 的任务提交链完整。 |
+| `git log --oneline --decorate main..HEAD` | 最终分支 HEAD 为 `a78d697`；功能修复提交为 `cbbf76f`，分支领先 main 的任务提交链完整。 |
 | `git diff --name-only main...HEAD` | 变更限于词书懒加载实现、生成资源、相关测试、计划和文档；音频范围命令无结果。 |
 | `npm run preview -- --host 127.0.0.1 --port 4173` | 本地预览可访问。 |
 
@@ -86,3 +86,5 @@
 ## 本任务提交
 
 `cbbf76f fix: recover word book search status`：包含最终代码与测试验证；不包含音频文件，且不合入 main、不推送远程。
+
+`a78d697 docs: refresh word book verification report`：同步最终分支 HEAD、测试结果和验证记录。
