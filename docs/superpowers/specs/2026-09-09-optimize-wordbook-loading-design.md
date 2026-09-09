@@ -156,4 +156,3 @@ public/data/word-books/cet4-high-frequency/
 - 改造后首屏 manifest、首屏详情分片和首屏可见时间；
 - 搜索索引首次加载体积和是否被首屏显示阻塞；
 - 第二次进入同一本词书时的请求数量，确认会话缓存生效。
-

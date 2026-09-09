@@ -52,6 +52,10 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook }) {
       setCurrentPage(page)
       setDisplayedQuery(requestedQuery)
       setDisplayedSort(requestedSort)
+      const needsIndex = typeof session.requiresIndex === 'function'
+        ? session.requiresIndex({ sort: requestedSort, page, query: requestedQuery })
+        : Boolean(requestedQuery.trim())
+      if (needsIndex) setIndexState('ready')
       setPageLoadState('ready')
       setHasLoadedPage(true)
     } catch {
@@ -198,7 +202,7 @@ function BookContent({ book, bookId, pageData, pageLoadState, indexState, pageEr
       {pageLoadState === 'loading' && <p className="vocabulary-load-status" role="status">正在加载当前结果...</p>}
       {pageError && <p className="vocabulary-load-status vocabulary-load-status--error" role="status">当前结果加载失败，请重试或返回词书。 <button type="button" onClick={onRetryPage}>重试当前结果</button></p>}
     </div>
-    {displayedSort === 'frequency' && !hasFrequency && <p className="vocabulary-data-note">本词书暂无词频数据，当前按字母顺序显示。</p>}
+    {displayedSort === 'frequency' && pageData.total > 0 && !hasFrequency && <p className="vocabulary-data-note">本词书暂无词频数据，当前按字母顺序显示。</p>}
     {pageData.words.length === 0 ? <div className="vocabulary-empty">
       <h3>{displayedQuery.trim() ? '没有找到匹配的单词' : '这本词书暂无单词'}</h3>
       <p>{displayedQuery.trim() ? '试试更短的英文拼写或其他中文释义。' : '可以返回词书列表，选择其他词书。'}</p>

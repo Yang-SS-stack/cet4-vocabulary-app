@@ -109,6 +109,25 @@ function retryableIndexSession(words) {
   }
 }
 
+function retryableSearchIndexSession(words) {
+  let attempts = 0
+  const inlineSession = createInlineWordBookSession(words)
+  const indexReady = Promise.reject(new Error('index unavailable'))
+  indexReady.catch(() => {})
+  const loadIndex = vi.fn(() => {
+    attempts += 1
+    return attempts === 1 ? Promise.reject(new Error('index unavailable')) : Promise.resolve()
+  })
+  return {
+    indexReady,
+    loadIndex,
+    loadPage: async (options) => {
+      if (options.query.trim()) await loadIndex()
+      return inlineSession.loadPage(options)
+    },
+  }
+}
+
 function retryablePageSession() {
   let attempts = 0
   return {
@@ -173,13 +192,19 @@ test('keeps visible cards while a later page is loading', async () => {
   expect(screen.getByText('正在加载当前结果...')).toHaveAttribute('role', 'status')
 })
 
-test('reports an index failure without removing browseable cards', async () => {
-  const session = searchableSession([{ ...browseWords[0], word: 'abruptly' }], { rejectIndex: true })
-  await openSessionBook({ session })
+test('recovers a failed index when direct search retries it without hiding cards', async () => {
+  const session = retryableSearchIndexSession([
+    { ...browseWords[0], word: 'abruptly', meaning: '突然地' },
+    { ...browseWords[0], word: 'quickly', meaning: '快速地' },
+  ])
+  const user = await openSessionBook({ session })
 
   expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
   await waitFor(() => expect(statusContaining('搜索索引读取失败')).toBeTruthy())
-  expect(statusContaining('搜索索引读取失败')).toHaveAttribute('role', 'status')
+  await user.type(screen.getByRole('searchbox'), '突然')
+
+  expect(await screen.findByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
+  await waitFor(() => expect(statusContaining('搜索索引读取失败')).toBeUndefined())
 })
 
 test('reports a later page failure without removing visible cards', async () => {
@@ -490,6 +515,10 @@ test('opens the CET-4 high-frequency book in descending frequency order and retu
     expect.stringContaining('affect'),
     expect.stringContaining('achieve'),
   ])
+
+  await user.type(screen.getByRole('searchbox'), '不存在')
+  expect(await screen.findByText('没有找到匹配的单词')).toBeInTheDocument()
+  expect(screen.queryByText('本词书暂无词频数据，当前按字母顺序显示。')).not.toBeInTheDocument()
 
   await user.click(screen.getByRole('button', { name: '返回词书' }))
 

@@ -1,14 +1,16 @@
 # Task 5：完整验证、性能对比和最终分支审计
 
-日期：2026-09-09  
-工作区：`C:\Users\29864\Documents\单词学习软件\.worktrees\optimize-wordbook-loading`  
+日期：2026-09-09
+工作区：`C:\Users\29864\Documents\单词学习软件\.worktrees\optimize-wordbook-loading`
 分支：`codex/optimize-wordbook-loading`
+
+最终实现 HEAD（代码与测试）：`d17213b`
 
 ## 结论
 
 - 发现并最小修复了一项测试夹具（`src/App.test.jsx`）与当前 manifest 加载协议不一致的问题：旧测试把整本 JSON 数组伪装成 manifest 响应，导致 CET-4 测试显示“词库读取失败”。修复后该测试文件 12/12 通过。
-- `npm run lint` 和 `npm run build` 均以退出码 0 完成。
-- 完整测试最终为 73/75 通过、2 个超时失败：已知的 `src/data/audioManifest.test.js`，以及本次全套并行负载下偶发的 `src/components/particleMotion.test.js`。后者单独复跑为 2/2 通过（2.717 秒），因此未改动任何音频或粒子文件。
+- 最终修复了索引失败后直接搜索的状态恢复，以及高频词书空搜索时的词频提示；`npm run lint` 和 `npm run build` 均以退出码 0 完成。
+- 完整测试最终为 19 个测试文件、81 项全部通过。
 - 生产构建只引用新的 manifest 路径，未发现旧整本 JSON 请求路径。
 - 未合入 `main`，未推送远程。
 
@@ -18,49 +20,27 @@
 | --- | --- |
 | `npm test -- --reporter=verbose`（初次） | 73/75 通过；`audioManifest.test.js` 超时；`App.test.jsx` 旧夹具与 manifest 协议不一致，失败。 |
 | `npm test -- src/App.test.jsx --reporter=verbose` | 12/12 通过，退出码 0。 |
-| `npm test -- --reporter=verbose`（修复后） | 73/75 通过、2 超时：`audioManifest.test.js` 和 `particleMotion.test.js`，退出码 1。 |
+| `npm test -- src/components/VocabularyPage.test.jsx src/data/wordBookSession.test.js --maxWorkers=1` | 29/29 通过，退出码 0。 |
+| `npm test -- --maxWorkers=2`（最终） | 81/81 通过，退出码 0。 |
 | `npm run lint` | 退出码 0。 |
-| `npm test -- src/components/particleMotion.test.js --reporter=verbose` | 2/2 通过，耗时 2.717 秒，退出码 0。 |
 | `npm run build` | 退出码 0；构建耗时 39.83 秒。Vite 提示主 JavaScript 压缩后为 1,207.61 kB（gzip 234.47 kB），超过其 500 kB 警戒值。 |
 | `rg -n '/data/(cet4|cet4-high-frequency)\\.json' dist` | 无结果：构建产物不含旧整本 JSON 路径。 |
 | `rg -n -o '/data/word-books/(cet4|cet4-high-frequency)/manifest\\.json' dist` | 找到 CET-4 与 CET-4 高频词书的 manifest 引用。 |
 | `git status --short --branch` | 分支仍为 `codex/optimize-wordbook-loading`；除本任务测试与报告外，存在此前任务留下的未跟踪 `.superpowers/sdd` 文件。 |
-| `git diff --check` | 无空白错误；PowerShell 提示 `src/App.test.jsx` 下次被 Git 写入时会由 LF 转为 CRLF。 |
-| `git log --oneline --decorate main..HEAD` | HEAD 为 `5efbb78 test: cover word book page load failures`，分支领先 main 的任务提交链完整。 |
+| `git diff --check` | 通过，无空白错误。 |
+| `git log --oneline --decorate main..HEAD` | 代码与测试最终验证提交为 `d17213b`，分支领先 main 的任务提交链完整。 |
 | `git diff --name-only main...HEAD` | 变更限于词书懒加载实现、生成资源、相关测试、计划和文档；音频范围命令无结果。 |
 | `npm run preview -- --host 127.0.0.1 --port 4173` | 本地预览可访问。 |
 
 后台预览启动尝试因执行环境策略被拦截，随后使用前台预览会话成功启动；这不是应用错误。
 
-## 完整测试失败信息
+## 完整测试结果
 
-### 已知音频基线问题
-
-`src/data/audioManifest.test.js > audio manifest records the approved voices and every vocabulary audio file`
-
-```text
-Error: Test timed out in 5000ms.
-If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
-❯ src/data/audioManifest.test.js:7:1
-```
-
-此次验证中它在 5.489 秒时失败；初次运行时在 7.239 秒时失败。依任务边界，未修改音频相关文件。
-
-### 偶发粒子动画超时
-
-`src/components/particleMotion.test.js > motion starts at the source and converges to the destination without a phase jump`
-
-```text
-Error: Test timed out in 5000ms.
-If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
-❯ src/components/particleMotion.test.js:14:1
-```
-
-它只在第二次全量、并行运行 lint 的负载下超时（5.750 秒），随后单独复跑通过（2.717 秒）。本任务未找到稳定复现的实现缺陷，未改动该文件。
+最终全量测试为 19 个测试文件、81 项全部通过。依任务边界，未修改音频相关文件。
 
 ## 资源体积（原始字节）
 
-| 词书 | 旧整本 JSON | 新 manifest | 新首屏详情分片 `chunks/00.json` | manifest + 首屏分片 | 初始请求体积减少 |
+| 词书 | 旧整本 JSON | 新 manifest | 新首屏详情分片 `chunks/00.json` | 首屏必需资源合计 | 相对旧整本 JSON 减少 |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | CET-4 | 1,813,232 B | 1,834 B | 63,141 B | 64,975 B | 96.42% |
 | CET-4 高频词汇 | 1,243,631 B | 1,314 B | 76,029 B | 77,343 B | 93.78% |
@@ -98,11 +78,11 @@ If this is a long-running test, pass a timeout value as the last argument or con
 
 ## 疑虑与限制
 
-- 完整测试目前不能达到全绿：音频清单超时为已知基线；粒子动画测试在一次高负载全量运行中也超时，但无法单独稳定复现。
+- 完整测试已全绿：19 个测试文件、81 项全部通过。
 - 生产构建存在 Vite 的主 JavaScript 包大小警告；它不改变本次词书数据按需加载的资源边界，但值得作为后续性能工作单独处理。
 - 当前工作区含有本任务开始前就存在的未跟踪 `.superpowers/sdd` 工作文件；未删除或合并它们。
 - 未测量真实首卡毫秒时间，不能由资源体积推导为具体交互耗时。
 
 ## 本任务提交
 
-`bc68a2c test: align word book app fixture with manifest loading`：包含 `src/App.test.jsx` 的 manifest 测试夹具修复与本报告；不包含音频文件，且不合入 main、不推送远程。
+`d17213b fix: harden lazy word book retries and view state`：包含最终代码与测试验证；不包含音频文件，且不合入 main、不推送远程。

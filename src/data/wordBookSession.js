@@ -81,6 +81,7 @@ function validateIndex(index, manifest) {
 export function createInlineWordBookSession(words) {
   const loadIndex = () => Promise.resolve()
   return {
+    requiresIndex: () => false,
     get indexReady() {
       return loadIndex()
     },
@@ -157,6 +158,7 @@ export function createRemoteWordBookSession(manifest, manifestUrl, fetchImpl) {
   }
 
   return {
+    requiresIndex: ({ sort, page, query }) => !(sort === manifest.defaultSort && page === 1 && !query.trim()),
     get indexReady() {
       return getIndexReady()
     },
