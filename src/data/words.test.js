@@ -13,8 +13,8 @@ test('contains the complete CET-4 vocabulary list', () => {
 
 test('keeps production word books as data-file references', () => {
   expect(wordBooks).toEqual(expect.arrayContaining([
-    expect.objectContaining({ id: 'cet4', dataUrl: '/data/word-books/cet4/manifest.json' }),
-    expect.objectContaining({ id: 'cet4-high-frequency', dataUrl: '/data/word-books/cet4-high-frequency/manifest.json' }),
+    expect.objectContaining({ id: 'cet4', dataUrl: `${import.meta.env.BASE_URL}data/word-books/cet4/manifest.json` }),
+    expect.objectContaining({ id: 'cet4-high-frequency', dataUrl: `${import.meta.env.BASE_URL}data/word-books/cet4-high-frequency/manifest.json` }),
   ]))
   expect(wordBooks.every((book) => !('words' in book))).toBe(true)
 })

@@ -46,6 +46,12 @@ function isStringArray(value) {
   return Array.isArray(value) && value.every((item) => typeof item === 'string' && item.length > 0)
 }
 
+function isWordDetailArray(value) {
+  return Array.isArray(value) && value.every((word) => (
+    word && typeof word === 'object' && typeof word.word === 'string' && word.word.length > 0
+  ))
+}
+
 function validateManifest(value) {
   return value && typeof value === 'object'
     && Number.isInteger(value.total) && value.total >= 0
@@ -73,8 +79,12 @@ function validateIndex(index, manifest) {
 }
 
 export function createInlineWordBookSession(words) {
+  const loadIndex = () => Promise.resolve()
   return {
-    indexReady: Promise.resolve(),
+    get indexReady() {
+      return loadIndex()
+    },
+    loadIndex,
     async loadPage({ sort, page, query }) {
       const filtered = query.trim() ? words.filter((word) => matchesWordQuery(word, query)) : words
       return pageResult([...filtered].sort((first, second) => compareWords(first, second, sort)), page)
@@ -107,7 +117,7 @@ export function createRemoteWordBookSession(manifest, manifestUrl, fetchImpl) {
         resolveAssetUrl(manifestUrl, chunkId),
         fetchImpl,
         'Unable to load word book details',
-        Array.isArray,
+        isWordDetailArray,
       ).catch((error) => {
         chunkPromises.delete(chunkId)
         throw error
@@ -118,19 +128,39 @@ export function createRemoteWordBookSession(manifest, manifestUrl, fetchImpl) {
   }
 
   const loadDetails = async (entries) => {
-    const chunks = await Promise.all([...new Set(entries.map((entry) => entry.chunkId))].map(async (chunkId) => [chunkId, await getChunk(chunkId)]))
-    const wordsByChunk = new Map(chunks.map(([chunkId, words]) => [chunkId, new Map(words.map((word) => [word.word, word]))]))
-    return entries.map((entry) => {
-      const word = wordsByChunk.get(entry.chunkId).get(entry.word)
-      if (!word) throw new Error(`Word book details are missing ${entry.word}`)
-      return word
-    })
+    const chunkIds = [...new Set(entries.map((entry) => entry.chunkId))]
+    try {
+      const chunks = await Promise.all(chunkIds.map(async (chunkId) => [chunkId, await getChunk(chunkId)]))
+      const wordsByChunk = new Map(chunks.map(([chunkId, words]) => [chunkId, new Map(words.map((word) => [word.word, word]))]))
+      return entries.map((entry) => {
+        const word = wordsByChunk.get(entry.chunkId).get(entry.word)
+        if (!word) throw new Error(`Word book details are missing ${entry.word}`)
+        return word
+      })
+    } catch (error) {
+      // The response may be syntactically valid JSON but still not contain the
+      // requested entries. Do not keep that response in the session cache.
+      chunkIds.forEach((chunkId) => chunkPromises.delete(chunkId))
+      throw error
+    }
   }
 
-  const indexReady = getIndex().then(() => undefined)
+  // Start the index request in the background, but attach a rejection handler
+  // immediately so a slow/failing index cannot become an unhandled rejection
+  // before the page subscribes to its status.
+  getIndex().catch(() => {})
+  const loadIndex = () => getIndex()
+  const getIndexReady = () => {
+    const promise = loadIndex().then(() => undefined)
+    promise.catch(() => {})
+    return promise
+  }
 
   return {
-    indexReady,
+    get indexReady() {
+      return getIndexReady()
+    },
+    loadIndex,
     async loadPage({ sort, page, query }) {
       const normalizedQuery = query.trim()
       if (sort === manifest.defaultSort && page === 1 && !normalizedQuery) {

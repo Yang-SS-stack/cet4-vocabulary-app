@@ -17,7 +17,7 @@
 
 ## 词表数据生成
 
-`src/data/words.js` 和 `src/data/highFrequencyWords.js` 中的旧 JSON 词表仍是源文件。词表内容变动后运行：
+`public/data/cet4.json` 和 `public/data/cet4-high-frequency.json` 中的旧 JSON 词表仍是构建源文件。词表内容变动后运行：
 
 ```powershell
 npm run build:wordbooks
