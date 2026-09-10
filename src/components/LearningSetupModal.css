@@ -1,0 +1,215 @@
+.learning-setup-backdrop {
+  --dialog-enter-duration: 240ms;
+  --dialog-exit-duration: 180ms;
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(11, 34, 68, 0.28);
+  animation: learning-setup-backdrop-in var(--dialog-enter-duration) var(--ease-out) both;
+}
+
+.learning-setup-backdrop.is-closing {
+  pointer-events: none;
+  animation: learning-setup-backdrop-out var(--dialog-exit-duration) var(--ease-out) both;
+}
+
+.learning-setup-modal {
+  width: min(100%, 574px);
+  max-height: min(88vh, 760px);
+  overflow-y: auto;
+  padding: clamp(28px, 5vw, 42px);
+  border: 1px solid var(--ink);
+  border-radius: 14px;
+  color: var(--ink);
+  background: var(--white);
+  box-shadow: 0 18px 46px rgba(11, 34, 68, 0.2);
+  animation: learning-setup-modal-in var(--dialog-enter-duration) var(--ease-out) both;
+  scrollbar-color: var(--gold-soft) transparent;
+  scrollbar-width: thin;
+}
+
+.learning-setup-modal.is-closing {
+  animation: learning-setup-modal-out var(--dialog-exit-duration) var(--ease-out) both;
+}
+
+.learning-setup-modal__header {
+  text-align: center;
+}
+
+.learning-setup-modal__header h2 {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(27px, 5vw, 34px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.learning-setup-modal__header p {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.learning-setup-modal__fields {
+  margin-top: 26px;
+  border-top: 1px solid var(--line);
+}
+
+.learning-setup-modal__confirmation {
+  margin-top: 20px;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--gold-soft);
+}
+
+.learning-setup-modal__confirmation p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.learning-setup-modal__confirmation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.learning-setup-modal__status {
+  min-height: 24px;
+  margin: 12px 0 0;
+  color: #8d2e2e;
+  font-size: 14px;
+}
+
+.learning-setup-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.learning-setup-modal__footer button,
+.learning-setup-modal__confirmation-actions button {
+  min-height: 44px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.learning-setup-modal__text-button {
+  padding: 8px 10px;
+  border: 0;
+  color: var(--ink-soft);
+  background: transparent;
+}
+
+.learning-setup-modal__confirm-button {
+  padding: 8px 16px;
+  border: 1px solid var(--gold);
+  color: var(--ink);
+  background: transparent;
+}
+
+.learning-setup-modal__save-button {
+  min-width: 176px;
+  padding: 10px 22px;
+  border: 1px solid var(--ink);
+  color: var(--white);
+  background: var(--ink);
+}
+
+.learning-setup-modal button {
+  transition: color var(--dialog-exit-duration) var(--ease-out), background var(--dialog-exit-duration) var(--ease-out), border-color var(--dialog-exit-duration) var(--ease-out);
+}
+
+.learning-setup-modal button:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.learning-setup-modal__save-button:hover:not(:disabled) {
+  color: var(--white);
+  background: #123563;
+}
+
+.learning-setup-modal button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.learning-setup-modal button:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+@keyframes learning-setup-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes learning-setup-backdrop-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes learning-setup-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes learning-setup-modal-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (max-width: 560px) {
+  .learning-setup-backdrop {
+    align-items: end;
+    padding: 12px;
+  }
+
+  .learning-setup-modal {
+    max-height: calc(100dvh - 24px);
+    padding: 26px 20px 22px;
+  }
+
+  .learning-setup-modal__footer {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .learning-setup-modal__save-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .learning-setup-backdrop,
+  .learning-setup-backdrop.is-closing,
+  .learning-setup-modal,
+  .learning-setup-modal.is-closing {
+    animation: none;
+  }
+
+  .learning-setup-modal button {
+    transition: none;
+  }
+}
