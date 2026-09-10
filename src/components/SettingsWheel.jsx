@@ -1,7 +1,8 @@
-import { useEffect, useId, useRef } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import './SettingsWheel.css'
 
 const OPTION_HEIGHT = 48
+const CLOSE_DURATION = 180
 
 function WheelColumn({ label, value, options, onChange }) {
   const labelId = useId()
@@ -59,6 +60,7 @@ function WheelColumn({ label, value, options, onChange }) {
             className="settings-wheel__option"
             role="option"
             aria-selected={Object.is(option.value, value)}
+            tabIndex={index === selectedIndex ? 0 : -1}
             onClick={() => selectOption(option, index)}
             onKeyDown={(event) => handleKeyDown(event, index)}
           >
@@ -71,14 +73,39 @@ function WheelColumn({ label, value, options, onChange }) {
 }
 
 function SettingsWheel({ label, value, displayValue, isOpen, onToggle, onChange, columns }) {
+  const [isTrayMounted, setIsTrayMounted] = useState(isOpen)
+  const [isClosing, setIsClosing] = useState(false)
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsTrayMounted(true)
+      setIsClosing(false)
+      return undefined
+    }
+
+    if (!isTrayMounted) return undefined
+    if (prefersReducedMotion()) {
+      setIsTrayMounted(false)
+      setIsClosing(false)
+      return undefined
+    }
+
+    setIsClosing(true)
+    const closeTimer = window.setTimeout(() => {
+      setIsTrayMounted(false)
+      setIsClosing(false)
+    }, CLOSE_DURATION)
+    return () => window.clearTimeout(closeTimer)
+  }, [isOpen, isTrayMounted])
+
   return (
     <section className="settings-wheel" data-value={String(value)}>
       <button type="button" className="settings-wheel__summary" aria-label={`${label} ${displayValue}`} aria-expanded={isOpen} onClick={onToggle}>
         <span>{label}</span>
         <strong>{displayValue}</strong>
       </button>
-      {isOpen && (
-        <div className="settings-wheel__tray">
+      {isTrayMounted && (
+        <div className={isClosing ? 'settings-wheel__tray is-closing' : 'settings-wheel__tray'} aria-hidden={isClosing || undefined} inert={isClosing || undefined}>
           {columns.map((column) => <WheelColumn key={column.label} {...column} onChange={onChange} />)}
         </div>
       )}

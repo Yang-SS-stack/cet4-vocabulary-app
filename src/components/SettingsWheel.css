@@ -38,6 +38,11 @@
   isolation: isolate;
 }
 
+.settings-wheel__tray.is-closing {
+  pointer-events: none;
+  animation: settings-wheel-close var(--dialog-exit-duration) var(--ease-out) both;
+}
+
 .settings-wheel__tray::before {
   position: absolute;
   z-index: -1;
@@ -117,6 +122,18 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes settings-wheel-close {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-5px);
   }
 }
 

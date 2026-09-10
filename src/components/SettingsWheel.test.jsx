@@ -43,6 +43,45 @@ test('uses arrow keys on an option to select its adjacent choice', async () => {
   expect(onChange).toHaveBeenCalledWith(30, '每日新词')
 })
 
+test('keeps the current option as the only tab stop and lets Tab leave its column', async () => {
+  const user = userEvent.setup()
+  const onChange = vi.fn()
+
+  render(<ControlledWheels onChange={onChange} />)
+
+  await user.click(screen.getByRole('button', { name: '每日新词 20' }))
+  await user.tab()
+  const selectedOption = screen.getByRole('option', { name: '20', selected: true })
+  expect(selectedOption).toHaveFocus()
+  expect(screen.getByRole('option', { name: '10' })).toHaveAttribute('tabindex', '-1')
+  expect(selectedOption).toHaveAttribute('tabindex', '0')
+  expect(screen.getByRole('option', { name: '30' })).toHaveAttribute('tabindex', '-1')
+
+  await user.keyboard('{ArrowDown}')
+  expect(onChange).toHaveBeenCalledWith(30, '每日新词')
+  expect(screen.getByRole('option', { name: '30', selected: true })).toHaveFocus()
+
+  await user.tab()
+  expect(screen.getByRole('button', { name: '每日学习时长 30 分钟' })).toHaveFocus()
+})
+
+test('keeps the tray mounted through its closing state before removing it', async () => {
+  const user = userEvent.setup()
+  const onChange = vi.fn()
+
+  render(<ControlledWheels onChange={onChange} />)
+
+  const summary = screen.getByRole('button', { name: '每日新词 20' })
+  await user.click(summary)
+  expect(document.querySelector('.settings-wheel__tray')).toBeInTheDocument()
+
+  await user.click(summary)
+  expect(document.querySelector('.settings-wheel__tray')).toHaveClass('is-closing')
+  expect(document.querySelector('.settings-wheel__tray')).toHaveAttribute('aria-hidden', 'true')
+
+  await waitFor(() => expect(document.querySelector('.settings-wheel__tray')).not.toBeInTheDocument())
+})
+
 test('reports the option aligned by a touch or mouse scroll', async () => {
   const onChange = vi.fn()
   render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
