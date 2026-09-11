@@ -301,12 +301,12 @@ function wheelProps(field, draft) {
 function createDraft(settings, recommendation) {
   return {
     ...settings,
-    examDate: settings.examDate ?? futureDateKey(90),
-    todayWordBookId: settings.todayWordBookId ?? wordBooks[0].id,
-    dailyNewWords: settings.dailyNewWords ?? boundedWordCount(recommendation.deadlineDailyWords, 15),
-    dailyReviewWords: settings.dailyReviewWords ?? boundedWordCount(recommendation.dailyReviewWords, 20),
-    dailyStudyMinutes: settings.dailyStudyMinutes ?? 30,
-    mistakeStudyWords: settings.mistakeStudyWords ?? 20,
+    examDate: normalizeExamDate(settings.examDate),
+    todayWordBookId: normalizeWordBookId(settings.todayWordBookId),
+    dailyNewWords: normalizeWordCount(settings.dailyNewWords, boundedWordCount(recommendation.deadlineDailyWords, 15)),
+    dailyReviewWords: normalizeWordCount(settings.dailyReviewWords, boundedWordCount(recommendation.dailyReviewWords, 20)),
+    dailyStudyMinutes: normalizeStudyMinutes(settings.dailyStudyMinutes),
+    mistakeStudyWords: normalizeWordCount(settings.mistakeStudyWords, 20),
   }
 }
 
@@ -363,6 +363,31 @@ function futureDateKey(daysAhead) {
 
 function boundedWordCount(value, fallback) {
   return Number.isSafeInteger(value) && value > 0 ? Math.min(100, value) : fallback
+}
+
+function normalizeExamDate(value) {
+  if (typeof value !== 'string') return futureDateKey(90)
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value)
+  if (!match) return futureDateKey(90)
+  const [year, month, day] = match.slice(1).map(Number)
+  const date = new Date(year, month - 1, day)
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
+    ? value
+    : futureDateKey(90)
+}
+
+function normalizeWordBookId(value) {
+  return wordBooks.some((book) => book.id === value) ? value : wordBooks[0].id
+}
+
+function normalizeWordCount(value, fallback) {
+  if (value === null || value === undefined || !Number.isSafeInteger(value)) return fallback
+  return Math.min(100, Math.max(1, value))
+}
+
+function normalizeStudyMinutes(value) {
+  if (value === null || value === undefined || !Number.isSafeInteger(value)) return 30
+  return Math.min(240, Math.max(5, Math.round(value / 5) * 5))
 }
 
 function daysInMonth(year, month) {

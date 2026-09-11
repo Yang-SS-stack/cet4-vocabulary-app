@@ -149,6 +149,56 @@ test('fills null fields with visible defaults and saves one complete mode patch'
   })
 })
 
+test('normalizes legacy values to choices supported by every setup wheel before saving', async () => {
+  const user = userEvent.setup()
+  const legacySettings = {
+    ...baseSettings,
+    examDate: 'not-a-date',
+    todayWordBookId: 'missing-book',
+    dailyNewWords: 0,
+    dailyReviewWords: 101,
+    dailyStudyMinutes: 31,
+    mistakeStudyWords: 0,
+  }
+  const learningSave = vi.fn()
+  const { unmount } = renderModal({ settings: legacySettings, onSave: learningSave })
+
+  expect(summary('考试日期')).toHaveAccessibleName(expect.stringMatching(/^考试日期 \d{4} 年 \d{1,2} 月 \d{1,2} 日$/))
+  expect(summary('学习词表')).toHaveAccessibleName('学习词表 CET-4')
+  expect(summary('每日新词')).toHaveAccessibleName('每日新词 1 词')
+  expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 30 分钟')
+
+  await user.click(screen.getByRole('button', { name: '保存并继续' }))
+  expect(learningSave).toHaveBeenCalledWith({
+    examDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
+    todayWordBookId: 'cet4',
+    dailyNewWords: 1,
+    dailyStudyMinutes: 30,
+  })
+  unmount()
+
+  const reviewSave = vi.fn()
+  const review = renderModal({
+    mode: 'review',
+    settings: { ...legacySettings, dailyNewWords: 1, dailyStudyMinutes: 240 },
+    onSave: reviewSave,
+  })
+  expect(summary('每日复习数量')).toHaveAccessibleName('每日复习数量 100 词')
+  await user.click(screen.getByRole('button', { name: '保存并继续' }))
+  expect(reviewSave).toHaveBeenCalledWith({ dailyReviewWords: 100 })
+  review.unmount()
+
+  const mistakesSave = vi.fn()
+  renderModal({
+    mode: 'mistakes',
+    settings: { ...legacySettings, dailyNewWords: 1, dailyStudyMinutes: 240 },
+    onSave: mistakesSave,
+  })
+  expect(summary('错题本每日学习数量')).toHaveAccessibleName('错题本每日学习数量 1 词')
+  await user.click(screen.getByRole('button', { name: '保存并继续' }))
+  expect(mistakesSave).toHaveBeenCalledWith({ mistakeStudyWords: 1 })
+})
+
 test('asks before an overloaded save and never changes the chosen draft', async () => {
   const user = userEvent.setup()
   const onSave = vi.fn()
