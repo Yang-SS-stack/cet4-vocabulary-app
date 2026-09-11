@@ -4,7 +4,10 @@ import FadeContent from './components/FadeContent'
 import LineSidebar from './components/LineSidebar'
 import ParticleTextTransition from './components/ParticleTextTransition'
 import SplashScreen from './components/SplashScreen'
+import SettingsPage from './components/SettingsPage'
+import TodayLearningPage from './components/TodayLearningPage'
 import VocabularyPage from './components/VocabularyPage'
+import { createLearningStore, LearningStoreProvider } from './data/learning'
 
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 
@@ -60,6 +63,8 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
               <p className="page-lede">从今天的单词开始</p>
             ) : selectedPage === '词表' ? (
               <p className="page-lede">查找单词，浏览释义与例句</p>
+            ) : selectedPage === '设置' ? (
+              <p className="page-lede">按你的时间，调整之后的学习计划</p>
             ) : (
               <p className="page-lede">这一部分即将准备好</p>
             )}
@@ -67,8 +72,12 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
 
           <div className="content-rule" />
 
-          {selectedPage === '词表' ? (
+          {selectedPage === '今日学习' ? (
+            <TodayLearningPage />
+          ) : selectedPage === '词表' ? (
             <VocabularyPage />
+          ) : selectedPage === '设置' ? (
+            <SettingsPage />
           ) : (
             <section className="empty-panel" aria-label={`${selectedPage}内容`}>
               <span className="panel-number">A</span>
@@ -85,6 +94,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
 }
 
 function App() {
+  const [learningStore] = useState(() => createLearningStore())
   const [selectedPage, setSelectedPage] = useState('今日学习')
   const [isNavOpen, setIsNavOpen] = useState(true)
   const [showSplash, setShowSplash] = useState(true)
@@ -112,7 +122,8 @@ function App() {
 
   return (
     <>
-      <LearningSurface
+      <LearningStoreProvider store={learningStore}>
+        <LearningSurface
           selectedPage={selectedPage}
           isNavOpen={isNavOpen}
           onNavToggle={() => setIsNavOpen((isOpen) => !isOpen)}
@@ -120,7 +131,8 @@ function App() {
           logoRef={setParticleLogoElement}
           isBrandConcealed={showSplash}
           isTransitionPrepared={!isLearningRevealed}
-      />
+        />
+      </LearningStoreProvider>
       {showSplash && (
         <SplashScreen
           onStartTransition={startParticleTransition}

@@ -1,0 +1,114 @@
+.settings-page {
+  width: min(100%, 760px);
+  margin-top: 42px;
+}
+
+.settings-page__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.8fr);
+  gap: 36px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.settings-page__header h2 {
+  margin: 0;
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+.settings-page__header p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.settings-page__panel {
+  padding: 10px 24px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+}
+
+.settings-page__panel .settings-wheel:last-child { border-bottom: 0; }
+
+.settings-page__confirmation {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--gold-soft);
+  border-radius: 14px;
+  color: var(--ink);
+  background: var(--paper-deep);
+}
+
+.settings-page__confirmation p { margin: 0; line-height: 1.65; }
+
+.settings-page__confirmation div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.settings-page__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.settings-page__footer p {
+  min-height: 1.5em;
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.settings-page__save-button,
+.settings-page__confirm-button,
+.settings-page__text-button {
+  min-height: 44px;
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.settings-page__save-button,
+.settings-page__confirm-button {
+  padding: 10px 22px;
+  border: 1px solid var(--ink);
+  color: var(--paper);
+  background: var(--ink);
+}
+
+.settings-page__text-button {
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: transparent;
+}
+
+.settings-page :is(button):focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.settings-page__save-button:disabled { cursor: wait; opacity: 0.62; }
+
+@media (max-width: 640px) {
+  .settings-page { margin-top: 30px; }
+
+  .settings-page__header { grid-template-columns: 1fr; gap: 12px; }
+
+  .settings-page__panel { padding-inline: 16px; }
+
+  .settings-page__footer { align-items: stretch; flex-direction: column; }
+
+  .settings-page__save-button { width: 100%; }
+
+  .settings-page__confirmation div { align-items: stretch; flex-direction: column; }
+}

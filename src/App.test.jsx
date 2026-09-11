@@ -16,7 +16,7 @@ vi.mock('./components/ParticleTextTransition', () => ({
 
 async function waitForApp() {
   await waitFor(
-    () => expect(screen.getByRole('button', { name: '今日学习' })).toBeInTheDocument(),
+    () => expect(screen.getAllByRole('button', { name: '今日学习' }).length).toBeGreaterThan(0),
     { timeout: 1800 },
   )
 }
@@ -37,7 +37,7 @@ test('shows the LinguaJet welcome screen and opens the app after a click', async
   expect(screen.getByTestId('splash-waves')).toBeInTheDocument()
 
   await new Promise((resolve) => window.setTimeout(resolve, 1300))
-  expect(screen.queryByRole('button', { name: '今日学习' })).not.toBeInTheDocument()
+  expect(screen.queryAllByRole('button', { name: '今日学习' })).toHaveLength(0)
 
   await enterApp(user)
   expect(screen.getByLabelText('LinguaJet')).toBeInTheDocument()
@@ -77,9 +77,33 @@ test('a skipped particle transition still reveals a usable homepage', async () =
   render(<App />)
   await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
   await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
-  expect(screen.getByRole('button', { name: '今日学习' })).toBeVisible()
+  expect(screen.getAllByRole('button', { name: '今日学习' })[0]).toBeVisible()
   expect(document.querySelector('.app-shell')).not.toHaveAttribute('inert')
   expect(screen.queryByRole('main', { name: 'LinguaJet 欢迎页' })).not.toBeInTheDocument()
+})
+
+test('replaces the today-learning placeholder with the real overview', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await enterApp(user)
+
+  expect(screen.getByRole('region', { name: '今日学习概览' })).toBeInTheDocument()
+  expect(screen.getByText('学习建议')).toBeInTheDocument()
+  expect(screen.queryByLabelText('今日学习内容')).not.toBeInTheDocument()
+})
+
+test('opens editable settings from navigation and returns to the original vocabulary entry', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await enterApp(user)
+
+  await user.click(screen.getByRole('button', { name: '设置' }))
+  expect(screen.getByRole('region', { name: '学习设置' })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /^发音偏好 / })).toBeInTheDocument()
+
+  await user.click(screen.getByRole('button', { name: '词表' }))
+  expect(screen.getByRole('button', { name: 'CET-4' })).toBeInTheDocument()
+  expect(screen.queryByRole('list', { name: '四级单词' })).not.toBeInTheDocument()
 })
 
 test('clicking vocabulary navigation shows the vocabulary page', async () => {
