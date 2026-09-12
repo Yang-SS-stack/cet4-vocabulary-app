@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './App.css'
 import FadeContent from './components/FadeContent'
 import LineSidebar from './components/LineSidebar'
@@ -10,6 +10,7 @@ import VocabularyPage from './components/VocabularyPage'
 import { createLearningStore, LEARNING_STORAGE_KEY, LearningStoreProvider } from './data/learning'
 
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
+const RECOVERY_CLOSE_DURATION = 180
 
 function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, isBrandConcealed, isTransitionPrepared }) {
   return (
@@ -154,59 +155,139 @@ function LearningApp({ learningStore }) {
 
 function LearningDataRecovery({ onReset }) {
   const [showVocabulary, setShowVocabulary] = useState(false)
-  const [confirmingReset, setConfirmingReset] = useState(false)
+  const [confirmationPhase, setConfirmationPhase] = useState('closed')
   const [resetError, setResetError] = useState('')
+  const resetTriggerRef = useRef(null)
+  const confirmationRef = useRef(null)
+  const closeTimerRef = useRef(null)
+  const restoreFocusRef = useRef(false)
+  const confirmingReset = confirmationPhase !== 'closed'
+
+  useEffect(() => () => window.clearTimeout(closeTimerRef.current), [])
+
+  useEffect(() => {
+    if (confirmationPhase === 'open') {
+      focusableElements(confirmationRef.current)[0]?.focus()
+    } else if (confirmationPhase === 'closed' && restoreFocusRef.current) {
+      restoreFocusRef.current = false
+      resetTriggerRef.current?.focus()
+    }
+  }, [confirmationPhase])
+
+  const finishConfirmationClose = (afterClose) => {
+    setConfirmationPhase('closed')
+    restoreFocusRef.current = true
+    afterClose?.()
+  }
+
+  const closeConfirmation = (afterClose) => {
+    if (confirmationPhase === 'closing') return
+    setConfirmationPhase('closing')
+    if (prefersReducedMotion()) {
+      finishConfirmationClose(afterClose)
+      return
+    }
+    closeTimerRef.current = window.setTimeout(
+      () => finishConfirmationClose(afterClose),
+      RECOVERY_CLOSE_DURATION,
+    )
+  }
 
   const reset = () => {
     setResetError('')
-    try {
-      onReset()
-    } catch {
-      setResetError('清除失败，请检查浏览器是否允许本地存储后再试。')
+    closeConfirmation(() => {
+      try {
+        const result = onReset()
+        if (result === 'changed') {
+          setResetError('数据已在其他页面更新，请重新确认后再决定是否清除。')
+        }
+      } catch {
+        setResetError('清除失败，请检查浏览器是否允许本地存储后再试。')
+      }
+    })
+  }
+
+  const handleConfirmationKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      closeConfirmation()
+      return
+    }
+    if (event.key !== 'Tab') return
+
+    const controls = focusableElements(confirmationRef.current)
+    if (controls.length === 0) return
+    const first = controls[0]
+    const last = controls.at(-1)
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus()
     }
   }
 
   return (
     <main className="learning-data-recovery">
-      <section className="learning-data-recovery__notice" role="alert" aria-labelledby="learning-data-recovery-title">
-        <p className="learning-data-recovery__eyebrow">本地学习记录</p>
-        <h1 id="learning-data-recovery-title">学习数据暂时无法读取</h1>
-        <p>保存的数据可能已损坏，或来自当前版本尚不支持的格式。原始数据仍保留在此浏览器中。</p>
-        <div className="learning-data-recovery__actions">
-          <button type="button" onClick={() => setShowVocabulary(true)}>继续浏览词表</button>
-          <button type="button" className="learning-data-recovery__danger" onClick={() => setConfirmingReset(true)}>清除异常学习数据</button>
-        </div>
+      <div
+        className="learning-data-recovery__context"
+        aria-hidden={confirmingReset || undefined}
+        inert={confirmingReset || undefined}
+      >
+        <section className="learning-data-recovery__notice" role="alert" aria-labelledby="learning-data-recovery-title">
+          <p className="learning-data-recovery__eyebrow">本地学习记录</p>
+          <h1 id="learning-data-recovery-title">学习数据暂时无法读取</h1>
+          <p>保存的数据可能已损坏，或来自当前版本尚不支持的格式。原始数据仍保留在此浏览器中。</p>
+          <div className="learning-data-recovery__actions">
+            <button type="button" onClick={() => setShowVocabulary(true)}>继续浏览词表</button>
+            <button
+              ref={resetTriggerRef}
+              type="button"
+              className="learning-data-recovery__danger"
+              onClick={() => setConfirmationPhase('open')}
+            >
+              清除异常学习数据
+            </button>
+          </div>
 
-        {confirmingReset && (
+          {resetError && <p className="learning-data-recovery__error" role="status" aria-live="polite">{resetError}</p>}
+        </section>
+
+        {showVocabulary && (
+          <section className="learning-data-recovery__vocabulary" aria-label="词表浏览">
+            <header>
+              <p className="learning-data-recovery__eyebrow">不受学习数据影响</p>
+              <h2>词表</h2>
+            </header>
+            <VocabularyPage />
+          </section>
+        )}
+      </div>
+
+      {confirmingReset && (
+        <div className={confirmationPhase === 'closing'
+          ? 'learning-data-recovery__confirmation-backdrop is-closing'
+          : 'learning-data-recovery__confirmation-backdrop'}>
           <section
-            className="learning-data-recovery__confirmation"
+            ref={confirmationRef}
+            className={confirmationPhase === 'closing'
+              ? 'learning-data-recovery__confirmation is-closing'
+              : 'learning-data-recovery__confirmation'}
             role="alertdialog"
+            aria-modal="true"
             aria-labelledby="learning-data-reset-title"
             aria-describedby="learning-data-reset-description"
-            onKeyDown={(event) => {
-              if (event.key === 'Escape') setConfirmingReset(false)
-            }}
+            onKeyDown={handleConfirmationKeyDown}
           >
             <h2 id="learning-data-reset-title">确认清除学习数据</h2>
             <p id="learning-data-reset-description">这会永久删除异常的学习设置和进度。词表资源不会受影响。</p>
             <div className="learning-data-recovery__actions">
-              <button type="button" autoFocus onClick={() => setConfirmingReset(false)}>保留原始数据</button>
+              <button type="button" onClick={() => closeConfirmation()}>保留原始数据</button>
               <button type="button" className="learning-data-recovery__danger" onClick={reset}>确认清除并重新开始</button>
             </div>
           </section>
-        )}
-
-        {resetError && <p className="learning-data-recovery__error" role="status" aria-live="polite">{resetError}</p>}
-      </section>
-
-      {showVocabulary && (
-        <section className="learning-data-recovery__vocabulary" aria-label="词表浏览">
-          <header>
-            <p className="learning-data-recovery__eyebrow">不受学习数据影响</p>
-            <h2>词表</h2>
-          </header>
-          <VocabularyPage />
-        </section>
+        </div>
       )}
     </main>
   )
@@ -214,9 +295,15 @@ function LearningDataRecovery({ onReset }) {
 
 function initializeLearningStore() {
   try {
-    return { store: createLearningStore(), error: null }
+    return { store: createLearningStore(), error: null, failedRaw: null }
   } catch (error) {
-    return { store: null, error }
+    let failedRaw
+    try {
+      failedRaw = globalThis.localStorage.getItem(LEARNING_STORAGE_KEY)
+    } catch {
+      failedRaw = undefined
+    }
+    return { store: null, error, failedRaw }
   }
 }
 
@@ -224,15 +311,33 @@ function App() {
   const [learningState, setLearningState] = useState(initializeLearningStore)
 
   const resetLearningData = () => {
+    const currentRaw = globalThis.localStorage.getItem(LEARNING_STORAGE_KEY)
+    if (currentRaw !== learningState.failedRaw) {
+      const nextState = initializeLearningStore()
+      setLearningState(nextState)
+      return nextState.store ? 'reloaded' : 'changed'
+    }
+
     globalThis.localStorage.removeItem(LEARNING_STORAGE_KEY)
     const nextState = initializeLearningStore()
     setLearningState(nextState)
     if (nextState.error) throw nextState.error
+    return 'reset'
   }
 
   return learningState.store
     ? <LearningApp learningStore={learningState.store} />
     : <LearningDataRecovery onReset={resetLearningData} />
+}
+
+function focusableElements(root) {
+  if (!root) return []
+  return [...root.querySelectorAll('button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])')]
+    .filter((element) => !element.closest('[inert]'))
+}
+
+function prefersReducedMotion() {
+  return globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
 }
 
 export default App

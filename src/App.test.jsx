@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 import App from './App'
-import { LEARNING_STORAGE_KEY } from './data/learning'
+import { createLearningStore, LEARNING_STORAGE_KEY } from './data/learning'
 
 vi.mock('./components/ParticleTextTransition', () => ({
   default: ({ onSourceRelease, onScatterComplete, onComplete }) => (
@@ -133,15 +133,73 @@ test.each([
   expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
 
   await user.keyboard('{Escape}')
-  expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+  await waitFor(() => expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument())
   expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
 
   await user.click(screen.getByRole('button', { name: '清除异常学习数据' }))
 
   await user.click(screen.getByRole('button', { name: '确认清除并重新开始' }))
-  expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBeNull()
-  expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).toBeInTheDocument()
+  await waitFor(() => expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBeNull())
+  await waitFor(() => expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).toBeInTheDocument())
   expect(screen.queryByText('学习数据暂时无法读取')).not.toBeInTheDocument()
+})
+
+test('does not delete valid learning data written by another tab before reset confirmation', async () => {
+  const user = userEvent.setup()
+  localStorage.setItem(LEARNING_STORAGE_KEY, '{broken')
+  render(<App />)
+
+  await user.click(screen.getByRole('button', { name: '清除异常学习数据' }))
+
+  localStorage.removeItem(LEARNING_STORAGE_KEY)
+  const otherTabStore = createLearningStore()
+  otherTabStore.updateSettings({ dailyNewWords: 18 })
+  const validRaw = localStorage.getItem(LEARNING_STORAGE_KEY)
+
+  await user.click(screen.getByRole('button', { name: '确认清除并重新开始' }))
+
+  await waitFor(() => expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(validRaw))
+  await waitFor(() => expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).toBeInTheDocument())
+  expect(screen.queryByText('学习数据暂时无法读取')).not.toBeInTheDocument()
+})
+
+test('refreshes recovery instead of deleting a different invalid value written elsewhere', async () => {
+  const user = userEvent.setup()
+  const firstRaw = '{broken'
+  const nextRaw = JSON.stringify({ version: 998 })
+  localStorage.setItem(LEARNING_STORAGE_KEY, firstRaw)
+  render(<App />)
+
+  await user.click(screen.getByRole('button', { name: '清除异常学习数据' }))
+  localStorage.setItem(LEARNING_STORAGE_KEY, nextRaw)
+  await user.click(screen.getByRole('button', { name: '确认清除并重新开始' }))
+
+  expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(nextRaw)
+  await waitFor(() => expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument())
+  await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('数据已在其他页面更新，请重新确认'))
+})
+
+test('traps recovery confirmation focus and restores it after Escape', async () => {
+  const user = userEvent.setup()
+  localStorage.setItem(LEARNING_STORAGE_KEY, '{broken')
+  render(<App />)
+
+  const resetTrigger = screen.getByRole('button', { name: '清除异常学习数据' })
+  await user.click(resetTrigger)
+
+  const keepButton = screen.getByRole('button', { name: '保留原始数据' })
+  const confirmButton = screen.getByRole('button', { name: '确认清除并重新开始' })
+  expect(keepButton).toHaveFocus()
+  expect(document.querySelector('.learning-data-recovery__context')).toHaveAttribute('inert')
+
+  await user.tab({ shift: true })
+  expect(confirmButton).toHaveFocus()
+  await user.tab()
+  expect(keepButton).toHaveFocus()
+
+  await user.keyboard('{Escape}')
+  await waitFor(() => expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument())
+  await waitFor(() => expect(resetTrigger).toHaveFocus())
 })
 
 test('clicking vocabulary navigation shows the vocabulary page', async () => {
