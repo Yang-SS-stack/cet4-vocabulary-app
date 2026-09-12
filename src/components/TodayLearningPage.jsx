@@ -10,13 +10,31 @@ import LearningSetupModal from './LearningSetupModal'
 import './TodayLearningPage.css'
 
 const LEARNING_FIELDS = ['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyStudyMinutes']
+const validWordCount = (value) => Number.isSafeInteger(value) && value >= 1 && value <= 100
+const validStudyMinutes = (value) => Number.isSafeInteger(value)
+  && value >= 5 && value <= 240 && value % 5 === 0
+
+function validExamDate(value) {
+  const match = typeof value === 'string' && /^(\d{4})-(\d{2})-(\d{2})$/.exec(value)
+  if (!match) return false
+  const [year, month, day] = match.slice(1).map(Number)
+  const date = new Date(year, month - 1, day)
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
+}
+
+const LEARNING_FIELD_VALIDATORS = {
+  examDate: validExamDate,
+  todayWordBookId: (value) => wordBooks.some(({ id }) => id === value),
+  dailyNewWords: validWordCount,
+  dailyStudyMinutes: validStudyMinutes,
+}
 
 function TodayLearningPage({ now = new Date() }) {
   const { store, snapshot } = useLearningStore()
   const { settings } = snapshot
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
   const completedWords = completedWordCount(snapshot, selectedWordBook.id)
-  const daysRemaining = daysUntilExam(settings.examDate, now)
+  const daysRemaining = validExamDate(settings.examDate) ? daysUntilExam(settings.examDate, now) : null
   const recommendation = buildLearningRecommendation({
     totalWords: selectedWordBook.totalWords,
     completedWords,
@@ -31,8 +49,8 @@ function TodayLearningPage({ now = new Date() }) {
   const start = (mode) => {
     setStatus('')
     const needsSetup = mode === 'learning'
-      ? LEARNING_FIELDS.some((field) => settings[field] === null)
-      : settings.dailyReviewWords === null
+      ? LEARNING_FIELDS.some((field) => !LEARNING_FIELD_VALIDATORS[field](settings[field]))
+      : !validWordCount(settings.dailyReviewWords)
     if (needsSetup) {
       setSetupMode(mode)
       return
@@ -76,7 +94,7 @@ function TodayLearningPage({ now = new Date() }) {
             ...recommendation,
             totalWords: selectedWordBook.totalWords,
             completedWords,
-            dailyReviewWords: settings.dailyReviewWords ?? 20,
+            dailyReviewWords: settings.dailyReviewWords,
           }}
           onSave={saveSetup}
           onClose={() => setSetupMode(null)}

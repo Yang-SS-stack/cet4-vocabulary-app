@@ -39,6 +39,30 @@ function configure(store, patch = {}) {
   })
 }
 
+function createSnapshotStore(settingsPatch) {
+  const snapshot = {
+    version: 1,
+    settings: {
+      examDate: '2026-09-21',
+      todayWordBookId: 'cet4',
+      dailyNewWords: 12,
+      dailyReviewWords: 7,
+      dailyStudyMinutes: 50,
+      pronunciation: 'en-GB',
+      mistakeStudyWords: null,
+      ...settingsPatch,
+    },
+    mistakes: {},
+    wordBooks: {},
+    days: {},
+  }
+  return {
+    getSnapshot: () => snapshot,
+    subscribe: () => () => {},
+    updateSettings: vi.fn(),
+  }
+}
+
 afterEach(() => {
   vi.unstubAllGlobals()
 })
@@ -94,6 +118,44 @@ test('opens review setup when its quota is missing', async () => {
   await user.click(screen.getByRole('button', { name: '今日复习' }))
 
   expect(screen.getByRole('dialog', { name: '开始前，先设定你的复习计划' })).toBeInTheDocument()
+})
+
+test('does not count the review default toward a fresh learning plan load', async () => {
+  vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true })))
+  const user = userEvent.setup()
+  const store = createStore()
+  configure(store, { examDate: null, dailyNewWords: 10, dailyReviewWords: null, dailyStudyMinutes: 30 })
+  renderPage(store)
+
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await user.click(screen.getByRole('button', { name: '保存并继续' }))
+
+  expect(screen.queryByText(/超过你的 30 分钟计划/)).not.toBeInTheDocument()
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(store.getSnapshot().settings.dailyReviewWords).toBeNull()
+})
+
+test.each([
+  ['examDate', 'not-a-date', '今日学习', /^考试日期 \d{4} 年 \d{1,2} 月 \d{1,2} 日$/],
+  ['todayWordBookId', 'missing-book', '今日学习', '学习词表 CET-4'],
+  ['dailyNewWords', 0, '今日学习', '每日新词 1 词'],
+  ['dailyNewWords', 1.5, '今日学习', '每日新词 100 词'],
+  ['dailyNewWords', 101, '今日学习', '每日新词 100 词'],
+  ['dailyStudyMinutes', 0, '今日学习', '每日学习时长 5 分钟'],
+  ['dailyStudyMinutes', 245, '今日学习', '每日学习时长 240 分钟'],
+  ['dailyStudyMinutes', 31, '今日学习', '每日学习时长 30 分钟'],
+  ['dailyReviewWords', 0, '今日复习', '每日复习数量 1 词'],
+  ['dailyReviewWords', 1.5, '今日复习', '每日复习数量 20 词'],
+  ['dailyReviewWords', 101, '今日复习', '每日复习数量 100 词'],
+])('reopens setup and normalizes an unsupported %s value of %s', async (field, value, action, normalizedName) => {
+  const user = userEvent.setup()
+  const store = createSnapshotStore({ [field]: value })
+  renderPage(store)
+
+  await user.click(screen.getByRole('button', { name: action }))
+
+  expect(screen.getByRole('dialog')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: normalizedName })).toBeInTheDocument()
 })
 
 test('keeps configured learning and review flows disabled until their later prompts', async () => {

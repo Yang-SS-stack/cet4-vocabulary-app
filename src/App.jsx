@@ -7,7 +7,7 @@ import SplashScreen from './components/SplashScreen'
 import SettingsPage from './components/SettingsPage'
 import TodayLearningPage from './components/TodayLearningPage'
 import VocabularyPage from './components/VocabularyPage'
-import { createLearningStore, LearningStoreProvider } from './data/learning'
+import { createLearningStore, LEARNING_STORAGE_KEY, LearningStoreProvider } from './data/learning'
 
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 
@@ -93,8 +93,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
   )
 }
 
-function App() {
-  const [learningStore] = useState(() => createLearningStore())
+function LearningApp({ learningStore }) {
   const [selectedPage, setSelectedPage] = useState('今日学习')
   const [isNavOpen, setIsNavOpen] = useState(true)
   const [showSplash, setShowSplash] = useState(true)
@@ -151,6 +150,89 @@ function App() {
       )}
     </>
   )
+}
+
+function LearningDataRecovery({ onReset }) {
+  const [showVocabulary, setShowVocabulary] = useState(false)
+  const [confirmingReset, setConfirmingReset] = useState(false)
+  const [resetError, setResetError] = useState('')
+
+  const reset = () => {
+    setResetError('')
+    try {
+      onReset()
+    } catch {
+      setResetError('清除失败，请检查浏览器是否允许本地存储后再试。')
+    }
+  }
+
+  return (
+    <main className="learning-data-recovery">
+      <section className="learning-data-recovery__notice" role="alert" aria-labelledby="learning-data-recovery-title">
+        <p className="learning-data-recovery__eyebrow">本地学习记录</p>
+        <h1 id="learning-data-recovery-title">学习数据暂时无法读取</h1>
+        <p>保存的数据可能已损坏，或来自当前版本尚不支持的格式。原始数据仍保留在此浏览器中。</p>
+        <div className="learning-data-recovery__actions">
+          <button type="button" onClick={() => setShowVocabulary(true)}>继续浏览词表</button>
+          <button type="button" className="learning-data-recovery__danger" onClick={() => setConfirmingReset(true)}>清除异常学习数据</button>
+        </div>
+
+        {confirmingReset && (
+          <section
+            className="learning-data-recovery__confirmation"
+            role="alertdialog"
+            aria-labelledby="learning-data-reset-title"
+            aria-describedby="learning-data-reset-description"
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') setConfirmingReset(false)
+            }}
+          >
+            <h2 id="learning-data-reset-title">确认清除学习数据</h2>
+            <p id="learning-data-reset-description">这会永久删除异常的学习设置和进度。词表资源不会受影响。</p>
+            <div className="learning-data-recovery__actions">
+              <button type="button" autoFocus onClick={() => setConfirmingReset(false)}>保留原始数据</button>
+              <button type="button" className="learning-data-recovery__danger" onClick={reset}>确认清除并重新开始</button>
+            </div>
+          </section>
+        )}
+
+        {resetError && <p className="learning-data-recovery__error" role="status" aria-live="polite">{resetError}</p>}
+      </section>
+
+      {showVocabulary && (
+        <section className="learning-data-recovery__vocabulary" aria-label="词表浏览">
+          <header>
+            <p className="learning-data-recovery__eyebrow">不受学习数据影响</p>
+            <h2>词表</h2>
+          </header>
+          <VocabularyPage />
+        </section>
+      )}
+    </main>
+  )
+}
+
+function initializeLearningStore() {
+  try {
+    return { store: createLearningStore(), error: null }
+  } catch (error) {
+    return { store: null, error }
+  }
+}
+
+function App() {
+  const [learningState, setLearningState] = useState(initializeLearningStore)
+
+  const resetLearningData = () => {
+    globalThis.localStorage.removeItem(LEARNING_STORAGE_KEY)
+    const nextState = initializeLearningStore()
+    setLearningState(nextState)
+    if (nextState.error) throw nextState.error
+  }
+
+  return learningState.store
+    ? <LearningApp learningStore={learningState.store} />
+    : <LearningDataRecovery onReset={resetLearningData} />
 }
 
 export default App

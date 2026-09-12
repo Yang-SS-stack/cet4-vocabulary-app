@@ -308,3 +308,104 @@ h1 {
     animation: none;
   }
 }
+
+.learning-data-recovery {
+  min-height: 100vh;
+  padding: clamp(32px, 7vw, 88px) clamp(20px, 8vw, 112px);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.learning-data-recovery__notice,
+.learning-data-recovery__vocabulary {
+  width: min(100%, 880px);
+  margin: 0 auto;
+}
+
+.learning-data-recovery__notice {
+  padding: clamp(28px, 5vw, 52px);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--white);
+  box-shadow: 0 20px 60px rgb(66 55 34 / 8%);
+}
+
+.learning-data-recovery__notice h1 {
+  max-width: 720px;
+  font-size: clamp(36px, 6vw, 64px);
+}
+
+.learning-data-recovery__notice > p:not(.learning-data-recovery__eyebrow),
+.learning-data-recovery__confirmation p {
+  max-width: 680px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.learning-data-recovery__eyebrow {
+  margin: 0 0 16px;
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.learning-data-recovery__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.learning-data-recovery__actions button {
+  padding: 12px 18px;
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  color: var(--white);
+  background: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.learning-data-recovery__actions button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  outline-offset: 3px;
+}
+
+.learning-data-recovery__actions .learning-data-recovery__danger {
+  border-color: #8f493d;
+  color: #783b32;
+  background: transparent;
+}
+
+.learning-data-recovery__confirmation {
+  margin-top: 30px;
+  padding: 24px;
+  border: 1px solid #c69b91;
+  background: #fffaf7;
+}
+
+.learning-data-recovery__confirmation h2,
+.learning-data-recovery__vocabulary h2 {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 28px;
+  font-weight: 400;
+}
+
+.learning-data-recovery__error {
+  color: #783b32;
+}
+
+.learning-data-recovery__vocabulary {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 600px) {
+  .learning-data-recovery__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

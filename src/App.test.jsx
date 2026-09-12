@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect, test, vi } from 'vitest'
+import { afterEach, expect, test, vi } from 'vitest'
 import App from './App'
+import { LEARNING_STORAGE_KEY } from './data/learning'
 
 vi.mock('./components/ParticleTextTransition', () => ({
   default: ({ onSourceRelease, onScatterComplete, onComplete }) => (
@@ -13,6 +14,10 @@ vi.mock('./components/ParticleTextTransition', () => ({
     </div>
   ),
 }))
+
+afterEach(() => {
+  localStorage.removeItem(LEARNING_STORAGE_KEY)
+})
 
 async function waitForApp() {
   await waitFor(
@@ -104,6 +109,39 @@ test('opens editable settings from navigation and returns to the original vocabu
   await user.click(screen.getByRole('button', { name: '词表' }))
   expect(screen.getByRole('button', { name: 'CET-4' })).toBeInTheDocument()
   expect(screen.queryByRole('list', { name: '四级单词' })).not.toBeInTheDocument()
+})
+
+test.each([
+  ['broken JSON', '{broken'],
+  ['an unknown version', JSON.stringify({ version: 999 })],
+])('preserves %s and offers an explicit two-step recovery without blocking vocabulary access', async (_label, raw) => {
+  const user = userEvent.setup()
+  localStorage.setItem(LEARNING_STORAGE_KEY, raw)
+
+  render(<App />)
+
+  expect(screen.getByRole('alert')).toHaveTextContent('学习数据暂时无法读取')
+  expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
+
+  await user.click(screen.getByRole('button', { name: '继续浏览词表' }))
+  expect(screen.getByRole('button', { name: 'CET-4' })).toBeInTheDocument()
+  expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
+
+  await user.click(screen.getByRole('button', { name: '清除异常学习数据' }))
+  expect(screen.getByRole('alertdialog', { name: '确认清除学习数据' })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '保留原始数据' })).toHaveFocus()
+  expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
+
+  await user.keyboard('{Escape}')
+  expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+  expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
+
+  await user.click(screen.getByRole('button', { name: '清除异常学习数据' }))
+
+  await user.click(screen.getByRole('button', { name: '确认清除并重新开始' }))
+  expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBeNull()
+  expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).toBeInTheDocument()
+  expect(screen.queryByText('学习数据暂时无法读取')).not.toBeInTheDocument()
 })
 
 test('clicking vocabulary navigation shows the vocabulary page', async () => {
