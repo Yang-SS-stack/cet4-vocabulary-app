@@ -2,12 +2,14 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import './App.css'
 import FadeContent from './components/FadeContent'
 import LineSidebar from './components/LineSidebar'
+import LearningSetupModal from './components/LearningSetupModal'
 import ParticleTextTransition from './components/ParticleTextTransition'
 import SplashScreen from './components/SplashScreen'
 import SettingsPage from './components/SettingsPage'
 import TodayLearningPage from './components/TodayLearningPage'
 import VocabularyPage from './components/VocabularyPage'
-import { createLearningStore, LEARNING_STORAGE_KEY, LearningStoreProvider } from './data/learning'
+import { initialSetupComplete } from './components/setupDraft'
+import { createLearningStore, LEARNING_STORAGE_KEY, LearningStoreProvider, useLearningStore } from './data/learning'
 
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 const RECOVERY_CLOSE_DURATION = 180
@@ -97,6 +99,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
 function LearningApp({ learningStore }) {
   const [selectedPage, setSelectedPage] = useState('今日学习')
   const [isNavOpen, setIsNavOpen] = useState(true)
+  const [showInitialSetup, setShowInitialSetup] = useState(false)
   const [showSplash, setShowSplash] = useState(true)
   const [particleSources, setParticleSources] = useState(null)
   const [particleLogoElement, setParticleLogoElement] = useState(null)
@@ -113,7 +116,8 @@ function LearningApp({ learningStore }) {
     setIsLearningRevealed(true)
     setParticleSources(null)
     setShowSplash(false)
-  }, [])
+    setShowInitialSetup(!initialSetupComplete(learningStore.getSnapshot().settings))
+  }, [learningStore])
 
   const releaseParticleSource = useCallback(() => setIsParticleSourceReleased(true), [])
   const revealLearningSurface = useCallback(() => {
@@ -132,6 +136,9 @@ function LearningApp({ learningStore }) {
           isBrandConcealed={showSplash}
           isTransitionPrepared={!isLearningRevealed}
         />
+        {showInitialSetup && (
+          <InitialLearningSetup onClose={() => setShowInitialSetup(false)} />
+        )}
       </LearningStoreProvider>
       {showSplash && (
         <SplashScreen
@@ -150,6 +157,19 @@ function LearningApp({ learningStore }) {
         />
       )}
     </>
+  )
+}
+
+function InitialLearningSetup({ onClose }) {
+  const { store, snapshot } = useLearningStore()
+  return (
+    <LearningSetupModal
+      mode="initial"
+      settings={snapshot.settings}
+      snapshot={snapshot}
+      onSave={(patch) => store.updateSettings(patch)}
+      onClose={onClose}
+    />
   )
 }
 

@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 import App from './App'
@@ -30,10 +30,46 @@ async function enterApp(user) {
   await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
   await user.click(screen.getByRole('button', { name: '完成文字拆散' }))
   await waitForApp()
+  await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
 }
+
+function configureFirstRun() {
+  const store = createLearningStore()
+  store.updateSettings({
+    examDate: '2027-09-13',
+    todayWordBookId: 'cet4',
+    dailyNewWords: 20,
+    dailyReviewWords: 20,
+    dailyStudyMinutes: 30,
+  })
+}
+
+test('opens one combined setup dialog only after the welcome animation finishes', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
+
+  expect(screen.getByRole('dialog', { name: '开始前，先设定你的学习计划' })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /^每日复习数量 / })).toBeInTheDocument()
+})
+
+test('does not reopen the first-run dialog when all five settings were saved', async () => {
+  configureFirstRun()
+  const user = userEvent.setup()
+  render(<App />)
+
+  await enterApp(user)
+
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+})
 
 test('shows the LinguaJet welcome screen and opens the app after a click', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
 
   expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).toBeInTheDocument()
@@ -50,6 +86,7 @@ test('shows the LinguaJet welcome screen and opens the app after a click', async
 
 test('hands the logo from the welcome screen to the particle transition', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
 
   await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
@@ -79,6 +116,7 @@ test('hands the logo from the welcome screen to the particle transition', async 
 
 test('a skipped particle transition still reveals a usable homepage', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
   await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
   await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
@@ -89,6 +127,7 @@ test('a skipped particle transition still reveals a usable homepage', async () =
 
 test('replaces the today-learning placeholder with the real overview', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
   await enterApp(user)
 
@@ -101,9 +140,6 @@ test('mounts setup dialogs outside the animated page and disables the app shell 
   const user = userEvent.setup()
   render(<App />)
   await enterApp(user)
-
-  const overview = screen.getByRole('region', { name: '今日学习概览' })
-  await user.click(within(overview).getByRole('button', { name: '今日学习' }))
 
   const dialog = screen.getByRole('dialog', { name: '开始前，先设定你的学习计划' })
   expect(dialog.closest('.page-transition')).toBeNull()
@@ -119,6 +155,7 @@ test('mounts setup dialogs outside the animated page and disables the app shell 
 
 test('opens editable settings from navigation and returns to the original vocabulary entry', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
   await enterApp(user)
 
@@ -224,6 +261,7 @@ test('traps recovery confirmation focus and restores it after Escape', async () 
 
 test('clicking vocabulary navigation shows the vocabulary page', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
   await enterApp(user)
 
@@ -234,6 +272,7 @@ test('clicking vocabulary navigation shows the vocabulary page', async () => {
 
 test('vocabulary page displays the first study words', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   const assetPaths = {
     '/data/word-books/cet4/manifest.json': 'public/data/word-books/cet4/manifest.json',
     '/data/word-books/cet4/chunks/00.json': 'public/data/word-books/cet4/chunks/00.json',
@@ -257,6 +296,7 @@ test('vocabulary page displays the first study words', async () => {
 
 test('vocabulary page starts with a book list', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
   await enterApp(user)
 
@@ -268,6 +308,7 @@ test('vocabulary page starts with a book list', async () => {
 
 test('vocabulary page can return from a book to the book list', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
   await enterApp(user)
 
@@ -280,6 +321,7 @@ test('vocabulary page can return from a book to the book list', async () => {
 
 test('hiding navigation keeps a control for showing it again', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   render(<App />)
   await enterApp(user)
 
@@ -290,6 +332,7 @@ test('hiding navigation keeps a control for showing it again', async () => {
 
 test('hiding navigation makes the entire sidebar inert', async () => {
   const user = userEvent.setup()
+  configureFirstRun()
   const { container } = render(<App />)
   await enterApp(user)
 

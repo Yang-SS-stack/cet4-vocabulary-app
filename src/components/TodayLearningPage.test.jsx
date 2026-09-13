@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, expect, test, vi } from 'vitest'
+import { expect, test } from 'vitest'
 
 import { createLearningStore, LearningStoreProvider } from '../data/learning'
 import TodayLearningPage from './TodayLearningPage'
@@ -39,34 +39,6 @@ function configure(store, patch = {}) {
   })
 }
 
-function createSnapshotStore(settingsPatch) {
-  const snapshot = {
-    version: 1,
-    settings: {
-      examDate: '2026-09-21',
-      todayWordBookId: 'cet4',
-      dailyNewWords: 12,
-      dailyReviewWords: 7,
-      dailyStudyMinutes: 50,
-      pronunciation: 'en-GB',
-      mistakeStudyWords: null,
-      ...settingsPatch,
-    },
-    mistakes: {},
-    wordBooks: {},
-    days: {},
-  }
-  return {
-    getSnapshot: () => snapshot,
-    subscribe: () => () => {},
-    updateSettings: vi.fn(),
-  }
-}
-
-afterEach(() => {
-  vi.unstubAllGlobals()
-})
-
 test('shows exam progress, word-book progress, both actions, and all six recommendation rows', () => {
   const store = createStore()
   configure(store)
@@ -94,96 +66,20 @@ test('shows exam progress, word-book progress, both actions, and all six recomme
   expect(screen.getByText('用户当前设置')).toBeInTheDocument()
   expect(screen.getByText('新词 12 · 复习 7')).toBeInTheDocument()
   expect(screen.getByText('预计每日学习时间')).toBeInTheDocument()
-  expect(screen.getByText('约 43 分钟')).toBeInTheDocument()
+  expect(screen.getByText('约 15 分钟')).toBeInTheDocument()
   expect(screen.getByText('查看依据')).toBeInTheDocument()
 })
 
-test('opens learning setup when any required learning field is missing', async () => {
+test('leaves first-run setup to the app entry and keeps later flows disabled', async () => {
   const user = userEvent.setup()
   const store = createStore()
-  configure(store, { dailyStudyMinutes: null })
   renderPage(store)
 
   await user.click(screen.getByRole('button', { name: '今日学习' }))
-
-  expect(screen.getByRole('dialog', { name: '开始前，先设定你的学习计划' })).toBeInTheDocument()
-})
-
-test('opens review setup when its quota is missing', async () => {
-  const user = userEvent.setup()
-  const store = createStore()
-  configure(store, { dailyReviewWords: null, dailyStudyMinutes: 60 })
-  renderPage(store)
-
-  await user.click(screen.getByRole('button', { name: '今日复习' }))
-
-  expect(screen.getByRole('dialog', { name: '开始前，先设定你的复习计划' })).toBeInTheDocument()
-})
-
-test('does not count the review default toward a fresh learning plan load', async () => {
-  vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true })))
-  const user = userEvent.setup()
-  const store = createStore()
-  configure(store, { examDate: null, dailyNewWords: 10, dailyReviewWords: null, dailyStudyMinutes: 30 })
-  renderPage(store)
-
-  await user.click(screen.getByRole('button', { name: '今日学习' }))
-  await user.click(screen.getByRole('button', { name: '保存并继续' }))
-
-  expect(screen.queryByText(/超过你的 30 分钟计划/)).not.toBeInTheDocument()
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-  expect(store.getSnapshot().settings.dailyReviewWords).toBeNull()
-})
-
-test.each([
-  ['examDate', 'not-a-date', '今日学习', /^考试日期 \d{4} 年 \d{1,2} 月 \d{1,2} 日$/],
-  ['todayWordBookId', 'missing-book', '今日学习', '学习词表 CET-4'],
-  ['dailyNewWords', 0, '今日学习', '每日新词 1 词'],
-  ['dailyNewWords', 1.5, '今日学习', '每日新词 100 词'],
-  ['dailyNewWords', 101, '今日学习', '每日新词 100 词'],
-  ['dailyStudyMinutes', 0, '今日学习', '每日学习时长 5 分钟'],
-  ['dailyStudyMinutes', 245, '今日学习', '每日学习时长 240 分钟'],
-  ['dailyStudyMinutes', 31, '今日学习', '每日学习时长 30 分钟'],
-  ['dailyReviewWords', 0, '今日复习', '每日复习数量 1 词'],
-  ['dailyReviewWords', 1.5, '今日复习', '每日复习数量 20 词'],
-  ['dailyReviewWords', 101, '今日复习', '每日复习数量 100 词'],
-])('reopens setup and normalizes an unsupported %s value of %s', async (field, value, action, normalizedName) => {
-  const user = userEvent.setup()
-  const store = createSnapshotStore({ [field]: value })
-  renderPage(store)
-
-  await user.click(screen.getByRole('button', { name: action }))
-
-  expect(screen.getByRole('dialog')).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: normalizedName })).toBeInTheDocument()
-})
-
-test('keeps configured learning and review flows disabled until their later prompts', async () => {
-  const user = userEvent.setup()
-  const store = createStore()
-  configure(store)
-  renderPage(store)
-
-  await user.click(screen.getByRole('button', { name: '今日学习' }))
   expect(screen.getByRole('status')).toHaveTextContent('学习流程将在下一阶段启用')
-  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 
   await user.click(screen.getByRole('button', { name: '今日复习' }))
-  expect(screen.getByRole('status')).toHaveTextContent('复习流程将在下一阶段启用')
-  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-})
-
-test('saves first-run settings through the learning store', async () => {
-  vi.stubGlobal('matchMedia', vi.fn(() => ({ matches: true })))
-  const user = userEvent.setup()
-  const store = createStore()
-  configure(store, { dailyReviewWords: null, dailyStudyMinutes: 60 })
-  renderPage(store)
-
-  await user.click(screen.getByRole('button', { name: '今日复习' }))
-  await user.click(screen.getByRole('button', { name: '保存并继续' }))
-
-  expect(store.getSnapshot().settings.dailyReviewWords).toBe(20)
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   expect(screen.getByRole('status')).toHaveTextContent('复习流程将在下一阶段启用')
 })

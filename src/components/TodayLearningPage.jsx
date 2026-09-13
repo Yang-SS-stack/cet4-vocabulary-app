@@ -6,35 +6,14 @@ import {
   daysUntilExam,
 } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
-import LearningSetupModal from './LearningSetupModal'
 import './TodayLearningPage.css'
 
-const LEARNING_FIELDS = ['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyStudyMinutes']
-const validWordCount = (value) => Number.isSafeInteger(value) && value >= 1 && value <= 100
-const validStudyMinutes = (value) => Number.isSafeInteger(value)
-  && value >= 5 && value <= 240 && value % 5 === 0
-
-function validExamDate(value) {
-  const match = typeof value === 'string' && /^(\d{4})-(\d{2})-(\d{2})$/.exec(value)
-  if (!match) return false
-  const [year, month, day] = match.slice(1).map(Number)
-  const date = new Date(year, month - 1, day)
-  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
-}
-
-const LEARNING_FIELD_VALIDATORS = {
-  examDate: validExamDate,
-  todayWordBookId: (value) => wordBooks.some(({ id }) => id === value),
-  dailyNewWords: validWordCount,
-  dailyStudyMinutes: validStudyMinutes,
-}
-
 function TodayLearningPage({ now = new Date() }) {
-  const { store, snapshot } = useLearningStore()
+  const { snapshot } = useLearningStore()
   const { settings } = snapshot
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
   const completedWords = completedWordCount(snapshot, selectedWordBook.id)
-  const daysRemaining = validExamDate(settings.examDate) ? daysUntilExam(settings.examDate, now) : null
+  const daysRemaining = daysUntilExam(settings.examDate, now)
   const recommendation = buildLearningRecommendation({
     totalWords: selectedWordBook.totalWords,
     completedWords,
@@ -43,28 +22,12 @@ function TodayLearningPage({ now = new Date() }) {
     dailyReviewWords: settings.dailyReviewWords ?? 0,
     dailyStudyMinutes: settings.dailyStudyMinutes ?? 0,
   })
-  const [setupMode, setSetupMode] = useState(null)
   const [status, setStatus] = useState('')
 
   const start = (mode) => {
-    setStatus('')
-    const needsSetup = mode === 'learning'
-      ? LEARNING_FIELDS.some((field) => !LEARNING_FIELD_VALIDATORS[field](settings[field]))
-      : !validWordCount(settings.dailyReviewWords)
-    if (needsSetup) {
-      setSetupMode(mode)
-      return
-    }
     setStatus(mode === 'learning'
-      ? '设置已保存，学习流程将在下一阶段启用。'
-      : '设置已保存，复习流程将在下一阶段启用。')
-  }
-
-  const saveSetup = (patch) => {
-    store.updateSettings(patch)
-    setStatus(setupMode === 'learning'
-      ? '设置已保存，学习流程将在下一阶段启用。'
-      : '设置已保存，复习流程将在下一阶段启用。')
+      ? '学习流程将在下一阶段启用。'
+      : '复习流程将在下一阶段启用。')
   }
 
   return (
@@ -85,21 +48,6 @@ function TodayLearningPage({ now = new Date() }) {
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
 
       <RecommendationCard recommendation={recommendation} settings={settings} />
-
-      {setupMode && (
-        <LearningSetupModal
-          mode={setupMode}
-          settings={settings}
-          recommendation={{
-            ...recommendation,
-            totalWords: selectedWordBook.totalWords,
-            completedWords,
-            dailyReviewWords: settings.dailyReviewWords,
-          }}
-          onSave={saveSetup}
-          onClose={() => setSetupMode(null)}
-        />
-      )}
     </section>
   )
 }
