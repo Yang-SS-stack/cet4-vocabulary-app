@@ -16,6 +16,7 @@ vi.mock('./components/ParticleTextTransition', () => ({
 }))
 
 afterEach(() => {
+  vi.useRealTimers()
   localStorage.removeItem(LEARNING_STORAGE_KEY)
 })
 
@@ -34,9 +35,15 @@ async function enterApp(user) {
 }
 
 function configureFirstRun() {
+  const now = new Date()
+  const examDate = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
   const store = createLearningStore()
   store.updateSettings({
-    examDate: '2027-09-13',
+    examDate: [
+      examDate.getFullYear(),
+      String(examDate.getMonth() + 1).padStart(2, '0'),
+      String(examDate.getDate()).padStart(2, '0'),
+    ].join('-'),
     todayWordBookId: 'cet4',
     dailyNewWords: 20,
     dailyReviewWords: 20,
@@ -58,6 +65,8 @@ test('opens one combined setup dialog only after the welcome animation finishes'
 })
 
 test('does not reopen the first-run dialog when all five settings were saved', async () => {
+  vi.useFakeTimers({ toFake: ['Date'] })
+  vi.setSystemTime(new Date(2030, 8, 13, 12))
   configureFirstRun()
   const user = userEvent.setup()
   render(<App />)
