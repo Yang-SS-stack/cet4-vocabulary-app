@@ -678,7 +678,7 @@ function renderPage(store, now = new Date(2026, 8, 11, 10)) {
 
 - [ ] **Step 2: Update Today recommendation expectations before implementation**
 
-For 12 new words and 7 reviews, change `约 43 分钟` to `约 15 分钟`. Add an over-limit fixture that checks the raw “考试计划计算” value, the capped “系统最终建议” value of 100, and the cannot-finish warning text:
+For 12 new words and 7 reviews, change `约 43 分钟` to `约 15 分钟`. Replace the non-numeric “研究建议：新词” row with a concise “学习方法建议” row, and add an over-limit fixture that checks the raw “考试目标需要” value, the capped personalized “系统建议” value of 100, and the cannot-finish warning text:
 
 ```jsx
 test('separates an impossible raw deadline from the capped editable suggestion', () => {
@@ -724,7 +724,7 @@ const systemPlan = recommendation.recommendedDailyWords === null
   : `每天 ${formatNumber(recommendation.recommendedDailyWords)} 词`
 ```
 
-When `exceedsDailyWordLimit` is true, render the same cannot-finish warning near the recommendation rows. Keep “用户当前设置” sourced from saved settings, not the recommendation.
+Render “学习方法建议” as method guidance only: use spaced learning and active recall, and prioritize due reviews. Do not present a fixed daily quantity as a research result. When `exceedsDailyWordLimit` is true, render the same cannot-finish warning near the recommendation rows. Keep “用户当前设置” sourced from saved settings, not the recommendation, and add a short plan result that explains whether the current setting meets the deadline requirement.
 
 - [ ] **Step 6: Run focused tests and commit**
 
