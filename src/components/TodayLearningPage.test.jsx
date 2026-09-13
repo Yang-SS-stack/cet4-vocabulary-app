@@ -56,18 +56,48 @@ test('shows exam progress, word-book progress, both actions, and all six recomme
   expect(screen.getByRole('button', { name: '今日学习' })).toBeInTheDocument()
   expect(screen.getByRole('button', { name: '今日复习' })).toBeInTheDocument()
 
-  expect(screen.getByText('研究建议：新词')).toBeInTheDocument()
-  expect(screen.getByText('研究未给出通用固定数量')).toBeInTheDocument()
-  expect(screen.getByText('研究建议：复习')).toBeInTheDocument()
-  expect(screen.getByText('优先完成全部到期词')).toBeInTheDocument()
-  expect(screen.getByText('考试计划计算')).toBeInTheDocument()
-  expect(screen.getAllByText('每天 455 词')).toHaveLength(2)
-  expect(screen.getByText('系统最终建议')).toBeInTheDocument()
+  expect(screen.getByText('学习方法建议')).toBeInTheDocument()
+  expect(screen.getByText('使用间隔学习与主动回忆；复习时优先完成全部到期词')).toBeInTheDocument()
+  expect(screen.getByText('尚无到期复习；开始复习后按当天到期词更新')).toBeInTheDocument()
+  expect(screen.getByText('考试目标需要')).toBeInTheDocument()
+  expect(screen.getByText('每天 455 词')).toBeInTheDocument()
+  expect(screen.getByText('系统建议')).toBeInTheDocument()
+  expect(screen.getByText('每天 100 词')).toBeInTheDocument()
   expect(screen.getByText('用户当前设置')).toBeInTheDocument()
   expect(screen.getByText('新词 12 · 复习 7')).toBeInTheDocument()
   expect(screen.getByText('预计每日学习时间')).toBeInTheDocument()
   expect(screen.getByText('约 15 分钟')).toBeInTheDocument()
+  expect(screen.getByText('计划结果')).toBeInTheDocument()
+  expect(screen.getByText('当前设置可能无法在考试前完成，建议每天至少学习 455 个新词。')).toBeInTheDocument()
   expect(screen.getByText('查看依据')).toBeInTheDocument()
+})
+
+test('separates an impossible raw deadline from the capped editable suggestion', () => {
+  const store = createStore()
+  configure(store, { examDate: '2026-09-12', dailyNewWords: 100, dailyStudyMinutes: 110 })
+  renderPage(store)
+
+  expect(screen.getByText('每天 4,544 词')).toBeInTheDocument()
+  expect(screen.getByText('每天 100 词')).toBeInTheDocument()
+  expect(screen.getByText(/考试前可能无法完成/)).toBeInTheDocument()
+  expect(screen.getByText('当前设置可能无法在考试前完成，建议每天至少学习 4,544 个新词。')).toBeInTheDocument()
+})
+
+test('reports when the saved daily quantity can meet the deadline', () => {
+  const store = createStore()
+  configure(store, { examDate: '2027-09-11', dailyNewWords: 13 })
+  renderPage(store)
+
+  expect(screen.getByText('当前设置可以在考试前完成。')).toBeInTheDocument()
+})
+
+test('prompts for a future date when deadline plans are unavailable', () => {
+  const store = createStore()
+  configure(store, { examDate: null })
+  renderPage(store)
+
+  expect(screen.getAllByText('设置未来考试日期后计算')).toHaveLength(2)
+  expect(screen.getByText('请先设置未来的考试日期。')).toBeInTheDocument()
 })
 
 test('leaves first-run setup to the app entry and keeps later flows disabled', async () => {

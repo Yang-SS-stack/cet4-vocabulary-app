@@ -30,10 +30,10 @@ function createStore() {
   return store
 }
 
-function renderPage(store) {
+function renderPage(store, now = new Date(2026, 8, 11, 10)) {
   return render(
     <LearningStoreProvider store={store}>
-      <SettingsPage />
+      <SettingsPage now={now} />
     </LearningStoreProvider>,
   )
 }
@@ -86,6 +86,40 @@ test('does not overlap wheel trays when the user changes the pending field quick
   expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })
 
+test('recalculates study minutes when either word count changes', async () => {
+  const user = userEvent.setup()
+  renderPage(createStore(), new Date(2026, 8, 13, 10))
+
+  await user.click(summary('每日新词数量'))
+  await user.click(screen.getByRole('option', { name: '13 词' }))
+  expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 20 分钟')
+
+  await user.click(summary('每日复习数量'))
+  await user.click(await screen.findByRole('option', { name: '1 词' }))
+  expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 15 分钟')
+})
+
+test('does not save a date that is today or earlier', async () => {
+  const user = userEvent.setup()
+  const store = createStore()
+  store.updateSettings({ examDate: '2026-09-13' })
+  renderPage(store, new Date(2026, 8, 13, 10))
+
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+
+  expect(screen.getByRole('status')).toHaveTextContent('请选择未来的考试日期')
+  expect(store.getSnapshot().settings.examDate).toBe('2026-09-13')
+})
+
+test('warns when the deadline requires more than the editable daily limit', () => {
+  const store = createStore()
+  store.updateSettings({ examDate: '2026-09-12' })
+
+  renderPage(store)
+
+  expect(screen.getByText(/考试前可能无法完成/)).toBeInTheDocument()
+})
+
 test('saves en-US and later settings changes without rewriting an existing daily task snapshot', async () => {
   const user = userEvent.setup()
   const store = createStore()
@@ -102,8 +136,8 @@ test('saves en-US and later settings changes without rewriting an existing daily
 
   await user.click(summary('每日新词数量'))
   await user.click(screen.getByRole('option', { name: '24 词' }))
+  expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 35 分钟')
   await user.click(screen.getByRole('button', { name: '保存设置' }))
-  await user.click(await screen.findByRole('button', { name: '仍然保存' }))
 
   await waitFor(() => expect(store.getSnapshot().settings.dailyNewWords).toBe(24))
   expect(store.getSnapshot().settings.pronunciation).toBe('en-US')

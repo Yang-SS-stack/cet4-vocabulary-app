@@ -62,12 +62,16 @@ function StatusMetric({ label, value }) {
 }
 
 function RecommendationCard({ recommendation, settings }) {
-  const plan = recommendation.deadlineDailyWords === null
+  const deadlinePlan = recommendation.deadlineDailyWords === null
     ? '设置未来考试日期后计算'
     : `每天 ${formatNumber(recommendation.deadlineDailyWords)} 词`
+  const systemPlan = recommendation.recommendedDailyWords === null
+    ? '设置未来考试日期后计算'
+    : `每天 ${formatNumber(recommendation.recommendedDailyWords)} 词`
   const current = settings.dailyNewWords === null && settings.dailyReviewWords === null
     ? '尚未设置'
     : `新词 ${settings.dailyNewWords ?? '未设置'} · 复习 ${settings.dailyReviewWords ?? '未设置'}`
+  const planResult = formatPlanResult(recommendation, settings)
 
   return (
     <article className="learning-recommendation" aria-labelledby="learning-recommendation-title">
@@ -77,13 +81,17 @@ function RecommendationCard({ recommendation, settings }) {
       </header>
 
       <dl className="learning-recommendation__rows">
-        <RecommendationRow label="研究建议：新词" value="研究未给出通用固定数量" />
-        <RecommendationRow label="研究建议：复习" value="优先完成全部到期词" note="尚无到期复习；开始复习后按当天到期词更新" />
-        <RecommendationRow label="考试计划计算" value={plan} />
-        <RecommendationRow label="系统最终建议" value={plan} />
+        <RecommendationRow label="学习方法建议" value="使用间隔学习与主动回忆；复习时优先完成全部到期词" note="尚无到期复习；开始复习后按当天到期词更新" />
+        <RecommendationRow label="考试目标需要" value={deadlinePlan} />
+        <RecommendationRow label="系统建议" value={systemPlan} />
         <RecommendationRow label="用户当前设置" value={current} />
         <RecommendationRow label="预计每日学习时间" value={`约 ${formatNumber(recommendation.estimatedMinutes)} 分钟`} />
+        <RecommendationRow label="计划结果" value={planResult} />
       </dl>
+
+      {recommendation.exceedsDailyWordLimit && (
+        <p role="status">按当前日期和剩余词量，考试前可能无法完成，请调整考试日期或学习计划。</p>
+      )}
 
       <details className="learning-recommendation__evidence">
         <summary>查看依据</summary>
@@ -98,6 +106,13 @@ function RecommendationCard({ recommendation, settings }) {
       </details>
     </article>
   )
+}
+
+function formatPlanResult(recommendation, settings) {
+  const required = recommendation.deadlineDailyWords
+  if (required === null) return '请先设置未来的考试日期。'
+  if ((settings.dailyNewWords ?? 0) >= required) return '当前设置可以在考试前完成。'
+  return `当前设置可能无法在考试前完成，建议每天至少学习 ${formatNumber(required)} 个新词。`
 }
 
 function RecommendationRow({ label, value, note }) {

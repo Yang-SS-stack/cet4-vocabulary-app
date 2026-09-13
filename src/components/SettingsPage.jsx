@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { useLearningStore } from '../data/learning'
+import { estimateDailyStudyMinutes } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
+import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
 import './SettingsPage.css'
 
@@ -29,10 +31,10 @@ const MINUTE_OPTIONS = Array.from({ length: 48 }, (_, index) => ({
   label: `${(index + 1) * 5} 分钟`,
 }))
 
-function SettingsPage() {
+function SettingsPage({ now = new Date() }) {
   const { store, snapshot } = useLearningStore()
   const initialDraftRef = useRef(null)
-  if (initialDraftRef.current === null) initialDraftRef.current = createDraft(snapshot.settings)
+  if (initialDraftRef.current === null) initialDraftRef.current = createDraft(snapshot.settings, now)
 
   const [draft, setDraft] = useState(initialDraftRef.current)
   const draftRef = useRef(initialDraftRef.current)
@@ -54,9 +56,10 @@ function SettingsPage() {
     setStatus('')
     setShowOverload(false)
     setDraft((current) => {
-      const next = field === 'examDate'
+      const changed = field === 'examDate'
         ? { ...current, examDate: changeDatePart(current.examDate, columnLabel, value) }
         : { ...current, [field]: value }
+      const next = synchronizeSetupDraft({ draft: changed, changedField: field, snapshot, now })
       draftRef.current = next
       return next
     })
@@ -94,7 +97,14 @@ function SettingsPage() {
 
   const persist = (confirmed) => {
     const currentDraft = draftRef.current
-    const estimatedMinutes = currentDraft.dailyNewWords * 3 + currentDraft.dailyReviewWords
+    const currentPlanStatus = setupPlanStatus({ draft: currentDraft, snapshot, now })
+    if (currentPlanStatus.invalidExamDate) {
+      setStatus('请选择未来的考试日期。')
+      setIsSaving(false)
+      return
+    }
+
+    const estimatedMinutes = estimateDailyStudyMinutes(currentDraft.dailyNewWords, currentDraft.dailyReviewWords)
     if (!confirmed && estimatedMinutes > currentDraft.dailyStudyMinutes) {
       setShowOverload(true)
       setIsSaving(false)
@@ -132,7 +142,8 @@ function SettingsPage() {
     }, SCROLL_SETTLE_DURATION)
   }
 
-  const estimatedMinutes = draft.dailyNewWords * 3 + draft.dailyReviewWords
+  const estimatedMinutes = estimateDailyStudyMinutes(draft.dailyNewWords, draft.dailyReviewWords)
+  const planStatus = setupPlanStatus({ draft, snapshot, now })
 
   return (
     <section className="settings-page" aria-label="学习设置">
@@ -143,7 +154,7 @@ function SettingsPage() {
 
       <div className="settings-page__panel">
         {FIELDS.map((field) => {
-          const props = wheelProps(field, draft)
+          const props = wheelProps(field, draft, now)
           return (
             <SettingsWheel
               key={field}
@@ -156,6 +167,12 @@ function SettingsPage() {
           )
         })}
       </div>
+
+      {planStatus.exceedsDailyWordLimit && (
+        <section className="settings-page__confirmation" role="status">
+          <p>按当前日期和剩余词量，考试前可能无法完成，请调整考试日期或学习计划。</p>
+        </section>
+      )}
 
       {showOverload && (
         <section className="settings-page__confirmation" role="alert" aria-live="polite">
@@ -177,10 +194,10 @@ function SettingsPage() {
   )
 }
 
-function wheelProps(field, draft) {
+function wheelProps(field, draft, now) {
   if (field === 'examDate') {
     const { year, month, day } = dateParts(draft.examDate)
-    const currentYear = new Date().getFullYear()
+    const currentYear = now.getFullYear()
     return {
       label: '考试日期',
       displayValue: `${year} 年 ${month} 月 ${day} 日`,
@@ -237,10 +254,10 @@ function wheelProps(field, draft) {
   }
 }
 
-function createDraft(settings) {
+function createDraft(settings, now) {
   return {
     ...settings,
-    examDate: normalizeExamDate(settings.examDate),
+    examDate: normalizeExamDate(settings.examDate, now),
     todayWordBookId: wordBooks.some(({ id }) => id === settings.todayWordBookId) ? settings.todayWordBookId : wordBooks[0].id,
     dailyNewWords: normalizeWordCount(settings.dailyNewWords, 15),
     dailyReviewWords: normalizeWordCount(settings.dailyReviewWords, 20),
@@ -260,9 +277,9 @@ function normalizeStudyMinutes(value) {
   return Math.min(240, Math.max(5, Math.round(value / 5) * 5))
 }
 
-function normalizeExamDate(value) {
+function normalizeExamDate(value, now) {
   if (validDateKey(value)) return value
-  const date = new Date()
+  const date = new Date(now)
   date.setHours(12, 0, 0, 0)
   date.setDate(date.getDate() + 90)
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
