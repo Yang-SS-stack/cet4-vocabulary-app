@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { buildLearningRecommendation } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
+import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
 import './LearningSetupModal.css'
 
@@ -9,19 +10,14 @@ const CLOSE_DURATION = 180
 const SCROLL_SETTLE_DURATION = 110
 const FIELD_SWITCH_DURATION = CLOSE_DURATION + 20
 const MODE_FIELDS = {
-  learning: ['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyStudyMinutes'],
-  review: ['dailyReviewWords'],
+  initial: ['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes'],
   mistakes: ['mistakeStudyWords'],
 }
 
 const MODE_COPY = {
-  learning: {
+  initial: {
     title: '开始前，先设定你的学习计划',
     description: '这些设置随时可以在“设置”页修改',
-  },
-  review: {
-    title: '开始前，先设定你的复习计划',
-    description: '先选择每天计划复习的单词数量',
   },
   mistakes: {
     title: '开始前，先设定错题本计划',
@@ -38,7 +34,7 @@ const MINUTE_OPTIONS = Array.from({ length: 48 }, (_, index) => ({
   label: `${(index + 1) * 5} 分钟`,
 }))
 
-function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClose }) {
+function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recommendation = {}, onSave, onClose }) {
   const fields = MODE_FIELDS[mode]
   if (!fields) throw new Error(`Unsupported setup mode: ${mode}`)
 
@@ -51,7 +47,7 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
   const settleTimerRef = useRef(null)
   const wheelSettlingRef = useRef(false)
   const initialDraftRef = useRef(null)
-  if (initialDraftRef.current === null) initialDraftRef.current = createDraft(settings, recommendation)
+  if (initialDraftRef.current === null) initialDraftRef.current = createDraft(mode, settings, snapshot, now)
   const [draft, setDraft] = useState(initialDraftRef.current)
   const draftRef = useRef(initialDraftRef.current)
   const [activeField, setActiveField] = useState(null)
@@ -131,9 +127,12 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
     setError('')
     setShowOverload(false)
     setDraft((current) => {
-      const next = field === 'examDate'
+      const changed = field === 'examDate'
         ? { ...current, examDate: changeDatePart(current.examDate, columnLabel, value) }
         : { ...current, [field]: value }
+      const next = mode === 'initial'
+        ? synchronizeSetupDraft({ draft: changed, changedField: field, snapshot, now })
+        : changed
       draftRef.current = next
       return next
     })
@@ -144,6 +143,15 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
     const patch = Object.fromEntries(fields.map((field) => [field, currentDraft[field]]))
     if (Object.values(patch).some((value) => value === null || value === undefined || value === '')) {
       setError('请完成所有设置后再保存。')
+      setIsSaving(false)
+      return
+    }
+
+    const currentPlanStatus = mode === 'initial'
+      ? setupPlanStatus({ draft: currentDraft, snapshot, now })
+      : null
+    if (currentPlanStatus?.invalidExamDate) {
+      setError('请选择未来的考试日期。')
       setIsSaving(false)
       return
     }
@@ -216,6 +224,9 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
   }
 
   const load = calculateDraftLoad(mode, draft, settings, recommendation)
+  const planStatus = mode === 'initial'
+    ? setupPlanStatus({ draft, snapshot, now })
+    : { invalidExamDate: false, exceedsDailyWordLimit: false }
 
   return createPortal((
     <div className={isClosing ? 'learning-setup-backdrop is-closing' : 'learning-setup-backdrop'}>
@@ -245,6 +256,17 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
             />
           ))}
         </div>
+
+        {mode === 'initial' && (
+          <p className="learning-setup-modal__estimate-note">
+            预计时间按每个新词约 1 分钟、每个复习词约 20 秒计算，结果向上取整到 5 分钟；你仍可自行调整。
+          </p>
+        )}
+        {planStatus.exceedsDailyWordLimit && (
+          <p className="learning-setup-modal__plan-warning" role="status">
+            按当前日期和剩余词量，考试前可能无法完成，请调整考试日期或学习计划。
+          </p>
+        )}
 
         {showOverload && (
           <section ref={overloadRef} className="learning-setup-modal__confirmation" role="alert" aria-live="polite">
@@ -318,24 +340,27 @@ function wheelProps(field, draft) {
   }
 }
 
-function createDraft(settings, recommendation) {
-  return {
+function createDraft(mode, settings, snapshot, now) {
+  const normalized = {
     ...settings,
     examDate: normalizeExamDate(settings.examDate),
     todayWordBookId: normalizeWordBookId(settings.todayWordBookId),
-    dailyNewWords: normalizeWordCount(settings.dailyNewWords, boundedWordCount(recommendation.deadlineDailyWords, 15)),
-    dailyReviewWords: normalizeWordCount(settings.dailyReviewWords, boundedWordCount(recommendation.dailyReviewWords, 20)),
+    dailyNewWords: normalizeWordCount(settings.dailyNewWords, 15),
+    dailyReviewWords: normalizeWordCount(settings.dailyReviewWords, 20),
     dailyStudyMinutes: normalizeStudyMinutes(settings.dailyStudyMinutes),
     mistakeStudyWords: normalizeWordCount(settings.mistakeStudyWords, 20),
   }
+  return mode === 'initial'
+    ? synchronizeSetupDraft({ draft: normalized, changedField: 'examDate', snapshot, now })
+    : normalized
 }
 
 function calculateDraftLoad(mode, draft, settings, recommendation) {
-  const dailyNewWords = mode === 'learning' ? draft.dailyNewWords : settings.dailyNewWords ?? 0
-  const dailyReviewWords = mode === 'review'
+  const dailyNewWords = mode === 'initial' ? draft.dailyNewWords : settings.dailyNewWords ?? 0
+  const dailyReviewWords = mode === 'initial'
     ? draft.dailyReviewWords
     : recommendation.dailyReviewWords ?? settings.dailyReviewWords ?? 0
-  const dailyStudyMinutes = mode === 'learning' ? draft.dailyStudyMinutes : settings.dailyStudyMinutes ?? 0
+  const dailyStudyMinutes = mode === 'initial' ? draft.dailyStudyMinutes : settings.dailyStudyMinutes ?? 0
   const result = buildLearningRecommendation({
     totalWords: recommendation.totalWords ?? 0,
     completedWords: recommendation.completedWords ?? 0,
@@ -379,10 +404,6 @@ function futureDateKey(daysAhead) {
   date.setHours(12, 0, 0, 0)
   date.setDate(date.getDate() + daysAhead)
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
-}
-
-function boundedWordCount(value, fallback) {
-  return Number.isSafeInteger(value) && value > 0 ? Math.min(100, value) : fallback
 }
 
 function normalizeExamDate(value) {

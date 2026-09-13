@@ -8,10 +8,17 @@ const baseSettings = {
   examDate: '2026-12-12',
   todayWordBookId: 'cet4',
   dailyNewWords: 5,
-  dailyReviewWords: 5,
+  dailyReviewWords: 20,
   dailyStudyMinutes: 30,
   pronunciation: 'en-GB',
   mistakeStudyWords: 10,
+}
+
+const snapshot = {
+  settings: {},
+  wordBooks: {},
+  mistakes: {},
+  days: {},
 }
 
 const recommendation = {
@@ -19,7 +26,7 @@ const recommendation = {
   completedWords: 0,
   daysRemaining: 90,
   deadlineDailyWords: 5,
-  dailyReviewWords: 5,
+  dailyReviewWords: 20,
 }
 
 afterEach(() => {
@@ -28,24 +35,62 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-test('renders only the fields belonging to each setup mode and starts collapsed', () => {
-  const { rerender } = renderModal({ mode: 'learning' })
+test('shows all five first-run settings and the visible estimate explanation', () => {
+  renderModal({ mode: 'initial' })
 
   expect(screen.getByRole('dialog', { name: '开始前，先设定你的学习计划' })).toBeInTheDocument()
   expect(summary('考试日期')).toBeInTheDocument()
   expect(summary('学习词表')).toBeInTheDocument()
   expect(summary('每日新词')).toBeInTheDocument()
-  expect(summary('每日学习时长')).toBeInTheDocument()
-  expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-  expect(screen.queryByRole('button', { name: /^每日复习数量 / })).not.toBeInTheDocument()
-
-  rerender(<LearningSetupModal {...modalProps({ mode: 'review' })} />)
   expect(summary('每日复习数量')).toBeInTheDocument()
-  expect(screen.queryByRole('button', { name: /^考试日期 / })).not.toBeInTheDocument()
+  expect(summary('每日学习时长')).toBeInTheDocument()
+  expect(screen.getByText(/每个新词约 1 分钟、每个复习词约 20 秒/)).toBeVisible()
+  expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+})
 
-  rerender(<LearningSetupModal {...modalProps({ mode: 'mistakes' })} />)
+test('keeps the mistakes setup mode isolated for the later mistakes flow', () => {
+  renderModal({ mode: 'mistakes' })
   expect(summary('错题本每日学习数量')).toBeInTheDocument()
   expect(screen.queryByRole('button', { name: /^每日复习数量 / })).not.toBeInTheDocument()
+})
+
+test('recalculates time from count changes but still allows a final manual time choice', async () => {
+  const user = userEvent.setup()
+  renderModal({ mode: 'initial' })
+
+  await user.click(summary('每日新词'))
+  await user.click(screen.getByRole('option', { name: '13 词' }))
+  expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 20 分钟')
+
+  await user.click(summary('每日学习时长'))
+  await user.click(await screen.findByRole('option', { name: '30 分钟' }))
+  expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 30 分钟')
+})
+
+test('blocks a non-future exam date and preserves the draft', async () => {
+  const user = userEvent.setup()
+  const onSave = vi.fn()
+  renderModal({
+    mode: 'initial',
+    now: new Date(2026, 8, 13, 10),
+    settings: { ...baseSettings, examDate: '2026-09-13' },
+    onSave,
+  })
+
+  await user.click(screen.getByRole('button', { name: '保存并继续' }))
+  expect(screen.getByRole('status')).toHaveTextContent('请选择未来的考试日期')
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2026 年 9 月 13 日')
+  expect(onSave).not.toHaveBeenCalled()
+})
+
+test('warns when the remaining words cannot fit the daily word limit', () => {
+  renderModal({
+    mode: 'initial',
+    now: new Date(2026, 8, 13, 10),
+    settings: { ...baseSettings, examDate: '2026-09-14' },
+  })
+
+  expect(screen.getByText(/按当前日期和剩余词量，考试前可能无法完成/)).toBeVisible()
 })
 
 test('keeps only one wheel open and preserves draft choices while switching fields', async () => {
@@ -128,15 +173,23 @@ test('fills null fields with visible defaults and saves one complete mode patch'
   const user = userEvent.setup()
   const onSave = vi.fn()
   renderModal({
-    settings: { ...baseSettings, examDate: null, todayWordBookId: null, dailyNewWords: null, dailyStudyMinutes: null },
+    settings: {
+      ...baseSettings,
+      examDate: null,
+      todayWordBookId: null,
+      dailyNewWords: null,
+      dailyReviewWords: null,
+      dailyStudyMinutes: null,
+    },
     recommendation: { ...recommendation, deadlineDailyWords: 5, dailyReviewWords: 0 },
     onSave,
   })
 
   expect(summary('考试日期')).not.toHaveAccessibleName('考试日期 未设置')
   expect(summary('学习词表')).toHaveAccessibleName('学习词表 CET-4')
-  expect(summary('每日新词')).toHaveAccessibleName('每日新词 5 词')
-  expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 30 分钟')
+  expect(summary('每日新词')).toHaveAccessibleName(expect.stringMatching(/^每日新词 \d+ 词$/))
+  expect(summary('每日复习数量')).toHaveAccessibleName('每日复习数量 20 词')
+  expect(summary('每日学习时长')).toHaveAccessibleName(expect.stringMatching(/^每日学习时长 \d+ 分钟$/))
 
   await user.click(screen.getByRole('button', { name: '保存并继续' }))
 
@@ -144,8 +197,9 @@ test('fills null fields with visible defaults and saves one complete mode patch'
   expect(onSave).toHaveBeenCalledWith({
     examDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
     todayWordBookId: 'cet4',
-    dailyNewWords: 5,
-    dailyStudyMinutes: 30,
+    dailyNewWords: expect.any(Number),
+    dailyReviewWords: 20,
+    dailyStudyMinutes: expect.any(Number),
   })
 })
 
@@ -165,28 +219,19 @@ test('normalizes legacy values to choices supported by every setup wheel before 
 
   expect(summary('考试日期')).toHaveAccessibleName(expect.stringMatching(/^考试日期 \d{4} 年 \d{1,2} 月 \d{1,2} 日$/))
   expect(summary('学习词表')).toHaveAccessibleName('学习词表 CET-4')
-  expect(summary('每日新词')).toHaveAccessibleName('每日新词 1 词')
-  expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 30 分钟')
+  expect(summary('每日新词')).toHaveAccessibleName(expect.stringMatching(/^每日新词 \d+ 词$/))
+  expect(summary('每日复习数量')).toHaveAccessibleName('每日复习数量 100 词')
+  expect(summary('每日学习时长')).toHaveAccessibleName(expect.stringMatching(/^每日学习时长 \d+ 分钟$/))
 
   await user.click(screen.getByRole('button', { name: '保存并继续' }))
   expect(learningSave).toHaveBeenCalledWith({
     examDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
     todayWordBookId: 'cet4',
-    dailyNewWords: 1,
-    dailyStudyMinutes: 30,
+    dailyNewWords: expect.any(Number),
+    dailyReviewWords: 100,
+    dailyStudyMinutes: expect.any(Number),
   })
   unmount()
-
-  const reviewSave = vi.fn()
-  const review = renderModal({
-    mode: 'review',
-    settings: { ...legacySettings, dailyNewWords: 1, dailyStudyMinutes: 240 },
-    onSave: reviewSave,
-  })
-  expect(summary('每日复习数量')).toHaveAccessibleName('每日复习数量 100 词')
-  await user.click(screen.getByRole('button', { name: '保存并继续' }))
-  expect(reviewSave).toHaveBeenCalledWith({ dailyReviewWords: 100 })
-  review.unmount()
 
   const mistakesSave = vi.fn()
   renderModal({
@@ -202,31 +247,37 @@ test('normalizes legacy values to choices supported by every setup wheel before 
 test('asks before an overloaded save and never changes the chosen draft', async () => {
   const user = userEvent.setup()
   const onSave = vi.fn()
-  renderModal({ settings: { ...baseSettings, dailyNewWords: 20, dailyStudyMinutes: 30 }, onSave })
+  renderModal({ now: new Date(2026, 8, 13, 10), onSave })
+
+  await user.click(summary('每日学习时长'))
+  await user.click(screen.getByRole('option', { name: '30 分钟' }))
 
   await user.click(screen.getByRole('button', { name: '保存并继续' }))
 
-  expect(screen.getByText(/预计约 65 分钟，超过你的 30 分钟计划/)).toBeInTheDocument()
+  expect(await screen.findByText(/预计约 60 分钟，超过你的 30 分钟计划/)).toBeInTheDocument()
   expect(onSave).not.toHaveBeenCalled()
   await user.click(screen.getByRole('button', { name: '返回调整' }))
-  expect(summary('每日新词')).toHaveAccessibleName('每日新词 20 词')
+  expect(summary('每日新词')).toHaveAccessibleName('每日新词 51 词')
   expect(summary('每日学习时长')).toHaveAccessibleName('每日学习时长 30 分钟')
 
   await user.click(screen.getByRole('button', { name: '保存并继续' }))
   await user.click(screen.getByRole('button', { name: '仍然保存' }))
-  expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ dailyNewWords: 20, dailyStudyMinutes: 30 }))
+  expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ dailyNewWords: 51, dailyReviewWords: 20, dailyStudyMinutes: 30 }))
 })
 
 test('moves focus to the overload decision after closing a focused wheel', async () => {
   const user = userEvent.setup()
-  renderModal({ settings: { ...baseSettings, dailyNewWords: 20, dailyStudyMinutes: 30 } })
+  renderModal({ now: new Date(2026, 8, 13, 10) })
+
+  await user.click(summary('每日学习时长'))
+  await user.click(screen.getByRole('option', { name: '30 分钟' }))
 
   await user.click(summary('每日新词'))
-  const selectedOption = screen.getByRole('option', { name: '20 词' })
+  const selectedOption = await screen.findByRole('option', { name: '51 词' })
   selectedOption.focus()
   fireEvent.click(screen.getByRole('button', { name: '保存并继续' }))
 
-  await waitFor(() => expect(screen.getByText(/预计约 65 分钟，超过你的 30 分钟计划/)).toBeInTheDocument())
+  await waitFor(() => expect(screen.getByText(/预计约 60 分钟，超过你的 30 分钟计划/)).toBeInTheDocument())
   expect(screen.getByRole('button', { name: '返回调整' })).toHaveFocus()
 })
 
@@ -273,8 +324,9 @@ test('removes the dialog immediately when reduced motion is requested', async ()
 
 function modalProps(overrides = {}) {
   return {
-    mode: 'learning',
+    mode: 'initial',
     settings: baseSettings,
+    snapshot,
     recommendation,
     onSave: vi.fn(),
     onClose: vi.fn(),

@@ -60,6 +60,20 @@
   border-top: 1px solid var(--line);
 }
 
+.learning-setup-modal__estimate-note,
+.learning-setup-modal__plan-warning {
+  margin: 12px 0 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.learning-setup-modal__plan-warning {
+  padding-top: 10px;
+  border-top: 1px solid var(--gold-soft);
+  color: #8d2e2e;
+}
+
 .learning-setup-modal__confirmation {
   margin-top: 20px;
   padding: 16px 0 0;
