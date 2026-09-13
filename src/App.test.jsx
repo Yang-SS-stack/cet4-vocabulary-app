@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 import App from './App'
@@ -95,6 +95,26 @@ test('replaces the today-learning placeholder with the real overview', async () 
   expect(screen.getByRole('region', { name: '今日学习概览' })).toBeInTheDocument()
   expect(screen.getByText('学习建议')).toBeInTheDocument()
   expect(screen.queryByLabelText('今日学习内容')).not.toBeInTheDocument()
+})
+
+test('mounts setup dialogs outside the animated page and disables the app shell behind them', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await enterApp(user)
+
+  const overview = screen.getByRole('region', { name: '今日学习概览' })
+  await user.click(within(overview).getByRole('button', { name: '今日学习' }))
+
+  const dialog = screen.getByRole('dialog', { name: '开始前，先设定你的学习计划' })
+  expect(dialog.closest('.page-transition')).toBeNull()
+  expect(dialog.parentElement?.parentElement).toBe(document.body)
+  expect(document.querySelector('.app-shell')).toHaveAttribute('inert')
+  expect(document.querySelector('.app-shell')).toHaveAttribute('aria-hidden', 'true')
+
+  await user.keyboard('{Escape}')
+  await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  expect(document.querySelector('.app-shell')).not.toHaveAttribute('inert')
+  expect(document.querySelector('.app-shell')).toHaveAttribute('aria-hidden', 'false')
 })
 
 test('opens editable settings from navigation and returns to the original vocabulary entry', async () => {

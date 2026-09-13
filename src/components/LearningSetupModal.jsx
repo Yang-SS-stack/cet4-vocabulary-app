@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { buildLearningRecommendation } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
 import SettingsWheel from './SettingsWheel'
@@ -43,6 +44,7 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
 
   const titleId = useId()
   const dialogRef = useRef(null)
+  const overloadRef = useRef(null)
   const returnFocusRef = useRef(document.activeElement)
   const closeTimerRef = useRef(null)
   const switchTimerRef = useRef(null)
@@ -68,6 +70,24 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
       window.clearTimeout(settleTimerRef.current)
     }
   }, [])
+
+  useEffect(() => {
+    const appShell = document.querySelector('.app-shell')
+    if (!appShell) return undefined
+    const hadInert = appShell.hasAttribute('inert')
+    const previousAriaHidden = appShell.getAttribute('aria-hidden')
+    appShell.setAttribute('inert', '')
+    appShell.setAttribute('aria-hidden', 'true')
+    return () => {
+      if (!hadInert) appShell.removeAttribute('inert')
+      if (previousAriaHidden === null) appShell.removeAttribute('aria-hidden')
+      else appShell.setAttribute('aria-hidden', previousAriaHidden)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (showOverload) focusableElements(overloadRef.current)[0]?.focus()
+  }, [showOverload])
 
   const finishClose = () => {
     onClose()
@@ -197,7 +217,7 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
 
   const load = calculateDraftLoad(mode, draft, settings, recommendation)
 
-  return (
+  return createPortal((
     <div className={isClosing ? 'learning-setup-backdrop is-closing' : 'learning-setup-backdrop'}>
       <div
         ref={dialogRef}
@@ -227,7 +247,7 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
         </div>
 
         {showOverload && (
-          <section className="learning-setup-modal__confirmation" role="alert" aria-live="polite">
+          <section ref={overloadRef} className="learning-setup-modal__confirmation" role="alert" aria-live="polite">
             <p>预计约 {load.estimatedMinutes} 分钟，超过你的 {load.dailyStudyMinutes} 分钟计划。要调整吗？</p>
             <div className="learning-setup-modal__confirmation-actions">
               <button type="button" className="learning-setup-modal__text-button" onClick={() => setShowOverload(false)}>返回调整</button>
@@ -246,7 +266,7 @@ function LearningSetupModal({ mode, settings, recommendation = {}, onSave, onClo
         </footer>
       </div>
     </div>
-  )
+  ), document.body)
 }
 
 function FieldWheel({ field, draft, isOpen, onToggle, onChange }) {

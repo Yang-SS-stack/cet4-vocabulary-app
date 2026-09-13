@@ -31,7 +31,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
         <LineSidebar
           className="app-sidebar-nav"
           items={pages}
-          accentColor="#96762e"
+          accentColor="#76591e"
           textColor="#526176"
           markerColor="#b6a982"
           showIndex={false}

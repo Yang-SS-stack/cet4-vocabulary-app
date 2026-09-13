@@ -217,6 +217,19 @@ test('asks before an overloaded save and never changes the chosen draft', async 
   expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ dailyNewWords: 20, dailyStudyMinutes: 30 }))
 })
 
+test('moves focus to the overload decision after closing a focused wheel', async () => {
+  const user = userEvent.setup()
+  renderModal({ settings: { ...baseSettings, dailyNewWords: 20, dailyStudyMinutes: 30 } })
+
+  await user.click(summary('每日新词'))
+  const selectedOption = screen.getByRole('option', { name: '20 词' })
+  selectedOption.focus()
+  fireEvent.click(screen.getByRole('button', { name: '保存并继续' }))
+
+  await waitFor(() => expect(screen.getByText(/预计约 65 分钟，超过你的 30 分钟计划/)).toBeInTheDocument())
+  expect(screen.getByRole('button', { name: '返回调整' })).toHaveFocus()
+})
+
 test('keeps the draft and announces an understandable save failure', async () => {
   const user = userEvent.setup()
   const onSave = vi.fn().mockRejectedValue(new Error('storage full'))
