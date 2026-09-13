@@ -47,10 +47,11 @@ export function synchronizeSetupDraft({ draft, changedField, snapshot, now }) {
   return next
 }
 
-export function initialSetupComplete(settings) {
+export function initialSetupComplete(settings, now = new Date()) {
   const validDate = typeof settings.examDate === 'string'
     && /^\d{4}-\d{2}-\d{2}$/.test(settings.examDate)
     && Number.isFinite(Date.parse(`${settings.examDate}T00:00:00`))
+    && daysUntilExam(settings.examDate, now) > 0
   return validDate
     && wordBooks.some(({ id }) => id === settings.todayWordBookId)
     && countValid(settings.dailyNewWords)

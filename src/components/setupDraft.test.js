@@ -56,6 +56,23 @@ test('requires all five supported first-run fields', () => {
     examDate: '2027-09-13', todayWordBookId: 'cet4', dailyNewWords: 20,
     dailyReviewWords: 20, dailyStudyMinutes: 30,
   }
-  expect(initialSetupComplete(complete)).toBe(true)
+  const now = new Date(2026, 8, 13)
+  expect(initialSetupComplete(complete, now)).toBe(true)
   expect(initialSetupComplete({ ...complete, dailyReviewWords: null })).toBe(false)
+})
+
+test('rejects an exam date that is today', () => {
+  const settings = {
+    examDate: '2026-09-13', todayWordBookId: 'cet4', dailyNewWords: 20,
+    dailyReviewWords: 20, dailyStudyMinutes: 30,
+  }
+  expect(initialSetupComplete(settings, new Date(2026, 8, 13))).toBe(false)
+})
+
+test('rejects an exam date that has passed', () => {
+  const settings = {
+    examDate: '2026-09-12', todayWordBookId: 'cet4', dailyNewWords: 20,
+    dailyReviewWords: 20, dailyStudyMinutes: 30,
+  }
+  expect(initialSetupComplete(settings, new Date(2026, 8, 13))).toBe(false)
 })
