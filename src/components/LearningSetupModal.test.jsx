@@ -133,6 +133,34 @@ test('rapidly switching across three fields keeps one tray mounted and opens onl
   expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })
 
+test('reduced motion settles the current scroll before a rapid three-field switch opens only the latest field', () => {
+  vi.useFakeTimers()
+  vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))
+  renderModal()
+
+  fireEvent.click(summary('每日新词'))
+  const listbox = screen.getByRole('listbox', { name: '每日新词' })
+  listbox.scrollTop = 9 * 48
+  fireEvent.scroll(listbox)
+
+  fireEvent.click(summary('每日复习数量'))
+  fireEvent.click(summary('每日学习时长'))
+
+  expect(screen.getByRole('listbox', { name: '每日新词' })).toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+  expect(screen.queryByRole('listbox', { name: '每日复习数量' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('listbox', { name: '每日学习时长' })).not.toBeInTheDocument()
+
+  act(() => vi.advanceTimersByTime(100))
+  expect(summary('每日新词')).toHaveAccessibleName('每日新词 10 词')
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+
+  act(() => vi.advanceTimersByTime(10))
+  expect(screen.getByRole('listbox', { name: '每日学习时长' })).toBeInTheDocument()
+  expect(screen.queryByRole('listbox', { name: '每日复习数量' })).not.toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+})
+
 test('commits the latest scroll position when saving immediately after a wheel scroll', async () => {
   const onSave = vi.fn()
   renderModal({ settings: { ...baseSettings, dailyStudyMinutes: 240 }, onSave })
@@ -145,6 +173,32 @@ test('commits the latest scroll position when saving immediately after a wheel s
 
   await waitFor(() => expect(onSave).toHaveBeenCalledOnce())
   expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ dailyNewWords: 10 }))
+})
+
+test('reduced motion keeps the scrolled wheel mounted through settlement before an immediate save', async () => {
+  vi.useFakeTimers()
+  vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))
+  const onSave = vi.fn().mockResolvedValue(undefined)
+  renderModal({ settings: { ...baseSettings, dailyStudyMinutes: 240 }, onSave })
+
+  fireEvent.click(summary('每日新词'))
+  const listbox = screen.getByRole('listbox', { name: '每日新词' })
+  listbox.scrollTop = 9 * 48
+  fireEvent.scroll(listbox)
+  fireEvent.click(screen.getByRole('button', { name: '保存并继续' }))
+
+  expect(screen.getByRole('listbox', { name: '每日新词' })).toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+  expect(onSave).not.toHaveBeenCalled()
+
+  act(() => vi.advanceTimersByTime(100))
+  expect(summary('每日新词')).toHaveAccessibleName('每日新词 10 词')
+  expect(onSave).not.toHaveBeenCalled()
+
+  await act(async () => vi.advanceTimersByTime(10))
+
+  expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ dailyNewWords: 10 }))
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(0)
 })
 
 test('commits a closing wheel before saving and cancels its pending field switch', async () => {

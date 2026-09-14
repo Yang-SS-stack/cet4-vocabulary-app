@@ -187,10 +187,12 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
       return
     }
 
-    setActiveField(null)
+    const reducedMotion = prefersReducedMotion()
+    if (!reducedMotion) setActiveField(null)
     window.clearTimeout(settleTimerRef.current)
     settleTimerRef.current = window.setTimeout(() => {
       wheelSettlingRef.current = false
+      if (reducedMotion) setActiveField(null)
       save(options)
     }, SCROLL_SETTLE_DURATION)
   }
@@ -213,14 +215,9 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
     settleTimerRef.current = window.setTimeout(() => {
       wheelSettlingRef.current = false
     }, SCROLL_SETTLE_DURATION)
-    if (activeField === field) {
-      setActiveField(null)
-      scheduleFieldOpen(null, switchTimerRef, isSwitchingRef, setActiveField)
-      return
-    }
-
-    setActiveField(null)
-    scheduleFieldOpen(field, switchTimerRef, isSwitchingRef, setActiveField)
+    const nextField = activeField === field ? null : field
+    if (!prefersReducedMotion()) setActiveField(null)
+    scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, setActiveField)
   }
 
   const load = calculateDraftLoad(mode, draft, settings, recommendation)
