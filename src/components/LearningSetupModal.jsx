@@ -250,6 +250,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
               key={field}
               field={field}
               draft={draft}
+              now={now}
               isOpen={activeField === field}
               onToggle={() => toggleField(field)}
               onChange={(value, columnLabel) => changeField(field, value, columnLabel)}
@@ -291,15 +292,15 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   ), document.body)
 }
 
-function FieldWheel({ field, draft, isOpen, onToggle, onChange }) {
-  const props = wheelProps(field, draft)
+function FieldWheel({ field, draft, now, isOpen, onToggle, onChange }) {
+  const props = wheelProps(field, draft, now)
   return <SettingsWheel {...props} value={draft[field]} isOpen={isOpen} onToggle={onToggle} onChange={onChange} />
 }
 
-function wheelProps(field, draft) {
+function wheelProps(field, draft, now) {
   if (field === 'examDate') {
     const { year, month, day } = dateParts(draft.examDate)
-    const currentYear = new Date().getFullYear()
+    const currentYear = now.getFullYear()
     const firstYear = Math.min(currentYear, year)
     const lastYear = Math.max(currentYear + 5, year)
     return {
@@ -343,7 +344,7 @@ function wheelProps(field, draft) {
 function createDraft(mode, settings, snapshot, now) {
   const normalized = {
     ...settings,
-    examDate: normalizeExamDate(settings.examDate),
+    examDate: normalizeExamDate(settings.examDate, now),
     todayWordBookId: normalizeWordBookId(settings.todayWordBookId),
     dailyNewWords: normalizeWordCount(settings.dailyNewWords, 15),
     dailyReviewWords: normalizeWordCount(settings.dailyReviewWords, 20),
@@ -399,22 +400,22 @@ function dateParts(dateKey) {
   return { year, month, day }
 }
 
-function futureDateKey(daysAhead) {
-  const date = new Date()
+function futureDateKey(daysAhead, now) {
+  const date = new Date(now)
   date.setHours(12, 0, 0, 0)
   date.setDate(date.getDate() + daysAhead)
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
 }
 
-function normalizeExamDate(value) {
-  if (typeof value !== 'string') return futureDateKey(90)
+function normalizeExamDate(value, now) {
+  if (typeof value !== 'string') return futureDateKey(90, now)
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value)
-  if (!match) return futureDateKey(90)
+  if (!match) return futureDateKey(90, now)
   const [year, month, day] = match.slice(1).map(Number)
   const date = new Date(year, month - 1, day)
   return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
     ? value
-    : futureDateKey(90)
+    : futureDateKey(90, now)
 }
 
 function normalizeWordBookId(value) {

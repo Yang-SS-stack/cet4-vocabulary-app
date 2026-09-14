@@ -29,6 +29,8 @@ const recommendation = {
   dailyReviewWords: 20,
 }
 
+const fixedNow = new Date(2026, 8, 13, 10)
+
 afterEach(() => {
   vi.useRealTimers()
   vi.restoreAllMocks()
@@ -223,6 +225,19 @@ test('fills null fields with visible defaults and saves one complete mode patch'
   })
 })
 
+test('uses the injected date for fallback defaults and year options after the real clock passes the fixture exam date', () => {
+  vi.useFakeTimers({ toFake: ['Date'] })
+  vi.setSystemTime(new Date(2035, 0, 1, 10))
+  renderModal({ settings: { ...baseSettings, examDate: null } })
+
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2026 年 12 月 12 日')
+
+  fireEvent.click(summary('考试日期'))
+
+  expect(screen.getByRole('option', { name: '2031 年' })).toBeInTheDocument()
+  expect(screen.queryByRole('option', { name: '2032 年' })).not.toBeInTheDocument()
+})
+
 test('normalizes legacy values to choices supported by every setup wheel before saving', async () => {
   const user = userEvent.setup()
   const legacySettings = {
@@ -345,6 +360,7 @@ test('removes the dialog immediately when reduced motion is requested', async ()
 function modalProps(overrides = {}) {
   return {
     mode: 'initial',
+    now: fixedNow,
     settings: baseSettings,
     snapshot,
     recommendation,
