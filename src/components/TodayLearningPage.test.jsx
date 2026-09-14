@@ -64,7 +64,7 @@ test('shows exam progress, word-book progress, both actions, and all six recomme
   expect(screen.getByText('系统建议')).toBeInTheDocument()
   expect(screen.getByText('每天 100 词')).toBeInTheDocument()
   expect(screen.getByText('用户当前设置')).toBeInTheDocument()
-  expect(screen.getByText('新词 12 · 复习 7')).toBeInTheDocument()
+  expect(screen.getByText('新词 12 · 复习 7 · 计划 50 分钟')).toBeInTheDocument()
   expect(screen.getByText('预计每日学习时间')).toBeInTheDocument()
   expect(screen.getByText('约 15 分钟')).toBeInTheDocument()
   expect(screen.getByText('计划结果')).toBeInTheDocument()
@@ -81,6 +81,15 @@ test('separates an impossible raw deadline from the capped editable suggestion',
   expect(screen.getByText('每天 100 词')).toBeInTheDocument()
   expect(screen.getByText(/考试前可能无法完成/)).toBeInTheDocument()
   expect(screen.getByText('当前设置可能无法在考试前完成，建议每天至少学习 4,544 个新词。')).toBeInTheDocument()
+})
+
+test('shows saved daily quantities and planned minutes separately from the formula estimate', () => {
+  const store = createStore()
+  configure(store, { dailyNewWords: 100, dailyReviewWords: 20, dailyStudyMinutes: 30 })
+  renderPage(store)
+
+  expect(screen.getByText('新词 100 · 复习 20 · 计划 30 分钟')).toBeInTheDocument()
+  expect(screen.getByText('约 110 分钟')).toBeInTheDocument()
 })
 
 test('reports when the saved daily quantity can meet the deadline', () => {

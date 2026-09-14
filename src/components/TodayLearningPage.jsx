@@ -68,9 +68,11 @@ function RecommendationCard({ recommendation, settings }) {
   const systemPlan = recommendation.recommendedDailyWords === null
     ? '设置未来考试日期后计算'
     : `每天 ${formatNumber(recommendation.recommendedDailyWords)} 词`
-  const current = settings.dailyNewWords === null && settings.dailyReviewWords === null
+  const current = settings.dailyNewWords === null
+    && settings.dailyReviewWords === null
+    && settings.dailyStudyMinutes === null
     ? '尚未设置'
-    : `新词 ${settings.dailyNewWords ?? '未设置'} · 复习 ${settings.dailyReviewWords ?? '未设置'}`
+    : `新词 ${settings.dailyNewWords ?? '未设置'} · 复习 ${settings.dailyReviewWords ?? '未设置'} · 计划 ${settings.dailyStudyMinutes ?? '未设置'} 分钟`
   const planResult = formatPlanResult(recommendation, settings)
 
   return (
