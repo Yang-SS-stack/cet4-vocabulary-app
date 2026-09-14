@@ -46,6 +46,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   const switchTimerRef = useRef(null)
   const settleTimerRef = useRef(null)
   const wheelSettlingRef = useRef(false)
+  const isSwitchingRef = useRef(false)
   const initialDraftRef = useRef(null)
   if (initialDraftRef.current === null) initialDraftRef.current = createDraft(mode, settings, snapshot, now)
   const [draft, setDraft] = useState(initialDraftRef.current)
@@ -177,19 +178,19 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   const requestSave = (options) => {
     if (isSaving) return
     setIsSaving(true)
+    const wasSwitching = isSwitchingRef.current
     window.clearTimeout(switchTimerRef.current)
-    const needsWheelSettlement = activeField !== null || wheelSettlingRef.current
+    isSwitchingRef.current = false
+    const needsWheelSettlement = activeField !== null || wheelSettlingRef.current || wasSwitching
     if (!needsWheelSettlement) {
       save(options)
       return
     }
 
-    const reducedMotion = prefersReducedMotion()
-    if (!reducedMotion) setActiveField(null)
+    setActiveField(null)
     window.clearTimeout(settleTimerRef.current)
-    switchTimerRef.current = window.setTimeout(() => {
+    settleTimerRef.current = window.setTimeout(() => {
       wheelSettlingRef.current = false
-      if (reducedMotion) setActiveField(null)
       save(options)
     }, SCROLL_SETTLE_DURATION)
   }
@@ -197,6 +198,12 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   const toggleField = (field) => {
     if (isClosing || isSaving) return
     window.clearTimeout(switchTimerRef.current)
+
+    if (isSwitchingRef.current) {
+      scheduleFieldOpen(field, switchTimerRef, isSwitchingRef, setActiveField)
+      return
+    }
+
     if (activeField === null) {
       setActiveField(field)
       return
@@ -207,20 +214,13 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
       wheelSettlingRef.current = false
     }, SCROLL_SETTLE_DURATION)
     if (activeField === field) {
-      if (prefersReducedMotion()) {
-        switchTimerRef.current = window.setTimeout(() => setActiveField(null), SCROLL_SETTLE_DURATION)
-      } else {
-        setActiveField(null)
-      }
+      setActiveField(null)
+      scheduleFieldOpen(null, switchTimerRef, isSwitchingRef, setActiveField)
       return
     }
 
-    if (prefersReducedMotion()) {
-      switchTimerRef.current = window.setTimeout(() => setActiveField(field), SCROLL_SETTLE_DURATION)
-    } else {
-      setActiveField(null)
-      switchTimerRef.current = window.setTimeout(() => setActiveField(field), FIELD_SWITCH_DURATION)
-    }
+    setActiveField(null)
+    scheduleFieldOpen(field, switchTimerRef, isSwitchingRef, setActiveField)
   }
 
   const load = calculateDraftLoad(mode, draft, settings, recommendation)
@@ -451,6 +451,15 @@ function focusableElements(root) {
 
 function prefersReducedMotion() {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+}
+
+function scheduleFieldOpen(field, timerRef, switchingRef, setActiveField) {
+  switchingRef.current = true
+  const delay = prefersReducedMotion() ? SCROLL_SETTLE_DURATION : FIELD_SWITCH_DURATION
+  timerRef.current = window.setTimeout(() => {
+    switchingRef.current = false
+    setActiveField(field)
+  }, delay)
 }
 
 export default LearningSetupModal

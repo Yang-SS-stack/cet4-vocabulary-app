@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
 import { afterEach, expect, test, vi } from 'vitest'
@@ -109,6 +109,26 @@ test('keeps only one wheel open and preserves draft choices while switching fiel
 
   await user.click(summary('每日新词'))
   expect(await screen.findByRole('option', { name: '8 词', selected: true })).toBeInTheDocument()
+})
+
+test('rapidly switching across three fields keeps one tray mounted and opens only the latest field', () => {
+  vi.useFakeTimers()
+  renderModal()
+
+  fireEvent.click(summary('每日新词'))
+  expect(screen.getByRole('listbox', { name: '每日新词' })).toBeInTheDocument()
+
+  fireEvent.click(summary('每日复习数量'))
+  fireEvent.click(summary('每日学习时长'))
+
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+  expect(screen.queryByRole('listbox', { name: '每日复习数量' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('listbox', { name: '每日学习时长' })).not.toBeInTheDocument()
+
+  act(() => vi.advanceTimersByTime(200))
+
+  expect(screen.getByRole('listbox', { name: '每日学习时长' })).toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })
 
 test('commits the latest scroll position when saving immediately after a wheel scroll', async () => {
