@@ -44,6 +44,7 @@ function summary(label) {
 
 afterEach(() => {
   vi.useRealTimers()
+  vi.unstubAllGlobals()
 })
 
 test('shows all seven editable settings as collapsed wheels', () => {
