@@ -14,7 +14,7 @@ import { createLearningStore, LEARNING_STORAGE_KEY, LearningStoreProvider, useLe
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 const RECOVERY_CLOSE_DURATION = 180
 
-function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, isBrandConcealed, isTransitionPrepared }) {
+function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, pageTitleRef, isBrandConcealed, isTransitionPrepared }) {
   return (
     <div className={[
       'app-shell',
@@ -61,7 +61,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
       <main className="content-area">
         <FadeContent key={selectedPage}>
           <section className="page-intro" aria-labelledby="page-title">
-            <h1 id="page-title">{selectedPage}</h1>
+            <h1 ref={pageTitleRef} id="page-title" tabIndex={-1}>{selectedPage}</h1>
             {selectedPage === '今日学习' ? (
               <p className="page-lede">从今天的单词开始</p>
             ) : selectedPage === '词表' ? (
@@ -105,6 +105,18 @@ function LearningApp({ learningStore }) {
   const [particleLogoElement, setParticleLogoElement] = useState(null)
   const [isParticleSourceReleased, setIsParticleSourceReleased] = useState(false)
   const [isLearningRevealed, setIsLearningRevealed] = useState(false)
+  const pageTitleRef = useRef(null)
+  const setupFocusTimerRef = useRef(null)
+  const shouldRestoreSetupFocusRef = useRef(false)
+
+  useEffect(() => () => window.clearTimeout(setupFocusTimerRef.current), [])
+
+  useEffect(() => {
+    if (showInitialSetup || !shouldRestoreSetupFocusRef.current) return
+    shouldRestoreSetupFocusRef.current = false
+    window.clearTimeout(setupFocusTimerRef.current)
+    setupFocusTimerRef.current = window.setTimeout(() => pageTitleRef.current?.focus(), 0)
+  }, [showInitialSetup])
 
   const startParticleTransition = useCallback((sourceTexts) => {
     setParticleSources(sourceTexts)
@@ -124,6 +136,11 @@ function LearningApp({ learningStore }) {
     setIsLearningRevealed(true)
   }, [])
 
+  const closeInitialSetup = useCallback(() => {
+    shouldRestoreSetupFocusRef.current = true
+    setShowInitialSetup(false)
+  }, [])
+
   return (
     <>
       <LearningStoreProvider store={learningStore}>
@@ -133,11 +150,12 @@ function LearningApp({ learningStore }) {
           onNavToggle={() => setIsNavOpen((isOpen) => !isOpen)}
           onPageChange={setSelectedPage}
           logoRef={setParticleLogoElement}
+          pageTitleRef={pageTitleRef}
           isBrandConcealed={showSplash}
           isTransitionPrepared={!isLearningRevealed}
         />
         {showInitialSetup && (
-          <InitialLearningSetup onClose={() => setShowInitialSetup(false)} />
+          <InitialLearningSetup onClose={closeInitialSetup} />
         )}
       </LearningStoreProvider>
       {showSplash && (

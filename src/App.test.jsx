@@ -160,6 +160,29 @@ test('mounts setup dialogs outside the animated page and disables the app shell 
   await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   expect(document.querySelector('.app-shell')).not.toHaveAttribute('inert')
   expect(document.querySelector('.app-shell')).toHaveAttribute('aria-hidden', 'false')
+  await waitFor(() => expect(screen.getByRole('heading', { name: '今日学习' })).toHaveFocus())
+})
+
+test('focuses the Today page title after canceling the automatic first-run setup', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await enterApp(user)
+
+  await user.click(screen.getByRole('button', { name: '暂不开始' }))
+
+  await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  await waitFor(() => expect(screen.getByRole('heading', { name: '今日学习' })).toHaveFocus())
+})
+
+test('focuses the Today page title after saving the automatic first-run setup', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+  await enterApp(user)
+
+  await user.click(screen.getByRole('button', { name: '保存并继续' }))
+
+  await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  await waitFor(() => expect(screen.getByRole('heading', { name: '今日学习' })).toHaveFocus())
 })
 
 test('opens editable settings from navigation and returns to the original vocabulary entry', async () => {
