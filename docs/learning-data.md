@@ -1,12 +1,14 @@
 # 学习系统数据基础
 
-Prompt 1 新增了 `src/data/learning/` 数据模块。Prompt 2 在不修改现有词表浏览页和词表卡片的前提下，接入了首次设置、设置页和“今日学习”概览；真实的新词、复习和错题本学习流程仍留给后续 Prompt。
+本文保留 Prompt 1／2 的基础设计说明；P-01 的现行行为以文末章节为准。
+
+Prompt 1 新增了 `src/data/learning/` 数据模块。Prompt 2 在不修改现有词表浏览页和词表卡片的前提下，接入了首次设置、设置页和“今日学习”概览；P-01 已接入真实新词自评流程，复习与错题本学习页面仍未实现。
 
 ## 保存方式
 
 - 浏览器保存位置：`localStorage`
 - 保存键：`linguajet.learning`
-- 数据版本：`1`
+- 当前数据版本：`2`（兼容读取 `1`）
 - 每次修改先生成并校验完整快照，写入成功后才替换内存状态并通知订阅者。
 - 保存失败时抛出错误，内存状态保持不变。
 - 损坏数据或未知版本不会被自动清空或覆盖。
@@ -190,3 +192,49 @@ days
 ## 本阶段验收
 
 运行 `npm test -- src/data/learning/foundation.test.js`。测试覆盖设置、词表隔离、全局错题去重、反馈变化、跨天归零、同日恢复、复习记录、本地 00:00、三类任务、持久化失败、损坏数据和多实例覆盖保护。
+
+## P-01：现行今日学习协议（2026-09-24）
+
+### 任务事实和学习方式
+
+固定任务的 itemIds、wordBookId、date、settings 与 createdAt 属于程序事实，不由展示顺序或未来 Agent 建议改写。创建前通过词书 session.loadLearningOrder 读取资源默认顺序，按该书完成状态过滤、去重并限制到 dailyNewWords（1–100）。session.loadWords 按这些固定 ID 加载所需分片；加载失败不创建任务。没有候选词时也保存空任务，保证当日幂等。
+
+学习任务增加 method={id:'self-assessment',rulesVersion:1}、sessionRevision 和 feedbackEvents；其他旧任务的 method 为 null。nextLearningItem(task) 是集中、可替换的下一词选择接口：从当前词之后按固定顺序循环，跳过完成／移除词。它不改变 itemIds。未接入通用策略引擎。
+
+### 原子命令与权限边界
+
+浏览器应用只通过 createBrowserLearningStore 暴露以下写操作，均返回 Promise：
+
+| 方法 | 校验与结果 |
+| --- | --- |
+| updateSettings(patch) | 原有设置校验；只影响以后创建任务 |
+| ensureTodayLearning(bookId, orderedWords, expectedDate, expectedSettings) | 先检查当天任务；无任务时校验加载时的日期和设置，过滤未完成词、限制数量，保存固定快照 |
+| submitSelfAssessment({date,itemId,revision}, feedback) | 校验本地日期、任务、方式版本、当前词、序号和 question 状态；同一写入保存反馈、错误证据、完成标记、事件和 feedback 详情状态 |
+| advanceLearning({date,itemId,revision}) | 只接受同日当前详情；原子保存 previousItemId、下一未完成词、question 状态和递增序号；全部完成时 currentItemId=null |
+| reload() | 重新读取并完整校验；不写数据、不重放失败动作 |
+
+所有浏览器写操作使用同一 Web Locks 名称 linguajet.learning，再比较存储原始快照，拒绝陈旧实例覆盖。锁内无异步存储间隙；localStorage.setItem 成功后才发布只读内存快照。浏览器不支持安全锁时拒绝写入；页面提供明确提示。页面禁用正在提交的控件，数据层仍独立拒绝重复或迟到 token，包括同一个词进入下一轮后的旧请求。
+
+基础同步 createLearningStore 保留旧 API 以兼容基础层和历史测试；recordFeedback／setTaskSession 等低层接口不暴露给浏览器业务，不能用于新页面或未来 Agent。设置页等待异步保存结果，冲突时用户可重新读取已保存设置后核对；首次设置冲突提示退出并刷新。
+
+### 自评规则与证据
+
+认识 +1，3 次完成；模糊 -1，最低 0；不认识清零。当次不认识同时更新全局 unknownCount、unknownCountSinceRemoval、lastErrorAt；累计达到 5 时自动标记 entered，恢复 removed=false。移除操作仍保留历史总数并重新累计 5 次。没有实现错误证据库页面。
+
+每个新反馈事件保存 source='self-assessment'、rulesVersion=1、itemId、feedback、at、revision。未来生成题目的答错必须使用独立来源和规则，不能调用自评不认识命令冒充自评。规则版本和“三次认识完成”不代表未来其他题型的完成条件。
+
+完成学习只更新本词书 learning.completed，不自动创建复习任务或计算间隔。旧 getDailyStats 的 knownCount 是当前认识计数，原有 feedbackCount 由当前计数相加，并不等于历史逐次反馈总数；P-01 新任务的真实反馈次数可读取 feedbackEvents.length，统计页面不在本次范围。
+
+### 日期、恢复及旧数据
+
+本地年月日组成任务日期，00:00 跨天。提交和下一词都在获得写锁之后重新检查时钟；旧 token 不可写入当天或昨日任务。页面在焦点恢复、可见性变化和短周期检查日期，并在每次动作前验证。旧日任务和事件原样保留，未完成词在下一天的新快照中从 0 开始。
+
+v1 迁移先严格验证整个旧快照，再克隆并增加方式、序号 0 和空事件数组。单词完成、复习库、错误证据、每日计数、设置和固定词集均保留。旧接口可能留下“已完成词 + question”，此时只把会话恢复为详情，使下一词可继续；currentItemId=null 但有未完成词时恢复首个未完成词。历史逐次反馈无法重建，保持空事件数组。迁移只发生在内存，首次正常写入成功才保存 v2；失败不覆盖 v1。损坏和未知版本不自动删除。
+
+不同浏览器、主机名、协议和端口的存储相互独立。旧版代码不理解 v2；版本切换前关闭旧标签，保留新版处理的数据。Web Locks 保证使用该协议的新版页面互斥，不能锁住不遵守协议的旧版页面或外部脚本。
+
+### 验证入口
+
+运行 npm test -- --maxWorkers=2。P-01 重点文件：todayLearning.test.js（候选、规则、幂等、日期、迁移和保存失败）、browserStore.test.js（串行写入、重复提交、锁内跨天、无锁拒写）、wordBookLearning.test.js（默认顺序和分片重试）、LearningSession.test.jsx（隐藏答案、详情／位置恢复、加载／保存失败、冲突和完成）。设置与原有词书／页面测试继续执行。
+
+程序负责事实、日期、持久化和校验。未来 Agent 仅输出结构化建议，由程序校验，重要计划变更由用户确认；本版没有模型请求、Agent 工具或后端。

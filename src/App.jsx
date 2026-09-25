@@ -9,7 +9,8 @@ import SettingsPage from './components/SettingsPage'
 import TodayLearningPage from './components/TodayLearningPage'
 import VocabularyPage from './components/VocabularyPage'
 import { initialSetupComplete } from './components/setupDraft'
-import { createLearningStore, LEARNING_STORAGE_KEY, LearningStoreProvider, useLearningStore } from './data/learning'
+import { LEARNING_STORAGE_KEY, LearningStoreProvider, useLearningStore } from './data/learning'
+import { createBrowserLearningStore } from './data/learning/browserStore'
 
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 const RECOVERY_CLOSE_DURATION = 180
@@ -233,9 +234,9 @@ function LearningDataRecovery({ onReset }) {
 
   const reset = () => {
     setResetError('')
-    closeConfirmation(() => {
+    closeConfirmation(async () => {
       try {
-        const result = onReset()
+        const result = await onReset()
         if (result === 'changed') {
           setResetError('数据已在其他页面更新，请重新确认后再决定是否清除。')
         }
@@ -333,7 +334,7 @@ function LearningDataRecovery({ onReset }) {
 
 function initializeLearningStore() {
   try {
-    return { store: createLearningStore(), error: null, failedRaw: null }
+    return { store: createBrowserLearningStore(), error: null, failedRaw: null }
   } catch (error) {
     let failedRaw
     try {
@@ -348,19 +349,22 @@ function initializeLearningStore() {
 function App() {
   const [learningState, setLearningState] = useState(initializeLearningStore)
 
-  const resetLearningData = () => {
-    const currentRaw = globalThis.localStorage.getItem(LEARNING_STORAGE_KEY)
-    if (currentRaw !== learningState.failedRaw) {
+  const resetLearningData = async () => {
+    if (!globalThis.navigator?.locks?.request) throw new Error('Safe storage lock unavailable')
+    return navigator.locks.request(LEARNING_STORAGE_KEY, { mode: 'exclusive' }, () => {
+      const currentRaw = globalThis.localStorage.getItem(LEARNING_STORAGE_KEY)
+      if (currentRaw !== learningState.failedRaw) {
+        const nextState = initializeLearningStore()
+        setLearningState(nextState)
+        return nextState.store ? 'reloaded' : 'changed'
+      }
+
+      globalThis.localStorage.removeItem(LEARNING_STORAGE_KEY)
       const nextState = initializeLearningStore()
       setLearningState(nextState)
-      return nextState.store ? 'reloaded' : 'changed'
-    }
-
-    globalThis.localStorage.removeItem(LEARNING_STORAGE_KEY)
-    const nextState = initializeLearningStore()
-    setLearningState(nextState)
-    if (nextState.error) throw nextState.error
-    return 'reset'
+      if (nextState.error) throw nextState.error
+      return 'reset'
+    })
   }
 
   return learningState.store

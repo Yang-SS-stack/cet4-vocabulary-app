@@ -1,5 +1,5 @@
 export const LEARNING_STORAGE_KEY = 'linguajet.learning'
-export const SCHEMA_VERSION = 1
+export const SCHEMA_VERSION = 2
 export const MISTAKE_ENTRY_THRESHOLD = 5
 export const REVIEW_STAGE_DAYS = Object.freeze([1, 2, 4, 7, 15])
 export const TASK_KINDS = Object.freeze(['learning', 'review', 'mistakes'])
@@ -99,9 +99,9 @@ export function validateDateKey(value) {
   assert(dateKey(value), 'Invalid date')
 }
 
-export function validateState(state) {
+export function validateState(state, version = SCHEMA_VERSION) {
   assert(shape(state, {
-    version: (value) => value === SCHEMA_VERSION, settings: settingsValid,
+    version: (value) => value === version, settings: settingsValid,
     mistakes: record, wordBooks: record, days: record,
   }), 'Invalid or unsupported learning snapshot')
   for (const [id, word] of Object.entries(state.mistakes)) {
@@ -122,6 +122,16 @@ export function validateState(state) {
         itemIds: (value) => Array.isArray(value) && value.every(string), items: record,
         currentItemId: nullable(string), previousItemId: nullable(string),
         view: (value) => ['question', 'feedback'].includes(value),
+        ...(version === 2 ? {
+          method: (value) => value === null || shape(value, {
+            id: (id) => id === 'self-assessment', rulesVersion: (v) => v === 1,
+          }),
+          sessionRevision: integer,
+          feedbackEvents: (events) => Array.isArray(events) && events.every((event) => shape(event, {
+            source: (v) => v === 'self-assessment', rulesVersion: (v) => v === 1,
+            itemId: (id) => task.itemIds.includes(id), feedback, at: timestamp, revision: integer,
+          })),
+        } : {}),
       }), 'Invalid task')
       assert(new Set(task.itemIds).size === task.itemIds.length
         && Object.keys(task.items).length === task.itemIds.length
@@ -176,4 +186,26 @@ export function freeze(value) {
     Object.freeze(value)
   }
   return value
+}
+
+// Validate the entire v1 snapshot before adding fields; never fabricate lost events.
+export function migrateState(state) {
+  if (state?.version !== 1) return validateState(state)
+  validateState(state, 1)
+  const next = JSON.parse(JSON.stringify(state))
+  next.version = SCHEMA_VERSION
+  for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) {
+    task.method = task.kind === 'learning' ? { id: 'self-assessment', rulesVersion: 1 } : null
+    task.sessionRevision = 0
+    task.feedbackEvents = []
+    if (task.kind === 'learning') {
+      if (task.currentItemId === null) {
+        task.currentItemId = task.itemIds.find(id => !task.items[id].completed && !task.items[id].removed) ?? null
+        task.view = 'question'
+      } else if (task.items[task.currentItemId].completed) {
+        task.view = 'feedback'
+      }
+    }
+  }
+  return validateState(next)
 }

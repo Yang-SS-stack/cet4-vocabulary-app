@@ -109,14 +109,14 @@ test('prompts for a future date when deadline plans are unavailable', () => {
   expect(screen.getByText('请先设置未来的考试日期。')).toBeInTheDocument()
 })
 
-test('leaves first-run setup to the app entry and keeps later flows disabled', async () => {
+test('requires learning settings and leaves review disabled', async () => {
   const user = userEvent.setup()
   const store = createStore()
   renderPage(store)
 
   await user.click(screen.getByRole('button', { name: '今日学习' }))
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-  expect(screen.getByRole('status')).toHaveTextContent('学习流程将在下一阶段启用')
+  expect(screen.getByRole('status')).toHaveTextContent('请先在设置中选择词书和每日新词数量')
 
   await user.click(screen.getByRole('button', { name: '今日复习' }))
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()

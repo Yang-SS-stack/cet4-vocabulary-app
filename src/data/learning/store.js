@@ -1,7 +1,8 @@
+import { SELF_ASSESSMENT, nextLearningItem, requireLearningTurn, applySelfAssessment } from './selfAssessment'
 import {
   assert, createMistakeRecord, createProgress, createState, createWordBookWord, DEFAULT_SETTINGS, freeze,
   LEARNING_STORAGE_KEY, localDateKey, localDayStartIso, TASK_KINDS, validateDateKey, validatePatch, validateState,
-  wordBookWordId, wordId,
+  wordBookWordId, wordId, migrateState,
 } from './model'
 
 const own = (object, key) => Object.hasOwn(object, key) ? object[key] : null
@@ -13,7 +14,7 @@ const own = (object, key) => Object.hasOwn(object, key) ? object[key] : null
 export function createLearningStore({ storage = globalThis.localStorage, now = () => new Date() } = {}) {
   assert(storage && typeof storage.getItem === 'function' && typeof storage.setItem === 'function', 'Local storage unavailable')
   let saved = storage.getItem(LEARNING_STORAGE_KEY)
-  let state = freeze(saved === null ? createState() : validateState(JSON.parse(saved)))
+  let state = freeze(saved === null ? createState() : migrateState(JSON.parse(saved)))
   const listeners = new Set()
   const today = () => localDateKey(now())
   const timestamp = () => {
@@ -82,6 +83,47 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
   }
 
   const api = {
+    getToday: today,
+    reload() {
+      const raw = storage.getItem(LEARNING_STORAGE_KEY)
+      const loaded = freeze(raw === null ? createState() : migrateState(JSON.parse(raw)))
+      saved = raw
+      state = loaded
+      for (const listener of [...listeners]) listener()
+    },
+    ensureTodayLearning(wordBookId, orderedWords, expectedDate = today(), expectedSettings = state.settings) {
+      assert(expectedDate === today(), 'Learning date changed; start today again')
+      const existing = taskAt(state, 'learning', today())
+      if (existing) return existing
+      assert(JSON.stringify(expectedSettings) === JSON.stringify(state.settings), 'Learning settings changed; start today again')
+      assert(wordBookId === state.settings.todayWordBookId, 'Learning settings changed; start today again')
+      const count = state.settings.dailyNewWords
+      assert(Number.isSafeInteger(count) && count >= 1 && count <= 100, 'Set daily new words first')
+      assert(Array.isArray(orderedWords), 'Invalid task candidates')
+      const candidates = [...new Set(orderedWords.map(wordId))]
+        .filter((word) => !api.getWord(wordBookId, word)?.learning.completed).slice(0, count)
+      return api.ensureTask('learning', candidates, wordBookId)
+    },
+    submitSelfAssessment(token, feedback) {
+      const date = today()
+      const at = timestamp()
+      change((next) => {
+        const task = requireTask(next, 'learning', date)
+        const progress = requireLearningTurn(task, token, today(), 'question')
+        applySelfAssessment(next, task, progress, feedback, at)
+      })
+    },
+    advanceLearning(token) {
+      const date = today()
+      change((next) => {
+        const task = requireTask(next, 'learning', date)
+        requireLearningTurn(task, token, today(), 'feedback')
+        task.previousItemId = task.currentItemId
+        task.currentItemId = nextLearningItem(task)
+        task.view = 'question'
+        task.sessionRevision += 1
+      })
+    },
     getSnapshot: () => state,
     subscribe(listener) {
       assert(typeof listener === 'function', 'Invalid subscriber')
@@ -119,6 +161,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
           date, kind, wordBookId, createdAt, settings: { ...next.settings }, itemIds: ids,
           items: Object.fromEntries(uniqueItems.map((item) => [item.id, createProgress(item)])),
           currentItemId: ids[0] ?? null, previousItemId: null, view: 'question',
+          method: kind === 'learning' ? { ...SELF_ASSESSMENT } : null, sessionRevision: 0, feedbackEvents: [],
         }
       })
       return taskAt(state, kind, date)

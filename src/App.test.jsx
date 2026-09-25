@@ -1,9 +1,20 @@
 import { readFileSync } from 'node:fs'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import App from './App'
 import { createLearningStore, LEARNING_STORAGE_KEY } from './data/learning'
+
+beforeEach(() => {
+  let queue = Promise.resolve()
+  Object.defineProperty(navigator, 'locks', { configurable: true, value: {
+    request: (_, __, work) => {
+      const result = queue.then(work)
+      queue = result.catch(() => {})
+      return result
+    },
+  } })
+})
 
 vi.mock('./components/ParticleTextTransition', () => ({
   default: ({ onSourceRelease, onScatterComplete, onComplete }) => (

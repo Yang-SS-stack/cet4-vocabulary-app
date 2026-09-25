@@ -169,8 +169,12 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
     try {
       await onSave(patch)
       requestCloseAfterSave(onClose, returnFocusRef, closeTimerRef, setIsClosing)
-    } catch {
-      setError('保存失败，请重试。你的设置仍保留在这里。')
+    } catch (failure) {
+      setError(/elsewhere/.test(failure.message)
+        ? '记录已在其他页面更新，请选择暂不开始，然后刷新页面读取最新设置。'
+        : /lock unavailable/.test(failure.message)
+          ? '当前浏览器无法安全保存，请使用支持 Web Locks 的浏览器本机地址或 HTTPS 页面。'
+          : '保存失败，请重试。你的设置仍保留在这里。')
       setIsSaving(false)
     }
   }

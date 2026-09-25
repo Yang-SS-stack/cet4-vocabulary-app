@@ -1,3 +1,4 @@
+import { wordId } from './learning/model'
 import { matchesWordQuery } from './partOfSpeech'
 
 const WORDS_PER_PAGE = 21
@@ -81,6 +82,17 @@ function validateIndex(index, manifest) {
 export function createInlineWordBookSession(words) {
   const loadIndex = () => Promise.resolve()
   return {
+    async loadLearningOrder(sort = 'alphabetical') {
+      return [...words].sort((a, b) => compareWords(a, b, sort)).map(item => item.word)
+    },
+    async loadWords(ids) {
+      const byId = new Map(words.map(item => [wordId(item.word), item]))
+      return ids.map(id => {
+        const item = byId.get(wordId(id))
+        if (!item) throw new Error('Word book details are missing ' + id)
+        return item
+      })
+    },
     requiresIndex: () => false,
     get indexReady() {
       return loadIndex()
@@ -158,6 +170,20 @@ export function createRemoteWordBookSession(manifest, manifestUrl, fetchImpl) {
   }
 
   return {
+    async loadLearningOrder() {
+      const index = await getIndex()
+      return [...index.orders[manifest.defaultSort]]
+    },
+    async loadWords(ids) {
+      const index = await getIndex()
+      const byId = new Map(index.entries.map(entry => [wordId(entry.word), entry]))
+      const entries = ids.map(id => {
+        const entry = byId.get(wordId(id))
+        if (!entry) throw new Error('Word book details are missing ' + id)
+        return entry
+      })
+      return loadDetails(entries)
+    },
     requiresIndex: ({ sort, page, query }) => !(sort === manifest.defaultSort && page === 1 && !query.trim()),
     get indexReady() {
       return getIndexReady()

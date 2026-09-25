@@ -1,0 +1,16 @@
+.learning-session { max-width: 840px; margin: 28px auto; color: var(--ink); }
+.learning-session__header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.learning-session button { min-height: 44px; padding: 10px 22px; border: 1px solid var(--gold); border-radius: 8px; background: transparent; color: var(--ink); cursor: pointer; font: inherit; }
+.learning-session button:hover:not(:disabled) { background: var(--ink); color: var(--white); }
+.learning-session button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.learning-session button:disabled { opacity: .5; cursor: wait; }
+.learning-session__word { padding: clamp(20px, 4vw, 40px); margin-top: 24px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 254, 250, .62); overflow-wrap: anywhere; }
+.learning-session__word h2 { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(32px, 6vw, 52px); font-weight: 400; }
+.learning-session__actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.learning-session__details { border-top: 1px solid var(--line); padding-top: 16px; line-height: 1.8; }
+.learning-session__details h3 { font-size: 15px; color: var(--ink-soft); margin-bottom: 8px; }
+.learning-session__details p { white-space: pre-line; }
+.learning-session__next { margin-top: 24px; }
+.learning-session__rule { color: var(--ink-soft); font-size: 14px; line-height: 1.8; }
+.learning-session [role='alert'] { padding: 16px; border: 1px solid var(--gold); border-radius: 8px; }
+@media (max-width: 480px) { .learning-session__actions > button { flex: 1; padding-inline: 14px; } }

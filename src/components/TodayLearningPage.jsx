@@ -1,3 +1,4 @@
+import LearningSession from './LearningSession'
 import { useState } from 'react'
 import { useLearningStore } from '../data/learning'
 import {
@@ -8,8 +9,8 @@ import {
 import { wordBooks } from '../data/wordBooks'
 import './TodayLearningPage.css'
 
-function TodayLearningPage({ now = new Date() }) {
-  const { snapshot } = useLearningStore()
+function TodayLearningPage({ now = new Date(), loadBook }) {
+  const { store, snapshot } = useLearningStore()
   const { settings } = snapshot
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
   const completedWords = completedWordCount(snapshot, selectedWordBook.id)
@@ -23,12 +24,19 @@ function TodayLearningPage({ now = new Date() }) {
     dailyStudyMinutes: settings.dailyStudyMinutes ?? 0,
   })
   const [status, setStatus] = useState('')
+  const [learning, setLearning] = useState(false)
 
   const start = (mode) => {
-    setStatus(mode === 'learning'
-      ? '学习流程将在下一阶段启用。'
-      : '复习流程将在下一阶段启用。')
+    if (mode === 'learning') {
+      if (!store.getTask('learning') && (!settings.todayWordBookId || !settings.dailyNewWords)) {
+        setStatus('请先在设置中选择词书和每日新词数量。')
+        return
+      }
+      setLearning(true)
+    } else setStatus('复习流程将在下一阶段启用。')
   }
+
+  if (learning) return <LearningSession loadBook={loadBook} onExit={() => setLearning(false)} />
 
   return (
     <section className="learning-overview" aria-label="今日学习概览">

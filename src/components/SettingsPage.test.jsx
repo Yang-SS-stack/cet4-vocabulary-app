@@ -207,3 +207,31 @@ test('saves en-US and later settings changes without rewriting an existing daily
   expect(store.getTask('learning')).toEqual(taskBefore)
   expect(screen.getByRole('status')).toHaveTextContent('设置已保存')
 })
+
+test('waits for asynchronous settings persistence and reports rejection without success', async () => {
+  const store = createStore()
+  let rejectSave
+  store.updateSettings = () => new Promise((_, reject) => { rejectSave = reject })
+  renderPage(store)
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  expect(screen.queryByText(/设置已保存/)).not.toBeInTheDocument()
+  await act(async () => rejectSave(Error('quota')))
+  expect(screen.getByRole('status')).toHaveTextContent('保存失败')
+})
+
+test('offers explicit reload after another tab changes settings and then permits saving', async () => {
+  const store = createStore()
+  const original = store.updateSettings
+  let stale = true
+  store.updateSettings = patch => { if (stale) throw Error('Learning data changed elsewhere'); original(patch) }
+  const originalReload = store.reload
+  store.reload = () => { originalReload(); stale = false }
+  renderPage(store)
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  expect(screen.getByRole('status')).toHaveTextContent('其他页面')
+  await user.click(screen.getByRole('button', { name: '重新读取已保存设置' }))
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  expect(screen.getByRole('status')).toHaveTextContent('设置已保存')
+})

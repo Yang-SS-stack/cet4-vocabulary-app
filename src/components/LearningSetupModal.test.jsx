@@ -367,7 +367,7 @@ test('moves focus to the overload decision after closing a focused wheel', async
   fireEvent.click(screen.getByRole('button', { name: '保存并继续' }))
 
   await waitFor(() => expect(screen.getByText(/预计约 60 分钟，超过你的 30 分钟计划/)).toBeInTheDocument())
-  expect(screen.getByRole('button', { name: '返回调整' })).toHaveFocus()
+  await waitFor(() => expect(screen.getByRole('button', { name: '返回调整' })).toHaveFocus())
 })
 
 test('keeps the draft and announces an understandable save failure', async () => {

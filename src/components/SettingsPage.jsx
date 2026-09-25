@@ -42,6 +42,7 @@ function SettingsPage({ now = new Date() }) {
   const [status, setStatus] = useState('')
   const [showOverload, setShowOverload] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const [conflict, setConflict] = useState(false)
   const switchTimerRef = useRef(null)
   const settleTimerRef = useRef(null)
   const wheelSettlingRef = useRef(false)
@@ -90,7 +91,7 @@ function SettingsPage({ now = new Date() }) {
     scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, setActiveField)
   }
 
-  const persist = (confirmed) => {
+  const persist = async (confirmed) => {
     const currentDraft = draftRef.current
     const currentPlanStatus = setupPlanStatus({ draft: currentDraft, snapshot, now })
     if (currentPlanStatus.invalidExamDate) {
@@ -107,11 +108,15 @@ function SettingsPage({ now = new Date() }) {
     }
 
     try {
-      store.updateSettings(Object.fromEntries(FIELDS.map((field) => [field, currentDraft[field]])))
+      await store.updateSettings(Object.fromEntries(FIELDS.map((field) => [field, currentDraft[field]])))
       setShowOverload(false)
       setStatus('设置已保存。已开始的今日任务保持原计划。')
-    } catch {
-      setStatus('保存失败，请重试。你的修改仍保留在这里。')
+    } catch (error) {
+      const changed = /elsewhere/.test(error.message)
+      setConflict(changed)
+      setStatus(changed ? '记录已在其他页面更新。重新读取会以最新已保存设置替换当前草稿，请核对后再保存。'
+        : /lock unavailable/.test(error.message) ? '当前浏览器无法安全保存，请使用支持 Web Locks 的浏览器本机地址或 HTTPS 页面。'
+          : '保存失败，请重试。你的修改仍保留在这里。')
     } finally {
       setIsSaving(false)
     }
@@ -183,6 +188,18 @@ function SettingsPage({ now = new Date() }) {
 
       <footer className="settings-page__footer">
         <p role="status" aria-live="polite">{status}</p>
+        {conflict && <button type="button" disabled={isSaving} onClick={() => {
+          try {
+            store.reload()
+            const latest = createDraft(store.getSnapshot().settings, now)
+            draftRef.current = latest
+            setDraft(latest)
+            setActiveField(null)
+            setShowOverload(false)
+            setConflict(false)
+            setStatus('已读取最新设置，请核对后再保存。')
+          } catch { setStatus('读取失败，原始记录保持不变，请检查存储权限后重试。') }
+        }}>重新读取已保存设置</button>}
         <button type="button" className="settings-page__save-button" disabled={isSaving} onClick={() => requestSave(false)}>
           {isSaving ? '正在保存…' : '保存设置'}
         </button>
