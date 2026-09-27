@@ -27,3 +27,7 @@
 ### 最终验证记录
 
 2026-09-26：31 个测试文件、213 项测试通过（npm test -- --maxWorkers=2，62.52 秒）；npm run lint 退出码 0，保留 LearningSetupModal 原有 effect cleanup ref 提示；npm run build 退出码 0，保留按需音频清单超过 500 kB 提醒。git diff --check 通过。HTTP 首页与 dist/index.html 完全一致，首页、主脚本及词书 manifest 返回 200。
+
+### 2026-09-27 后续实施入口
+
+用户批准的三轮渐进学习和专注界面已在同一分支继续实施。恢复时请优先读取 [渐进学习实施与验证记录](2026-09-26-guided-learning.md) 和 README 的现行验收步骤；数据格式现为 v3，旧任务保留自评方式。

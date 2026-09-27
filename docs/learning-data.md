@@ -8,7 +8,7 @@ Prompt 1 新增了 `src/data/learning/` 数据模块。Prompt 2 在不修改现�
 
 - 浏览器保存位置：`localStorage`
 - 保存键：`linguajet.learning`
-- 当前数据版本：`2`（兼容读取 `1`）
+- 当前数据版本：`3`（兼容读取 `1`、`2`）
 - 每次修改先生成并校验完整快照，写入成功后才替换内存状态并通知订阅者。
 - 保存失败时抛出错误，内存状态保持不变。
 - 损坏数据或未知版本不会被自动清空或覆盖。
@@ -238,3 +238,17 @@ v1 迁移先严格验证整个旧快照，再克隆并增加方式、序号 0 �
 运行 npm test -- --maxWorkers=2。P-01 重点文件：todayLearning.test.js（候选、规则、幂等、日期、迁移和保存失败）、browserStore.test.js（串行写入、重复提交、锁内跨天、无锁拒写）、wordBookLearning.test.js（默认顺序和分片重试）、LearningSession.test.jsx（隐藏答案、详情／位置恢复、加载／保存失败、冲突和完成）。设置与原有词书／页面测试继续执行。
 
 程序负责事实、日期、持久化和校验。未来 Agent 仅输出结构化建议，由程序校验，重要计划变更由用户确认；本版没有模型请求、Agent 工具或后端。
+
+## P-01 渐进式单词学习补充（2026-09-26）
+
+新建“今日学习”可把 `ensureTodayLearning` 的第五个参数设为 `{id:'guided-recall',rulesVersion:1}`。不传时仍创建旧版 `self-assessment` 任务；当天任务一旦存在，重复调用原样返回，不能静默转换方式。v1、v2 历史任务迁移时保持自评方式和进度，仅为各任务加入 `choice:null`，迁移到 v3 仍只在下一次成功写入后落盘。
+
+渐进式任务在单词 `knownCount===0` 时先调用 `prepareLearningChoice({date,itemId,revision}, options)`。`options` 必须是四个 `{word,meaning}`，包含当前单词，四个单词与四个释义各不重复。数据层按传入顺序保存为 `task.choice.options`；页面应先从已加载的词书事实组成选项，再调用此命令。题目一旦保存，当轮再次准备返回已存选项，保证刷新后顺序稳定。每次成功写入都会增加 `sessionRevision`，页面需使用新序号生成下一次操作的 token。
+
+`submitLearningChoice(token, selectedWord)` 接受四个选项中的单词或 `null`（显示答案）。答对使当前词 `knownCount` 从 0 变为 1；答错或显示答案保持 0。该命令保存 `view:'feedback'`、`choice.selectedWord` 和独立的 `guided-choice` 事件，`outcome` 分别为 `correct`、`incorrect`、`show-answer`。选择后 `choice.revealed:false`，页面可先显示选项反馈；随后 `revealLearningDetails(token)` 将它改为 `true`，才显示完整释义和例句。显示答案直接保存 `revealed:true`。`advanceLearning(token)` 要求已揭示，切换到下一词时清空 `choice`。此类选择题事件不增加全局错题次数，也不伪装成自评的“不认识”。
+
+同一词下一轮 `knownCount>=1` 时继续使用 `submitSelfAssessment(token, feedback)`，沿用认识加一、模糊减一、不认识清零以及自评不认识的错题计数。若模糊或不认识使认识次数回到 0，该词下次出现重新进入四选一。浏览器仓库对新增三个写命令同样使用 Web Locks，并在锁内校验当前日期、词、序号和保存快照；重复提交、跨天旧请求以及写入失败不会发布新进度。
+
+页面边界：学习和未启用的复习页使用专注外壳，返回主界面不删除任务。单词标题、可滚动正文、底部操作分区；宽屏详情分栏。题面按当前认识次数递减提示，后两轮不显示音标或中文翻译。首次选项由词书默认顺序前80词与目标词构成候选池，确定性排除重复及相同释义片段；不足4项则报可重试错误，不生成虚构释义。选项仅在需要时加载，恢复已保存结果不依赖重新加载干扰词。
+
+动画为表现状态，不参与学习计数：保存完成之后才开始旧内容淡出160ms、新内容淡入240ms；淡出时旧控件 inert，不能再次交互。系统减少动态效果时不播放过渡。

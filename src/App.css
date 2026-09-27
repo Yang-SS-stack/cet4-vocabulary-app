@@ -471,3 +471,12 @@ h1 {
     animation: none;
   }
 }
+
+/* The dashboard keeps its navigation; study sessions occupy the viewport. */
+.app-shell.is-study-focused { display: block; min-height: 100dvh; }
+.is-study-focused > .sidebar,
+.is-study-focused > .nav-toggle,
+.is-study-focused .page-intro,
+.is-study-focused .content-rule { display: none; }
+.app-shell.is-study-focused .content-area { padding: 0; min-width: 0; width: 100%; }
+.is-study-focused .fade-content { transform: none !important; }

@@ -16,16 +16,18 @@ const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 const RECOVERY_CLOSE_DURATION = 180
 
 function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, pageTitleRef, isBrandConcealed, isTransitionPrepared }) {
+  const [focusMode, setFocusMode] = useState(false)
   return (
     <div className={[
       'app-shell',
+      focusMode && 'is-study-focused',
       !isNavOpen && 'is-nav-collapsed',
       isTransitionPrepared && 'is-transition-prepared',
     ].filter(Boolean).join(' ')} aria-hidden={isTransitionPrepared} inert={isTransitionPrepared}>
       <aside
         className="sidebar"
-        aria-hidden={!isNavOpen}
-        inert={!isNavOpen}
+        aria-hidden={focusMode || !isNavOpen}
+        inert={focusMode || !isNavOpen}
       >
         <div className="brand-mark" aria-label="LinguaJet">
           <span ref={logoRef} className={isBrandConcealed ? 'brand-name is-brand-concealed' : 'brand-name'}>LinguaJet</span>
@@ -51,7 +53,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
       <button
         className={isNavOpen ? 'nav-toggle is-open' : 'nav-toggle'}
         type="button"
-        onClick={onNavToggle}
+        onClick={onNavToggle} hidden={focusMode}
         aria-label={isNavOpen ? '隐藏导航栏' : '显示导航栏'}
         aria-expanded={isNavOpen}
         title={isNavOpen ? '隐藏导航栏' : '显示导航栏'}
@@ -61,7 +63,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
 
       <main className="content-area">
         <FadeContent key={selectedPage}>
-          <section className="page-intro" aria-labelledby="page-title">
+          <section className="page-intro" aria-labelledby="page-title" hidden={focusMode}>
             <h1 ref={pageTitleRef} id="page-title" tabIndex={-1}>{selectedPage}</h1>
             {selectedPage === '今日学习' ? (
               <p className="page-lede">从今天的单词开始</p>
@@ -74,10 +76,10 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
             )}
           </section>
 
-          <div className="content-rule" />
+          <div className="content-rule" hidden={focusMode} />
 
           {selectedPage === '今日学习' ? (
-            <TodayLearningPage />
+            <TodayLearningPage onFocusModeChange={setFocusMode} />
           ) : selectedPage === '词表' ? (
             <VocabularyPage />
           ) : selectedPage === '设置' ? (

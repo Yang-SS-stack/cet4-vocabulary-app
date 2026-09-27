@@ -7,9 +7,12 @@ import { wordBooks } from '../data/wordBooks'
 import { describePartOfSpeech } from '../data/partOfSpeech'
 import supplementalExamples from '../data/supplementalExamples.json'
 import SpeechButton from './SpeechButton'
+import StudyTransition from './StudyTransition'
+import { learningChoices } from './learningChoices'
 import './LearningSession.css'
 
 function messageFor(error, loading) {
+  if (/choice content/.test(error.message)) return '暂时无法准备四个有效选项，请重新加载词书后重试。进度保持不变。'
   if (/date changed|today's task/.test(error.message)) return '日期已变化。昨日进度已保留，请开始今天的任务。'
   if (/elsewhere|turn changed/.test(error.message)) return '学习记录已在其他页面更新，请重新读取进度后继续。'
   if (/lock unavailable/.test(error.message)) return '当前浏览器无法安全保存，请在支持 Web Locks 的浏览器本机地址或 HTTPS 页面重试。'
@@ -28,8 +31,11 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
   const [clock, setClock] = useState(store.getToday)
   const pending = useRef(false)
   const heading = useRef(null)
+  const alert = useRef(null)
   const task = loaded ? snapshot.days[loaded.date]?.learning : null
   const expired = (task && task.date !== clock) || error.startsWith('日期已变化')
+
+  useEffect(() => { if (error || expired) alert.current?.focus() }, [error, expired])
 
   useEffect(() => {
     const update = () => setClock(store.getToday())
@@ -60,9 +66,9 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
         loading = false
         if (store.getToday() !== date) throw Error('Learning date changed')
         if (!existing && store.getSnapshot() !== initial) throw Error('Learning settings changed')
-        const savedTask = existing ?? await store.ensureTodayLearning(book.id, ids, date, initial.settings)
+        const savedTask = existing ?? await store.ensureTodayLearning(book.id, ids, date, initial.settings, { id: 'guided-recall', rulesVersion: 1 })
         if (cancelled) return
-        setLoaded({ date: savedTask.date, book, words: new Map(details.map(item => [wordId(item.word), item])) })
+        setLoaded({ date: savedTask.date, book, session, words: new Map(details.map(item => [wordId(item.word), item])) })
         setClock(store.getToday())
       } catch (failure) {
         if (!cancelled) setError(messageFor(failure, loading))
@@ -80,9 +86,28 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
     return () => { cancelled = true }
   }, [attempt])
 
-  useEffect(() => { heading.current?.focus() }, [task?.currentItemId, task?.view, loaded])
+  useEffect(() => {
+    if (!loaded || !task || task.method.id !== 'guided-recall' || task.view !== 'question' || task.choice || !task.currentItemId) return
+    const progress = task.items[task.currentItemId]
+    if (progress.knownCount !== 0) return
+    let cancelled = false
+    async function prepare() {
+      let loading = true
+      setBusy(true)
+      try {
+        const pool = await loaded.session.loadWords((await loaded.session.loadLearningOrder()).slice(0, 80))
+        if (cancelled) return
+        const options = learningChoices(loaded.words.get(progress.wordId), pool)
+        loading = false
+        await store.prepareLearningChoice({ date: task.date, itemId: task.currentItemId, revision: task.sessionRevision }, options)
+      } catch (failure) { if (!cancelled) setError(messageFor(failure, loading)) }
+      finally { setBusy(false) }
+    }
+    prepare()
+    return () => { cancelled = true }
+  }, [loaded, task, store])
 
-  const act = async (feedback) => {
+  const act = async (feedback, action = 'self') => {
     if (pending.current || !task) return
     pending.current = true
     setBusy(true)
@@ -90,7 +115,9 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
     try {
       const token = { date: task.date, itemId: task.currentItemId, revision: task.sessionRevision }
       if (store.getToday() !== task.date) throw Error('Learning date changed')
-      if (feedback) await store.submitSelfAssessment(token, feedback)
+      if (action === 'choice') await store.submitLearningChoice(token, feedback)
+      else if (action === 'reveal') await store.revealLearningDetails(token)
+      else if (feedback) await store.submitSelfAssessment(token, feedback)
       else await store.advanceLearning(token)
     } catch (failure) {
       setError(messageFor(failure, false))
@@ -111,36 +138,62 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
   const progress = task?.items[task.currentItemId]
   const item = progress && loaded.words.get(progress.wordId)
   const complete = task && task.currentItemId === null
-  return <section className="learning-session" aria-label="今日自评学习" aria-busy={busy}>
+  const guided = task?.method.id === 'guided-recall'
+  const choiceFeedback = guided && task.view === 'feedback' && task.choice && !task.choice.revealed
+  const choosing = guided && task.view === 'question' && progress?.knownCount === 0
+  const example = item && (item.example?.trim() || supplementalExamples[item.word.toLowerCase()]?.example)
+  const wordAudio = item && audio?.words?.[item.word.toLowerCase()]
+  const notice = (error || expired) && <div ref={alert} tabIndex={-1} role="alert"><p>{expired ? '日期已变化。昨日进度已保留，请开始今天的任务。' : error}</p>
+    <button type="button" disabled={busy} onClick={restart}>{expired ? '开始今天的任务' : loaded || /记录/.test(error) && !/词书/.test(error) ? '重新读取进度' : '重试'}</button>
+  </div>
+  return <section className="learning-session" aria-label="今日学习练习" aria-busy={busy}>
     <header className="learning-session__header">
-      <p>{loaded ? `${loaded.book.label} · ${loaded.date} · 自评学习` : '准备今日学习'}</p>
-      <button type="button" onClick={onExit} disabled={busy}>退出学习</button>
+      <button type="button" onClick={onExit} disabled={pending.current}>返回主界面</button>
+      <p>{loaded ? loaded.book.label : '准备今日学习'}{task && <span>已完成 {Object.values(task.items).filter(entry => entry.completed).length} / {task.itemIds.length} 词</span>}</p>
     </header>
-    {task && <p>已完成 {Object.values(task.items).filter(entry => entry.completed).length} / {task.itemIds.length} 词</p>}
-    {(error || expired) && <div role="alert"><p>{expired ? '日期已变化。昨日进度已保留，请开始今天的任务。' : error}</p>
-      <button type="button" disabled={busy} onClick={restart}>{expired ? '开始今天的任务' : loaded || /记录/.test(error) && !/词书/.test(error) ? '重新读取进度' : '重试'}</button>
-    </div>}
+    {(!item || expired) && notice}
     {busy && !loaded && <p role="status">正在加载词书与学习进度…</p>}
-    {!expired && complete && <div><h2 ref={heading} tabIndex={-1}>{task.itemIds.length ? '今日学习已完成' : '这本词书已全部学完'}</h2><p>进度已保存。当天任务保持不变，新的设置从下次创建任务时生效。</p></div>}
-    {!expired && item && <article className="learning-session__word">
-      <h2 ref={heading} tabIndex={-1} lang="en">{item.word}</h2>
-      <p>今日认识 {progress.knownCount} / 3 次</p>
-      {task.view === 'question' ? <>
-        <p>先回想词义，再选择你的熟悉程度。</p>
-        <div className="learning-session__actions">{[['known', '认识'], ['fuzzy', '模糊'], ['unknown', '不认识']].map(([value, label]) =>
-          <button type="button" key={value} onClick={() => act(value)} disabled={busy}>{label}</button>)}</div>
-      </> : <>
-        <p role="status">已保存：{({ known: '认识', fuzzy: '模糊', unknown: '不认识' })[progress.lastFeedback]}{progress.completed ? ' · 本词已完成' : ''}</p>
-        <LearningDetails item={item} audio={audio?.words?.[item.word.toLowerCase()]} pronunciation={task.settings.pronunciation} />
-        {audioError && <p>发音资源暂时无法加载，可退出后重试；可用时使用浏览器发音。</p>}
-        {snapshot.mistakes[progress.wordId]?.entered && !snapshot.mistakes[progress.wordId].removed && <p>已记录到错误证据库。</p>}
-        <button className="learning-session__next" type="button" onClick={() => act()} disabled={busy}>下一词</button>
-      </>}
-    </article>}
-    {task && <p className="learning-session__rule">当前自评规则：认识加 1，满 3 次完成；模糊减 1（最低 0）；不认识清零。未完成词按任务顺序循环。</p>}
+    {!expired && complete && <div className="learning-session__empty"><h2 ref={heading} tabIndex={-1}>{task.itemIds.length ? '今日学习已完成' : '这本词书已全部学完'}</h2><p>进度已保存。当天任务保持不变，新的设置从下次创建任务时生效。</p></div>}
+    {!expired && item && <StudyTransition transitionKey={`${task.currentItemId}:${task.view}:${!!task.choice?.revealed}`}>
+      <article className="learning-session__word">
+        <div className="learning-session__word-heading">
+          <h2 ref={heading} tabIndex={-1} lang="en">{item.word}</h2>
+          <p className="learning-session__count" aria-label={`今日认识 ${progress.knownCount} / 3 次`}>{[1,2,3].map(n => <span key={n} className={progress.knownCount >= n ? 'is-filled' : ''} />)}<span className="learning-session__count-text">{progress.knownCount} / 3</span></p>
+        </div>
+        <div className="learning-session__body" tabIndex={0} aria-label="单词内容">
+          {notice}
+          {(choosing || choiceFeedback) ? <>
+            <p className="learning-session__phonetic">{item.phonetic}</p>
+            <div className="learning-session__pronunciation"><SpeechButton word={item.word} lang={task.settings.pronunciation} src={wordAudio?.[task.settings.pronunciation]} label="发音" /></div>
+            <p className="learning-session__hint">先回想词义，再选择；不确定可以看答案。</p>
+            {task.choice ? <div className="learning-session__choices">{task.choice.options.map(option => {
+              const correct = choiceFeedback && option.word === progress.wordId
+              const wrong = choiceFeedback && option.word === task.choice.selectedWord && !correct
+              return <button key={option.word} type="button" className={`${correct ? 'is-correct' : ''} ${wrong ? 'is-wrong' : ''}`} disabled={busy || choiceFeedback} onClick={() => act(option.word, 'choice')}>
+                <span>{option.meaning}</span>{(correct || wrong) && <small>{correct ? '正确答案' : '你的选择'} · {option.word}</small>}
+              </button>
+            })}</div> : !error && <p role="status">正在准备选项…</p>}
+          </> : task.view === 'question' ? <>
+            {guided && progress.knownCount === 1 && <p className="learning-session__example" lang="en">{example || '该词暂无英文例句，请直接回想词义。'}</p>}
+            {!guided && <p className="learning-session__hint">先回想词义，再选择你的熟悉程度。</p>}
+          </> : <>
+            <p className="learning-session__saved" role="status">{task.choice ? (task.choice.selectedWord === progress.wordId ? '首次选对，认识次数加 1' : '已查看答案，本次不增加认识次数') : `已保存：${({ known: '认识', fuzzy: '模糊', unknown: '不认识' })[progress.lastFeedback]}`}{progress.completed ? ' · 本词已完成' : ''}</p>
+            <LearningDetails item={item} audio={wordAudio} pronunciation={task.settings.pronunciation} />
+            {audioError && <p>发音资源暂时无法加载，可退出后重试；可用时使用浏览器发音。</p>}
+            {snapshot.mistakes[progress.wordId]?.entered && !snapshot.mistakes[progress.wordId].removed && <p>已记录到错误证据库。</p>}
+          </>}
+        </div>
+        <footer className="learning-session__footer">
+          {choosing ? <button type="button" disabled={busy || !task.choice} onClick={() => act(null, 'choice')}>看答案</button>
+            : choiceFeedback ? <button className="learning-session__next" type="button" disabled={busy} onClick={() => act(null, 'reveal')}>继续</button>
+            : task.view === 'question' ? <div className="learning-session__actions">{[['known', '认识'], ['fuzzy', '模糊'], ['unknown', '不认识']].map(([value, label]) =>
+              <button type="button" key={value} onClick={() => act(value)} disabled={busy}>{label}</button>)}</div>
+            : <button className="learning-session__next" type="button" onClick={() => act()} disabled={busy}>下一词</button>}
+        </footer>
+      </article>
+    </StudyTransition>}
   </section>
 }
-
 function LearningDetails({ item, audio, pronunciation }) {
   const supplement = !item.example?.trim() ? supplementalExamples[item.word.toLowerCase()] : null
   const example = supplement?.example ?? item.example
@@ -149,11 +202,11 @@ function LearningDetails({ item, audio, pronunciation }) {
   return <div className="learning-session__details">
     <p>{item.phonetic} {describePartOfSpeech(item.partOfSpeech ?? '')}</p>
     <div className="learning-session__actions">{langs.map(lang => <SpeechButton key={lang} word={item.word} lang={lang} src={audio?.[lang]} label={lang === 'en-GB' ? '英音' : '美音'} accessibleLabel={`${item.word} ${lang === 'en-GB' ? '英音' : '美音'}`} />)}</div>
-    <h3>释义</h3><p>{item.meaning || '暂无释义'}</p>
+    <div className="learning-session__detail-grid"><section><h3>释义</h3><p>{item.meaning || '暂无释义'}</p></section><section>
     <h3>{supplement ? '补充例句' : '例句'}</h3><p lang="en">{example || '暂无例句'}</p>
     {translation && <p>{translation}</p>}
     {supplement && item.word === 'reservior' && <p>例句采用规范拼写 reservoir。</p>}
     {example && <SpeechButton word={example} src={audio?.example} label="朗读例句" />}
-    <h3>词组</h3>{item.phrases?.length ? <ul>{item.phrases.map((phrase, index) => <li key={index}>{phrase}</li>)}</ul> : <p>暂无词组</p>}
+    </section><section className="learning-session__phrases"><h3>词组</h3>{item.phrases?.length ? <ul>{item.phrases.map((phrase, index) => <li key={index}>{phrase}</li>)}</ul> : <p>暂无词组</p>}</section></div>
   </div>
 }

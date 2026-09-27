@@ -1,6 +1,7 @@
 import { assert, MISTAKE_ENTRY_THRESHOLD } from './model'
 
 export const SELF_ASSESSMENT = Object.freeze({ id: 'self-assessment', rulesVersion: 1 })
+export const GUIDED_RECALL = Object.freeze({ id: 'guided-recall', rulesVersion: 1 })
 
 // Presentation order can change without changing task.itemIds (the fixed assignment).
 export function nextLearningItem(task) {
@@ -12,9 +13,9 @@ export function nextLearningItem(task) {
   return null
 }
 
-export function requireLearningTurn(task, token, date, view) {
+export function requireLearningTurn(task, token, date, view, allowedMethods = ['self-assessment', 'guided-recall']) {
   assert(token?.date === date && task?.date === date, 'Learning date changed; start today again')
-  assert(task.method?.id === SELF_ASSESSMENT.id && task.method.rulesVersion === 1, 'Unsupported learning method')
+  assert(allowedMethods.includes(task.method?.id) && task.method.rulesVersion === 1, 'Unsupported learning method')
   assert(task.currentItemId !== null && task.currentItemId === token.itemId
     && task.sessionRevision === token.revision && task.view === view, 'Learning turn changed; reload progress')
   return task.items[token.itemId]
@@ -23,6 +24,8 @@ export function requireLearningTurn(task, token, date, view) {
 // Only self-assessment unknowns contribute to the existing mistake threshold.
 export function applySelfAssessment(next, task, progress, feedback, at) {
   assert(['known', 'fuzzy', 'unknown'].includes(feedback), 'Invalid feedback')
+  assert(task.method.id === SELF_ASSESSMENT.id || (task.method.id === GUIDED_RECALL.id
+    && progress.knownCount >= 1 && task.choice === null), 'Choose the first meaning before self assessment')
   assert(!progress.completed && !progress.removed, 'Learning word already completed')
   progress.lastFeedback = feedback
   if (feedback === 'known') progress.knownCount += 1

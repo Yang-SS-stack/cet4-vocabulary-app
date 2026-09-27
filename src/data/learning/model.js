@@ -1,5 +1,5 @@
 export const LEARNING_STORAGE_KEY = 'linguajet.learning'
-export const SCHEMA_VERSION = 2
+export const SCHEMA_VERSION = 3
 export const MISTAKE_ENTRY_THRESHOLD = 5
 export const REVIEW_STAGE_DAYS = Object.freeze([1, 2, 4, 7, 15])
 export const TASK_KINDS = Object.freeze(['learning', 'review', 'mistakes'])
@@ -49,6 +49,29 @@ const dateKey = (value) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.te
   && Number.isFinite(Date.parse(`${value}T00:00:00.000Z`))
   && new Date(`${value}T00:00:00.000Z`).toISOString().slice(0, 10) === value
 const feedback = (value) => ['known', 'fuzzy', 'unknown'].includes(value)
+const method = (value) => value === null || shape(value, {
+  id: (id) => ['self-assessment', 'guided-recall'].includes(id), rulesVersion: (v) => v === 1,
+})
+const choice = (value) => value === null || shape(value, {
+  options: (options) => Array.isArray(options) && options.length === 4
+    && options.every((option) => shape(option, { word: string, meaning: string }) && option.word === wordId(option.word))
+    && new Set(options.map((option) => option.word)).size === 4
+    && new Set(options.map((option) => option.meaning)).size === 4,
+  selectedWord: nullable(string), revealed: boolean,
+}) && (value.selectedWord === null || value.options.some((option) => option.word === value.selectedWord))
+const feedbackEvent = (event, task, version) => {
+  if (event?.source === 'self-assessment') return shape(event, {
+    source: (v) => v === 'self-assessment', rulesVersion: (v) => v === 1,
+    itemId: (id) => task.itemIds.includes(id), feedback, at: timestamp, revision: integer,
+  })
+  return version >= 3 && shape(event, {
+    source: (v) => v === 'guided-choice', rulesVersion: (v) => v === 1,
+    itemId: (id) => task.itemIds.includes(id), selectedWord: nullable(string),
+    outcome: (v) => ['correct', 'incorrect', 'show-answer'].includes(v), at: timestamp, revision: integer,
+  }) && ((event.outcome === 'show-answer') === (event.selectedWord === null))
+    && (event.outcome === 'show-answer' || (event.outcome === 'correct') ===
+      (event.selectedWord === task.items[event.itemId]?.wordId))
+}
 
 function shape(value, fields) {
   return record(value) && Object.keys(value).length === Object.keys(fields).length
@@ -122,17 +145,38 @@ export function validateState(state, version = SCHEMA_VERSION) {
         itemIds: (value) => Array.isArray(value) && value.every(string), items: record,
         currentItemId: nullable(string), previousItemId: nullable(string),
         view: (value) => ['question', 'feedback'].includes(value),
-        ...(version === 2 ? {
-          method: (value) => value === null || shape(value, {
-            id: (id) => id === 'self-assessment', rulesVersion: (v) => v === 1,
-          }),
+        ...(version >= 2 ? {
+          method: (value) => version === 2
+            ? value === null || shape(value, { id: (id) => id === 'self-assessment', rulesVersion: (v) => v === 1 })
+            : method(value),
           sessionRevision: integer,
-          feedbackEvents: (events) => Array.isArray(events) && events.every((event) => shape(event, {
-            source: (v) => v === 'self-assessment', rulesVersion: (v) => v === 1,
-            itemId: (id) => task.itemIds.includes(id), feedback, at: timestamp, revision: integer,
-          })),
+          feedbackEvents: (events) => Array.isArray(events) && events.every((event) => feedbackEvent(event, task, version)),
         } : {}),
+        ...(version >= 3 ? { choice } : {}),
       }), 'Invalid task')
+      if (version >= 3) {
+        assert(task.kind === 'learning' || (task.choice === null && task.method === null), 'Invalid task choice')
+        assert(task.feedbackEvents.every((event) => event.revision < task.sessionRevision
+          && (event.source === 'self-assessment' || task.method?.id === 'guided-recall')),
+        'Invalid task feedback event')
+        if (task.choice !== null) {
+          const current = task.items[task.currentItemId]
+          assert(task.method?.id === 'guided-recall' && task.currentItemId !== null
+            && current.knownCount <= 1
+            && task.choice.options.some((option) => option.word === current.wordId), 'Invalid task choice')
+          if (task.view === 'question') assert(task.choice.selectedWord === null && !task.choice.revealed, 'Invalid task choice')
+          if (task.view === 'feedback') {
+            const expectedOutcome = task.choice.selectedWord === null ? 'show-answer'
+              : task.choice.selectedWord === current.wordId ? 'correct' : 'incorrect'
+            const event = task.feedbackEvents.at(-1)
+            assert((task.choice.selectedWord !== null || task.choice.revealed)
+              && current.knownCount === (expectedOutcome === 'correct' ? 1 : 0)
+              && event?.source === 'guided-choice' && event.itemId === current.id
+              && event.selectedWord === task.choice.selectedWord && event.outcome === expectedOutcome,
+            'Invalid task choice feedback')
+          }
+        }
+      }
       assert(new Set(task.itemIds).size === task.itemIds.length
         && Object.keys(task.items).length === task.itemIds.length
         && (task.currentItemId === null || task.itemIds.includes(task.currentItemId))
@@ -190,22 +234,28 @@ export function freeze(value) {
 
 // Validate the entire v1 snapshot before adding fields; never fabricate lost events.
 export function migrateState(state) {
-  if (state?.version !== 1) return validateState(state)
-  validateState(state, 1)
+  if (state?.version === SCHEMA_VERSION) return validateState(state)
+  assert(state?.version === 1 || state?.version === 2, 'Invalid or unsupported learning snapshot')
+  validateState(state, state.version)
   const next = JSON.parse(JSON.stringify(state))
-  next.version = SCHEMA_VERSION
-  for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) {
-    task.method = task.kind === 'learning' ? { id: 'self-assessment', rulesVersion: 1 } : null
-    task.sessionRevision = 0
-    task.feedbackEvents = []
-    if (task.kind === 'learning') {
-      if (task.currentItemId === null) {
-        task.currentItemId = task.itemIds.find(id => !task.items[id].completed && !task.items[id].removed) ?? null
-        task.view = 'question'
-      } else if (task.items[task.currentItemId].completed) {
-        task.view = 'feedback'
+  if (next.version === 1) {
+    next.version = 2
+    for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) {
+      task.method = task.kind === 'learning' ? { id: 'self-assessment', rulesVersion: 1 } : null
+      task.sessionRevision = 0
+      task.feedbackEvents = []
+      if (task.kind === 'learning') {
+        if (task.currentItemId === null) {
+          task.currentItemId = task.itemIds.find(id => !task.items[id].completed && !task.items[id].removed) ?? null
+          task.view = 'question'
+        } else if (task.items[task.currentItemId].completed) {
+          task.view = 'feedback'
+        }
       }
     }
+    validateState(next, 2)
   }
+  next.version = SCHEMA_VERSION
+  for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) task.choice = null
   return validateState(next)
 }

@@ -9,7 +9,7 @@ import {
 import { wordBooks } from '../data/wordBooks'
 import './TodayLearningPage.css'
 
-function TodayLearningPage({ now = new Date(), loadBook }) {
+function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
   const { store, snapshot } = useLearningStore()
   const { settings } = snapshot
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
@@ -32,11 +32,17 @@ function TodayLearningPage({ now = new Date(), loadBook }) {
         setStatus('请先在设置中选择词书和每日新词数量。')
         return
       }
-      setLearning(true)
-    } else setStatus('复习流程将在下一阶段启用。')
+      setLearning('learning')
+      onFocusModeChange?.(true)
+    } else { setLearning('review'); onFocusModeChange?.(true) }
   }
 
-  if (learning) return <LearningSession loadBook={loadBook} onExit={() => setLearning(false)} />
+  const exit = () => { setLearning(false); onFocusModeChange?.(false) }
+  if (learning === 'learning') return <LearningSession loadBook={loadBook} onExit={exit} />
+  if (learning === 'review') return <section className="learning-session" aria-label="今日复习">
+    <header className="learning-session__header"><button type="button" onClick={exit}>返回主界面</button><p>今日复习</p></header>
+    <div className="learning-session__empty"><h2>复习尚未启用</h2><p role="status">复习流程将在下一阶段启用。</p></div>
+  </section>
 
   return (
     <section className="learning-overview" aria-label="今日学习概览">

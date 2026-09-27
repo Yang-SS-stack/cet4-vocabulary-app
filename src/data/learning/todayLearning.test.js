@@ -94,12 +94,12 @@ test('version one records migrate without changing old progress or overwriting u
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
   for (const tasks of Object.values(legacy.days)) for (const task of Object.values(tasks)) {
-    delete task.method; delete task.sessionRevision; delete task.feedbackEvents
+    delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
   }
   const raw = JSON.stringify(legacy)
   env.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = env.open()
-  expect(migrated.getSnapshot().version).toBe(2)
+  expect(migrated.getSnapshot().version).toBe(3)
   expect(migrated.getTask('learning').items).toEqual(legacy.days['2026-09-24'].learning.items)
   expect(env.storage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
   migrated.updateSettings({ dailyNewWords: 3 })
@@ -143,7 +143,7 @@ test('migration preserves review/mistake records and history, corrupt versions s
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
   for (const tasks of Object.values(legacy.days)) for (const task of Object.values(tasks)) {
-    delete task.method; delete task.sessionRevision; delete task.feedbackEvents
+    delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
   }
   env.storage.setItem('', JSON.stringify(legacy))
   const migrated = env.open().getSnapshot()
@@ -164,7 +164,7 @@ test('legacy completed question resumes in details and can advance without losin
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
   const task = legacy.days['2026-09-24'].learning
-  delete task.method; delete task.sessionRevision; delete task.feedbackEvents
+  delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
   env.storage.setItem('', JSON.stringify(legacy))
   const migrated = env.open()
   expect(migrated.getTask('learning').view).toBe('feedback')
@@ -180,7 +180,7 @@ test('legacy null position resumes the first unfinished word without changing co
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
   const task = legacy.days['2026-09-24'].learning
-  delete task.method; delete task.sessionRevision; delete task.feedbackEvents
+  delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
   env.storage.setItem('', JSON.stringify(legacy))
   const migrated = env.open().getTask('learning')
   expect(migrated.currentItemId).toBe(task.itemIds[0])
