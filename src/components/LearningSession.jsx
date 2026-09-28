@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
-import { wordId } from '../data/learning/model'
+import { EXTRA_LEARNING_BATCH_SIZE, wordId } from '../data/learning/model'
 import { loadWordBook } from '../data/loadWordBook'
 import { loadAudioManifest } from '../data/audioManifest'
 import { wordBooks } from '../data/wordBooks'
@@ -20,7 +20,12 @@ function messageFor(error, loading) {
   return loading ? '词书加载失败，请检查网络后重试。已有学习记录保持不变。' : '保存失败，请检查浏览器存储空间或权限后重试。此次操作未计入。'
 }
 
-export default function LearningSession({ onExit, loadBook = loadWordBook }) {
+function turnToken(task) {
+  return { date: task.date, itemId: task.currentItemId, revision: task.sessionRevision,
+    ...(task.kind === 'extra-learning' ? { kind: task.kind, taskId: task.taskId } : {}) }
+}
+
+export default function LearningSession({ onExit, loadBook = loadWordBook, initialMode = 'learning' }) {
   const { store, snapshot } = useLearningStore()
   const [loaded, setLoaded] = useState(null)
   const [error, setError] = useState('')
@@ -29,11 +34,13 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
   const [audio, setAudio] = useState(null)
   const [audioError, setAudioError] = useState(false)
   const [clock, setClock] = useState(store.getToday)
+  const [mode, setMode] = useState(initialMode)
   const pending = useRef(false)
   const heading = useRef(null)
   const alert = useRef(null)
-  const task = loaded ? snapshot.days[loaded.date]?.learning : null
-  const expired = (task && task.date !== clock) || error.startsWith('日期已变化')
+  const extra = loaded ? snapshot.extraLearning[loaded.date] : null
+  const task = loaded ? mode === 'extra' ? extra?.batches.at(-1) : snapshot.days[loaded.date]?.learning : null
+  const expired = (loaded && loaded.date !== clock) || error.startsWith('日期已变化')
 
   useEffect(() => { if (error || expired) alert.current?.focus() }, [error, expired])
 
@@ -53,22 +60,29 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
       setError('')
       try {
         const date = store.getToday()
-        const existing = store.getTask('learning')
+        const daily = store.getTask('learning')
+        const process = mode === 'extra' ? store.getExtraLearningProcess() : null
+        const current = mode === 'extra' ? store.getExtraLearning() : daily
+        const existing = mode === 'extra' && current?.currentItemId === null && !process?.exhausted ? null : current
         const initial = store.getSnapshot()
-        const book = wordBooks.find(b => b.id === (existing?.wordBookId ?? initial.settings.todayWordBookId))
+        const book = wordBooks.find(b => b.id === (existing?.wordBookId ?? (mode === 'extra' ? daily?.wordBookId : initial.settings.todayWordBookId)))
         if (!book) throw Error('book unavailable')
         const session = await loadBook(book)
-        const ids = existing ? existing.itemIds.map(id => existing.items[id].wordId)
+        const ids = process?.exhausted ? [] : existing ? existing.itemIds.map(id => existing.items[id].wordId)
           : [...new Set((await session.loadLearningOrder()).map(wordId))]
-            .filter(id => !store.getWord(book.id, id)?.learning.completed).slice(0, initial.settings.dailyNewWords)
+            .filter(id => !store.getWord(book.id, id)?.learning.completed).slice(0, mode === 'extra' ? EXTRA_LEARNING_BATCH_SIZE : initial.settings.dailyNewWords)
         const details = await session.loadWords(ids)
+        const words = new Map(details.map(item => [wordId(item.word), item]))
+        if (ids.some(id => !words.has(id))) throw Error('Word book details are missing')
         if (cancelled) return
         loading = false
         if (store.getToday() !== date) throw Error('Learning date changed')
-        if (!existing && store.getSnapshot() !== initial) throw Error('Learning settings changed')
-        const savedTask = existing ?? await store.ensureTodayLearning(book.id, ids, date, initial.settings, { id: 'guided-recall', rulesVersion: 1 })
+        if (mode !== 'extra' && !existing && store.getSnapshot() !== initial) throw Error('Learning settings changed')
+        const savedTask = mode === 'extra'
+          ? existing ?? await store.ensureExtraLearning(ids, date)
+          : existing ?? await store.ensureTodayLearning(book.id, ids, date, initial.settings, { id: 'guided-recall', rulesVersion: 1 })
         if (cancelled) return
-        setLoaded({ date: savedTask.date, book, session, words: new Map(details.map(item => [wordId(item.word), item])) })
+        setLoaded({ date: savedTask?.date ?? date, taskId: savedTask?.taskId, book, session, words })
         setClock(store.getToday())
       } catch (failure) {
         if (!cancelled) setError(messageFor(failure, loading))
@@ -78,7 +92,15 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
     }
     start()
     return () => { cancelled = true }
-  }, [store, loadBook, attempt])
+  }, [store, loadBook, attempt, mode])
+
+  useEffect(() => {
+    if (mode === 'extra' && loaded && task && task.taskId === loaded.taskId && task.currentItemId === null
+      && !extra.exhausted && !busy && !error && !expired) {
+      setLoaded(null)
+      setAttempt(value => value + 1)
+    }
+  }, [mode, loaded, task, extra, busy, error, expired])
 
   useEffect(() => {
     let cancelled = false
@@ -88,6 +110,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
 
   useEffect(() => {
     if (!loaded || !task || task.method.id !== 'guided-recall' || task.view !== 'question' || task.choice || !task.currentItemId) return
+    if (task.kind === 'extra-learning' && task.taskId !== loaded.taskId) return
     const progress = task.items[task.currentItemId]
     if (progress.knownCount !== 0) return
     let cancelled = false
@@ -99,7 +122,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
         if (cancelled) return
         const options = learningChoices(loaded.words.get(progress.wordId), pool)
         loading = false
-        await store.prepareLearningChoice({ date: task.date, itemId: task.currentItemId, revision: task.sessionRevision }, options)
+        await store.prepareLearningChoice(turnToken(task), options)
       } catch (failure) { if (!cancelled) setError(messageFor(failure, loading)) }
       finally { setBusy(false) }
     }
@@ -113,7 +136,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
     setBusy(true)
     setError('')
     try {
-      const token = { date: task.date, itemId: task.currentItemId, revision: task.sessionRevision }
+      const token = turnToken(task)
       if (store.getToday() !== task.date) throw Error('Learning date changed')
       if (action === 'choice') await store.submitLearningChoice(token, feedback)
       else if (action === 'reveal') await store.revealLearningDetails(token)
@@ -130,6 +153,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
   const restart = () => {
     try {
       store.reload()
+      if (expired) setMode('learning')
       setLoaded(null)
       setError('')
       setAttempt(value => value + 1)
@@ -137,7 +161,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
   }
   const progress = task?.items[task.currentItemId]
   const item = progress && loaded.words.get(progress.wordId)
-  const complete = task && task.currentItemId === null
+  const complete = mode === 'extra' ? extra?.exhausted : task && task.currentItemId === null
   const guided = task?.method.id === 'guided-recall'
   const choiceFeedback = guided && task.view === 'feedback' && task.choice && !task.choice.revealed
   const choosing = guided && task.view === 'question' && progress?.knownCount === 0
@@ -146,14 +170,14 @@ export default function LearningSession({ onExit, loadBook = loadWordBook }) {
   const notice = (error || expired) && <div ref={alert} tabIndex={-1} role="alert"><p>{expired ? '日期已变化。昨日进度已保留，请开始今天的任务。' : error}</p>
     <button type="button" disabled={busy} onClick={restart}>{expired ? '开始今天的任务' : loaded || /记录/.test(error) && !/词书/.test(error) ? '重新读取进度' : '重试'}</button>
   </div>
-  return <section className="learning-session" aria-label="今日学习练习" aria-busy={busy}>
+  return <section className="learning-session" aria-label={mode === 'extra' ? '额外学习练习' : '今日学习练习'} aria-busy={busy}>
     <header className="learning-session__header">
       <button type="button" onClick={onExit} disabled={pending.current}>返回主界面</button>
-      <p>{loaded ? loaded.book.label : '准备今日学习'}{task && <span>已完成 {Object.values(task.items).filter(entry => entry.completed).length} / {task.itemIds.length} 词</span>}</p>
+      <p>{loaded ? `${loaded.book.label}${mode === 'extra' ? ' · 额外学习' : ''}` : '准备今日学习'}{task && <span>{mode === 'extra' ? '本组' : ''}已完成 {Object.values(task.items).filter(entry => entry.completed).length} / {task.itemIds.length} 词</span>}</p>
     </header>
     {(!item || expired) && notice}
     {busy && !loaded && <p role="status">正在加载词书与学习进度…</p>}
-    {!expired && complete && <div className="learning-session__empty"><h2 ref={heading} tabIndex={-1}>{task.itemIds.length ? '今日学习已完成' : '这本词书已全部学完'}</h2><p>进度已保存。当天任务保持不变，新的设置从下次创建任务时生效。</p></div>}
+    {!expired && complete && <div className="learning-session__empty"><h2 ref={heading} tabIndex={-1}>{mode === 'extra' || !task.itemIds.length ? '这本词书已全部学完' : '今日学习已完成'}</h2><p>进度已保存。当天任务保持不变，新的设置从下次创建任务时生效。</p></div>}
     {!expired && item && <StudyTransition transitionKey={`${task.currentItemId}:${task.view}:${!!task.choice?.revealed}`}>
       <article className="learning-session__word">
         <div className="learning-session__word-heading">

@@ -2,7 +2,7 @@ import { SELF_ASSESSMENT, GUIDED_RECALL, nextLearningItem, requireLearningTurn, 
 import {
   assert, createMistakeRecord, createProgress, createState, createWordBookWord, DEFAULT_SETTINGS, freeze,
   LEARNING_STORAGE_KEY, localDateKey, localDayStartIso, TASK_KINDS, validateDateKey, validatePatch, validateState,
-  wordBookWordId, wordId, migrateState,
+  wordBookWordId, wordId, migrateState, EXTRA_LEARNING_BATCH_SIZE,
 } from './model'
 
 const own = (object, key) => Object.hasOwn(object, key) ? object[key] : null
@@ -72,6 +72,20 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
     return task
   }
 
+  function extraProcessAt(snapshot, date) {
+    validateDateKey(date)
+    return own(snapshot.extraLearning, date)
+  }
+
+  function learningTask(snapshot, token, date) {
+    assert(token?.date === date, 'Learning date changed; start today again')
+    assert(token?.kind === undefined || ['learning', 'extra-learning'].includes(token.kind), 'Invalid learning task')
+    if (token?.kind !== 'extra-learning') return requireTask(snapshot, 'learning', date)
+    const task = extraProcessAt(snapshot, date)?.batches.at(-1)
+    assert(task && task.taskId === token.taskId, 'Learning turn changed; reload progress')
+    return task
+  }
+
   function normalizeTaskItem(kind, entry, defaultWordBookId) {
     const value = typeof entry === 'string' ? { word: entry } : entry
     assert(value && typeof value === 'object' && typeof value.word === 'string', 'Invalid task word')
@@ -104,9 +118,41 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
         .filter((word) => !api.getWord(wordBookId, word)?.learning.completed).slice(0, count)
       return api.ensureTask('learning', candidates, wordBookId, method)
     },
+    getExtraLearningProcess(date = today()) { return extraProcessAt(state, date) },
+    getExtraLearning(date = today()) { return extraProcessAt(state, date)?.batches.at(-1) ?? null },
+    ensureExtraLearning(orderedWords, expectedDate = today()) {
+      const date = today()
+      assert(expectedDate === date, 'Learning date changed; start today again')
+      const daily = taskAt(state, 'learning', date)
+      assert(daily?.currentItemId === null && daily.itemIds.every(id => daily.items[id].completed), 'Finish the daily task before extra learning')
+      const process = extraProcessAt(state, date)
+      if (process?.exhausted) return null
+      const current = process?.batches.at(-1)
+      if (current && current.currentItemId !== null) return current
+      assert(Array.isArray(orderedWords), 'Invalid task candidates')
+      const candidates = [...new Set(orderedWords.map(wordId))]
+        .filter(word => !api.getWord(daily.wordBookId, word)?.learning.completed).slice(0, EXTRA_LEARNING_BATCH_SIZE)
+      const items = candidates.map(word => normalizeTaskItem('learning', word, daily.wordBookId))
+      const createdAt = timestamp()
+      change(next => {
+        assert(today() === date, 'Learning date changed; start today again')
+        next.extraLearning[date] ??= { batches: [], exhausted: false }
+        const history = next.extraLearning[date]
+        if (items.length === 0) { history.exhausted = true; return }
+        items.forEach(item => { ensureWord(next, item.wordId); ensureWordBookWord(next, item.wordBookId, item.wordId) })
+        history.batches.push({
+          date, kind: 'extra-learning', taskId: `${date}:extra:${history.batches.length + 1}`,
+          wordBookId: daily.wordBookId, createdAt, settings: { ...daily.settings },
+          itemIds: items.map(item => item.id), items: Object.fromEntries(items.map(item => [item.id, createProgress(item)])),
+          currentItemId: items[0].id, previousItemId: null, view: 'question',
+          method: { ...daily.method }, sessionRevision: 0, feedbackEvents: [], choice: null,
+        })
+      })
+      return candidates.length ? api.getExtraLearning(date) : null
+    },
     prepareLearningChoice(token, options) {
       const date = today()
-      const task = requireTask(state, 'learning', date)
+      const task = learningTask(state, token, date)
       const progress = requireLearningTurn(task, token, date, 'question', [GUIDED_RECALL.id])
       assert(progress.knownCount === 0 && !progress.completed && !progress.removed, 'Choice is only for the first encounter')
       if (task.choice !== null) return task
@@ -120,18 +166,18 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
         && new Set(normalized.map((option) => option.meaning)).size === 4
         && normalized.some((option) => option.word === progress.wordId), 'Invalid meaning choices')
       change((next) => {
-        const nextTask = requireTask(next, 'learning', date)
+        const nextTask = learningTask(next, token, date)
         requireLearningTurn(nextTask, token, today(), 'question', [GUIDED_RECALL.id])
         nextTask.choice = { options: normalized, selectedWord: null, revealed: false }
         nextTask.sessionRevision += 1
       })
-      return taskAt(state, 'learning', date)
+      return learningTask(state, token, date)
     },
     submitLearningChoice(token, selectedWord) {
       const date = today()
       const at = timestamp()
       change((next) => {
-        const task = requireTask(next, 'learning', date)
+        const task = learningTask(next, token, date)
         const progress = requireLearningTurn(task, token, today(), 'question', [GUIDED_RECALL.id])
         assert(progress.knownCount === 0 && !progress.completed && task.choice !== null, 'Prepare choices before answering')
         const selected = selectedWord === null ? null : wordId(selectedWord)
@@ -152,7 +198,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
     revealLearningDetails(token) {
       const date = today()
       change((next) => {
-        const task = requireTask(next, 'learning', date)
+        const task = learningTask(next, token, date)
         requireLearningTurn(task, token, today(), 'feedback', [GUIDED_RECALL.id])
         assert(task.choice !== null && !task.choice.revealed && task.choice.selectedWord !== null,
           'No unrevealed choice feedback')
@@ -164,7 +210,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
       const date = today()
       const at = timestamp()
       change((next) => {
-        const task = requireTask(next, 'learning', date)
+        const task = learningTask(next, token, date)
         const progress = requireLearningTurn(task, token, today(), 'question')
         applySelfAssessment(next, task, progress, feedback, at)
       })
@@ -172,7 +218,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
     advanceLearning(token) {
       const date = today()
       change((next) => {
-        const task = requireTask(next, 'learning', date)
+        const task = learningTask(next, token, date)
         requireLearningTurn(task, token, today(), 'feedback')
         assert(task.method.id !== GUIDED_RECALL.id || task.choice === null || task.choice.revealed,
           'Reveal learning details before advancing')

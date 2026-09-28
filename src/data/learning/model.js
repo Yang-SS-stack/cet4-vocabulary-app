@@ -1,5 +1,6 @@
 export const LEARNING_STORAGE_KEY = 'linguajet.learning'
-export const SCHEMA_VERSION = 3
+export const SCHEMA_VERSION = 4
+export const EXTRA_LEARNING_BATCH_SIZE = 10
 export const MISTAKE_ENTRY_THRESHOLD = 5
 export const REVIEW_STAGE_DAYS = Object.freeze([1, 2, 4, 7, 15])
 export const TASK_KINDS = Object.freeze(['learning', 'review', 'mistakes'])
@@ -126,6 +127,7 @@ export function validateState(state, version = SCHEMA_VERSION) {
   assert(shape(state, {
     version: (value) => value === version, settings: settingsValid,
     mistakes: record, wordBooks: record, days: record,
+    ...(version >= 4 ? { extraLearning: record } : {}),
   }), 'Invalid or unsupported learning snapshot')
   for (const [id, word] of Object.entries(state.mistakes)) {
     assert(wordValid(word) && word.id === id, 'Invalid word record')
@@ -136,11 +138,38 @@ export function validateState(state, version = SCHEMA_VERSION) {
       assert(wordBookWordValid(word) && word.wordId === id && word.wordBookId === wordBookId, 'Invalid word book word')
     }
   }
+  const entries = []
   for (const [day, tasks] of Object.entries(state.days)) {
     assert(dateKey(day) && record(tasks), 'Invalid day record')
     for (const [kind, task] of Object.entries(tasks)) {
-      assert(TASK_KINDS.includes(kind) && shape(task, {
+      assert(TASK_KINDS.includes(kind), 'Invalid task kind')
+      entries.push({ day, kind, task })
+    }
+  }
+  if (version >= 4) for (const [day, process] of Object.entries(state.extraLearning)) {
+    const daily = state.days[day]?.learning
+    assert(dateKey(day) && shape(process, { batches: Array.isArray, exhausted: boolean })
+      && (process.batches.length > 0 || process.exhausted)
+      && daily?.currentItemId === null && daily.itemIds.every(id => daily.items[id].completed), 'Invalid extra learning process')
+    const seen = new Set()
+    process.batches.forEach((task, index) => {
+      assert(task.taskId === `${day}:extra:${index + 1}` && task.itemIds.length > 0
+        && task.itemIds.length <= EXTRA_LEARNING_BATCH_SIZE
+        && task.wordBookId === daily.wordBookId
+        && JSON.stringify(task.settings) === JSON.stringify(daily.settings)
+        && JSON.stringify(task.method) === JSON.stringify(daily.method), 'Invalid extra learning batch')
+      assert(task.itemIds.every(id => !seen.has(id)), 'Duplicate extra learning word')
+      task.itemIds.forEach(id => seen.add(id))
+      if (index < process.batches.length - 1 || process.exhausted) {
+        assert(task.currentItemId === null && task.itemIds.every(id => task.items[id].completed), 'Unfinished extra learning batch')
+      }
+      entries.push({ day, kind: 'extra-learning', task })
+    })
+  }
+  for (const { day, kind, task } of entries) {
+      assert(shape(task, {
         date: (value) => value === day, kind: (value) => value === kind,
+        ...(kind === 'extra-learning' ? { taskId: string } : {}),
         wordBookId: nullable(string), createdAt: timestamp, settings: settingsValid,
         itemIds: (value) => Array.isArray(value) && value.every(string), items: record,
         currentItemId: nullable(string), previousItemId: nullable(string),
@@ -155,7 +184,7 @@ export function validateState(state, version = SCHEMA_VERSION) {
         ...(version >= 3 ? { choice } : {}),
       }), 'Invalid task')
       if (version >= 3) {
-        assert(task.kind === 'learning' || (task.choice === null && task.method === null), 'Invalid task choice')
+        assert(['learning', 'extra-learning'].includes(task.kind) || (task.choice === null && task.method === null), 'Invalid task choice')
         assert(task.feedbackEvents.every((event) => event.revision < task.sessionRevision
           && (event.source === 'self-assessment' || task.method?.id === 'guided-recall')),
         'Invalid task feedback event')
@@ -192,15 +221,14 @@ export function validateState(state, version = SCHEMA_VERSION) {
             && Object.hasOwn(state.wordBooks, item.wordBookId)
             && Object.hasOwn(state.wordBooks[item.wordBookId].words, item.wordId), 'Invalid task word reference')
         }
-        if (kind === 'learning') assert(item.wordBookId === task.wordBookId, 'Invalid task word reference')
+        if (['learning', 'extra-learning'].includes(kind)) assert(item.wordBookId === task.wordBookId, 'Invalid task word reference')
       }
-    }
   }
   return state
 }
 
 export function createState() {
-  return { version: SCHEMA_VERSION, settings: { ...DEFAULT_SETTINGS }, mistakes: {}, wordBooks: {}, days: {} }
+  return { version: SCHEMA_VERSION, settings: { ...DEFAULT_SETTINGS }, mistakes: {}, wordBooks: {}, days: {}, extraLearning: {} }
 }
 
 export function createWordBookWord(wordBookId, id) {
@@ -235,7 +263,7 @@ export function freeze(value) {
 // Validate the entire v1 snapshot before adding fields; never fabricate lost events.
 export function migrateState(state) {
   if (state?.version === SCHEMA_VERSION) return validateState(state)
-  assert(state?.version === 1 || state?.version === 2, 'Invalid or unsupported learning snapshot')
+  assert([1, 2, 3].includes(state?.version), 'Invalid or unsupported learning snapshot')
   validateState(state, state.version)
   const next = JSON.parse(JSON.stringify(state))
   if (next.version === 1) {
@@ -255,7 +283,12 @@ export function migrateState(state) {
     }
     validateState(next, 2)
   }
+  if (next.version === 2) {
+    next.version = 3
+    for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) task.choice = null
+    validateState(next, 3)
+  }
   next.version = SCHEMA_VERSION
-  for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) task.choice = null
+  next.extraLearning = {}
   return validateState(next)
 }

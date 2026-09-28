@@ -1,5 +1,5 @@
 import LearningSession from './LearningSession'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
 import {
   buildLearningRecommendation,
@@ -25,20 +25,26 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
   })
   const [status, setStatus] = useState('')
   const [learning, setLearning] = useState(false)
+  const [confirmExtra, setConfirmExtra] = useState(false)
+
+  const enter = mode => { setLearning(mode); onFocusModeChange?.(true) }
 
   const start = (mode) => {
     if (mode === 'learning') {
-      if (!store.getTask('learning') && (!settings.todayWordBookId || !settings.dailyNewWords)) {
+      const task = store.getTask('learning')
+      if (!task && (!settings.todayWordBookId || !settings.dailyNewWords)) {
         setStatus('请先在设置中选择词书和每日新词数量。')
         return
       }
-      setLearning('learning')
-      onFocusModeChange?.(true)
+      if (task?.currentItemId === null && task.itemIds.every(id => task.items[id].completed)) {
+        if (store.getExtraLearningProcess()) enter('extra')
+        else setConfirmExtra(true)
+      } else enter('learning')
     } else { setLearning('review'); onFocusModeChange?.(true) }
   }
 
   const exit = () => { setLearning(false); onFocusModeChange?.(false) }
-  if (learning === 'learning') return <LearningSession loadBook={loadBook} onExit={exit} />
+  if (learning === 'learning' || learning === 'extra') return <LearningSession loadBook={loadBook} onExit={exit} initialMode={learning} />
   if (learning === 'review') return <section className="learning-session" aria-label="今日复习">
     <header className="learning-session__header"><button type="button" onClick={exit}>返回主界面</button><p>今日复习</p></header>
     <div className="learning-session__empty"><h2>复习尚未启用</h2><p role="status">复习流程将在下一阶段启用。</p></div>
@@ -62,8 +68,30 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
 
       <RecommendationCard recommendation={recommendation} settings={settings} />
+      {confirmExtra && <ExtraLearningConfirmation onCancel={() => setConfirmExtra(false)} onConfirm={() => {
+        setConfirmExtra(false)
+        // The date may have changed while the confirmation was open.
+        enter(store.getTask('learning')?.currentItemId === null ? 'extra' : 'learning')
+      }} />}
     </section>
   )
+}
+
+function ExtraLearningConfirmation({ onConfirm, onCancel }) {
+  const dialog = useRef(null)
+  useEffect(() => {
+    const previous = document.activeElement
+    dialog.current.showModal()
+    return () => previous?.focus()
+  }, [])
+  return <dialog ref={dialog} className="learning-extra-confirmation" aria-labelledby="learning-extra-title" onCancel={onCancel}>
+    <h2 id="learning-extra-title">继续学习更多单词？</h2>
+    <p>今日任务已完成。继续学习同一本词书的未完成新词，进度会自动保存。</p>
+    <div className="learning-overview__actions">
+      <button type="button" onClick={onCancel} autoFocus>暂不继续</button>
+      <button type="button" onClick={onConfirm}>继续学习更多单词</button>
+    </div>
+  </dialog>
 }
 
 function StatusMetric({ label, value }) {
