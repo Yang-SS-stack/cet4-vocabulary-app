@@ -8,6 +8,7 @@ import { describePartOfSpeech } from '../data/partOfSpeech'
 import supplementalExamples from '../data/supplementalExamples.json'
 import SpeechButton from './SpeechButton'
 import StudyTransition from './StudyTransition'
+import { cancelSpeechScope, playSpeechSequence, speechMessage } from './speechPlayback'
 import { learningChoices } from './learningChoices'
 import './LearningSession.css'
 
@@ -35,8 +36,17 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const [audioError, setAudioError] = useState(false)
   const [clock, setClock] = useState(store.getToday)
   const [mode, setMode] = useState(initialMode)
+  const [nextTurn, setNextTurn] = useState(0)
+  const [readyWord, setReadyWord] = useState('')
+  const [readyBody, setReadyBody] = useState('')
+  const [speechState, setSpeechState] = useState({ key: '', state: 'idle' })
+  const [correctPhase, setCorrectPhase] = useState('')
+  const speechScope = useRef({})
+  const speechConfig = useRef(null)
   const pending = useRef(false)
   const heading = useRef(null)
+  const body = useRef(null)
+  const footer = useRef(null)
   const alert = useRef(null)
   const extra = loaded ? snapshot.extraLearning[loaded.date] : null
   const task = loaded ? mode === 'extra' ? extra?.batches.at(-1) : snapshot.days[loaded.date]?.learning : null
@@ -104,6 +114,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
 
   useEffect(() => {
     let cancelled = false
+    setAudioError(false)
     loadAudioManifest().then(value => { if (!cancelled) setAudio(value) }).catch(() => { if (!cancelled) setAudioError(true) })
     return () => { cancelled = true }
   }, [attempt])
@@ -135,13 +146,14 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
     pending.current = true
     setBusy(true)
     setError('')
+    cancelSpeechScope(speechScope.current)
     try {
       const token = turnToken(task)
       if (store.getToday() !== task.date) throw Error('Learning date changed')
       if (action === 'choice') await store.submitLearningChoice(token, feedback)
       else if (action === 'reveal') await store.revealLearningDetails(token)
       else if (feedback) await store.submitSelfAssessment(token, feedback)
-      else await store.advanceLearning(token)
+      else { await store.advanceLearning(token); setNextTurn(value => value + 1) }
     } catch (failure) {
       setError(messageFor(failure, false))
     } finally {
@@ -167,34 +179,67 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const choosing = guided && task.view === 'question' && progress?.knownCount === 0
   const example = item && (item.example?.trim() || supplementalExamples[item.word.toLowerCase()]?.example)
   const wordAudio = item && audio?.words?.[item.word.toLowerCase()]
+  const wordFrame = item ? `${task.date}:${task.taskId ?? 'daily'}:${task.currentItemId}:${nextTurn}` : ''
+  const bodyPhase = choosing || choiceFeedback || task?.view === 'question' ? 'question' : 'details'
+  const bodyFrame = `${wordFrame}:${bodyPhase}`
+  const speechKey = `${wordFrame}:${task?.view}:${choiceFeedback ? task.choice.selectedWord : bodyPhase}`
+  const wrongChoice = choiceFeedback && task.choice.selectedWord !== progress.wordId
+  const startSpeech = () => {
+    const target = { text: item.word, lang: task.settings.pronunciation, src: wordAudio?.[task.settings.pronunciation] }
+    const selected = task.choice?.selectedWord
+    const sequence = wrongChoice
+      ? [{ text: selected, lang: task.settings.pronunciation, src: audio?.words?.[selected]?.[task.settings.pronunciation] }, target]
+      : [target]
+    if (!choiceFeedback && (bodyPhase === 'details' || guided && progress.knownCount === 1) && example) {
+      sequence.push({ text: example, lang: 'en-US', src: wordAudio?.example })
+    }
+    playSpeechSequence(sequence, { scope: speechScope.current,
+      onSegment: index => { if (choiceFeedback && index === (wrongChoice ? 1 : 0)) setCorrectPhase(speechKey) },
+      onState: state => setSpeechState({ key: speechKey, state }),
+      onCancel: () => { if (choiceFeedback) setCorrectPhase(speechKey) },
+    })
+  }
+  speechConfig.current = startSpeech
+  const speechReady = Boolean(item && (audio !== null || audioError) && !error && !expired && readyWord === wordFrame && readyBody === bodyFrame)
+  useEffect(() => {
+    if (speechReady) speechConfig.current()
+    const scope = speechScope.current
+    return () => cancelSpeechScope(scope)
+  }, [speechKey, speechReady])
+  useEffect(() => { if (choiceFeedback && !busy) footer.current?.querySelector('button')?.focus({ preventScroll: true }) }, [choiceFeedback, busy])
+  const playbackMessage = speechState.key === speechKey ? speechMessage(speechState.state, task?.settings.pronunciation, Boolean(wordAudio?.[task?.settings.pronunciation])) : ''
   const notice = (error || expired) && <div ref={alert} tabIndex={-1} role="alert"><p>{expired ? '日期已变化。昨日进度已保留，请开始今天的任务。' : error}</p>
     <button type="button" disabled={busy} onClick={restart}>{expired ? '开始今天的任务' : loaded || /记录/.test(error) && !/词书/.test(error) ? '重新读取进度' : '重试'}</button>
   </div>
   return <section className="learning-session" aria-label={mode === 'extra' ? '额外学习练习' : '今日学习练习'} aria-busy={busy}>
     <header className="learning-session__header">
-      <button type="button" onClick={onExit} disabled={pending.current}>返回主界面</button>
+      <button type="button" onClick={() => { cancelSpeechScope(speechScope.current); onExit() }} disabled={pending.current}>返回主界面</button>
       <p>{loaded ? `${loaded.book.label}${mode === 'extra' ? ' · 额外学习' : ''}` : '准备今日学习'}{task && <span>{mode === 'extra' ? '本组' : ''}已完成 {Object.values(task.items).filter(entry => entry.completed).length} / {task.itemIds.length} 词</span>}</p>
     </header>
     {(!item || expired) && notice}
     {busy && !loaded && <p role="status">正在加载词书与学习进度…</p>}
     {!expired && complete && <div className="learning-session__empty"><h2 ref={heading} tabIndex={-1}>{mode === 'extra' || !task.itemIds.length ? '这本词书已全部学完' : '今日学习已完成'}</h2><p>进度已保存。当天任务保持不变，新的设置从下次创建任务时生效。</p></div>}
-    {!expired && item && <StudyTransition transitionKey={`${task.currentItemId}:${task.view}:${!!task.choice?.revealed}`}>
+    {!expired && item && <StudyTransition transitionKey={wordFrame} onReady={setReadyWord}>
       <article className="learning-session__word">
         <div className="learning-session__word-heading">
           <h2 ref={heading} tabIndex={-1} lang="en">{item.word}</h2>
           <p className="learning-session__count" aria-label={`今日认识 ${progress.knownCount} / 3 次`}>{[1,2,3].map(n => <span key={n} className={progress.knownCount >= n ? 'is-filled' : ''} />)}<span className="learning-session__count-text">{progress.knownCount} / 3</span></p>
         </div>
-        <div className="learning-session__body" tabIndex={0} aria-label="单词内容">
+        <div ref={body} className="learning-session__body" tabIndex={0} role="region" aria-label="单词内容">
           {notice}
+          <StudyTransition content transitionKey={bodyFrame} onReady={key => {
+            setReadyBody(key)
+            if (bodyPhase === 'details') body.current?.focus({ preventScroll: true })
+          }}>
+          <div className="learning-session__playback"><button type="button" aria-label="重播本轮朗读" disabled={!speechReady} onClick={startSpeech}>重播朗读</button></div>
           {(choosing || choiceFeedback) ? <>
             <p className="learning-session__phonetic">{item.phonetic}</p>
-            <div className="learning-session__pronunciation"><SpeechButton word={item.word} lang={task.settings.pronunciation} src={wordAudio?.[task.settings.pronunciation]} label="发音" /></div>
             <p className="learning-session__hint">先回想词义，再选择；不确定可以看答案。</p>
             {task.choice ? <div className="learning-session__choices">{task.choice.options.map(option => {
-              const correct = choiceFeedback && option.word === progress.wordId
-              const wrong = choiceFeedback && option.word === task.choice.selectedWord && !correct
+              const correct = choiceFeedback && correctPhase === speechKey && option.word === progress.wordId
+              const wrong = choiceFeedback && option.word === task.choice.selectedWord && option.word !== progress.wordId
               return <button key={option.word} type="button" className={`${correct ? 'is-correct' : ''} ${wrong ? 'is-wrong' : ''}`} disabled={busy || choiceFeedback} onClick={() => act(option.word, 'choice')}>
-                <span>{option.meaning}</span>{(correct || wrong) && <small>{correct ? '正确答案' : '你的选择'} · {option.word}</small>}
+                <span>{option.meaning}</span><small className={correct || wrong ? '' : 'is-reserved'} aria-hidden={!(correct || wrong)}>{correct ? '正确答案' : '你的选择'} · {option.word}</small>
               </button>
             })}</div> : !error && <p role="status">正在准备选项…</p>}
           </> : task.view === 'question' ? <>
@@ -202,12 +247,14 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
             {!guided && <p className="learning-session__hint">先回想词义，再选择你的熟悉程度。</p>}
           </> : <>
             <p className="learning-session__saved" role="status">{task.choice ? (task.choice.selectedWord === progress.wordId ? '首次选对，认识次数加 1' : '已查看答案，本次不增加认识次数') : `已保存：${({ known: '认识', fuzzy: '模糊', unknown: '不认识' })[progress.lastFeedback]}`}{progress.completed ? ' · 本词已完成' : ''}</p>
-            <LearningDetails item={item} audio={wordAudio} pronunciation={task.settings.pronunciation} />
+            <LearningDetails item={item} audio={wordAudio} pronunciation={task.settings.pronunciation} speechScope={speechScope.current} />
             {audioError && <p>发音资源暂时无法加载，可退出后重试；可用时使用浏览器发音。</p>}
             {snapshot.mistakes[progress.wordId]?.entered && !snapshot.mistakes[progress.wordId].removed && <p>已记录到错误证据库。</p>}
           </>}
+          <p className="learning-session__speech-status" role="status">{playbackMessage}</p>
+          </StudyTransition>
         </div>
-        <footer className="learning-session__footer">
+        <footer ref={footer} className="learning-session__footer">
           {choosing ? <button type="button" disabled={busy || !task.choice} onClick={() => act(null, 'choice')}>看答案</button>
             : choiceFeedback ? <button className="learning-session__next" type="button" disabled={busy} onClick={() => act(null, 'reveal')}>继续</button>
             : task.view === 'question' ? <div className="learning-session__actions">{[['known', '认识'], ['fuzzy', '模糊'], ['unknown', '不认识']].map(([value, label]) =>
@@ -218,19 +265,19 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
     </StudyTransition>}
   </section>
 }
-function LearningDetails({ item, audio, pronunciation }) {
+function LearningDetails({ item, audio, pronunciation, speechScope }) {
   const supplement = !item.example?.trim() ? supplementalExamples[item.word.toLowerCase()] : null
   const example = supplement?.example ?? item.example
   const translation = supplement?.translation ?? item.translation
   const langs = pronunciation === 'en-US' ? ['en-US', 'en-GB'] : ['en-GB', 'en-US']
   return <div className="learning-session__details">
     <p>{item.phonetic} {describePartOfSpeech(item.partOfSpeech ?? '')}</p>
-    <div className="learning-session__actions">{langs.map(lang => <SpeechButton key={lang} word={item.word} lang={lang} src={audio?.[lang]} label={lang === 'en-GB' ? '英音' : '美音'} accessibleLabel={`${item.word} ${lang === 'en-GB' ? '英音' : '美音'}`} />)}</div>
+    <div className="learning-session__actions">{langs.map(lang => <SpeechButton key={lang} scope={speechScope} word={item.word} lang={lang} src={audio?.[lang]} label={lang === 'en-GB' ? '英音' : '美音'} accessibleLabel={`${item.word} ${lang === 'en-GB' ? '英音' : '美音'}`} />)}</div>
     <div className="learning-session__detail-grid"><section><h3>释义</h3><p>{item.meaning || '暂无释义'}</p></section><section>
     <h3>{supplement ? '补充例句' : '例句'}</h3><p lang="en">{example || '暂无例句'}</p>
     {translation && <p>{translation}</p>}
     {supplement && item.word === 'reservior' && <p>例句采用规范拼写 reservoir。</p>}
-    {example && <SpeechButton word={example} src={audio?.example} label="朗读例句" />}
+    {example && <SpeechButton scope={speechScope} word={example} src={audio?.example} label="朗读例句" />}
     </section><section className="learning-session__phrases"><h3>词组</h3>{item.phrases?.length ? <ul>{item.phrases.map((phrase, index) => <li key={index}>{phrase}</li>)}</ul> : <p>暂无词组</p>}</section></div>
   </div>
 }
