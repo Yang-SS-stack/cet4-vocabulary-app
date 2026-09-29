@@ -1,4 +1,4 @@
-import { SELF_ASSESSMENT, GUIDED_RECALL, nextLearningItem, requireLearningTurn, applySelfAssessment } from './selfAssessment'
+import { SELF_ASSESSMENT, GUIDED_RECALL, nextLearningItem, requireLearningTurn, applySelfAssessment, canCorrectLearningFeedback } from './selfAssessment'
 import {
   assert, createMistakeRecord, createProgress, createState, createWordBookWord, DEFAULT_SETTINGS, freeze,
   LEARNING_STORAGE_KEY, localDateKey, localDayStartIso, TASK_KINDS, validateDateKey, validatePatch, validateState,
@@ -213,6 +213,29 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
         const task = learningTask(next, token, date)
         const progress = requireLearningTurn(task, token, today(), 'question')
         applySelfAssessment(next, task, progress, feedback, at)
+      })
+    },
+    correctLearningFeedback(token) {
+      const date = today()
+      const at = timestamp()
+      change((next) => {
+        const task = learningTask(next, token, date)
+        const progress = requireLearningTurn(task, token, today(), 'feedback')
+        assert(canCorrectLearningFeedback(task), 'No correctable positive feedback in this detail')
+        const original = task.feedbackEvents.at(-1)
+        progress.knownCount = Math.max(0, progress.knownCount - 1)
+        progress.fuzzyCount += 1
+        progress.lastFeedback = 'fuzzy'
+        if (progress.completed) {
+          progress.completed = false
+          progress.completedAt = null
+          const learning = next.wordBooks[progress.wordBookId].words[progress.wordId].learning
+          learning.completed = false
+          learning.completedAt = null
+        }
+        task.feedbackEvents.push({ source: 'feedback-correction', rulesVersion: 1,
+          itemId: progress.id, correctedRevision: original.revision, at, revision: task.sessionRevision })
+        task.sessionRevision += 1
       })
     },
     advanceLearning(token) {

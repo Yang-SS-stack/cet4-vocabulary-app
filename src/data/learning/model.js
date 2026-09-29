@@ -1,5 +1,5 @@
 export const LEARNING_STORAGE_KEY = 'linguajet.learning'
-export const SCHEMA_VERSION = 4
+export const SCHEMA_VERSION = 5
 export const EXTRA_LEARNING_BATCH_SIZE = 10
 export const MISTAKE_ENTRY_THRESHOLD = 5
 export const REVIEW_STAGE_DAYS = Object.freeze([1, 2, 4, 7, 15])
@@ -64,6 +64,10 @@ const feedbackEvent = (event, task, version) => {
   if (event?.source === 'self-assessment') return shape(event, {
     source: (v) => v === 'self-assessment', rulesVersion: (v) => v === 1,
     itemId: (id) => task.itemIds.includes(id), feedback, at: timestamp, revision: integer,
+  })
+  if (version >= 5 && event?.source === 'feedback-correction') return shape(event, {
+    source: (v) => v === 'feedback-correction', rulesVersion: (v) => v === 1,
+    itemId: (id) => task.itemIds.includes(id), correctedRevision: integer, at: timestamp, revision: integer,
   })
   return version >= 3 && shape(event, {
     source: (v) => v === 'guided-choice', rulesVersion: (v) => v === 1,
@@ -186,8 +190,18 @@ export function validateState(state, version = SCHEMA_VERSION) {
       if (version >= 3) {
         assert(['learning', 'extra-learning'].includes(task.kind) || (task.choice === null && task.method === null), 'Invalid task choice')
         assert(task.feedbackEvents.every((event) => event.revision < task.sessionRevision
-          && (event.source === 'self-assessment' || task.method?.id === 'guided-recall')),
+          && (event.source === 'self-assessment' || event.source === 'feedback-correction'
+            || task.method?.id === 'guided-recall')),
         'Invalid task feedback event')
+        if (version >= 5) task.feedbackEvents.forEach((event, index) => {
+          if (event.source !== 'feedback-correction') return
+          const original = task.feedbackEvents[index - 1]
+          assert(original?.itemId === event.itemId && original.revision === event.correctedRevision
+            && original.revision < event.revision
+            && (original.source === 'self-assessment' && original.feedback === 'known'
+              || original.source === 'guided-choice' && original.outcome === 'correct'),
+          'Invalid feedback correction')
+        })
         if (task.choice !== null) {
           const current = task.items[task.currentItemId]
           assert(task.method?.id === 'guided-recall' && task.currentItemId !== null
@@ -197,9 +211,13 @@ export function validateState(state, version = SCHEMA_VERSION) {
           if (task.view === 'feedback') {
             const expectedOutcome = task.choice.selectedWord === null ? 'show-answer'
               : task.choice.selectedWord === current.wordId ? 'correct' : 'incorrect'
-            const event = task.feedbackEvents.at(-1)
+            const last = task.feedbackEvents.at(-1)
+            const corrected = last?.source === 'feedback-correction'
+            const event = corrected ? task.feedbackEvents.at(-2) : last
             assert((task.choice.selectedWord !== null || task.choice.revealed)
-              && current.knownCount === (expectedOutcome === 'correct' ? 1 : 0)
+              && current.knownCount === (expectedOutcome === 'correct' && !corrected ? 1 : 0)
+              && (!corrected || (task.choice.revealed && last.itemId === current.id
+                && last.correctedRevision === event?.revision && expectedOutcome === 'correct'))
               && event?.source === 'guided-choice' && event.itemId === current.id
               && event.selectedWord === task.choice.selectedWord && event.outcome === expectedOutcome,
             'Invalid task choice feedback')
@@ -263,7 +281,7 @@ export function freeze(value) {
 // Validate the entire v1 snapshot before adding fields; never fabricate lost events.
 export function migrateState(state) {
   if (state?.version === SCHEMA_VERSION) return validateState(state)
-  assert([1, 2, 3].includes(state?.version), 'Invalid or unsupported learning snapshot')
+  assert([1, 2, 3, 4].includes(state?.version), 'Invalid or unsupported learning snapshot')
   validateState(state, state.version)
   const next = JSON.parse(JSON.stringify(state))
   if (next.version === 1) {
@@ -288,7 +306,11 @@ export function migrateState(state) {
     for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) task.choice = null
     validateState(next, 3)
   }
+  if (next.version === 3) {
+    next.version = 4
+    next.extraLearning = {}
+    validateState(next, 4)
+  }
   next.version = SCHEMA_VERSION
-  next.extraLearning = {}
   return validateState(next)
 }

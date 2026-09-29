@@ -7,6 +7,7 @@ import { createLearningStore, LEARNING_STORAGE_KEY } from './data/learning'
 import { clearWordBookCache } from './data/loadWordBook'
 
 beforeEach(() => {
+  HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }
   let queue = Promise.resolve()
   Object.defineProperty(navigator, 'locks', { configurable: true, value: {
     request: (_, __, work) => {
@@ -28,6 +29,7 @@ vi.mock('./components/ParticleTextTransition', () => ({
 }))
 
 afterEach(() => {
+  delete HTMLDialogElement.prototype.showModal
   vi.useRealTimers()
   localStorage.removeItem(LEARNING_STORAGE_KEY)
 })
@@ -448,9 +450,11 @@ test('study and review sessions conceal navigation and return to the dashboard',
   expect(playing.pause).not.toHaveBeenCalled()
   playing.currentTime = 12
   await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  expect(screen.getByRole('dialog')).toHaveTextContent('剩余')
+  await user.click(screen.getByRole('button', { name: '确认退出' }))
   expect(playing.pause).toHaveBeenCalledOnce()
   expect(playing.currentTime).toBe(0)
   expect(playing.onended).toBe(null)
   expect(playing.onerror).toBe(null)
-  expect(document.querySelector('.app-shell')).not.toHaveClass('is-study-focused')
+  await waitFor(() => expect(document.querySelector('.app-shell')).not.toHaveClass('is-study-focused'))
 })

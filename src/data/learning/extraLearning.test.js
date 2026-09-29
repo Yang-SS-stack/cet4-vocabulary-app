@@ -204,7 +204,7 @@ test.each([1, 2, 3])('v%s migration preserves records and only adds empty extra 
   const raw = JSON.stringify(legacy)
   env.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = env.open()
-  expect(migrated.getSnapshot().version).toBe(4)
+  expect(migrated.getSnapshot().version).toBe(5)
   expect(migrated.getSnapshot().extraLearning).toEqual({})
   expect(migrated.getSnapshot().wordBooks).toEqual(legacy.wordBooks)
   expect(migrated.getSnapshot().mistakes).toEqual(legacy.mistakes)

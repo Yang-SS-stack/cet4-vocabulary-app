@@ -26,6 +26,9 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
   const [status, setStatus] = useState('')
   const [learning, setLearning] = useState(false)
   const [confirmExtra, setConfirmExtra] = useState(false)
+  const [returned, setReturned] = useState(false)
+  const entryButton = useRef(null)
+  useEffect(() => { if (!learning && returned) entryButton.current?.focus({ preventScroll: true }) }, [learning, returned])
 
   const enter = mode => { setLearning(mode); onFocusModeChange?.(true) }
 
@@ -43,7 +46,7 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
     } else { setLearning('review'); onFocusModeChange?.(true) }
   }
 
-  const exit = () => { setLearning(false); onFocusModeChange?.(false) }
+  const exit = () => { setReturned(true); setLearning(false); onFocusModeChange?.(false) }
   if (learning === 'learning' || learning === 'extra') return <LearningSession loadBook={loadBook} onExit={exit} initialMode={learning} />
   if (learning === 'review') return <section className="learning-session" aria-label="今日复习">
     <header className="learning-session__header"><button type="button" onClick={exit}>返回主界面</button><p>今日复习</p></header>
@@ -51,7 +54,7 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
   </section>
 
   return (
-    <section className="learning-overview" aria-label="今日学习概览">
+    <section className={`learning-overview ${returned ? 'is-entering' : ''}`} aria-label="今日学习概览">
       <div className="learning-overview__status-strip">
         <StatusMetric label="距离考试" value={formatDays(daysRemaining)} />
         <StatusMetric
@@ -61,7 +64,7 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
       </div>
 
       <div className="learning-overview__actions">
-        <button type="button" onClick={() => start('learning')}>今日学习</button>
+        <button ref={entryButton} type="button" onClick={() => start('learning')}>今日学习</button>
         <button type="button" onClick={() => start('review')}>今日复习</button>
       </div>
 

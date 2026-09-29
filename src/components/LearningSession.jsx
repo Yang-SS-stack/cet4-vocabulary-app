@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
+import { canCorrectLearningFeedback } from '../data/learning/selfAssessment'
 import { EXTRA_LEARNING_BATCH_SIZE, wordId } from '../data/learning/model'
 import { loadWordBook } from '../data/loadWordBook'
 import { loadAudioManifest } from '../data/audioManifest'
@@ -41,6 +42,10 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const [readyBody, setReadyBody] = useState('')
   const [speechState, setSpeechState] = useState({ key: '', state: 'idle' })
   const [correctPhase, setCorrectPhase] = useState('')
+  const [confirmExit, setConfirmExit] = useState(false)
+  const [exiting, setExiting] = useState(false)
+  const exitCallback = useRef(onExit)
+  const exitButton = useRef(null)
   const speechScope = useRef({})
   const speechConfig = useRef(null)
   const pending = useRef(false)
@@ -51,6 +56,14 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const extra = loaded ? snapshot.extraLearning[loaded.date] : null
   const task = loaded ? mode === 'extra' ? extra?.batches.at(-1) : snapshot.days[loaded.date]?.learning : null
   const expired = (loaded && loaded.date !== clock) || error.startsWith('日期已变化')
+
+  useEffect(() => { exitCallback.current = onExit }, [onExit])
+  useEffect(() => {
+    if (!exiting) return
+    const reduced = !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const timer = window.setTimeout(() => exitCallback.current(), reduced ? 0 : 240)
+    return () => window.clearTimeout(timer)
+  }, [exiting])
 
   useEffect(() => { if (error || expired) alert.current?.focus() }, [error, expired])
 
@@ -158,6 +171,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
       if (store.getToday() !== task.date) throw Error('Learning date changed')
       if (action === 'choice') await store.submitLearningChoice(token, feedback)
       else if (action === 'reveal') await store.revealLearningDetails(token)
+      else if (action === 'correct') await store.correctLearningFeedback(token)
       else if (feedback) await store.submitSelfAssessment(token, feedback)
       else { await store.advanceLearning(token); setNextTurn(value => value + 1) }
     } catch (failure) {
@@ -177,6 +191,21 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
       setAttempt(value => value + 1)
     } catch { setError('学习记录暂时无法读取，原始数据已保留。请检查浏览器存储权限后重新读取。') }
   }
+  const exitTask = task ?? (mode === 'extra' ? store.getExtraLearning() : store.getTask('learning'))
+  const remaining = exitTask ? Object.values(exitTask.items).filter(entry => !entry.completed && !entry.removed).length : 0
+  const beginExit = () => {
+    if (pending.current) return
+    pending.current = true
+    cancelSpeechScope(speechScope.current)
+    setConfirmExit(false)
+    setExiting(true)
+  }
+  const requestExit = () => {
+    if (pending.current) return
+    if (remaining > 0) setConfirmExit(true)
+    else beginExit()
+  }
+  const corrected = task?.view === 'feedback' && task.feedbackEvents.at(-1)?.source === 'feedback-correction'
   const progress = task?.items[task.currentItemId]
   const item = progress && loaded.words.get(progress.wordId)
   const complete = mode === 'extra' ? extra?.exhausted : task && task.currentItemId === null
@@ -206,7 +235,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
     })
   }
   speechConfig.current = startSpeech
-  const speechReady = Boolean(item && (audio !== null || audioError) && !error && !expired && readyWord === wordFrame && readyBody === bodyFrame)
+  const speechReady = Boolean(item && (audio !== null || audioError) && !error && !expired && !exiting && readyWord === wordFrame && readyBody === bodyFrame)
   useEffect(() => {
     if (speechReady) speechConfig.current()
     const scope = speechScope.current
@@ -217,9 +246,9 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const notice = (error || expired) && <div ref={alert} tabIndex={-1} role="alert"><p>{expired ? '日期已变化。昨日进度已保留，请开始今天的任务。' : error}</p>
     <button type="button" disabled={busy} onClick={restart}>{expired ? '开始今天的任务' : loaded || /记录/.test(error) && !/词书/.test(error) ? '重新读取进度' : '重试'}</button>
   </div>
-  return <section className="learning-session" aria-label={mode === 'extra' ? '额外学习练习' : '今日学习练习'} aria-busy={busy}>
+  return <section className={`learning-session ${exiting ? 'is-exiting' : ''}`} inert={exiting} aria-label={mode === 'extra' ? '额外学习练习' : '今日学习练习'} aria-busy={busy}>
     <header className="learning-session__header">
-      <button type="button" onClick={() => { cancelSpeechScope(speechScope.current); onExit() }} disabled={pending.current}>返回主界面</button>
+      <button type="button" ref={exitButton} onClick={requestExit} disabled={pending.current}>返回主界面</button>
       <p>{loaded ? `${loaded.book.label}${mode === 'extra' ? ' · 额外学习' : ''}` : '准备今日学习'}{task && <span>{mode === 'extra' ? '本组' : ''}已完成 {Object.values(task.items).filter(entry => entry.completed).length} / {task.itemIds.length} 词</span>}</p>
     </header>
     {(!item || expired) && notice}
@@ -252,7 +281,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
             {guided && progress.knownCount === 1 && <p className="learning-session__example" lang="en">{example || '该词暂无英文例句，请直接回想词义。'}</p>}
             {!guided && <p className="learning-session__hint">先回想词义，再选择你的熟悉程度。</p>}
           </> : <>
-            <p className="learning-session__saved" role="status">{task.choice ? (task.choice.selectedWord === progress.wordId ? '首次选对，认识次数加 1' : '已查看答案，本次不增加认识次数') : `已保存：${({ known: '认识', fuzzy: '模糊', unknown: '不认识' })[progress.lastFeedback]}`}{progress.completed ? ' · 本词已完成' : ''}</p>
+            <p className="learning-session__saved" role="status">{corrected ? '已更正：模糊，认识次数减 1' : task.choice ? (task.choice.selectedWord === progress.wordId ? '首次选对，认识次数加 1' : '已查看答案，本次不增加认识次数') : `已保存：${({ known: '认识', fuzzy: '模糊', unknown: '不认识' })[progress.lastFeedback]}`}{progress.completed ? ' · 本词已完成' : ''}</p>
             <LearningDetails item={item} audio={wordAudio} pronunciation={task.settings.pronunciation} speechScope={speechScope.current} />
             {audioError && <p>发音资源暂时无法加载，可退出后重试；可用时使用浏览器发音。</p>}
             {snapshot.mistakes[progress.wordId]?.entered && !snapshot.mistakes[progress.wordId].removed && <p>已记录到错误证据库。</p>}
@@ -265,12 +294,30 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
             : choiceFeedback ? <button className="learning-session__next" type="button" disabled={busy} onClick={() => act(null, 'reveal')}>继续</button>
             : task.view === 'question' ? <div className="learning-session__actions">{[['known', '认识'], ['fuzzy', '模糊'], ['unknown', '不认识']].map(([value, label]) =>
               <button type="button" key={value} onClick={() => act(value)} disabled={busy}>{label}</button>)}</div>
-            : <button className="learning-session__next" type="button" onClick={() => act()} disabled={busy}>下一词</button>}
+            : <>{(canCorrectLearningFeedback(task) || corrected) && <button type="button" disabled={busy || corrected || readyBody !== bodyFrame} onClick={() => act(null, 'correct')}>{corrected ? '已更正' : '记错了'}</button>}<button className="learning-session__next" type="button" onClick={() => act()} disabled={busy}>下一词</button></>}
         </footer>
       </article>
     </StudyTransition>}
+    {confirmExit && <ExitConfirmation returnFocus={exitButton} remaining={remaining} extra={mode === 'extra'} onCancel={() => setConfirmExit(false)} onConfirm={beginExit} />}
   </section>
 }
+function ExitConfirmation({ returnFocus, remaining, extra, onCancel, onConfirm }) {
+  const dialog = useRef(null)
+  useEffect(() => {
+    const previous = returnFocus.current
+    dialog.current.showModal()
+    return () => previous?.focus({ preventScroll: true })
+  }, [returnFocus])
+  return <dialog ref={dialog} className="learning-session__exit-dialog" aria-labelledby="learning-exit-title" aria-describedby="learning-exit-description" onCancel={event => { event.preventDefault(); onCancel() }}>
+    <h2 id="learning-exit-title">退出本次学习？</h2>
+    <p id="learning-exit-description">{extra ? '本组' : '当前任务'}剩余 {remaining} 词。进度已保存，下次可以继续。</p>
+    <div className="learning-session__actions">
+      <button type="button" autoFocus onClick={onCancel}>继续学习</button>
+      <button type="button" onClick={onConfirm}>确认退出</button>
+    </div>
+  </dialog>
+}
+
 function LearningDetails({ item, audio, pronunciation, speechScope }) {
   const supplement = !item.example?.trim() ? supplementalExamples[item.word.toLowerCase()] : null
   const example = supplement?.example ?? item.example

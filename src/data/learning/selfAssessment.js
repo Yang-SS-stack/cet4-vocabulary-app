@@ -25,6 +25,14 @@ export function requireLearningTurn(task, token, date, view, allowedMethods = ['
   return task.items[token.itemId]
 }
 
+export function canCorrectLearningFeedback(task) {
+  if (!task || task.view !== 'feedback' || task.currentItemId === null) return false
+  const event = task.feedbackEvents.at(-1)
+  if (!event || event.itemId !== task.currentItemId || !task.items[event.itemId]?.knownCount) return false
+  if (event.source === 'self-assessment') return event.feedback === 'known' && task.choice === null
+  return event.source === 'guided-choice' && event.outcome === 'correct' && task.choice?.revealed === true
+}
+
 // Only self-assessment unknowns contribute to the existing mistake threshold.
 export function applySelfAssessment(next, task, progress, feedback, at) {
   assert(['known', 'fuzzy', 'unknown'].includes(feedback), 'Invalid feedback')

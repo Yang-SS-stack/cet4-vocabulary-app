@@ -1,6 +1,6 @@
 import { act, cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, beforeEach, expect, test, vi } from 'vitest'
+import { afterAll, afterEach, beforeAll, beforeEach, expect, test, vi } from 'vitest'
 import { createLearningStore, LearningStoreProvider } from '../data/learning'
 import { createInlineWordBookSession } from '../data/wordBookSession'
 import { loadAudioManifest } from '../data/audioManifest'
@@ -12,6 +12,8 @@ const words = [
   { word: 'beta', meaning: '测试版', example: 'A beta example.' },
   { word: 'chill', meaning: '寒冷' }, { word: 'drain', meaning: '排水' },
 ]
+beforeAll(() => { HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') } })
+afterAll(() => { delete HTMLDialogElement.prototype.showModal })
 let sounds
 let active
 let synthesis
@@ -141,6 +143,14 @@ test('failure reveals the answer and retry/manual speech never resumes an abando
   await act(async () => { stale(); await Promise.resolve() })
   expect(sounds.at(-1).src).toBe('/alpha-us')
   await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  expect(active.size).toBe(1)
+  await user.click(screen.getByRole('button', { name: '继续学习', exact: true }))
+  expect(active.size).toBe(1)
+  await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  const staleExit = sounds.at(-1).onended
+  await user.click(screen.getByRole('button', { name: '确认退出' }))
+  expect(active.size).toBe(0)
+  await act(async () => { staleExit?.(); await Promise.resolve() })
   expect(active.size).toBe(0)
 })
 

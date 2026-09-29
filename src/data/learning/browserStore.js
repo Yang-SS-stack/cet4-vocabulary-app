@@ -9,7 +9,7 @@ export function createBrowserLearningStore({ locks = globalThis.navigator?.locks
     'getReviewLibrary', 'getDueReviews', 'getMistakes', 'getDailyStats', 'getToday', 'reload',
     'getExtraLearning', 'getExtraLearningProcess'])
   const writes = new Set(['updateSettings', 'ensureTodayLearning', 'prepareLearningChoice',
-    'submitLearningChoice', 'revealLearningDetails', 'submitSelfAssessment', 'advanceLearning', 'ensureExtraLearning'])
+    'submitLearningChoice', 'revealLearningDetails', 'submitSelfAssessment', 'correctLearningFeedback', 'advanceLearning', 'ensureExtraLearning'])
   return Object.fromEntries(Object.entries(core).filter(([name]) => reads.has(name) || writes.has(name)).map(([name, method]) => [name,
     reads.has(name) ? method : async (...args) => {
       assert(typeof locks?.request === 'function', 'Safe storage lock unavailable')

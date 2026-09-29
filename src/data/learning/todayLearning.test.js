@@ -100,7 +100,7 @@ test('version one records migrate without changing old progress or overwriting u
   const raw = JSON.stringify(legacy)
   env.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = env.open()
-  expect(migrated.getSnapshot().version).toBe(4)
+  expect(migrated.getSnapshot().version).toBe(5)
   expect(migrated.getTask('learning').items).toEqual(legacy.days['2026-09-24'].learning.items)
   expect(env.storage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
   migrated.updateSettings({ dailyNewWords: 3 })

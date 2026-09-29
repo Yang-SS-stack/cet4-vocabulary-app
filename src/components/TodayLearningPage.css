@@ -263,3 +263,9 @@
     transition: none;
   }
 }
+
+.learning-overview.is-entering { animation: learning-overview-enter 240ms ease-out; }
+@keyframes learning-overview-enter { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .learning-overview.is-entering { animation: none; }
+}
