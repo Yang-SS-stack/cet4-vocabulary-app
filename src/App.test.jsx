@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import App from './App'
 import { createLearningStore, LEARNING_STORAGE_KEY } from './data/learning'
+import { clearWordBookCache } from './data/loadWordBook'
 
 beforeEach(() => {
   let queue = Promise.resolve()
@@ -409,6 +410,26 @@ test('crossfades the splash and learning surfaces over the same duration', () =>
 
 test('study and review sessions conceal navigation and return to the dashboard', async () => {
   configureFirstRun()
+  clearWordBookCache()
+  const assetPaths = {
+    '/data/word-books/cet4/manifest.json': 'public/data/word-books/cet4/manifest.json',
+    '/data/word-books/cet4/chunks/00.json': 'public/data/word-books/cet4/chunks/00.json',
+    '/data/word-books/cet4/search-index.json': 'public/data/word-books/cet4/search-index.json',
+  }
+  vi.stubGlobal('fetch', vi.fn(async (url) => ({
+    ok: Boolean(assetPaths[url]),
+    json: async () => JSON.parse(readFileSync(assetPaths[url], 'utf8')),
+  })))
+  const sounds = []
+  vi.stubGlobal('Audio', class {
+    constructor(src) {
+      this.src = src
+      this.currentTime = 0
+      this.play = vi.fn(() => Promise.resolve())
+      this.pause = vi.fn()
+      sounds.push(this)
+    }
+  })
   const user = userEvent.setup()
   render(<App />)
   await enterApp(user)
@@ -421,7 +442,15 @@ test('study and review sessions conceal navigation and return to the dashboard',
   const start = screen.getAllByRole('button', { name: '今日学习' }).at(-1)
   await user.click(start)
   expect(document.querySelector('.sidebar')).toHaveAttribute('inert')
-  await waitFor(() => expect(screen.getByRole('button', { name: '返回主界面' })).toBeEnabled())
+  await waitFor(() => expect(sounds.some(sound => sound.play.mock.calls.length > 0)).toBe(true))
+  const playing = sounds.at(-1)
+  expect(playing.play).toHaveBeenCalledOnce()
+  expect(playing.pause).not.toHaveBeenCalled()
+  playing.currentTime = 12
   await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  expect(playing.pause).toHaveBeenCalledOnce()
+  expect(playing.currentTime).toBe(0)
+  expect(playing.onended).toBe(null)
+  expect(playing.onerror).toBe(null)
   expect(document.querySelector('.app-shell')).not.toHaveClass('is-study-focused')
 })

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { afterAll, beforeAll, expect, test, vi } from 'vitest'
 import { createLearningStore, LearningStoreProvider } from '../data/learning'
 import { createInlineWordBookSession } from '../data/wordBookSession'
+import * as audioManifest from '../data/audioManifest'
 import TodayLearningPage from './TodayLearningPage'
 
 // jsdom has dialog markup but does not implement the browser's showModal API.
@@ -26,7 +27,7 @@ function finish(store, get = () => store.getTask('learning')) {
 }
 function setup(method) {
   let raw = null, fail = false, date = new Date(2026, 8, 29)
-  const storage = { getItem: () => raw, setItem: (_, value) => { if (fail) throw Error('quota'); raw = value } }
+  const storage = { getItem: () => raw, setItem: vi.fn((_, value) => { if (fail) throw Error('quota'); raw = value }) }
   const open = () => createLearningStore({ storage, now: () => date })
   const store = open()
   store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1 })
@@ -36,8 +37,51 @@ function setup(method) {
   const loader = vi.fn(async () => ({ ...session, loadLearningOrder: async () => words.map(item => item.word) }))
   const focus = vi.fn()
   const show = (s = store) => render(<LearningStoreProvider store={s}><TodayLearningPage loadBook={loader} onFocusModeChange={focus} /></LearningStoreProvider>)
-  return { store, open, loader, focus, show, fail: value => { fail = value }, nextDay: () => { date = new Date(2026, 8, 30) } }
+  return { store, open, loader, session, storage, focus, show, fail: value => { fail = value }, nextDay: () => { date = new Date(2026, 8, 30) } }
 }
+
+test.each([
+  ['without a batch', false],
+  ['after the last completed batch', true],
+])('restores exhausted extra learning %s offline without loading or changing history', async (_label, hasBatch) => {
+  const env = setup(), user = userEvent.setup()
+  const candidates = hasBatch ? ['daily', 'word0'] : ['daily']
+  if (hasBatch) {
+    env.store.ensureExtraLearning(candidates)
+    finish(env.store, () => env.store.getExtraLearning())
+  }
+  env.store.ensureExtraLearning(candidates)
+  env.store.updateSettings({ todayWordBookId: 'cet4-high-frequency' })
+  const restored = env.open(), saved = restored.getSnapshot()
+  expect(restored.getExtraLearningProcess()).toMatchObject({ exhausted: true })
+  expect(restored.getExtraLearningProcess().batches).toHaveLength(hasBatch ? 1 : 0)
+  env.storage.setItem.mockClear()
+  env.loader.mockRejectedValue(Error('offline'))
+  const loadWords = vi.spyOn(env.session, 'loadWords').mockRejectedValue(Error('offline'))
+  const loadAudio = vi.spyOn(audioManifest, 'loadAudioManifest').mockRejectedValue(Error('offline'))
+  const fetch = vi.fn().mockRejectedValue(Error('offline'))
+  vi.stubGlobal('fetch', fetch)
+  env.show(restored)
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+
+  expect(await screen.findByRole('heading', { name: '这本词书已全部学完' })).toBeInTheDocument()
+  expect(screen.getByText('CET-4 · 额外学习')).toBeInTheDocument()
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+  expect(env.loader).not.toHaveBeenCalled()
+  expect(loadWords).not.toHaveBeenCalled()
+  expect(loadAudio).not.toHaveBeenCalled()
+  expect(fetch).not.toHaveBeenCalled()
+  expect(env.storage.setItem).not.toHaveBeenCalled()
+  expect(restored.getSnapshot()).toBe(saved)
+  expect(env.open().getSnapshot()).toEqual(saved)
+
+  env.nextDay()
+  act(() => window.dispatchEvent(new Event('focus')))
+  expect(await screen.findByRole('alert')).toHaveTextContent('日期已变化')
+  expect(screen.queryByRole('heading', { name: '这本词书已全部学完' })).not.toBeInTheDocument()
+  expect(env.storage.setItem).not.toHaveBeenCalled()
+  expect(restored.getExtraLearningProcess('2026-09-29')).toEqual(saved.extraLearning['2026-09-29'])
+})
 
 test('completed daily entry asks once, cancel writes nothing, confirm follows original book/settings and detail resumes on re-entry', async () => {
   const env = setup(), user = userEvent.setup()

@@ -77,8 +77,13 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
         const initial = store.getSnapshot()
         const book = wordBooks.find(b => b.id === (existing?.wordBookId ?? (mode === 'extra' ? daily?.wordBookId : initial.settings.todayWordBookId)))
         if (!book) throw Error('book unavailable')
+        if (process?.exhausted) {
+          setLoaded({ date, taskId: existing?.taskId, book, session: null, words: new Map() })
+          setClock(date)
+          return
+        }
         const session = await loadBook(book)
-        const ids = process?.exhausted ? [] : existing ? existing.itemIds.map(id => existing.items[id].wordId)
+        const ids = existing ? existing.itemIds.map(id => existing.items[id].wordId)
           : [...new Set((await session.loadLearningOrder()).map(wordId))]
             .filter(id => !store.getWord(book.id, id)?.learning.completed).slice(0, mode === 'extra' ? EXTRA_LEARNING_BATCH_SIZE : initial.settings.dailyNewWords)
         const details = await session.loadWords(ids)
@@ -113,11 +118,12 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   }, [mode, loaded, task, extra, busy, error, expired])
 
   useEffect(() => {
+    if (mode === 'extra' && store.getExtraLearningProcess()?.exhausted) return
     let cancelled = false
     setAudioError(false)
     loadAudioManifest().then(value => { if (!cancelled) setAudio(value) }).catch(() => { if (!cancelled) setAudioError(true) })
     return () => { cancelled = true }
-  }, [attempt])
+  }, [attempt, mode, store])
 
   useEffect(() => {
     if (!loaded || !task || task.method.id !== 'guided-recall' || task.view !== 'question' || task.choice || !task.currentItemId) return
