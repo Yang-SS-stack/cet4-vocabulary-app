@@ -107,6 +107,22 @@ test('opens the latest requested wheel as soon as the 220ms collapse finishes', 
   expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })
 
+test('a later field click does not restart the current collapse', () => {
+  vi.useFakeTimers()
+  renderPage(createStore())
+  fireEvent.click(summary('每日新词数量'))
+  fireEvent.click(summary('每日复习数量'))
+
+  act(() => vi.advanceTimersByTime(100))
+  fireEvent.click(summary('发音偏好'))
+  act(() => vi.advanceTimersByTime(119))
+  expect(screen.queryByRole('listbox', { name: '发音偏好' })).not.toBeInTheDocument()
+
+  act(() => vi.advanceTimersByTime(1))
+  expect(screen.getByRole('listbox', { name: '发音偏好' })).toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+})
+
 test('reduced motion commits the scrolled value before a rapid three-field switch opens only the latest field', () => {
   vi.useFakeTimers()
   vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))

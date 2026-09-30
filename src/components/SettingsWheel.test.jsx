@@ -93,6 +93,20 @@ test('reports the option aligned by a touch or mouse scroll', async () => {
   await waitFor(() => expect(onChange).toHaveBeenCalledWith(30, '每日新词'))
 })
 
+test('collapse begins at the tray height reached when opening is interrupted', () => {
+  const onChange = vi.fn()
+  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+  const tray = document.querySelector('.settings-wheel__tray')
+  const rect = vi.spyOn(tray, 'getBoundingClientRect').mockReturnValue({ height: 64 })
+  try {
+    fireEvent.click(screen.getByRole('button', { name: '每日新词 20' }))
+    expect(tray).toHaveClass('is-closing')
+    expect(tray.style.getPropertyValue('--wheel-close-from')).toBe('64px')
+  } finally {
+    rect.mockRestore()
+  }
+})
+
 test('one mouse wheel notch selects only the adjacent option and prevents native scrolling', () => {
   const onChange = vi.fn()
   render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)

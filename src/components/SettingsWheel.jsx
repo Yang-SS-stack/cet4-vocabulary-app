@@ -109,11 +109,12 @@ function WheelColumn({ label, value, options, onChange }) {
   )
 }
 
-function SettingsWheel({ label, value, displayValue, isOpen, onToggle, onChange, columns }) {
+function SettingsWheel({ label, value, displayValue, isOpen, isAnotherOpen = false, onToggle, onChange, columns }) {
   const [isTrayMounted, setIsTrayMounted] = useState(isOpen)
   const [isClosing, setIsClosing] = useState(false)
+  const trayRef = useRef(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isOpen) {
       setIsTrayMounted(true)
       setIsClosing(false)
@@ -121,19 +122,24 @@ function SettingsWheel({ label, value, displayValue, isOpen, onToggle, onChange,
     }
 
     if (!isTrayMounted) return undefined
-    if (prefersReducedMotion()) {
+    if (prefersReducedMotion() || isAnotherOpen) {
       setIsTrayMounted(false)
       setIsClosing(false)
       return undefined
     }
 
+    const tray = trayRef.current
+    if (tray) {
+      tray.style.setProperty('--wheel-close-from', `${tray.getBoundingClientRect().height}px`)
+      tray.style.setProperty('--wheel-close-opacity', window.getComputedStyle(tray).opacity)
+    }
     setIsClosing(true)
     const closeTimer = window.setTimeout(() => {
       setIsTrayMounted(false)
       setIsClosing(false)
     }, CLOSE_DURATION)
     return () => window.clearTimeout(closeTimer)
-  }, [isOpen, isTrayMounted])
+  }, [isOpen, isTrayMounted, isAnotherOpen])
 
   return (
     <section className="settings-wheel" data-value={String(value)}>
@@ -142,8 +148,8 @@ function SettingsWheel({ label, value, displayValue, isOpen, onToggle, onChange,
         <strong>{displayValue}</strong>
         <span className="settings-wheel__chevron" aria-hidden="true" />
       </button>
-      {isTrayMounted && (
-        <div className={isClosing ? 'settings-wheel__tray is-closing' : 'settings-wheel__tray'} aria-hidden={isClosing || undefined} inert={isClosing || undefined}>
+      {isTrayMounted && (isOpen || !isAnotherOpen) && (
+        <div ref={trayRef} className={isClosing ? 'settings-wheel__tray is-closing' : 'settings-wheel__tray'} aria-hidden={isClosing || undefined} inert={isClosing || undefined}>
           {columns.map((column) => <WheelColumn key={column.label} {...column} onChange={onChange} />)}
         </div>
       )}

@@ -135,6 +135,22 @@ test('rapidly switching across three fields keeps one tray mounted and opens onl
   expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })
 
+test('a later field click keeps the original close deadline', () => {
+  vi.useFakeTimers()
+  renderModal()
+  fireEvent.click(summary('每日新词'))
+  fireEvent.click(summary('每日复习数量'))
+
+  act(() => vi.advanceTimersByTime(100))
+  fireEvent.click(summary('每日学习时长'))
+  act(() => vi.advanceTimersByTime(119))
+  expect(screen.queryByRole('listbox', { name: '每日学习时长' })).not.toBeInTheDocument()
+
+  act(() => vi.advanceTimersByTime(1))
+  expect(screen.getByRole('listbox', { name: '每日学习时长' })).toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+})
+
 test('reduced motion settles the current scroll before a rapid three-field switch opens only the latest field', () => {
   vi.useFakeTimers()
   vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))

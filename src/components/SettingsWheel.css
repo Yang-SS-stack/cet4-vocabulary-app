@@ -19,7 +19,11 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
+  transition: background-color var(--wheel-exit-duration) var(--ease-out);
 }
+
+.settings-wheel__summary:hover,
+.settings-wheel__summary:focus-visible { background: rgba(216, 200, 155, 0.10); }
 
 .settings-wheel__summary > span { color: var(--ink-soft); }
 
@@ -148,8 +152,8 @@
 
 @keyframes settings-wheel-close {
   from {
-    height: var(--wheel-tray-height);
-    opacity: 1;
+    height: var(--wheel-close-from, var(--wheel-tray-height));
+    opacity: var(--wheel-close-opacity, 1);
   }
 
   to {
@@ -165,5 +169,6 @@
 @media (prefers-reduced-motion: reduce) {
   .settings-wheel__tray { animation: none; }
   .settings-wheel__option,
+  .settings-wheel__summary,
   .settings-wheel__chevron { transition: none; }
 }

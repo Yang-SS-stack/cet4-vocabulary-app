@@ -15,7 +15,7 @@ test('types a sentence and reports when it is complete', async () => {
   )
 
   await waitFor(() => expect(screen.getByText('LinguaJet')).toBeInTheDocument())
-  expect(onSentenceComplete).toHaveBeenCalledWith('LinguaJet', 0)
+  await waitFor(() => expect(onSentenceComplete).toHaveBeenCalledWith('LinguaJet', 0))
 })
 
 test('deletes the first sentence before typing the next one', async () => {
