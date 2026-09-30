@@ -100,7 +100,7 @@ test('version one records migrate without changing old progress or overwriting u
   const raw = JSON.stringify(legacy)
   env.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = env.open()
-  expect(migrated.getSnapshot().version).toBe(5)
+  expect(migrated.getSnapshot().version).toBe(6)
   expect(migrated.getTask('learning').items).toEqual(legacy.days['2026-09-24'].learning.items)
   expect(env.storage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
   migrated.updateSettings({ dailyNewWords: 3 })
@@ -165,6 +165,9 @@ test('legacy completed question resumes in details and can advance without losin
   for (let i = 0; i < 3; i++) env.store.recordFeedback('learning', 'alpha', 'known')
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
+  for (const book of Object.values(legacy.wordBooks)) for (const word of Object.values(book.words)) {
+    if (word.review) delete word.review.provenance
+  }
   delete legacy.extraLearning
   const task = legacy.days['2026-09-24'].learning
   delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice

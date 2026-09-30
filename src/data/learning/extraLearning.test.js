@@ -196,6 +196,9 @@ test.each([1, 2, 3])('v%s migration preserves records and only adds empty extra 
   finishedDaily(env)
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = version
+  for (const book of Object.values(legacy.wordBooks)) for (const word of Object.values(book.words)) {
+    if (word.review) delete word.review.provenance
+  }
   delete legacy.extraLearning
   for (const day of Object.values(legacy.days)) for (const task of Object.values(day)) {
     if (version === 1) { delete task.method; delete task.sessionRevision; delete task.feedbackEvents }
@@ -204,7 +207,7 @@ test.each([1, 2, 3])('v%s migration preserves records and only adds empty extra 
   const raw = JSON.stringify(legacy)
   env.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = env.open()
-  expect(migrated.getSnapshot().version).toBe(5)
+  expect(migrated.getSnapshot().version).toBe(6)
   expect(migrated.getSnapshot().extraLearning).toEqual({})
   expect(migrated.getSnapshot().wordBooks).toEqual(legacy.wordBooks)
   expect(migrated.getSnapshot().mistakes).toEqual(legacy.mistakes)

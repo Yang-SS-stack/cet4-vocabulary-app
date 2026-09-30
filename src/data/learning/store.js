@@ -1,4 +1,7 @@
 import { SELF_ASSESSMENT, GUIDED_RECALL, nextLearningItem, requireLearningTurn, applySelfAssessment, canCorrectLearningFeedback } from './selfAssessment'
+import { REVIEW_GUIDED_RECALL, isReviewSession, requireReviewTurn, createReviewProgress, nextReviewItem,
+  applyReviewFeedback, canCorrectReviewFeedback } from './reviewSession'
+import { addCompletedLearningReview, withdrawLearningReview, projectedMissingReviews, dueReviewWords } from './reviewLibrary'
 import {
   assert, createMistakeRecord, createProgress, createState, createWordBookWord, DEFAULT_SETTINGS, freeze,
   LEARNING_STORAGE_KEY, localDateKey, localDayStartIso, TASK_KINDS, validateDateKey, validatePatch, validateState,
@@ -97,6 +100,134 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
   }
 
   const api = {
+    ensureTodayReview(expectedDate = today(), expectedSettings = state.settings) {
+      const date = today()
+      assert(expectedDate === date, 'Review date changed; start today again')
+      const existing = taskAt(state, 'review', date)
+      const bookId = existing?.wordBookId ?? state.settings.todayWordBookId, count = state.settings.dailyReviewWords
+      if (!existing) {
+        assert(JSON.stringify(expectedSettings) === JSON.stringify(state.settings), 'Review settings changed; start today again')
+        assert(typeof bookId === 'string' && bookId.trim() && Number.isSafeInteger(count) && count >= 1 && count <= 100,
+          'Set review settings before starting')
+      }
+      const missing = projectedMissingReviews(state, bookId, date)
+      if (existing && !missing.length) {
+        assert(storage.getItem(LEARNING_STORAGE_KEY) === saved, 'Learning data changed elsewhere; reopen the store')
+        return existing
+      }
+      const candidates = dueReviewWords(state, bookId, timestamp(), date, missing).slice(0, count)
+      const createdAt = timestamp()
+      change(next => {
+        assert(today() === date, 'Review date changed; start today again')
+        missing.forEach(word => { next.wordBooks[bookId].words[word.wordId].review = word.review })
+        if (existing) return
+        next.days[date] ??= {}
+        const items = candidates.map(word => {
+          const previous = Object.entries(next.days).filter(([day, tasks]) => day < date && tasks.review?.items[word.id])
+            .sort(([a], [b]) => b.localeCompare(a))[0]?.[1].review.items[word.id]
+          const abandoned = previous && !previous.completed
+          ensureWord(next, word.wordId)
+          return createReviewProgress(word, abandoned ? 0 : 2)
+        })
+        next.days[date].review = {
+          date, kind: 'review', wordBookId: bookId, createdAt, settings: { ...next.settings },
+          itemIds: items.map(item => item.id), items: Object.fromEntries(items.map(item => [item.id, item])),
+          currentItemId: items[0]?.id ?? null, previousItemId: null, view: 'question',
+          method: { ...REVIEW_GUIDED_RECALL }, sessionRevision: 0, feedbackEvents: [], choice: null,
+        }
+      })
+      return taskAt(state, 'review', date)
+    },
+    getReviewOverview({ wordBookId, at = timestamp() } = {}) {
+      assert(typeof at === 'string' && Number.isFinite(Date.parse(at)), 'Invalid review cutoff')
+      const date = localDateKey(new Date(at)), task = taskAt(state, 'review', date)
+      const bookId = task?.wordBookId ?? wordBookId ?? state.settings.todayWordBookId
+      const missing = projectedMissingReviews(state, bookId, date)
+      const due = dueReviewWords(state, bookId, at, date, missing)
+      const pending = task ? task.itemIds.filter(id => !task.items[id].completed && !task.items[id].removed) : []
+      return { bookId, dueCount: due.length, pendingCount: pending.length, taskCount: task?.itemIds.length ?? 0,
+        completedCount: task ? task.itemIds.filter(id => task.items[id].completed).length : 0,
+        unassignedCount: due.filter(word => !pending.includes(word.id)).length, needsReconciliation: missing.length > 0 }
+    },
+    submitReviewFeedback(token, feedback) {
+      const date = today(), at = timestamp()
+      change(next => {
+        const task = taskAt(next, 'review', date)
+        const progress = requireReviewTurn(task, token, today(), 'question')
+        applyReviewFeedback(next, task, progress, feedback, at)
+      })
+    },
+    prepareReviewChoice(token, options) {
+      const date = today(), task = taskAt(state, 'review', date)
+      const progress = requireReviewTurn(task, token, date, 'question')
+      assert(progress.knownCount === 0 && !progress.completed, 'Choice is only for the first review round')
+      if (task.choice !== null) return task
+      assert(Array.isArray(options) && options.length === 4, 'Four meaning choices are required')
+      const normalized = options.map(option => {
+        assert(option && typeof option.word === 'string' && typeof option.meaning === 'string' && option.meaning.trim(), 'Invalid meaning choice')
+        return { word: wordId(option.word), meaning: option.meaning.trim() }
+      })
+      assert(new Set(normalized.map(o => o.word)).size === 4 && new Set(normalized.map(o => o.meaning)).size === 4
+        && normalized.some(o => o.word === progress.wordId), 'Invalid meaning choices')
+      change(next => {
+        const current = taskAt(next, 'review', date)
+        requireReviewTurn(current, token, today(), 'question')
+        current.choice = { options: normalized, selectedWord: null, revealed: false }; current.sessionRevision += 1
+      })
+      return taskAt(state, 'review', date)
+    },
+    submitReviewChoice(token, selectedWord) {
+      const date = today(), at = timestamp()
+      change(next => {
+        const task = taskAt(next, 'review', date)
+        const progress = requireReviewTurn(task, token, today(), 'question')
+        assert(progress.knownCount === 0 && task.choice !== null, 'Prepare choices before answering')
+        const selected = selectedWord === null ? null : wordId(selectedWord)
+        assert(selected === null || task.choice.options.some(o => o.word === selected), 'Choice is not in this question')
+        const outcome = selected === null ? 'show-answer' : selected === progress.wordId ? 'correct' : 'incorrect'
+        if (outcome === 'correct') { progress.knownCount = 1; progress.lastFeedback = 'known' }
+        task.choice.selectedWord = selected; task.choice.revealed = selected === null
+        task.feedbackEvents.push({ source: 'guided-choice', rulesVersion: 1, itemId: progress.id,
+          selectedWord: selected, outcome, at, revision: task.sessionRevision })
+        task.view = 'feedback'; task.sessionRevision += 1
+      })
+    },
+    revealReviewDetails(token) {
+      const date = today()
+      change(next => {
+        const task = taskAt(next, 'review', date)
+        requireReviewTurn(task, token, today(), 'feedback')
+        assert(task.choice !== null && !task.choice.revealed && task.choice.selectedWord !== null, 'No unrevealed choice feedback')
+        task.choice.revealed = true; task.sessionRevision += 1
+      })
+    },
+    correctReviewFeedback(token) {
+      const date = today(), at = timestamp()
+      change(next => {
+        const task = taskAt(next, 'review', date)
+        const progress = requireReviewTurn(task, token, today(), 'feedback')
+        assert(canCorrectReviewFeedback(task), 'No correctable positive feedback in this detail')
+        const original = task.feedbackEvents.at(-1)
+        if (progress.completed) {
+          next.wordBooks[progress.wordBookId].words[progress.wordId].review = progress.settlement.previousReview
+          progress.completed = false; progress.completedAt = null; progress.settlement = null
+        }
+        progress.knownCount = Math.max(0, progress.knownCount - 1); progress.fuzzyCount += 1; progress.lastFeedback = 'fuzzy'
+        task.feedbackEvents.push({ source: 'review-feedback-correction', rulesVersion: 1, itemId: progress.id,
+          correctedRevision: original.revision, at, revision: task.sessionRevision })
+        task.sessionRevision += 1
+      })
+    },
+    advanceReview(token) {
+      const date = today()
+      change(next => {
+        const task = taskAt(next, 'review', date)
+        requireReviewTurn(task, token, today(), 'feedback')
+        assert(task.choice === null || task.choice.revealed, 'Reveal review details before advancing')
+        task.previousItemId = task.currentItemId; task.currentItemId = nextReviewItem(task)
+        task.view = 'question'; task.choice = null; task.sessionRevision += 1
+      })
+    },
     getToday: today,
     reload() {
       const raw = storage.getItem(LEARNING_STORAGE_KEY)
@@ -213,6 +344,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
         const task = learningTask(next, token, date)
         const progress = requireLearningTurn(task, token, today(), 'question')
         applySelfAssessment(next, task, progress, feedback, at)
+        if (progress.completed) addCompletedLearningReview(next, task, progress, at, task.feedbackEvents.at(-1).revision)
       })
     },
     correctLearningFeedback(token) {
@@ -227,6 +359,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
         progress.fuzzyCount += 1
         progress.lastFeedback = 'fuzzy'
         if (progress.completed) {
+          withdrawLearningReview(next, task, progress, original.revision)
           progress.completed = false
           progress.completedAt = null
           const learning = next.wordBooks[progress.wordBookId].words[progress.wordId].learning
@@ -301,6 +434,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
     setTaskSession(kind, patch) {
       const date = today()
       validatePatch(patch, ['currentItemId', 'previousItemId', 'view'])
+      assert(!isReviewSession(taskAt(state, kind, date)), 'Use guarded review session commands')
       change((next) => { Object.assign(requireTask(next, kind, date), patch) })
     },
 
@@ -308,6 +442,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
       assert(['known', 'fuzzy', 'unknown'].includes(feedback), 'Invalid feedback')
       const date = today()
       const task = requireTask(state, kind, date)
+      assert(!isReviewSession(task), 'Use guarded review session commands')
       const item = normalizeTaskItem(kind, entry, task.wordBookId)
       const current = own(task.items, item.id)
       assert(current, 'Word is not in today\'s task')
@@ -335,6 +470,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
             const learning = ensureWordBookWord(next, item.wordBookId, item.wordId).learning
             learning.completed = true
             learning.completedAt ??= at
+            addCompletedLearningReview(next, requireTask(next, kind, date), progress, at, requireTask(next, kind, date).sessionRevision)
           }
         }
       })
@@ -343,6 +479,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
     removeCompletedTaskItem(kind, entry) {
       const date = today()
       const task = requireTask(state, kind, date)
+      assert(!isReviewSession(task), 'Use guarded review session commands')
       const item = normalizeTaskItem(kind, entry, task.wordBookId)
       const current = own(task.items, item.id)
       assert(current?.completed, 'Task word is not completed')
@@ -370,6 +507,9 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
 
     updateReview(wordBookId, word, patch) {
       const id = wordId(word)
+      const active = taskAt(state, 'review', today())
+      assert(!isReviewSession(active) || !active.itemIds.includes(wordBookWordId(wordBookId, id)),
+        'Active review snapshot is protected; use guarded review session commands')
       validatePatch(patch, ['lastReviewedAt', 'nextReviewAt', 'stage', 'completedReviewCount', 'mastered', 'paused'])
       change((next) => {
         const entry = own(own(next.wordBooks, wordBookId)?.words ?? {}, id)

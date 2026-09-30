@@ -7,9 +7,10 @@ export function createBrowserLearningStore({ locks = globalThis.navigator?.locks
   const core = createLearningStore(options)
   const reads = new Set(['getSnapshot', 'subscribe', 'getWord', 'getMistake', 'getTask',
     'getReviewLibrary', 'getDueReviews', 'getMistakes', 'getDailyStats', 'getToday', 'reload',
-    'getExtraLearning', 'getExtraLearningProcess'])
+    'getExtraLearning', 'getExtraLearningProcess', 'getReviewOverview'])
   const writes = new Set(['updateSettings', 'ensureTodayLearning', 'prepareLearningChoice',
-    'submitLearningChoice', 'revealLearningDetails', 'submitSelfAssessment', 'correctLearningFeedback', 'advanceLearning', 'ensureExtraLearning'])
+    'submitLearningChoice', 'revealLearningDetails', 'submitSelfAssessment', 'correctLearningFeedback', 'advanceLearning', 'ensureExtraLearning',
+    'ensureTodayReview', 'prepareReviewChoice', 'submitReviewChoice', 'revealReviewDetails', 'submitReviewFeedback', 'correctReviewFeedback', 'advanceReview'])
   return Object.fromEntries(Object.entries(core).filter(([name]) => reads.has(name) || writes.has(name)).map(([name, method]) => [name,
     reads.has(name) ? method : async (...args) => {
       assert(typeof locks?.request === 'function', 'Safe storage lock unavailable')
