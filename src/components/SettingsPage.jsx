@@ -7,8 +7,7 @@ import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
 import './SettingsPage.css'
 
-const CLOSE_DURATION = 180
-const FIELD_SWITCH_DURATION = CLOSE_DURATION + 20
+const FIELD_SWITCH_DURATION = 220
 const SCROLL_SETTLE_DURATION = 110
 
 const FIELDS = [

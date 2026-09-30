@@ -91,6 +91,22 @@ test('does not overlap wheel trays when the user changes the pending field quick
   expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })
 
+test('opens the latest requested wheel as soon as the 220ms collapse finishes', () => {
+  vi.useFakeTimers()
+  renderPage(createStore())
+  fireEvent.click(summary('每日新词数量'))
+  fireEvent.click(summary('每日复习数量'))
+  fireEvent.click(summary('发音偏好'))
+
+  act(() => vi.advanceTimersByTime(219))
+  expect(screen.queryByRole('listbox', { name: '发音偏好' })).not.toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+
+  act(() => vi.advanceTimersByTime(1))
+  expect(screen.getByRole('listbox', { name: '发音偏好' })).toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+})
+
 test('reduced motion commits the scrolled value before a rapid three-field switch opens only the latest field', () => {
   vi.useFakeTimers()
   vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))
@@ -172,6 +188,17 @@ test('does not save a date that is today or earlier', async () => {
 
   expect(screen.getByRole('status')).toHaveTextContent('请选择未来的考试日期')
   expect(store.getSnapshot().settings.examDate).toBe('2026-09-13')
+})
+
+test('clamps the selected day when the month has fewer days', () => {
+  const store = createStore()
+  store.updateSettings({ examDate: '2027-01-31' })
+  renderPage(store)
+
+  fireEvent.click(summary('考试日期'))
+  fireEvent.click(screen.getByRole('option', { name: '2 月' }))
+
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2027 年 2 月 28 日')
 })
 
 test('warns when the deadline requires more than the editable daily limit', () => {

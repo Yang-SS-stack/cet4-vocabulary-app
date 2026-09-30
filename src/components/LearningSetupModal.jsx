@@ -8,7 +8,7 @@ import './LearningSetupModal.css'
 
 const CLOSE_DURATION = 180
 const SCROLL_SETTLE_DURATION = 110
-const FIELD_SWITCH_DURATION = CLOSE_DURATION + 20
+const FIELD_SWITCH_DURATION = 220
 const MODE_FIELDS = {
   initial: ['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes'],
   mistakes: ['mistakeStudyWords'],
