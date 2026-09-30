@@ -161,7 +161,10 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
       const date = today(), task = taskAt(state, 'review', date)
       const progress = requireReviewTurn(task, token, date, 'question')
       assert(progress.knownCount === 0 && !progress.completed, 'Choice is only for the first review round')
-      if (task.choice !== null) return task
+      if (task.choice !== null) {
+        assert(storage.getItem(LEARNING_STORAGE_KEY) === saved, 'Learning data changed elsewhere; reopen the store')
+        return task
+      }
       assert(Array.isArray(options) && options.length === 4, 'Four meaning choices are required')
       const normalized = options.map(option => {
         assert(option && typeof option.word === 'string' && typeof option.meaning === 'string' && option.meaning.trim(), 'Invalid meaning choice')

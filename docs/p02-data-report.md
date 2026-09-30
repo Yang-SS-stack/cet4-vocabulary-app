@@ -115,3 +115,18 @@ The48 review tests cover initialization/no fabricated events, all stage transiti
 - Historical completion identities cannot be reconstructed when original events are absent; this is represented explicitly by `completion:null` while preserving known completion dates and avoiding invented evidence.
 - Schema validation still scans the full saved state on writes, matching the existing architecture; review task event replay adds validation work proportional to saved review histories. No persistent storage abstraction or performance rewrite was introduced.
 - No known failing focused tests or unresolved data rule blockers at delivery.
+
+## P-02 review gate P2 fix — 2026-09-30
+
+Review finding: an already prepared `prepareReviewChoice` returned the local question/revision3 after another instance had durably submitted an answer as feedback/revision4. The no-op branch now compares current raw storage with the instance's saved raw snapshot before returning, using the existing `Learning data changed elsewhere; reopen the store` error. No other command or storage protocol was refactored.
+
+Added two public-API regressions in `todayReview.test.js`: synchronous core stale-choice reuse and browser reuse queued behind another instance's answer under the shared exclusive lock. Both verify repeated conflict refusal until explicit reload, unchanged local snapshot and listeners on refusal, no extra storage writes, same-instance no-op object identity, and saved option order even when reuse supplies a different order. Reload observes the saved feedback/revision4 and the original token is then refused as a stale turn.
+
+| Command / checkpoint | Observed result |
+| --- | --- |
+| RED `npm test -- src/data/learning/todayReview.test.js -t 'prepared review choices'` | **2 failed/48 skipped, exit1**, 2026-09-30 20:07:46 local. Core expected a conflict exception but none was thrown; browser reuse resolved with question/revision3 instead of rejecting. |
+| GREEN `npm test -- src/data/learning/todayReview.test.js src/data/learning/browserStore.test.js` | **2 files/56 tests passed, exit0**, final run 2026-09-30 20:09:50 local; review suite50 plus existing browser suite6. |
+| `npx oxlint src/data/learning/store.js src/data/learning/todayReview.test.js` | **exit0**, no warnings/errors. |
+| `git diff --check` | **exit0**, no whitespace errors; ordinary Git LF-to-CRLF notices only. |
+
+Fix base: `fddfe249cb4d97a99319cb996c72e4a5e9d0af17`. Scoped fix commit contains only `store.js`, `todayReview.test.js`, and this report; the commit is identified in its delivery response. No full suite, UI edits, push, merge, additional agents, or memory writes. Full integration and UI checks remain with the controller; no unresolved concern within this finding.
