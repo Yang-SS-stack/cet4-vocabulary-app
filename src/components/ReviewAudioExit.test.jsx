@@ -67,16 +67,16 @@ test('review autoplay waits for word and body entry animations before starting',
   await act(async () => vi.advanceTimersByTimeAsync(1)); expect(sounds).toHaveLength(2)
 })
 
-test('confirmed exit ignores delayed details and audio, leaving durable assignment available', async () => {
-  const e = reviewFixture(); let resolveBook, resolveAudio
+test('confirmed exit ignores delayed book and prevents new details and audio work', async () => {
+  const e = reviewFixture(); let resolveBook
   e.loader.mockImplementation(() => new Promise(resolve => { resolveBook = resolve }))
-  loadAudioManifest.mockImplementation(() => new Promise(resolve => { resolveAudio = resolve }))
   e.show(); await waitFor(() => expect(e.loader).toHaveBeenCalledOnce()); const original = e.store.getTask('review')
   const prepare = vi.spyOn(e.store, 'prepareReviewChoice')
   await click('返回主界面'); await click('确认退出'); await waitFor(() => expect(e.exit).toHaveBeenCalledOnce())
   const details = vi.spyOn(e.session, 'loadWords')
-  await act(async () => { resolveBook(e.session); resolveAudio?.({ words: { alpha: { 'en-GB': '/alpha' } } }) })
-  expect(details).not.toHaveBeenCalled(); expect(prepare).not.toHaveBeenCalled(); expect(sounds).toHaveLength(0)
+  await act(async () => { resolveBook(e.session) })
+  expect(details).not.toHaveBeenCalled(); expect(loadAudioManifest).not.toHaveBeenCalled()
+  expect(prepare).not.toHaveBeenCalled(); expect(sounds).toHaveLength(0)
   expect(e.store.getTask('review')).toBe(original)
 })
 
