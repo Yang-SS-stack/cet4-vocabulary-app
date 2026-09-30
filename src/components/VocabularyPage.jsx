@@ -4,6 +4,7 @@ import { loadAudioManifest } from '../data/audioManifest'
 import { loadWordBook } from '../data/loadWordBook'
 import { createInlineWordBookSession } from '../data/wordBookSession'
 import WordCard from './WordCard'
+import LoadingIndicator from './LoadingIndicator'
 import './VocabularyPage.css'
 
 const EMPTY_PAGE = { words: [], total: 0, totalPages: 1 }
@@ -44,7 +45,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
     return animation.finished.catch(() => {})
   }
 
-  const requestPage = async ({ session, bookId, sort: requestedSort, page, query: requestedQuery }) => {
+  const requestPage = async ({ session, bookId, sort: requestedSort, page, query: requestedQuery, animatePage = false }) => {
     const requestId = ++loadRequestId.current
     setPageLoadState('loading')
     setPageError(null)
@@ -52,6 +53,15 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
       const result = await session.loadPage({ sort: requestedSort, page, query: requestedQuery })
       const view = currentView.current
       if (loadRequestId.current !== requestId || view.session !== session || view.bookId !== bookId || view.sort !== requestedSort || view.page !== page || view.query !== requestedQuery) return
+      // Keep the current cards visible while fetching. Start the page transition
+      // only once the replacement is ready, so its loading status stays visible.
+      if (animatePage) {
+        isLeaving.current = true
+        contentRef.current.inert = true
+        await fade(1, 0, 160)
+        if (loadRequestId.current !== requestId) return
+        pageNavigation.current = true
+      }
       setPageData(result)
       setCurrentPage(page)
       setDisplayedQuery(requestedQuery)
@@ -73,23 +83,17 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
     }
   }
 
-  const updateView = ({ page, nextQuery = query, nextSort = sort }) => {
+  const updateView = ({ page, nextQuery = query, nextSort = sort, animatePage = false }) => {
     if (!bookSession || !selectedBook) return
     currentView.current = { bookId: selectedBook.id, session: bookSession, page, query: nextQuery, sort: nextSort }
     setQuery(nextQuery)
     setSort(nextSort)
-    requestPage({ session: bookSession, bookId: selectedBook.id, page, query: nextQuery, sort: nextSort })
+    requestPage({ session: bookSession, bookId: selectedBook.id, page, query: nextQuery, sort: nextSort, animatePage })
   }
 
   const changePage = async (page) => {
     if (page === currentPage || isLeaving.current || pageLoadState === 'loading') return
-    isLeaving.current = true
-    const transitionId = ++loadRequestId.current
-    contentRef.current.inert = true
-    await fade(1, 0, 160)
-    if (loadRequestId.current !== transitionId) return
-    pageNavigation.current = true
-    updateView({ page })
+    updateView({ page, animatePage: true })
   }
 
   useLayoutEffect(() => {
@@ -97,6 +101,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
     pageNavigation.current = false
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     fade(0, 1, 240).then(() => {
+      if (!contentRef.current) return
       contentRef.current.inert = false
       isLeaving.current = false
       headingRef.current?.focus({ preventScroll: true })
@@ -206,7 +211,7 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
   return <div ref={contentRef} className="vocabulary-transition">{!selectedBook ? <section className="vocabulary-page" aria-labelledby="vocabulary-heading">
     <div className="vocabulary-intro"><p className="panel-label">词书</p><h2 id="vocabulary-heading">选择一本词书</h2><p>从一套明确的学习范围开始，逐步扩充你的词汇库。</p></div>
     <ul className="book-list" aria-label="词书列表">{books.map((book) => <li key={book.id}><button className="book-entry" type="button" aria-label={book.label} onClick={() => selectBook(book)}><span className="book-entry__name">{book.label}</span><span className="book-entry__description">{book.description}</span></button></li>)}</ul>
-  </section> : isInitialLoading ? <section className="vocabulary-page" aria-live="polite"><p>正在读取词库...</p><button type="button" onClick={returnToBookList}>返回词书</button></section> : isInitialError ? <section className="vocabulary-page" aria-live="polite"><p>词库读取失败</p><button type="button" onClick={returnToBookList}>返回词书</button></section> : <BookContent book={selectedBook} bookId={selectedBookId} pageData={pageData} pageLoadState={pageLoadState} indexState={indexState} pageError={pageError} currentPage={currentPage} query={query} sort={sort} displayedQuery={displayedQuery} displayedSort={displayedSort} audioManifest={audioManifest} searchRef={searchRef} headingRef={headingRef} onBack={returnToBookList} onQuery={(value) => updateView({ page: 1, nextQuery: value })} onSort={(value) => updateView({ page: 1, nextSort: value })} onPage={changePage} onClearSearch={clearSearch} onRetryPage={retryPage} onRetryIndex={retryIndex} />}</div>
+  </section> : isInitialLoading ? <section className="vocabulary-page" aria-live="polite"><LoadingIndicator label="正在读取词书" /><button type="button" onClick={returnToBookList}>返回词书</button></section> : isInitialError ? <section className="vocabulary-page" aria-live="polite"><p>词库读取失败</p><button type="button" onClick={() => selectBook(selectedBook)}>重试读取词书</button><button type="button" onClick={returnToBookList}>返回词书</button></section> : <BookContent book={selectedBook} bookId={selectedBookId} pageData={pageData} pageLoadState={pageLoadState} indexState={indexState} pageError={pageError} currentPage={currentPage} query={query} sort={sort} displayedQuery={displayedQuery} displayedSort={displayedSort} audioManifest={audioManifest} searchRef={searchRef} headingRef={headingRef} onBack={returnToBookList} onQuery={(value) => updateView({ page: 1, nextQuery: value })} onSort={(value) => updateView({ page: 1, nextSort: value })} onPage={changePage} onClearSearch={clearSearch} onRetryPage={retryPage} onRetryIndex={retryIndex} />}</div>
 }
 
 function BookContent({ book, bookId, pageData, pageLoadState, indexState, pageError, currentPage, query, sort, displayedQuery, displayedSort, audioManifest, searchRef, headingRef, onBack, onQuery, onSort, onPage, onClearSearch, onRetryPage, onRetryIndex }) {
@@ -227,9 +232,9 @@ function BookContent({ book, bookId, pageData, pageLoadState, indexState, pageEr
         ].map((option) => <button key={option.value} type="button" aria-label={option.label} aria-pressed={sort === option.value} onClick={() => onSort(option.value)}>{option.text}</button>)}</div>
       </div>
       <p className="vocabulary-result-count" aria-live="polite" aria-atomic="true">{displayedQuery.trim() ? `找到 ${pageData.total} 个单词` : `共 ${pageData.total} 个单词`}</p>
-      {indexState === 'loading' && <p className="vocabulary-load-status" role="status">正在准备搜索</p>}
+      <LoadingIndicator active={indexState === 'loading' && pageLoadState !== 'loading'} compact label="正在准备搜索" />
       {indexState === 'error' && <p className="vocabulary-load-status" role="status">搜索索引读取失败，词卡浏览仍可继续。 <button type="button" onClick={onRetryIndex}>重试搜索</button></p>}
-      {pageLoadState === 'loading' && <p className="vocabulary-load-status" role="status">正在加载当前结果...</p>}
+      <LoadingIndicator active={pageLoadState === 'loading'} compact label="正在加载当前结果..." />
       {pageError && <p className="vocabulary-load-status vocabulary-load-status--error" role="status">当前结果加载失败，请重试或返回词书。 <button type="button" onClick={onRetryPage}>重试当前结果</button></p>}
     </div>
     {displayedSort === 'frequency' && pageData.total > 0 && !hasFrequency && <p className="vocabulary-data-note">本词书暂无词频数据，当前按字母顺序显示。</p>}

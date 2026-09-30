@@ -165,7 +165,7 @@ test('shows the first page while the search index is still loading', async () =>
   await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
 
   expect(await screen.findByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
-  expect(screen.getByText('正在准备搜索')).toBeInTheDocument()
+  expect(await screen.findByText('正在准备搜索')).toBeInTheDocument()
 })
 
 test('uses the complete index for Chinese and POS search', async () => {
@@ -185,11 +185,32 @@ test('keeps visible cards while a later page is loading', async () => {
   const session = deferredPageSession()
   const user = await openSessionBook({ session })
   expect(visibleWordNames()).toEqual(['abruptly'])
+  const root = document.querySelector('.vocabulary-transition')
+  root.animate = vi.fn(() => ({ cancel: vi.fn(), finished: Promise.resolve() }))
 
   await user.click(screen.getByRole('button', { name: '下一页' }))
 
   expect(screen.getByRole('heading', { name: 'abruptly' })).toBeInTheDocument()
-  expect(screen.getByText('正在加载当前结果...')).toHaveAttribute('role', 'status')
+  expect(await screen.findByText('正在加载当前结果...')).toHaveAttribute('role', 'status')
+  expect(root.animate).not.toHaveBeenCalled()
+  expect(root.inert).not.toBe(true)
+})
+
+test('initial book wait shows delayed dots, removes them on failure and retries successfully', async () => {
+  let reject
+  const loadWords = vi.fn().mockImplementationOnce(() => new Promise((_, fail) => { reject = fail })).mockResolvedValue(browseWords)
+  render(<VocabularyPage books={[catalogBook]} loadWords={loadWords} loadAudio={async () => ({})} />)
+  await userEvent.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
+  expect(screen.queryByRole('status', { name: '正在读取词书' })).not.toBeInTheDocument()
+  expect(await screen.findByRole('status', { name: '正在读取词书' })).toHaveClass('loading-indicator')
+  await act(async () => reject(Error('network')))
+  expect(screen.getByText('词库读取失败')).toBeInTheDocument()
+  expect(screen.queryByRole('status', { name: '正在读取词书' })).not.toBeInTheDocument()
+  await userEvent.click(screen.getByRole('button', { name: '重试读取词书' }))
+  expect(await screen.findByRole('heading', { name: 'absent' })).toBeInTheDocument()
+  expect(loadWords).toHaveBeenCalledTimes(2)
+  await userEvent.click(screen.getByRole('button', { name: '返回词书' }))
+  expect(screen.getByRole('button', { name: 'CET-4', exact: true })).toBeInTheDocument()
 })
 
 test('recovers a failed index when direct search retries it without hiding cards', async () => {

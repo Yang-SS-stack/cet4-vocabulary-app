@@ -28,11 +28,32 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
   const [confirmExtra, setConfirmExtra] = useState(false)
   const [returned, setReturned] = useState(false)
   const entryButton = useRef(null)
+  const [pendingEntry, setPendingEntry] = useState(null)
+  const entryRequested = useRef(false)
+  const focusCallback = useRef(onFocusModeChange)
+  useEffect(() => { focusCallback.current = onFocusModeChange }, [onFocusModeChange])
   useEffect(() => { if (!learning && returned) entryButton.current?.focus({ preventScroll: true }) }, [learning, returned])
 
-  const enter = mode => { setLearning(mode); onFocusModeChange?.(true) }
+  useEffect(() => {
+    if (!pendingEntry) return
+    const timer = window.setTimeout(() => {
+      setLearning(pendingEntry === 'extra' && !store.getTask('learning') ? 'learning' : pendingEntry)
+      setPendingEntry(null)
+      focusCallback.current?.(true)
+    }, 180)
+    return () => window.clearTimeout(timer)
+  }, [pendingEntry, store])
+  const enter = mode => {
+    if (entryRequested.current) return
+    entryRequested.current = true
+    if (!window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setLearning(mode)
+      onFocusModeChange?.(true)
+    } else setPendingEntry(mode)
+  }
 
   const start = (mode) => {
+    if (entryRequested.current) return
     if (mode === 'learning') {
       const task = store.getTask('learning')
       if (!task && (!settings.todayWordBookId || !settings.dailyNewWords)) {
@@ -46,15 +67,15 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
     } else { setLearning('review'); onFocusModeChange?.(true) }
   }
 
-  const exit = () => { setReturned(true); setLearning(false); onFocusModeChange?.(false) }
-  if (learning === 'learning' || learning === 'extra') return <LearningSession loadBook={loadBook} onExit={exit} initialMode={learning} />
+  const exit = () => { entryRequested.current = false; setReturned(true); setLearning(false); onFocusModeChange?.(false) }
+  if (learning === 'learning' || learning === 'extra') return <LearningSession loadBook={loadBook} onExit={exit} initialMode={learning} animateEntry />
   if (learning === 'review') return <section className="learning-session" aria-label="今日复习">
     <header className="learning-session__header"><button type="button" onClick={exit}>返回主界面</button><p>今日复习</p></header>
     <div className="learning-session__empty"><h2>复习尚未启用</h2><p role="status">复习流程将在下一阶段启用。</p></div>
   </section>
 
   return (
-    <section className={`learning-overview ${returned ? 'is-entering' : ''}`} aria-label="今日学习概览">
+    <section className={`learning-overview ${pendingEntry ? 'is-leaving' : returned ? 'is-entering' : ''}`} inert={Boolean(pendingEntry)} aria-label="今日学习概览">
       <div className="learning-overview__status-strip">
         <StatusMetric label="距离考试" value={formatDays(daysRemaining)} />
         <StatusMetric

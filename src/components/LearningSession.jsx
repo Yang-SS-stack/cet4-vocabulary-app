@@ -9,6 +9,7 @@ import { describePartOfSpeech } from '../data/partOfSpeech'
 import supplementalExamples from '../data/supplementalExamples.json'
 import SpeechButton from './SpeechButton'
 import StudyTransition from './StudyTransition'
+import LoadingIndicator from './LoadingIndicator'
 import { cancelSpeechScope, playSpeechSequence, speechMessage } from './speechPlayback'
 import { learningChoices } from './learningChoices'
 import './LearningSession.css'
@@ -27,7 +28,7 @@ function turnToken(task) {
     ...(task.kind === 'extra-learning' ? { kind: task.kind, taskId: task.taskId } : {}) }
 }
 
-export default function LearningSession({ onExit, loadBook = loadWordBook, initialMode = 'learning' }) {
+export default function LearningSession({ onExit, loadBook = loadWordBook, initialMode = 'learning', animateEntry = false }) {
   const { store, snapshot } = useLearningStore()
   const [loaded, setLoaded] = useState(null)
   const [error, setError] = useState('')
@@ -44,6 +45,8 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const [correctPhase, setCorrectPhase] = useState('')
   const [confirmExit, setConfirmExit] = useState(false)
   const [exiting, setExiting] = useState(false)
+  const [entering, setEntering] = useState(() => animateEntry && Boolean(window.matchMedia) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const [initialWordReady, setInitialWordReady] = useState(() => !animateEntry || !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const exitCallback = useRef(onExit)
   const exitButton = useRef(null)
   const speechScope = useRef({})
@@ -59,6 +62,14 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const expired = (loaded && loaded.date !== clock) || error.startsWith('日期已变化')
 
   useEffect(() => { exitCallback.current = onExit }, [onExit])
+  useEffect(() => {
+    if (!entering) return
+    const timer = window.setTimeout(() => setEntering(false), 240)
+    return () => window.clearTimeout(timer)
+  }, [entering])
+  useEffect(() => {
+    if (animateEntry && !entering) (alert.current ?? heading.current)?.focus({ preventScroll: true })
+  }, [animateEntry, entering])
   useEffect(() => {
     if (!exiting) return
     const reduced = !window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -167,7 +178,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   }, [loaded, task, store, exiting])
 
   const act = async (feedback, action = 'self') => {
-    if (pending.current || exitRequested.current || !task) return
+    if (pending.current || exitRequested.current || entering || !task) return
     pending.current = true
     setBusy(true)
     setError('')
@@ -216,6 +227,12 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const corrected = task?.view === 'feedback' && task.feedbackEvents.at(-1)?.source === 'feedback-correction'
   const progress = task?.items[task.currentItemId]
   const item = progress && loaded.words.get(progress.wordId)
+  const hasItem = Boolean(item)
+  useEffect(() => {
+    if (initialWordReady || !hasItem || exiting) return
+    const timer = window.setTimeout(() => setInitialWordReady(true), 240)
+    return () => window.clearTimeout(timer)
+  }, [initialWordReady, hasItem, exiting])
   const complete = mode === 'extra' ? extra?.exhausted : task && task.currentItemId === null
   const guided = task?.method.id === 'guided-recall'
   const choiceFeedback = guided && task.view === 'feedback' && task.choice && !task.choice.revealed
@@ -243,7 +260,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
     })
   }
   speechConfig.current = startSpeech
-  const speechReady = Boolean(item && (audio !== null || audioError) && !error && !expired && !exiting && readyWord === wordFrame && readyBody === bodyFrame)
+  const speechReady = Boolean(item && initialWordReady && (audio !== null || audioError) && !error && !expired && !exiting && !entering && readyWord === wordFrame && readyBody === bodyFrame)
   useEffect(() => {
     if (speechReady) speechConfig.current()
     const scope = speechScope.current
@@ -254,13 +271,13 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const notice = (error || expired) && <div ref={alert} tabIndex={-1} role="alert"><p>{expired ? '日期已变化。昨日进度已保留，请开始今天的任务。' : error}</p>
     <button type="button" disabled={busy} onClick={restart}>{expired ? '开始今天的任务' : loaded || /记录/.test(error) && !/词书/.test(error) ? '重新读取进度' : '重试'}</button>
   </div>
-  return <section className={`learning-session ${exiting ? 'is-exiting' : ''}`} inert={exiting} aria-label={mode === 'extra' ? '额外学习练习' : '今日学习练习'} aria-busy={busy}>
+  return <section className={`learning-session ${exiting ? 'is-exiting' : entering ? 'is-entering' : ''}`} inert={exiting || entering} aria-label={mode === 'extra' ? '额外学习练习' : '今日学习练习'} aria-busy={busy}>
     <header className="learning-session__header">
       <button type="button" ref={exitButton} onClick={requestExit} disabled={pending.current}>返回主界面</button>
       <p>{loaded ? `${loaded.book.label}${mode === 'extra' ? ' · 额外学习' : ''}` : '准备今日学习'}{task && <span>{mode === 'extra' ? '本组' : ''}已完成 {Object.values(task.items).filter(entry => entry.completed).length} / {task.itemIds.length} 词</span>}</p>
     </header>
     {(!item || expired) && notice}
-    {busy && !loaded && <p role="status">正在加载词书与学习进度…</p>}
+    <LoadingIndicator active={busy && !loaded && !error && !expired && !exiting} label="正在准备学习" />
     {!expired && complete && <div className="learning-session__empty"><h2 ref={heading} tabIndex={-1}>{mode === 'extra' || !task.itemIds.length ? '这本词书已全部学完' : '今日学习已完成'}</h2><p>进度已保存。当天任务保持不变，新的设置从下次创建任务时生效。</p></div>}
     {!expired && item && <StudyTransition transitionKey={wordFrame} onReady={setReadyWord}>
       <article className="learning-session__word">
@@ -284,7 +301,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
               return <button key={option.word} type="button" className={`${correct ? 'is-correct' : ''} ${wrong ? 'is-wrong' : ''}`} disabled={busy || choiceFeedback} onClick={() => act(option.word, 'choice')}>
                 <span>{option.meaning}</span><small className={correct || wrong ? '' : 'is-reserved'} aria-hidden={!(correct || wrong)}>{correct ? '正确答案' : '你的选择'} · {option.word}</small>
               </button>
-            })}</div> : !error && <p role="status">正在准备选项…</p>}
+            })}</div> : !error && <LoadingIndicator compact label="正在准备选项…" />}
           </> : task.view === 'question' ? <>
             {guided && progress.knownCount === 1 && <p className="learning-session__example" lang="en">{example || '该词暂无英文例句，请直接回想词义。'}</p>}
             {!guided && <p className="learning-session__hint">先回想词义，再选择你的熟悉程度。</p>}

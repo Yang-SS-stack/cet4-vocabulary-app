@@ -175,6 +175,7 @@ test('correction waits until full details enter, and completed-to-corrected upda
   }
   env.show()
   await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await waitFor(() => expect(screen.getByRole('region', { name: '今日学习练习' })).not.toHaveAttribute('inert'))
   await user.click(await screen.findByRole('button', { name: '认识', exact: true }))
   const correct = screen.getByRole('button', { name: '记错了' })
   expect(correct).toBeDisabled()

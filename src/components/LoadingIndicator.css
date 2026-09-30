@@ -1,0 +1,23 @@
+/* Bouncing dots adapted from Uiverse.io by mobinkakei (user-provided reference). */
+.loading-indicator { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px 12px; color: var(--ink-soft); font-size: 14px; animation: loading-indicator-appear 160ms ease-out; }
+.loading-indicator__dots { position: relative; display: flex; justify-content: space-around; width: 132px; height: 58px; flex: none; }
+.loading-indicator__pair { position: relative; width: 14px; height: 100%; }
+.loading-indicator__dot { position: absolute; top: 0; left: 0; width: 14px; height: 14px; border-radius: 50%; background: var(--ink); transform-origin: center bottom; animation: loading-dot-bounce 500ms ease infinite alternate; animation-delay: var(--dot-delay); }
+.loading-indicator__shadow { position: absolute; bottom: 1px; left: 0; width: 14px; height: 3px; border-radius: 50%; background: var(--ink); opacity: .15; animation: loading-dot-shadow 500ms ease infinite alternate; animation-delay: var(--dot-delay); }
+.loading-indicator--compact { flex-direction: row; justify-content: flex-start; gap: 8px; padding: 8px 0; font-size: 13px; }
+.loading-indicator--compact .loading-indicator__dots { width: 66px; height: 29px; }
+.loading-indicator--compact .loading-indicator__pair { scale: .5; transform-origin: top center; height: 58px; }
+@keyframes loading-dot-bounce {
+  0% { transform: translateY(38px) scale(1.6, .35); }
+  40% { transform: translateY(24px) scale(1, 1); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@keyframes loading-dot-shadow {
+  0% { transform: scaleX(1.5); opacity: .2; }
+  100% { transform: scaleX(.25); opacity: .07; }
+}
+@keyframes loading-indicator-appear { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .loading-indicator, .loading-indicator__dot, .loading-indicator__shadow { animation: none; }
+  .loading-indicator__dot { transform: translateY(22px); }
+}
