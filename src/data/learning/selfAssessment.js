@@ -15,10 +15,22 @@ export function nextLearningItem(task) {
 
 export function requireLearningTurn(task, token, date, view, allowedMethods = ['self-assessment', 'guided-recall']) {
   assert(token?.date === date && task?.date === date, 'Learning date changed; start today again')
+  assert(task.kind === 'extra-learning'
+    ? token.kind === task.kind && token.taskId === task.taskId
+    : (token.kind === undefined || token.kind === 'learning') && token.taskId === undefined,
+  'Learning turn changed; reload progress')
   assert(allowedMethods.includes(task.method?.id) && task.method.rulesVersion === 1, 'Unsupported learning method')
   assert(task.currentItemId !== null && task.currentItemId === token.itemId
     && task.sessionRevision === token.revision && task.view === view, 'Learning turn changed; reload progress')
   return task.items[token.itemId]
+}
+
+export function canCorrectLearningFeedback(task) {
+  if (!task || task.view !== 'feedback' || task.currentItemId === null) return false
+  const event = task.feedbackEvents.at(-1)
+  if (!event || event.itemId !== task.currentItemId || !task.items[event.itemId]?.knownCount) return false
+  if (event.source === 'self-assessment') return event.feedback === 'known' && task.choice === null
+  return event.source === 'guided-choice' && event.outcome === 'correct' && task.choice?.revealed === true
 }
 
 // Only self-assessment unknowns contribute to the existing mistake threshold.

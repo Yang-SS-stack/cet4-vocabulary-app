@@ -6,9 +6,10 @@ import { assert, LEARNING_STORAGE_KEY } from './model'
 export function createBrowserLearningStore({ locks = globalThis.navigator?.locks, ...options } = {}) {
   const core = createLearningStore(options)
   const reads = new Set(['getSnapshot', 'subscribe', 'getWord', 'getMistake', 'getTask',
-    'getReviewLibrary', 'getDueReviews', 'getMistakes', 'getDailyStats', 'getToday', 'reload'])
+    'getReviewLibrary', 'getDueReviews', 'getMistakes', 'getDailyStats', 'getToday', 'reload',
+    'getExtraLearning', 'getExtraLearningProcess'])
   const writes = new Set(['updateSettings', 'ensureTodayLearning', 'prepareLearningChoice',
-    'submitLearningChoice', 'revealLearningDetails', 'submitSelfAssessment', 'advanceLearning'])
+    'submitLearningChoice', 'revealLearningDetails', 'submitSelfAssessment', 'correctLearningFeedback', 'advanceLearning', 'ensureExtraLearning'])
   return Object.fromEntries(Object.entries(core).filter(([name]) => reads.has(name) || writes.has(name)).map(([name, method]) => [name,
     reads.has(name) ? method : async (...args) => {
       assert(typeof locks?.request === 'function', 'Safe storage lock unavailable')

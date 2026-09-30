@@ -93,13 +93,14 @@ test('version one records migrate without changing old progress or overwriting u
   env.store.recordFeedback('learning', 'alpha', 'known')
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
+  delete legacy.extraLearning
   for (const tasks of Object.values(legacy.days)) for (const task of Object.values(tasks)) {
     delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
   }
   const raw = JSON.stringify(legacy)
   env.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = env.open()
-  expect(migrated.getSnapshot().version).toBe(3)
+  expect(migrated.getSnapshot().version).toBe(5)
   expect(migrated.getTask('learning').items).toEqual(legacy.days['2026-09-24'].learning.items)
   expect(env.storage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
   migrated.updateSettings({ dailyNewWords: 3 })
@@ -142,6 +143,7 @@ test('migration preserves review/mistake records and history, corrupt versions s
   env.store.addToMistakes('alpha')
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
+  delete legacy.extraLearning
   for (const tasks of Object.values(legacy.days)) for (const task of Object.values(tasks)) {
     delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
   }
@@ -163,6 +165,7 @@ test('legacy completed question resumes in details and can advance without losin
   for (let i = 0; i < 3; i++) env.store.recordFeedback('learning', 'alpha', 'known')
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
+  delete legacy.extraLearning
   const task = legacy.days['2026-09-24'].learning
   delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
   env.storage.setItem('', JSON.stringify(legacy))
@@ -179,6 +182,7 @@ test('legacy null position resumes the first unfinished word without changing co
   env.store.setTaskSession('learning', { currentItemId: null })
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   legacy.version = 1
+  delete legacy.extraLearning
   const task = legacy.days['2026-09-24'].learning
   delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
   env.storage.setItem('', JSON.stringify(legacy))

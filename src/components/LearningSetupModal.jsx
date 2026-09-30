@@ -8,7 +8,7 @@ import './LearningSetupModal.css'
 
 const CLOSE_DURATION = 180
 const SCROLL_SETTLE_DURATION = 110
-const FIELD_SWITCH_DURATION = CLOSE_DURATION + 20
+const FIELD_SWITCH_DURATION = 220
 const MODE_FIELDS = {
   initial: ['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes'],
   mistakes: ['mistakeStudyWords'],
@@ -47,6 +47,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   const settleTimerRef = useRef(null)
   const wheelSettlingRef = useRef(false)
   const isSwitchingRef = useRef(false)
+  const requestedFieldRef = useRef(null)
   const initialDraftRef = useRef(null)
   if (initialDraftRef.current === null) initialDraftRef.current = createDraft(mode, settings, snapshot, now)
   const [draft, setDraft] = useState(initialDraftRef.current)
@@ -203,10 +204,9 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
 
   const toggleField = (field) => {
     if (isClosing || isSaving) return
-    window.clearTimeout(switchTimerRef.current)
 
     if (isSwitchingRef.current) {
-      scheduleFieldOpen(field, switchTimerRef, isSwitchingRef, setActiveField)
+      requestedFieldRef.current = field
       return
     }
 
@@ -221,7 +221,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
     }, SCROLL_SETTLE_DURATION)
     const nextField = activeField === field ? null : field
     if (!prefersReducedMotion()) setActiveField(null)
-    scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, setActiveField)
+    scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, requestedFieldRef, setActiveField)
   }
 
   const load = calculateDraftLoad(mode, draft, settings, recommendation)
@@ -253,6 +253,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
               draft={draft}
               now={now}
               isOpen={activeField === field}
+              isAnotherOpen={activeField !== null && activeField !== field}
               onToggle={() => toggleField(field)}
               onChange={(value, columnLabel) => changeField(field, value, columnLabel)}
             />
@@ -293,9 +294,9 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   ), document.body)
 }
 
-function FieldWheel({ field, draft, now, isOpen, onToggle, onChange }) {
+function FieldWheel({ field, draft, now, isOpen, isAnotherOpen, onToggle, onChange }) {
   const props = wheelProps(field, draft, now)
-  return <SettingsWheel {...props} value={draft[field]} isOpen={isOpen} onToggle={onToggle} onChange={onChange} />
+  return <SettingsWheel {...props} value={draft[field]} isOpen={isOpen} isAnotherOpen={isAnotherOpen} onToggle={onToggle} onChange={onChange} />
 }
 
 function wheelProps(field, draft, now) {
@@ -455,12 +456,13 @@ function prefersReducedMotion() {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 }
 
-function scheduleFieldOpen(field, timerRef, switchingRef, setActiveField) {
+function scheduleFieldOpen(field, timerRef, switchingRef, requestedFieldRef, setActiveField) {
   switchingRef.current = true
+  requestedFieldRef.current = field
   const delay = prefersReducedMotion() ? SCROLL_SETTLE_DURATION : FIELD_SWITCH_DURATION
   timerRef.current = window.setTimeout(() => {
     switchingRef.current = false
-    setActiveField(field)
+    setActiveField(requestedFieldRef.current)
   }, delay)
 }
 

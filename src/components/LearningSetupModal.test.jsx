@@ -127,8 +127,26 @@ test('rapidly switching across three fields keeps one tray mounted and opens onl
   expect(screen.queryByRole('listbox', { name: '每日复习数量' })).not.toBeInTheDocument()
   expect(screen.queryByRole('listbox', { name: '每日学习时长' })).not.toBeInTheDocument()
 
-  act(() => vi.advanceTimersByTime(200))
+  act(() => vi.advanceTimersByTime(219))
+  expect(screen.queryByRole('listbox', { name: '每日学习时长' })).not.toBeInTheDocument()
+  act(() => vi.advanceTimersByTime(1))
 
+  expect(screen.getByRole('listbox', { name: '每日学习时长' })).toBeInTheDocument()
+  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+})
+
+test('a later field click keeps the original close deadline', () => {
+  vi.useFakeTimers()
+  renderModal()
+  fireEvent.click(summary('每日新词'))
+  fireEvent.click(summary('每日复习数量'))
+
+  act(() => vi.advanceTimersByTime(100))
+  fireEvent.click(summary('每日学习时长'))
+  act(() => vi.advanceTimersByTime(119))
+  expect(screen.queryByRole('listbox', { name: '每日学习时长' })).not.toBeInTheDocument()
+
+  act(() => vi.advanceTimersByTime(1))
   expect(screen.getByRole('listbox', { name: '每日学习时长' })).toBeInTheDocument()
   expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
 import { expect, test, vi } from 'vitest'
@@ -91,6 +91,125 @@ test('reports the option aligned by a touch or mouse scroll', async () => {
   fireEvent.scroll(listbox)
 
   await waitFor(() => expect(onChange).toHaveBeenCalledWith(30, '每日新词'))
+})
+
+test('collapse begins at the tray height reached when opening is interrupted', () => {
+  const onChange = vi.fn()
+  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+  const tray = document.querySelector('.settings-wheel__tray')
+  const rect = vi.spyOn(tray, 'getBoundingClientRect').mockReturnValue({ height: 64 })
+  try {
+    fireEvent.click(screen.getByRole('button', { name: '每日新词 20' }))
+    expect(tray).toHaveClass('is-closing')
+    expect(tray.style.getPropertyValue('--wheel-close-from')).toBe('64px')
+  } finally {
+    rect.mockRestore()
+  }
+})
+
+test('one mouse wheel notch selects only the adjacent option and prevents native scrolling', () => {
+  const onChange = vi.fn()
+  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+  const listbox = screen.getByRole('listbox', { name: '每日新词' })
+
+  const down = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 360 })
+  listbox.dispatchEvent(down)
+  expect(down.defaultPrevented).toBe(true)
+  expect(onChange).toHaveBeenLastCalledWith(30, '每日新词')
+  expect(onChange).toHaveBeenCalledTimes(1)
+
+  const atEnd = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 360 })
+  listbox.dispatchEvent(atEnd)
+  expect(atEnd.defaultPrevented).toBe(true)
+  expect(onChange).toHaveBeenCalledTimes(1)
+
+  const up = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: -360 })
+  listbox.dispatchEvent(up)
+  expect(onChange).toHaveBeenLastCalledWith(20, '每日新词')
+  expect(onChange).toHaveBeenCalledTimes(2)
+})
+
+test('positions the selected value without scrollIntoView or a selection feedback event', () => {
+  const onChange = vi.fn()
+  const scrollIntoView = vi.fn()
+  const original = HTMLElement.prototype.scrollIntoView
+  HTMLElement.prototype.scrollIntoView = scrollIntoView
+  try {
+    render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+    const listbox = screen.getByRole('listbox', { name: '每日新词' })
+    expect(listbox.scrollTop).toBe(48)
+    fireEvent.scroll(listbox)
+    expect(onChange).not.toHaveBeenCalled()
+    expect(scrollIntoView).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByRole('option', { name: '30' }))
+    expect(listbox.scrollTop).toBe(96)
+    fireEvent.scroll(listbox)
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(scrollIntoView).not.toHaveBeenCalled()
+  } finally {
+    HTMLElement.prototype.scrollIntoView = original
+  }
+})
+
+test('returning a touch scroll to the selected row cancels its pending selection', () => {
+  vi.useFakeTimers()
+  try {
+    const onChange = vi.fn()
+    render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+    const listbox = screen.getByRole('listbox', { name: '每日新词' })
+
+    listbox.scrollTop = 96
+    fireEvent.scroll(listbox)
+    listbox.scrollTop = 48
+    fireEvent.scroll(listbox)
+    act(() => vi.advanceTimersByTime(100))
+
+    expect(onChange).not.toHaveBeenCalled()
+  } finally {
+    vi.useRealTimers()
+  }
+})
+
+test('small touchpad deltas accumulate before one adjacent choice', () => {
+  const onChange = vi.fn()
+  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+  const listbox = screen.getByRole('listbox', { name: '每日新词' })
+
+  for (const deltaY of [10, 10, 10, 10]) {
+    const event = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY })
+    listbox.dispatchEvent(event)
+    expect(event.defaultPrevented).toBe(true)
+  }
+  expect(onChange).not.toHaveBeenCalled()
+
+  listbox.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 10 }))
+  expect(onChange).toHaveBeenCalledOnce()
+  expect(onChange).toHaveBeenLastCalledWith(30, '每日新词')
+})
+
+test('a click starts a fresh touchpad gesture instead of using leftover delta', () => {
+  const onChange = vi.fn()
+  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+  const listbox = screen.getByRole('listbox', { name: '每日新词' })
+
+  listbox.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 40 }))
+  fireEvent.click(screen.getByRole('option', { name: '10' }))
+  listbox.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: 10 }))
+
+  expect(onChange).toHaveBeenCalledTimes(1)
+  expect(onChange).toHaveBeenLastCalledWith(10, '每日新词')
+})
+
+test('focusing a clicked choice does not scroll its ancestors', () => {
+  const focus = vi.spyOn(HTMLElement.prototype, 'focus')
+  try {
+    render(<ControlledWheels onChange={vi.fn()} initialOpen="newWords" />)
+    fireEvent.click(screen.getByRole('option', { name: '30' }))
+    expect(focus).toHaveBeenCalledWith({ preventScroll: true })
+  } finally {
+    focus.mockRestore()
+  }
 })
 
 function ControlledWheels({ onChange, initialOpen = null }) {

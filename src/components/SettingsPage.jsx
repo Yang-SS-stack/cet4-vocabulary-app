@@ -7,8 +7,7 @@ import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
 import './SettingsPage.css'
 
-const CLOSE_DURATION = 180
-const FIELD_SWITCH_DURATION = CLOSE_DURATION + 20
+const FIELD_SWITCH_DURATION = 220
 const SCROLL_SETTLE_DURATION = 110
 
 const FIELDS = [
@@ -47,6 +46,7 @@ function SettingsPage({ now = new Date() }) {
   const settleTimerRef = useRef(null)
   const wheelSettlingRef = useRef(false)
   const isSwitchingRef = useRef(false)
+  const requestedFieldRef = useRef(null)
 
   useEffect(() => () => {
     window.clearTimeout(switchTimerRef.current)
@@ -68,10 +68,9 @@ function SettingsPage({ now = new Date() }) {
 
   const toggleField = (field) => {
     if (isSaving) return
-    window.clearTimeout(switchTimerRef.current)
 
     if (isSwitchingRef.current) {
-      scheduleFieldOpen(field, switchTimerRef, isSwitchingRef, setActiveField)
+      requestedFieldRef.current = field
       return
     }
 
@@ -88,7 +87,7 @@ function SettingsPage({ now = new Date() }) {
 
     const nextField = activeField === field ? null : field
     if (!prefersReducedMotion()) setActiveField(null)
-    scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, setActiveField)
+    scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, requestedFieldRef, setActiveField)
   }
 
   const persist = async (confirmed) => {
@@ -163,6 +162,7 @@ function SettingsPage({ now = new Date() }) {
               {...props}
               value={draft[field]}
               isOpen={activeField === field}
+              isAnotherOpen={activeField !== null && activeField !== field}
               onToggle={() => toggleField(field)}
               onChange={(value, columnLabel) => changeField(field, value, columnLabel)}
             />
@@ -336,12 +336,13 @@ function prefersReducedMotion() {
   return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 }
 
-function scheduleFieldOpen(field, timerRef, switchingRef, setActiveField) {
+function scheduleFieldOpen(field, timerRef, switchingRef, requestedFieldRef, setActiveField) {
   switchingRef.current = true
+  requestedFieldRef.current = field
   const delay = prefersReducedMotion() ? SCROLL_SETTLE_DURATION : FIELD_SWITCH_DURATION
   timerRef.current = window.setTimeout(() => {
     switchingRef.current = false
-    setActiveField(field)
+    setActiveField(requestedFieldRef.current)
   }, delay)
 }
 

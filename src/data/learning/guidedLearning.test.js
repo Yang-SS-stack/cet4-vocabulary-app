@@ -119,6 +119,7 @@ test('v2 migration adds choice without changing legacy method and persists only 
   const env = environment()
   const old = JSON.parse(JSON.stringify(env.store.getSnapshot()))
   old.version = 2
+  delete old.extraLearning
   for (const tasks of Object.values(old.days)) for (const task of Object.values(tasks)) {
     task.method = { id: 'self-assessment', rulesVersion: 1 }
     delete task.choice

@@ -1,8 +1,9 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import './SettingsWheel.css'
 
 const OPTION_HEIGHT = 48
-const CLOSE_DURATION = 180
+const WHEEL_STEP_DELTA = 48
+const CLOSE_DURATION = 220
 
 function WheelColumn({ label, value, options, onChange }) {
   const labelId = useId()
@@ -10,17 +11,48 @@ function WheelColumn({ label, value, options, onChange }) {
   const optionRefs = useRef([])
   const scrollTimer = useRef(null)
   const selectedIndex = Math.max(0, options.findIndex((option) => Object.is(option.value, value)))
+  const selectedIndexRef = useRef(selectedIndex)
+  const programmaticTopRef = useRef(null)
+  const wheelDeltaRef = useRef(0)
+  selectedIndexRef.current = selectedIndex
+
+  useLayoutEffect(() => {
+    const list = listRef.current
+    if (!list) return
+    const target = selectedIndex * OPTION_HEIGHT
+    programmaticTopRef.current = target
+    list.scrollTop = target
+  }, [selectedIndex])
 
   useEffect(() => {
-    const selectedOption = optionRefs.current[selectedIndex]
-    selectedOption?.scrollIntoView?.({ block: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
-  }, [selectedIndex])
+    const list = listRef.current
+    if (!list) return undefined
+    const handleWheel = (event) => {
+      if (event.deltaY === 0) return
+      event.preventDefault()
+      window.clearTimeout(scrollTimer.current)
+      const deltaScale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 180 : 1
+      wheelDeltaRef.current += event.deltaY * deltaScale
+      if (Math.abs(wheelDeltaRef.current) < WHEEL_STEP_DELTA) return
+      const direction = Math.sign(wheelDeltaRef.current)
+      wheelDeltaRef.current = 0
+      const nextIndex = Math.min(options.length - 1, Math.max(0, selectedIndexRef.current + direction))
+      if (nextIndex === selectedIndexRef.current) return
+      selectedIndexRef.current = nextIndex
+      onChange(options[nextIndex].value, label)
+    }
+    list.addEventListener('wheel', handleWheel, { passive: false })
+    return () => list.removeEventListener('wheel', handleWheel)
+  }, [label, onChange, options])
 
   useEffect(() => () => window.clearTimeout(scrollTimer.current), [])
 
   const selectOption = (option, index) => {
+    window.clearTimeout(scrollTimer.current)
+    wheelDeltaRef.current = 0
+    selectedIndexRef.current = index
     onChange(option.value, label)
-    optionRefs.current[index]?.focus()
+    optionRefs.current[index]?.focus({ preventScroll: true })
   }
 
   const handleKeyDown = (event, index) => {
@@ -41,10 +73,15 @@ function WheelColumn({ label, value, options, onChange }) {
   const handleScroll = (event) => {
     const scrollTop = event.currentTarget.scrollTop
     window.clearTimeout(scrollTimer.current)
+    if (scrollTop === programmaticTopRef.current) return
+    wheelDeltaRef.current = 0
     scrollTimer.current = window.setTimeout(() => {
       const index = Math.min(options.length - 1, Math.max(0, Math.round(scrollTop / OPTION_HEIGHT)))
       const option = options[index]
-      if (option && !Object.is(option.value, value)) onChange(option.value, label)
+      if (option && !Object.is(option.value, value)) {
+        selectedIndexRef.current = index
+        onChange(option.value, label)
+      }
     }, 100)
   }
 
@@ -72,11 +109,12 @@ function WheelColumn({ label, value, options, onChange }) {
   )
 }
 
-function SettingsWheel({ label, value, displayValue, isOpen, onToggle, onChange, columns }) {
+function SettingsWheel({ label, value, displayValue, isOpen, isAnotherOpen = false, onToggle, onChange, columns }) {
   const [isTrayMounted, setIsTrayMounted] = useState(isOpen)
   const [isClosing, setIsClosing] = useState(false)
+  const trayRef = useRef(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isOpen) {
       setIsTrayMounted(true)
       setIsClosing(false)
@@ -84,28 +122,34 @@ function SettingsWheel({ label, value, displayValue, isOpen, onToggle, onChange,
     }
 
     if (!isTrayMounted) return undefined
-    if (prefersReducedMotion()) {
+    if (prefersReducedMotion() || isAnotherOpen) {
       setIsTrayMounted(false)
       setIsClosing(false)
       return undefined
     }
 
+    const tray = trayRef.current
+    if (tray) {
+      tray.style.setProperty('--wheel-close-from', `${tray.getBoundingClientRect().height}px`)
+      tray.style.setProperty('--wheel-close-opacity', window.getComputedStyle(tray).opacity)
+    }
     setIsClosing(true)
     const closeTimer = window.setTimeout(() => {
       setIsTrayMounted(false)
       setIsClosing(false)
     }, CLOSE_DURATION)
     return () => window.clearTimeout(closeTimer)
-  }, [isOpen, isTrayMounted])
+  }, [isOpen, isTrayMounted, isAnotherOpen])
 
   return (
     <section className="settings-wheel" data-value={String(value)}>
       <button type="button" className="settings-wheel__summary" aria-label={`${label} ${displayValue}`} aria-expanded={isOpen} onClick={onToggle}>
         <span>{label}</span>
         <strong>{displayValue}</strong>
+        <span className="settings-wheel__chevron" aria-hidden="true" />
       </button>
-      {isTrayMounted && (
-        <div className={isClosing ? 'settings-wheel__tray is-closing' : 'settings-wheel__tray'} aria-hidden={isClosing || undefined} inert={isClosing || undefined}>
+      {isTrayMounted && (isOpen || !isAnotherOpen) && (
+        <div ref={trayRef} className={isClosing ? 'settings-wheel__tray is-closing' : 'settings-wheel__tray'} aria-hidden={isClosing || undefined} inert={isClosing || undefined}>
           {columns.map((column) => <WheelColumn key={column.label} {...column} onChange={onChange} />)}
         </div>
       )}
