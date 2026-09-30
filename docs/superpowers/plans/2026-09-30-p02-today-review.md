@@ -1,6 +1,6 @@
 # P-02 今日复习最小闭环实施方案（2026-09-30 重审稿）
 
-> 状态：2026-09-30 用户已批准全部五项剩余规则，审核完成，进入实施。默认起点 2、不认识清零重走四轮、4 次完成、相邻间隔及 30 天维护、负向反馈缩短间隔、遗留词次日归 0、当前词书硬上限、历史排程补齐及单次更正均已确认。
+> 状态：2026-09-30 用户已批准全部五项剩余规则；实施、专项审查、集成验证及整分支审查完成。默认起点 2、不认识清零重走四轮、4 次完成、相邻间隔及 30 天维护、负向反馈缩短间隔、遗留词次日归 0、当前词书硬上限、历史排程补齐及单次更正均已确认。
 > 实施时使用 superpowers:executing-plans 逐项执行；以下步骤用于审核和后续跟踪。
 
 **Goal:** 让已经学完的词按确定规则进入复习，在当天形成稳定任务，完成反馈、保存、恢复和下一次排程。
@@ -9,7 +9,7 @@
 
 **Tech Stack:** 沿用 React、JavaScript、浏览器本地存储、Vitest 和 Testing Library，不新增运行依赖。
 
-## 1. 依据与范围
+## 1. 依据与范围（方案重审时的基线状态，非交付现状）
 
 - 本地当前分支 `main`，提交 `7c48914`。本地 `origin/main` 跟踪记录为 `4fa64a7`，本地领先该记录 10 个提交；本次用 `git ls-remote` 查询远端时连接被重置，实时远端状态未核验。
 - 这 10 个提交已增加：额外学习批次、串行自动朗读、原地选择反馈、单次“记错了”更正、退出确认及异步取消、滚轮连续动效、学习入场和延迟加载提示。代码已在本地 `main`；旧验收文档中“未合并”的描述是当时记录。
@@ -157,7 +157,7 @@ store.advanceReview({ date, itemId, revision })
 
 `feedback` 只允许 `known | fuzzy | unknown`。创建接口自行补齐历史并查询已保存的到期记录，不接受界面指定任意单词或任意日期。`revision` 表示页面读取到的任务修订号，用于拒绝过期提交。预期日期和设置在取得保存锁后核对；已有任务优先恢复其快照。
 
-新复习方式保存为 `review-guided-recall`、规则版本 1。词条保存 `initialKnownCount`，新到期词为 2；跨日遗留起点按后续确认规则确定。任务校验允许无反馈的初始 2，但禁止用初始化伪造事件；学习原有校验保持。复习 `knownCount` 范围 0–4，仅为 4 时完成；选择状态在回到第一轮时使用现有四选一结构。
+新复习方式保存为 `review-guided-recall`、规则版本 1。词条保存 `initialKnownCount`，新到期词为 2；跨日遗留起点已确认为 0。任务校验允许无反馈的初始 2，但禁止用初始化伪造事件；学习原有校验保持。复习 `knownCount` 范围 0–4，仅为 4 时完成；选择状态在回到第一轮时使用现有四选一结构。
 
 自评事件来源 `review-self-assessment`，选择事件 `review-guided-choice`，更正事件 `review-feedback-correction`；保存词条、结果、时间及修订号，更正引用原正向反馈。只有形成完成结算的事件才保存 `reviewBefore` 用于更正恢复原排程。详情更正资格由已保存事件与当前回合共同决定，不能只由界面布尔值决定。恢复时不重置为起点 2。
 
@@ -169,38 +169,38 @@ store.advanceReview({ date, itemId, revision })
 
 ### 任务一：确定排程与安全升级
 
-- [ ] 新增 `src/data/learning/reviewSchedule.test.js`：首次次日、仅四次完成后结算、末阶段维护、逾期、月末年末和本地跨日；含负向反馈时的日期按获批规则测试。
-- [ ] 新增 `src/data/learning/reviewMigration.test.js`：版本 1–5 无损升级到 6，额外批次和已有更正事件完整保留，学习/复习各自完成条件，非法字段与伪造完成状态拒绝。
-- [ ] 先确认这些新行为的测试失败，再实现规则与第 6 版校验，运行上述专项测试。
-- [ ] 复查 P-01 数据回归，形成可独立审查的改动。
+- [x] 排程测试（实际集中于 `src/data/learning/todayReview.test.js`）：首次次日、仅四次完成后结算、末阶段维护、逾期、月末年末和本地跨日；含负向反馈时的日期按获批规则测试。
+- [x] 迁移测试（实际集中于 `src/data/learning/todayReview.test.js` 及原迁移回归）：版本 1–5 无损升级到 6，额外批次和已有更正事件完整保留，学习/复习各自完成条件，非法字段与伪造完成状态拒绝。
+- [x] 先确认这些新行为的测试失败，再实现规则与第 6 版校验，运行上述专项测试。
+- [x] 复查 P-01 数据回归，形成可独立审查的改动。
 
 ### 任务二：复习数据闭环
 
-- [ ] 新增 `src/data/learning/todayReview.test.js`：每日及额外学习入库、完成更正撤回新入库、旧记录不误删、候选上限、逾期顺序、固定任务、设置变更、词书隔离、跨天和重复提交。
-- [ ] 新增 `src/data/learning/reviewRounds.test.js`：首次 2→3→4，模糊 2→1、3→2，不认识归 0 后四轮重走；首轮选择错误不冒充自评错误；重进不重新补两次；学习仍在 3 完成。
-- [ ] 新增 `src/data/learning/reviewCorrection.test.js`：仅正向反馈可更正，4→3 撤销完成及排程、3→2 回英文轮，结算次数不重复增加、刷新不重扣、旧令牌拒绝。
-- [ ] 实现七个复习接口；学习完成自动入库；反馈、事件、错误计数及最终完成排程在同一次存储写入中完成；历史补齐与初次任务创建合并保存。
-- [ ] 扩展 `src/data/learning/browserStore.test.js`：并发保存、锁内跨天、存储失败、冲突重载、无安全锁拒写。
-- [ ] 限制旧的通用 `recordFeedback`、`setTaskSession`、`updateReview` 等入口，禁止绕过新复习协议修改活动任务。旧基础数据测试继续保留。
-- [ ] 专项测试通过后审查数据边界。
+- [x] 新增 `src/data/learning/todayReview.test.js`：每日及额外学习入库、完成更正撤回新入库、旧记录不误删、候选上限、逾期顺序、固定任务、设置变更、词书隔离、跨天和重复提交。
+- [x] 四轮测试（实际集中于 `src/data/learning/todayReview.test.js`）：首次 2→3→4，模糊 2→1、3→2，不认识归 0 后四轮重走；首轮选择错误不冒充自评错误；重进不重新补两次；学习仍在 3 完成。
+- [x] 更正测试（实际集中于 `src/data/learning/todayReview.test.js`）：仅正向反馈可更正，4→3 撤销完成及排程、3→2 回英文轮，结算次数不重复增加、刷新不重扣、旧令牌拒绝。
+- [x] 实现七个复习接口；学习完成自动入库；反馈、事件、错误计数及最终完成排程在同一次存储写入中完成；历史补齐与初次任务创建合并保存。
+- [x] 浏览器保存边界：沿用 `src/data/learning/browserStore.test.js` 原回归，新增复习锁/冲突用例集中于 `todayReview.test.js`；覆盖并发保存、锁内跨天、存储失败、冲突重载、无安全锁拒写。
+- [x] 限制旧的通用 `recordFeedback`、`setTaskSession`、`updateReview` 等入口，禁止绕过新复习协议修改活动任务。旧基础数据测试继续保留。
+- [x] 专项测试通过后审查数据边界。
 
 ### 任务三：复习页面与概览
 
-- [ ] 新增 `src/components/ReviewSession.test.jsx`：初始英文轮、第四轮只中文、模糊回退、不认识完整重走四轮、选择与详情恢复、一次更正、下一词、完成页、空状态、加载失败及重试。
-- [ ] 新增 `src/components/ReviewAudioExit.test.jsx`：前三轮与详情自动读词/例句顺序，第四轮题面没有英文及单词发音入口、不触发单词朗读并取消残留声音，失败可继续、未完成退出确认、焦点恢复、确认退出后迟到请求不发起操作。
-- [ ] 扩展 `src/components/StudyEntry.test.jsx`：复习入口也走现有入场流程，防双击；慢加载、快加载和减少动态效果有真实覆盖。
-- [ ] 修改 `src/components/TodayLearningPage.test.jsx` 和必要的 `src/App.test.jsx`：真实入口、专注模式、返回、实际到期数量和设置切书后的任务归属。
-- [ ] 接入复习页面。先获取/创建任务，再按任务记录逐词加载详情；详情加载失败保留固定任务并可重试。
-- [ ] 禁止保存过程中重复提交；完成页与详情显示以保存结果为准。
-- [ ] 专项测试通过后进行桌面及手机人工验收。
+- [x] 新增 `src/components/ReviewSession.test.jsx`：初始英文轮、第四轮只中文、模糊回退、不认识完整重走四轮、选择与详情恢复、一次更正、下一词、完成页、空状态、加载失败及重试。
+- [x] 新增 `src/components/ReviewAudioExit.test.jsx`：前三轮与详情自动读词/例句顺序，第四轮题面没有英文及单词发音入口、不触发单词朗读并取消残留声音，失败可继续、未完成退出确认、焦点恢复、确认退出后迟到请求不发起操作。
+- [x] 扩展 `src/components/StudyEntry.test.jsx`：复习入口也走现有入场流程，防双击；慢加载、快加载和减少动态效果有真实覆盖。
+- [x] 修改 `src/components/TodayLearningPage.test.jsx` 和必要的 `src/App.test.jsx`：真实入口、专注模式、返回、实际到期数量和设置切书后的任务归属。
+- [x] 接入复习页面。先获取/创建任务，再按任务记录逐词加载详情；详情加载失败保留固定任务并可重试。
+- [x] 禁止保存过程中重复提交；完成页与详情显示以保存结果为准。
+- [x] 专项测试通过后进行桌面及手机人工验收。
 
 ### 任务四：全量验证与交付
 
-- [ ] 执行 `npm test -- --maxWorkers=2`，预期全量通过。
-- [ ] 执行 `npm run lint`，区分原有警告与新增问题。
-- [ ] 执行 `npm run build`，预期构建成功。
-- [ ] 更新产品和数据文档，确保与最终获批规则一致。
-- [ ] 提供对应分支与提交的本地生产预览，并给出人工验收步骤。推送、合并和公开部署单独由用户决定。
+- [x] 执行 `npm test -- --maxWorkers=2`，预期全量通过。
+- [x] 执行 `npm run lint`，区分原有警告与新增问题。
+- [x] 执行 `npm run build`，预期构建成功。
+- [x] 更新产品和数据文档，确保与最终获批规则一致。
+- [x] 提供对应分支与提交的本地生产预览，并给出人工验收步骤。推送、合并和公开部署单独由用户决定。
 
 全部规则已获批准。实施在 codex/p02-today-review 独立工作区进行；实时结果见 docs/p02-progress.md。
 
@@ -233,3 +233,11 @@ store.advanceReview({ date, itemId, revision })
 5. 是否沿用单次“记错了”更正，4→3 同步撤回本次复习完成结算？
 
 全部规则已获批准；实施中按本文件跟踪，范围有实质变化再提交用户审核。
+
+## 9. 实施映射与交付记录
+
+第5节保留方案拟定结构，实际实现以数据文档和报告为准：排程/补齐集中在reviewLibrary.js，四轮结算在reviewSession.js；学习完成入库钩子在store.js同一次保存内，未改selfAssessment.js。来源保存为provenance:{source,completion}，完成身份为{date,kind,taskId,revision}；旧复习记录保留原形，不补provenance；首次历史补齐source为historical。完成撤回使用settlement:{previousReview,revision}。复习自评/选择沿用self-assessment/guided-choice事件并按任务method区分，更正为review-feedback-correction。行为契约与获批规则相同，没有为拟定文件名或字段名复制逻辑。
+
+界面用ReviewSession窄包装复用LearningSession，中文轮样式写在LearningSession.css，无须新建ReviewSession.css或StudySessionContent。数据专项合并在todayReview.test.js共50项；UI专项ReviewSession14项、ReviewAudioExit10项及入口/原学习回归。任务清单勾选代表相应行为和验证完成，以这些实际文件映射理解。
+
+完整验证44文件375项通过、lint仅原有警告、生产构建成功。桌面和手机的中文题面、四轮重走、恢复、更正、排程、退出取消与积压已实际观察；其他故障和声音边界采用自动化证据，不声称真实听音完成。验收记录docs/p02-review-acceptance.md；最终整分支审查docs/p02-final-review.md。分支保留为codex/p02-today-review，不推送、不合并。

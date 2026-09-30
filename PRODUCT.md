@@ -30,7 +30,7 @@ LinguaJet 将四级词书浏览、每日新词学习、间隔复习、错题整�
 - 发音偏好支持英音和美音，默认英音。
 - 所有日期与跨天逻辑以用户设备本地时间 00:00 为分界。
 - 设置修改不重置历史记录，也不改变已经开始的当日任务快照。
-- Prompt 2 只建立首次设置、设置修改、推荐信息和入口概览，不提前实现实际学习、复习或错题流程。
+- Prompt 2 为设置与概览阶段；后续 P-01 已接入每日及额外新词学习，P-02（2026-09-30）已接入固定今日复习、四轮回忆、间隔排程、历史补齐和单次更正。独立复习库管理、统计、错题专项学习、后端与云同步仍属后续范围。
 
 ## Brand Commitments
 
@@ -40,7 +40,8 @@ LinguaJet 将四级词书浏览、每日新词学习、间隔复习、错题整�
 
 - CET-4 与高频词书数据：`public/data/word-books/`。
 - 已生成的英音和美音资源及清单：`public/audio/`、`src/data/audioManifest.json`。
-- 学习数据结构与保存说明：`docs/learning-data.md`。
+- 学习数据结构与保存说明（当前 v6）：`docs/learning-data.md`。
+- P-02 已批准规则与验收：`docs/p02-review.md`、`docs/p02-review-acceptance.md`。
 - Prompt 2 已确认设计：`docs/superpowers/specs/2026-09-11-learning-setup-and-settings-design.md`。
 - Prompt 2 已确认静态界面预览：`C:/Users/29864/.codex/generated_images/01a08bd0-08cf-76c1-a82f-ed53485cc67f/exec-51cf6a85-9c74-4d50-876b-e79b09339123.png`。
 - 没有用户成效数据、商业证明或可用于宣传的研究结论；后续界面不得虚构。
