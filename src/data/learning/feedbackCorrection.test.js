@@ -117,6 +117,9 @@ test('extra correction checks batch and word identity, undoes completion and pre
   }
   const old = JSON.parse(env.storage.getItem())
   old.version = 4
+  for (const book of Object.values(old.wordBooks)) for (const word of Object.values(book.words)) {
+    if (word.review) delete word.review.provenance
+  }
   env.storage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(old))
   const store = env.open()
   expect(store.getSnapshot().extraLearning).toEqual(old.extraLearning)

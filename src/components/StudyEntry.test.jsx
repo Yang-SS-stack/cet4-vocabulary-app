@@ -14,10 +14,11 @@ beforeEach(() => {
   vi.stubGlobal('Audio', class { play = play; pause = vi.fn() })
 })
 afterEach(() => vi.useRealTimers())
-function setup(loadBook = vi.fn(async () => createInlineWordBookSession(words))) {
+function setup(loadBook = vi.fn(async () => createInlineWordBookSession(words)), review = false) {
   let raw = null
   const store = createLearningStore({ storage: { getItem: () => raw, setItem: (_, value) => { raw = value } }, now: () => new Date(2026, 8, 30, 12) })
-  store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1, pronunciation: 'en-GB' })
+  store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1, dailyReviewWords: 1, pronunciation: 'en-GB' })
+  if (review) store.addToReview('cet4', 'alpha', { nextReviewAt: new Date(2026, 8, 30).toISOString() })
   const focus = vi.fn()
   const rendered = render(<LearningStoreProvider store={store}><TodayLearningPage loadBook={loadBook} onFocusModeChange={focus} /></LearningStoreProvider>)
   return { store, loadBook, focus, ...rendered }
@@ -41,6 +42,31 @@ test('fades the overview once, then waits for study entry before speech and inte
   expect(screen.getByRole('region', { name: '今日学习练习' })).not.toHaveAttribute('inert')
   expect(play).toHaveBeenCalledOnce()
   expect(env.focus).toHaveBeenCalledExactlyOnceWith(true)
+})
+
+test('review shares overview fade, double-click guard and entry gate, and returns focus to review', async () => {
+  HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }
+  const env = setup(undefined, true)
+  const button = screen.getByRole('button', { name: '今日复习' })
+  fireEvent.click(button); fireEvent.click(button)
+  expect(env.loadBook).not.toHaveBeenCalled()
+  await act(async () => vi.advanceTimersByTimeAsync(180))
+  expect(env.loadBook).toHaveBeenCalledOnce(); expect(play).not.toHaveBeenCalled()
+  expect(screen.getByRole('region', { name: '今日复习练习' })).toHaveAttribute('inert')
+  await act(async () => vi.advanceTimersByTimeAsync(240))
+  expect(play).toHaveBeenCalledOnce(); expect(env.focus).toHaveBeenCalledExactlyOnceWith(true)
+  fireEvent.click(screen.getByRole('button', { name: '返回主界面' })); fireEvent.click(screen.getByRole('button', { name: '确认退出' }))
+  await act(async () => vi.advanceTimersByTimeAsync(239)); expect(screen.queryByRole('button', { name: '今日复习' })).not.toBeInTheDocument()
+  await act(async () => vi.advanceTimersByTimeAsync(1)); expect(screen.getByRole('button', { name: '今日复习' })).toHaveFocus()
+})
+
+test('reduced motion review enters once immediately', async () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: true }))
+  const env = setup(undefined, true); const button = screen.getByRole('button', { name: '今日复习' })
+  fireEvent.click(button); fireEvent.click(button)
+  await act(async () => Promise.resolve())
+  expect(env.loadBook).toHaveBeenCalledOnce()
+  expect(screen.getByRole('region', { name: '今日复习练习' })).not.toHaveAttribute('inert')
 })
 test('unmounting during the overview fade never enters or starts loading', async () => {
   const env = setup()

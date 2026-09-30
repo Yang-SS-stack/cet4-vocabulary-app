@@ -24,6 +24,7 @@
 .learning-session__word-heading { flex: none; text-align: center; padding-bottom: 12px; }
 .learning-session__word h2 { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(32px, 5vw, 48px); font-weight: 400; }
 .learning-session__word h2:focus { outline: none; }
+.learning-session__word h2.learning-session__meaning-heading { font-family: inherit; font-size: clamp(20px, 3vw, 30px); line-height: 1.5; max-height: 22dvh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--gold-soft) transparent; }
 .learning-session__count { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 8px 0 0; }
 .learning-session__count > span:not(.learning-session__count-text) { width: 20px; height: 3px; background: var(--paper-deep); }
 .learning-session__count > span.is-filled { background: var(--gold); }

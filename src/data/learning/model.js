@@ -1,5 +1,5 @@
 export const LEARNING_STORAGE_KEY = 'linguajet.learning'
-export const SCHEMA_VERSION = 5
+export const SCHEMA_VERSION = 6
 export const EXTRA_LEARNING_BATCH_SIZE = 10
 export const MISTAKE_ENTRY_THRESHOLD = 5
 export const REVIEW_STAGE_DAYS = Object.freeze([1, 2, 4, 7, 15])
@@ -51,7 +51,7 @@ const dateKey = (value) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.te
   && new Date(`${value}T00:00:00.000Z`).toISOString().slice(0, 10) === value
 const feedback = (value) => ['known', 'fuzzy', 'unknown'].includes(value)
 const method = (value) => value === null || shape(value, {
-  id: (id) => ['self-assessment', 'guided-recall'].includes(id), rulesVersion: (v) => v === 1,
+  id: (id) => ['self-assessment', 'guided-recall', 'review-guided-recall'].includes(id), rulesVersion: (v) => v === 1,
 })
 const choice = (value) => value === null || shape(value, {
   options: (options) => Array.isArray(options) && options.length === 4
@@ -65,8 +65,9 @@ const feedbackEvent = (event, task, version) => {
     source: (v) => v === 'self-assessment', rulesVersion: (v) => v === 1,
     itemId: (id) => task.itemIds.includes(id), feedback, at: timestamp, revision: integer,
   })
-  if (version >= 5 && event?.source === 'feedback-correction') return shape(event, {
-    source: (v) => v === 'feedback-correction', rulesVersion: (v) => v === 1,
+  if (version >= 5 && (event?.source === 'feedback-correction'
+    || version >= 6 && task.kind === 'review' && event?.source === 'review-feedback-correction')) return shape(event, {
+    source: (v) => v === event.source, rulesVersion: (v) => v === 1,
     itemId: (id) => task.itemIds.includes(id), correctedRevision: integer, at: timestamp, revision: integer,
   })
   return version >= 3 && shape(event, {
@@ -83,6 +84,43 @@ function shape(value, fields) {
     && Object.entries(fields).every(([key, check]) => Object.hasOwn(value, key) && check(value[key]))
 }
 
+// New review tasks have complete event history; legacy task histories remain untouched.
+function validateReviewHistory(task) {
+  let priorRevision = -1
+  for (const event of task.feedbackEvents) {
+    assert(event.revision > priorRevision, 'Invalid review event order')
+    priorRevision = event.revision
+  }
+  for (const id of task.itemIds) {
+    const item = task.items[id]
+    let knownCount = item.initialKnownCount, fuzzyCount = 0, unknownCount = 0, lastFeedback = null
+    let completedAt = null, settlementRevision = null
+    for (const event of task.feedbackEvents.filter(e => e.itemId === id)) {
+      assert(knownCount < 4 || event.source === 'review-feedback-correction', 'Invalid completed review feedback')
+      if (event.source === 'self-assessment') {
+        assert(knownCount >= 1, 'Invalid review round')
+        lastFeedback = event.feedback
+        if (event.feedback === 'known') knownCount += 1
+        if (event.feedback === 'fuzzy') { fuzzyCount += 1; knownCount = Math.max(0, knownCount - 1) }
+        if (event.feedback === 'unknown') { unknownCount += 1; knownCount = 0 }
+        if (knownCount === 4) { completedAt = event.at; settlementRevision = event.revision }
+      } else if (event.source === 'guided-choice') {
+        assert(knownCount === 0, 'Invalid review choice round')
+        if (event.outcome === 'correct') { knownCount = 1; lastFeedback = 'known' }
+      } else {
+        assert(event.source === 'review-feedback-correction', 'Invalid review feedback source')
+        knownCount = Math.max(0, knownCount - 1); fuzzyCount += 1; lastFeedback = 'fuzzy'
+        completedAt = null; settlementRevision = null
+      }
+    }
+    assert(item.knownCount === knownCount && item.fuzzyCount === fuzzyCount && item.unknownCount === unknownCount
+      && item.lastFeedback === lastFeedback && item.completedAt === completedAt
+      && (item.settlement?.revision ?? null) === settlementRevision, 'Invalid review progress history')
+  }
+  assert(task.currentItemId !== null || task.itemIds.every(id => task.items[id].completed), 'Invalid unfinished review session')
+  if (task.view === 'question' && task.currentItemId !== null) assert(!task.items[task.currentItemId].completed, 'Invalid completed review turn')
+}
+
 const settingsFields = {
   examDate: nullable(dateKey), todayWordBookId: nullable(string), dailyNewWords: nullable(integer),
   dailyReviewWords: nullable(integer), dailyStudyMinutes: nullable(integer),
@@ -94,12 +132,21 @@ const reviewFields = {
   stage: (value) => integer(value) && value <= REVIEW_STAGE_DAYS.length,
   completedReviewCount: integer, mastered: boolean, paused: boolean,
 }
-const reviewValid = (value) => shape(value, reviewFields)
+const completionValid = (value) => shape(value, {
+  date: dateKey, kind: (v) => ['learning', 'extra-learning'].includes(v), taskId: string, revision: integer,
+})
+const reviewValid = (value, version = SCHEMA_VERSION) => shape(value, {
+  ...reviewFields,
+  ...(version >= 6 && Object.hasOwn(value ?? {}, 'provenance') ? { provenance: (v) => shape(v, {
+    source: (s) => ['learning', 'extra-learning', 'historical'].includes(s),
+    completion: (c) => (v.source === 'historical' && c === null) || completionValid(c),
+  }) } : {}),
+})
 const learningValid = (value) => shape(value, {
   completed: boolean, completedAt: nullable(timestamp),
 }) && value.completed === (value.completedAt !== null)
-const wordBookWordValid = (value) => shape(value, {
-  id: string, wordBookId: string, wordId: string, learning: learningValid, review: nullable(reviewValid),
+const wordBookWordValid = (value, version) => shape(value, {
+  id: string, wordBookId: string, wordId: string, learning: learningValid, review: nullable(v => reviewValid(v, version)),
 }) && value.id === wordBookWordId(value.wordBookId, value.wordId)
 const wordValid = (value) => shape(value, {
   id: string, unknownCount: integer, unknownCountSinceRemoval: integer, lastErrorAt: nullable(timestamp),
@@ -109,14 +156,21 @@ const wordValid = (value) => shape(value, {
   && value.entered === (value.enteredAt !== null) && value.removed === (value.removedAt !== null)
   && (!value.removed || value.entered)
 
-const taskItemValid = (value) => shape(value, {
+const taskItemValid = (value, review = false) => shape(value, {
   id: string, wordBookId: nullable(string), wordId: string,
-  knownCount: (count) => integer(count) && count <= 3,
+  knownCount: (count) => integer(count) && count <= (review ? 4 : 3),
   fuzzyCount: integer, unknownCount: integer, lastFeedback: nullable(feedback),
   completed: boolean, completedAt: nullable(timestamp), removed: boolean, removedAt: nullable(timestamp),
-}) && value.completed === (value.knownCount === 3) && value.completed === (value.completedAt !== null)
+  ...(review ? {
+    initialKnownCount: (v) => v === 0 || v === 2,
+    settlement: (v) => v === null || shape(v, { previousReview: reviewValid, revision: integer }),
+  } : {}),
+}) && value.completed === (value.knownCount === (review ? 4 : 3)) && value.completed === (value.completedAt !== null)
   && value.removed === (value.removedAt !== null) && (!value.removed || value.completed)
-  && ((value.knownCount + value.fuzzyCount + value.unknownCount > 0) === (value.lastFeedback !== null))
+  && (review ? (value.lastFeedback !== null || value.knownCount === value.initialKnownCount
+    && value.fuzzyCount === 0 && value.unknownCount === 0)
+    && value.completed === (value.settlement !== null)
+    : ((value.knownCount + value.fuzzyCount + value.unknownCount > 0) === (value.lastFeedback !== null)))
   && value.id === (value.wordBookId === null ? wordId(value.wordId) : wordBookWordId(value.wordBookId, value.wordId))
 
 export function validatePatch(patch, allowedKeys) {
@@ -139,7 +193,7 @@ export function validateState(state, version = SCHEMA_VERSION) {
   for (const [wordBookId, wordBook] of Object.entries(state.wordBooks)) {
     assert(shape(wordBook, { id: (value) => value === wordBookId, words: record }), 'Invalid word book record')
     for (const [id, word] of Object.entries(wordBook.words)) {
-      assert(wordBookWordValid(word) && word.wordId === id && word.wordBookId === wordBookId, 'Invalid word book word')
+      assert(wordBookWordValid(word, version) && word.wordId === id && word.wordBookId === wordBookId, 'Invalid word book word')
     }
   }
   const entries = []
@@ -171,6 +225,7 @@ export function validateState(state, version = SCHEMA_VERSION) {
     })
   }
   for (const { day, kind, task } of entries) {
+      const review = version >= 6 && kind === 'review' && task.method?.id === 'review-guided-recall'
       assert(shape(task, {
         date: (value) => value === day, kind: (value) => value === kind,
         ...(kind === 'extra-learning' ? { taskId: string } : {}),
@@ -188,13 +243,15 @@ export function validateState(state, version = SCHEMA_VERSION) {
         ...(version >= 3 ? { choice } : {}),
       }), 'Invalid task')
       if (version >= 3) {
-        assert(['learning', 'extra-learning'].includes(task.kind) || (task.choice === null && task.method === null), 'Invalid task choice')
+        assert(['learning', 'extra-learning'].includes(task.kind)
+          ? task.method === null || ['self-assessment', 'guided-recall'].includes(task.method?.id)
+          : review || (task.choice === null && task.method === null), 'Invalid task choice')
         assert(task.feedbackEvents.every((event) => event.revision < task.sessionRevision
           && (event.source === 'self-assessment' || event.source === 'feedback-correction'
-            || task.method?.id === 'guided-recall')),
+            || event.source === 'review-feedback-correction' || task.method?.id === 'guided-recall' || review)),
         'Invalid task feedback event')
         if (version >= 5) task.feedbackEvents.forEach((event, index) => {
-          if (event.source !== 'feedback-correction') return
+          if (!['feedback-correction', 'review-feedback-correction'].includes(event.source)) return
           const original = task.feedbackEvents[index - 1]
           assert(original?.itemId === event.itemId && original.revision === event.correctedRevision
             && original.revision < event.revision
@@ -204,7 +261,7 @@ export function validateState(state, version = SCHEMA_VERSION) {
         })
         if (task.choice !== null) {
           const current = task.items[task.currentItemId]
-          assert(task.method?.id === 'guided-recall' && task.currentItemId !== null
+          assert((task.method?.id === 'guided-recall' || review) && task.currentItemId !== null
             && current.knownCount <= 1
             && task.choice.options.some((option) => option.word === current.wordId), 'Invalid task choice')
           if (task.view === 'question') assert(task.choice.selectedWord === null && !task.choice.revealed, 'Invalid task choice')
@@ -212,7 +269,7 @@ export function validateState(state, version = SCHEMA_VERSION) {
             const expectedOutcome = task.choice.selectedWord === null ? 'show-answer'
               : task.choice.selectedWord === current.wordId ? 'correct' : 'incorrect'
             const last = task.feedbackEvents.at(-1)
-            const corrected = last?.source === 'feedback-correction'
+            const corrected = ['feedback-correction', 'review-feedback-correction'].includes(last?.source)
             const event = corrected ? task.feedbackEvents.at(-2) : last
             assert((task.choice.selectedWord !== null || task.choice.revealed)
               && current.knownCount === (expectedOutcome === 'correct' && !corrected ? 1 : 0)
@@ -230,7 +287,7 @@ export function validateState(state, version = SCHEMA_VERSION) {
         && (task.previousItemId === null || task.itemIds.includes(task.previousItemId)), 'Invalid task order')
       for (const id of task.itemIds) {
         const item = task.items[id]
-        assert(Object.hasOwn(task.items, id) && taskItemValid(item), 'Invalid task progress')
+        assert(Object.hasOwn(task.items, id) && taskItemValid(item, review), 'Invalid task progress')
         assert(Object.hasOwn(state.mistakes, item.wordId), 'Invalid task word reference')
         if (item.wordBookId === null) {
           assert(kind === 'mistakes', 'Invalid task word reference')
@@ -239,8 +296,13 @@ export function validateState(state, version = SCHEMA_VERSION) {
             && Object.hasOwn(state.wordBooks, item.wordBookId)
             && Object.hasOwn(state.wordBooks[item.wordBookId].words, item.wordId), 'Invalid task word reference')
         }
-        if (['learning', 'extra-learning'].includes(kind)) assert(item.wordBookId === task.wordBookId, 'Invalid task word reference')
+        if (['learning', 'extra-learning'].includes(kind) || review) assert(item.wordBookId === task.wordBookId, 'Invalid task word reference')
+        if (review) {
+          assert(state.wordBooks[item.wordBookId].words[item.wordId].review !== null, 'Invalid review word reference')
+          if (item.settlement) assert(item.settlement.revision < task.sessionRevision, 'Invalid review settlement')
+        }
       }
+      if (review) validateReviewHistory(task)
   }
   return state
 }
@@ -281,7 +343,7 @@ export function freeze(value) {
 // Validate the entire v1 snapshot before adding fields; never fabricate lost events.
 export function migrateState(state) {
   if (state?.version === SCHEMA_VERSION) return validateState(state)
-  assert([1, 2, 3, 4].includes(state?.version), 'Invalid or unsupported learning snapshot')
+  assert([1, 2, 3, 4, 5].includes(state?.version), 'Invalid or unsupported learning snapshot')
   validateState(state, state.version)
   const next = JSON.parse(JSON.stringify(state))
   if (next.version === 1) {

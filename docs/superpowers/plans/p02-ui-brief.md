@@ -1,0 +1,33 @@
+# P-02 review interface task — approved 2026-09-30
+
+Workspace C:/Users/29864/.codex/worktrees/p02-today-review/单词学习软件, branch codex/p02-today-review. Own src/components/**, src/App.test.jsx if needed. Do not change data engine; report interface gaps to controller. No push/merge/Obsidian, no further agents. Detailed report docs/p02-ui-report.md, scoped commits after tests.
+
+## Context and boundaries
+
+React app has current LearningSession (daily and extra), Today's overview, shared SpeechButton/speechPlayback, StudyTransition, LoadingIndicator. P-02 adds review based on user's approved existing learning flow. Preserve incumbent navy/paper visual truth and current behavior. Controller ran Impeccable context once; use existing CSS and tokens, not a new design system. Read craft-floor at C:/Users/29864/.codex/skills/impeccable/reference/craft-floor.md before editing UI. User has already specified design, skip new visual interviews.
+
+Implement review by narrowly generalizing shared LearningSession with review mode and lightweight ReviewSession wrapper; extract StudySessionContent only if necessary, not required as an artificial abstraction. Do not duplicate entire LearningSession code. Existing LearningSession public props/tests remain supported. Data APIs from data task: ensureTodayReview(expectedDate,expectedSettings), prepareReviewChoice(token,options), submitReviewChoice(token,selectedWord|null), revealReviewDetails(token), submitReviewFeedback(token,feedback), correctReviewFeedback(token), advanceReview(token); token {date,itemId,revision}. Eligible correction helper canCorrectReviewFeedback(task) in reviewSession.js; overview getReviewOverview read contract in data report. Review method review-guided-recall, known max4; inspect final report for actual fields.
+
+## Review behavior
+
+New due words initially count2. Count0=English four-choice (reuse pool/learningChoices/correct-wrong feedback); count1=English word + untranslated example; count2=English word only; count3=Chinese meaning only (no English word, phonetic, English example, English-bearing aria-label/title/data text, replay button or pronunciation button), NO word autoplay or queued old sound. Count4 completed. Unknown clears0 and all4 stages repeat; fuzzy subtract1 minimum0; positive adds1. All counts/feedback/correction persisted by engine. Review does not change original learned status. First choice results show original feedback -> Continue reveals details. All self feedback shows full details before Next. Fourth round hides English only while view question; after saved feedback details show full word/meaning/example/phrases/pronunciation. Restore count/stage/details without reinit2.
+
+Review correction follows learning: most recent correct positive in revealed details eligible once, lowers count1, 4→3 reopens word and rolls back settlement; show correction confirmation; no duplicate from refresh. Progress display 0–4 (daily stays0–3). Detail next-review date only if completed; incomplete detail says continue review rather than presenting future date as settled.
+
+Autoplay: rounds0/2 English word, round1 word then English example, details word then example. Reuse serialized current speech owner/scope incl manual playback cancels auto, switching cancels old, audio load result gates playback, entry/title/body finished before auto. Stage3 question must cancel and never read word; no replay control to leak it. Audio failure does not block progress.
+
+Initial review setup call creates/reconciles task before detail loading, then load book chosen by saved task, loadWords(task ids), no learning order for assignment. Loading failure leaves assignment persistent and retryable. Completed/empty task can display offline without requiring book/audio network. Incompatible legacy method:null review shows clear message + return, never rewrites it. Empty states distinguish missing settings, no learned words/no due, task complete, load failure. Errors date changed/turn changed/elsewhere/safe lock unavailable/settings changed -> sensible Chinese recovery actions. Midnight stops stale submissions and restart today review (not daily learning). Two tabs explicit reload; saving failure leaves question.
+
+Start TodayLearningPage review via existing enter('review')180ms overview exit and240ms entry, do not bypass timing/double click guard. Return restores focus to correct review entry; preserve daily extra confirmation and focus. Focus mode hide main nav as daily. No extra-review task creation on finished reentry.
+
+Return confirm if unfinished, remaining count exact; cancel/Escape restore focus and progress; confirm cancels speech and async lifecycle then smooth240ms exit. No new task/choice or speech can happen due to late responses after confirmed exit, including initial task creation guard. Keep pending writes that already started completing normally.
+
+Overview concise real counts: saved task book vs changed settings must be explicit, completed/task total, current due, unassigned. Before reconciliation mark projected due if needsReconciliation. Current task max setting1–100 but no silently expanded assignment. Replace existing misleading hardcoded '尚无到期复习' note with real due and approved rule wording. Don't imply '优先完成全部到期' if limit prevents it; say overdue first within set quantity. Preserve surrounding plan recommendations.
+
+UI motion: reuse 160ms out240ms in StudyTransition for whole-word changes, feedback body transitions with stable title in English stages. Chinese stage title changes to meaning (not stale English); don't render hidden answer in interactive DOM. Entry180/240 exit240; reduced motion immediate. LoadingIndicator real200ms delayed loading only, immediate hide on errors, no artificial wait.
+
+## Verification
+
+TDD first add failing ReviewSession/ReviewAudioExit/StudyEntry/TodayLearningPage tests (real LearningStoreProvider + memory storage + inline book; mock browser audio only when necessary). Run red before production edits. Cover initial2→3→4, chinese hidden/no sound, fuzzy rollback, unknown full four rounds and choices, save/reopen details/correction4→3, completed/empty offline, persisted task retry, stale midnight, failure/conflict, cancel/confirm exit+late load, actual counts/setbook snapshot, focus, entrydoubleclick/reducedmotion. Run focused component regressions including existing LearningSession, ExtraLearning, LearningAudio, LearningFeedbackExit and StudyEntry. Controller will run full suite after task review; do not run full concurrently.
+
+Detailed report includes files, actual design reuse, RED/GREEN command/results, commit(s), unresolved issues. Return <=15 lines DONE/DONE_WITH_CONCERNS etc. Report paths absolute.

@@ -57,8 +57,8 @@ test('shows exam progress, word-book progress, both actions, and all six recomme
   expect(screen.getByRole('button', { name: '今日复习' })).toBeInTheDocument()
 
   expect(screen.getByText('学习方法建议')).toBeInTheDocument()
-  expect(screen.getByText('使用间隔学习与主动回忆；复习时优先完成全部到期词')).toBeInTheDocument()
-  expect(screen.getByText('尚无到期复习；开始复习后按当天到期词更新')).toBeInTheDocument()
+  expect(screen.getByText('使用间隔学习与主动回忆；在设定数量内优先复习逾期词')).toBeInTheDocument()
+  expect(screen.getByText(/当前到期 0 词/)).toBeInTheDocument()
   expect(screen.getByText('考试目标需要')).toBeInTheDocument()
   expect(screen.getByText('每天 455 词')).toBeInTheDocument()
   expect(screen.getByText('系统建议')).toBeInTheDocument()
@@ -109,7 +109,7 @@ test('prompts for a future date when deadline plans are unavailable', () => {
   expect(screen.getByText('请先设置未来的考试日期。')).toBeInTheDocument()
 })
 
-test('requires learning settings and leaves review disabled', async () => {
+test('requires learning and review settings', async () => {
   const user = userEvent.setup()
   const store = createStore()
   renderPage(store)
@@ -120,7 +120,32 @@ test('requires learning settings and leaves review disabled', async () => {
 
   await user.click(screen.getByRole('button', { name: '今日复习' }))
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-  expect(screen.getByRole('status')).toHaveTextContent('复习流程将在下一阶段启用')
+  expect(await screen.findByRole('alert')).toHaveTextContent('请先在设置中选择词书和每日复习数量')
+})
+
+test('overview shows true due, assigned and unassigned counts and saved task book after settings change', () => {
+  const store = createStore(); configure(store, { dailyReviewWords: 2 })
+  for (const word of ['alpha', 'beta', 'gamma']) store.addToReview('cet4', word, { nextReviewAt: new Date(2026, 8, 11).toISOString() })
+  store.ensureTodayReview()
+  store.updateSettings({ todayWordBookId: 'cet4-high-frequency', dailyReviewWords: 1 })
+  renderPage(store)
+  expect(screen.getByText(/当前到期 3 词/)).toBeInTheDocument()
+  expect(screen.getByText(/已完成 0 \/ 2 词/)).toBeInTheDocument()
+  expect(screen.getByText(/尚未分配 1 词/)).toBeInTheDocument()
+  expect(screen.getByText(/复习沿用已保存词书：CET-4/)).toBeInTheDocument()
+})
+
+test('overview labels projected historical due counts without writing or silently assigning them', () => {
+  let raw = null, date = new Date(2026, 8, 9, 12)
+  const storage = { getItem: () => raw, setItem: (_, value) => { raw = value } }
+  const store = createLearningStore({ storage, now: () => date }); configure(store)
+  store.ensureTask('learning', ['alpha'], 'cet4')
+  for (let i = 0; i < 3; i++) store.recordFeedback('learning', 'alpha', 'known')
+  const snapshot = JSON.parse(raw); snapshot.wordBooks.cet4.words.alpha.review = null; raw = JSON.stringify(snapshot)
+  date = new Date(2026, 8, 11, 12); store.reload(); const before = raw
+  renderPage(store)
+  expect(screen.getByText(/预计到期 1 词；开始复习时核对历史记录/)).toBeInTheDocument()
+  expect(raw).toBe(before); expect(store.getTask('review')).toBeNull()
 })
 
 test('reveals the research sources without presenting them as a fixed word-count prescription', async () => {
