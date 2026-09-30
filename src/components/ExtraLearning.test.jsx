@@ -165,6 +165,28 @@ test('loading missing word details does not create an extra batch', async () => 
   expect(env.store.getExtraLearningProcess()).toBe(null)
 })
 
+test('exit during delayed next-batch details does not create another extra batch', async () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: false }))
+  const env = setup()
+  env.store.ensureExtraLearning(words.map(item => item.word))
+  finish(env.store, () => env.store.getExtraLearning())
+  const previous = env.store.getExtraLearningProcess()
+  env.storage.setItem.mockClear()
+  const ensure = vi.spyOn(env.store, 'ensureExtraLearning')
+  let resolveDetails
+  const loadWords = vi.fn(() => new Promise(resolve => { resolveDetails = resolve }))
+  env.loader.mockResolvedValueOnce({ ...env.session, loadWords })
+  env.show()
+  await userEvent.setup().click(screen.getByRole('button', { name: '今日学习' }))
+  await waitFor(() => expect(loadWords).toHaveBeenCalledOnce())
+  await userEvent.setup().click(screen.getByRole('button', { name: '返回主界面' }))
+  expect(document.querySelector('.learning-session')).toHaveClass('is-exiting')
+  await act(async () => { resolveDetails(words.slice(11)); await Promise.resolve() })
+  expect(ensure).not.toHaveBeenCalled()
+  expect(env.store.getExtraLearningProcess()).toBe(previous)
+  expect(env.storage.setItem).not.toHaveBeenCalled()
+})
+
 test('extra midnight notice starts todays fixed task while preserving old extra history', async () => {
   const env = setup(), user = userEvent.setup()
   env.store.ensureExtraLearning(words.map(item => item.word))

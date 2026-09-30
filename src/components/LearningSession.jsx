@@ -49,6 +49,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const speechScope = useRef({})
   const speechConfig = useRef(null)
   const pending = useRef(false)
+  const exitRequested = useRef(false)
   const heading = useRef(null)
   const body = useRef(null)
   const footer = useRef(null)
@@ -76,6 +77,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   }, [store])
 
   useEffect(() => {
+    if (exitRequested.current) return
     let cancelled = false
     async function start() {
       let loading = true
@@ -102,43 +104,46 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
         const details = await session.loadWords(ids)
         const words = new Map(details.map(item => [wordId(item.word), item]))
         if (ids.some(id => !words.has(id))) throw Error('Word book details are missing')
-        if (cancelled) return
+        if (cancelled || exitRequested.current) return
         loading = false
         if (store.getToday() !== date) throw Error('Learning date changed')
         if (mode !== 'extra' && !existing && store.getSnapshot() !== initial) throw Error('Learning settings changed')
+        if (exitRequested.current) return
         const savedTask = mode === 'extra'
           ? existing ?? await store.ensureExtraLearning(ids, date)
           : existing ?? await store.ensureTodayLearning(book.id, ids, date, initial.settings, { id: 'guided-recall', rulesVersion: 1 })
-        if (cancelled) return
+        if (cancelled || exitRequested.current) return
         setLoaded({ date: savedTask?.date ?? date, taskId: savedTask?.taskId, book, session, words })
         setClock(store.getToday())
       } catch (failure) {
-        if (!cancelled) setError(messageFor(failure, loading))
+        if (!cancelled && !exitRequested.current) setError(messageFor(failure, loading))
       } finally {
-        if (!cancelled) setBusy(false)
+        if (!cancelled && !exitRequested.current) setBusy(false)
       }
     }
     start()
     return () => { cancelled = true }
-  }, [store, loadBook, attempt, mode])
+  }, [store, loadBook, attempt, mode, exiting])
 
   useEffect(() => {
-    if (mode === 'extra' && loaded && task && task.taskId === loaded.taskId && task.currentItemId === null
+    if (!exitRequested.current && mode === 'extra' && loaded && task && task.taskId === loaded.taskId && task.currentItemId === null
       && !extra.exhausted && !busy && !error && !expired) {
       setLoaded(null)
       setAttempt(value => value + 1)
     }
-  }, [mode, loaded, task, extra, busy, error, expired])
+  }, [mode, loaded, task, extra, busy, error, expired, exiting])
 
   useEffect(() => {
+    if (exitRequested.current) return
     if (mode === 'extra' && store.getExtraLearningProcess()?.exhausted) return
     let cancelled = false
     setAudioError(false)
-    loadAudioManifest().then(value => { if (!cancelled) setAudio(value) }).catch(() => { if (!cancelled) setAudioError(true) })
+    loadAudioManifest().then(value => { if (!cancelled && !exitRequested.current) setAudio(value) }).catch(() => { if (!cancelled && !exitRequested.current) setAudioError(true) })
     return () => { cancelled = true }
-  }, [attempt, mode, store])
+  }, [attempt, mode, store, exiting])
 
   useEffect(() => {
+    if (exitRequested.current) return
     if (!loaded || !task || task.method.id !== 'guided-recall' || task.view !== 'question' || task.choice || !task.currentItemId) return
     if (task.kind === 'extra-learning' && task.taskId !== loaded.taskId) return
     const progress = task.items[task.currentItemId]
@@ -149,19 +154,20 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
       setBusy(true)
       try {
         const pool = await loaded.session.loadWords((await loaded.session.loadLearningOrder()).slice(0, 80))
-        if (cancelled) return
+        if (cancelled || exitRequested.current) return
         const options = learningChoices(loaded.words.get(progress.wordId), pool)
         loading = false
+        if (exitRequested.current) return
         await store.prepareLearningChoice(turnToken(task), options)
-      } catch (failure) { if (!cancelled) setError(messageFor(failure, loading)) }
-      finally { setBusy(false) }
+      } catch (failure) { if (!cancelled && !exitRequested.current) setError(messageFor(failure, loading)) }
+      finally { if (!exitRequested.current) setBusy(false) }
     }
     prepare()
     return () => { cancelled = true }
-  }, [loaded, task, store])
+  }, [loaded, task, store, exiting])
 
   const act = async (feedback, action = 'self') => {
-    if (pending.current || !task) return
+    if (pending.current || exitRequested.current || !task) return
     pending.current = true
     setBusy(true)
     setError('')
@@ -183,6 +189,7 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
     }
   }
   const restart = () => {
+    if (exitRequested.current) return
     try {
       store.reload()
       if (expired) setMode('learning')
@@ -194,14 +201,15 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const exitTask = task ?? (mode === 'extra' ? store.getExtraLearning() : store.getTask('learning'))
   const remaining = exitTask ? Object.values(exitTask.items).filter(entry => !entry.completed && !entry.removed).length : 0
   const beginExit = () => {
-    if (pending.current) return
+    if (pending.current || exitRequested.current) return
     pending.current = true
+    exitRequested.current = true
     cancelSpeechScope(speechScope.current)
     setConfirmExit(false)
     setExiting(true)
   }
   const requestExit = () => {
-    if (pending.current) return
+    if (pending.current || exitRequested.current) return
     if (remaining > 0) setConfirmExit(true)
     else beginExit()
   }

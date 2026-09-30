@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterAll, beforeAll, expect, test, vi } from 'vitest'
 import { readFileSync } from 'node:fs'
@@ -114,6 +114,46 @@ test('exit with no saved task does not invent remaining words', async () => {
   await userEvent.setup().click(screen.getByRole('button', { name: '返回主界面' }))
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   await waitFor(() => expect(exit).toHaveBeenCalledOnce())
+})
+
+test('exit during delayed daily details does not create a task', async () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: false }))
+  const writes = vi.fn()
+  const store = createLearningStore({ storage: { getItem: () => null, setItem: writes } })
+  store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1 })
+  writes.mockClear()
+  const ensure = vi.spyOn(store, 'ensureTodayLearning')
+  const session = createInlineWordBookSession(words)
+  let resolveDetails
+  const loadWords = vi.fn(() => new Promise(resolve => { resolveDetails = resolve }))
+  const exit = vi.fn()
+  render(<LearningStoreProvider store={store}><LearningSession onExit={exit} loadBook={async () => ({ ...session, loadWords })} /></LearningStoreProvider>)
+  await waitFor(() => expect(loadWords).toHaveBeenCalledOnce())
+  await userEvent.setup().click(screen.getByRole('button', { name: '返回主界面' }))
+  expect(document.querySelector('.learning-session')).toHaveClass('is-exiting')
+  expect(exit).not.toHaveBeenCalled()
+  await act(async () => { resolveDetails([words[0]]); await Promise.resolve() })
+  expect(ensure).not.toHaveBeenCalled()
+  expect(store.getTask('learning')).toBe(null)
+  expect(writes).not.toHaveBeenCalled()
+})
+
+test('exit during delayed choice preparation preserves the existing guided task', async () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: false }))
+  const env = setup({ guided: true })
+  const original = env.store.getTask('learning')
+  const session = createInlineWordBookSession(words)
+  let resolveOrder
+  const loadLearningOrder = vi.fn(() => new Promise(resolve => { resolveOrder = resolve }))
+  const prepare = vi.spyOn(env.store, 'prepareLearningChoice')
+  render(<LearningStoreProvider store={env.store}><LearningSession onExit={vi.fn()} loadBook={async () => ({ ...session, loadLearningOrder })} /></LearningStoreProvider>)
+  await waitFor(() => expect(loadLearningOrder).toHaveBeenCalledOnce())
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  await user.click(screen.getByRole('button', { name: '确认退出' }))
+  await act(async () => { resolveOrder(words.map(word => word.word)); await Promise.resolve() })
+  expect(prepare).not.toHaveBeenCalled()
+  expect(env.store.getTask('learning')).toBe(original)
 })
 
 test('option colors and reserved English transition together at 350ms with a reduced-motion override', () => {

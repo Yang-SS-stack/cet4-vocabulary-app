@@ -202,6 +202,21 @@ test('waits for a delayed manifest then plays its file once despite prepared cho
   expect(synthesis.speak).not.toHaveBeenCalled()
 })
 
+test('manifest arriving during confirmed exit does not start speech', async () => {
+  vi.stubGlobal('matchMedia', () => ({ matches: false }))
+  let resolve
+  loadAudioManifest.mockReturnValue(new Promise(done => { resolve = done }))
+  const env = setup()
+  env.show()
+  await screen.findByRole('button', { name: '首字母' })
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  await user.click(screen.getByRole('button', { name: '确认退出' }))
+  await act(async () => { resolve({ words: { alpha: { 'en-GB': '/alpha-gb' } } }); await Promise.resolve() })
+  expect(sounds).toHaveLength(0)
+  expect(synthesis.speak).not.toHaveBeenCalled()
+})
+
 test('failed manifest uses the requested accent, and unavailable voices can be manually retried', async () => {
   loadAudioManifest.mockRejectedValue(Error('network'))
   synthesis.getVoices = () => [{ lang: 'en-US' }]
