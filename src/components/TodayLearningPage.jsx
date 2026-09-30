@@ -1,4 +1,5 @@
 import LearningSession from './LearningSession'
+import ReviewSession from './ReviewSession'
 import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
 import {
@@ -12,6 +13,9 @@ import './TodayLearningPage.css'
 function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
   const { store, snapshot } = useLearningStore()
   const { settings } = snapshot
+  const reviewOverview = store.getReviewOverview()
+  const reviewTask = store.getTask('review')
+  const reviewBook = wordBooks.find(book => book.id === reviewOverview.bookId)
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
   const completedWords = completedWordCount(snapshot, selectedWordBook.id)
   const daysRemaining = daysUntilExam(settings.examDate, now)
@@ -28,11 +32,13 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
   const [confirmExtra, setConfirmExtra] = useState(false)
   const [returned, setReturned] = useState(false)
   const entryButton = useRef(null)
+  const reviewButton = useRef(null)
+  const returnMode = useRef('learning')
   const [pendingEntry, setPendingEntry] = useState(null)
   const entryRequested = useRef(false)
   const focusCallback = useRef(onFocusModeChange)
   useEffect(() => { focusCallback.current = onFocusModeChange }, [onFocusModeChange])
-  useEffect(() => { if (!learning && returned) entryButton.current?.focus({ preventScroll: true }) }, [learning, returned])
+  useEffect(() => { if (!learning && returned) (returnMode.current === 'review' ? reviewButton : entryButton).current?.focus({ preventScroll: true }) }, [learning, returned])
 
   useEffect(() => {
     if (!pendingEntry) return
@@ -46,6 +52,7 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
   const enter = mode => {
     if (entryRequested.current) return
     entryRequested.current = true
+    returnMode.current = mode
     if (!window.matchMedia || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setLearning(mode)
       onFocusModeChange?.(true)
@@ -64,15 +71,12 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
         if (store.getExtraLearningProcess()) enter('extra')
         else setConfirmExtra(true)
       } else enter('learning')
-    } else { setLearning('review'); onFocusModeChange?.(true) }
+    } else enter('review')
   }
 
   const exit = () => { entryRequested.current = false; setReturned(true); setLearning(false); onFocusModeChange?.(false) }
   if (learning === 'learning' || learning === 'extra') return <LearningSession loadBook={loadBook} onExit={exit} initialMode={learning} animateEntry />
-  if (learning === 'review') return <section className="learning-session" aria-label="今日复习">
-    <header className="learning-session__header"><button type="button" onClick={exit}>返回主界面</button><p>今日复习</p></header>
-    <div className="learning-session__empty"><h2>复习尚未启用</h2><p role="status">复习流程将在下一阶段启用。</p></div>
-  </section>
+  if (learning === 'review') return <ReviewSession loadBook={loadBook} onExit={exit} animateEntry />
 
   return (
     <section className={`learning-overview ${pendingEntry ? 'is-leaving' : returned ? 'is-entering' : ''}`} inert={Boolean(pendingEntry)} aria-label="今日学习概览">
@@ -86,12 +90,13 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
 
       <div className="learning-overview__actions">
         <button ref={entryButton} type="button" onClick={() => start('learning')}>今日学习</button>
-        <button type="button" onClick={() => start('review')}>今日复习</button>
+        <button ref={reviewButton} type="button" onClick={() => start('review')}>今日复习</button>
       </div>
 
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
 
-      <RecommendationCard recommendation={recommendation} settings={settings} />
+      {reviewTask && <p className="learning-overview__flow-status">复习沿用已保存词书：{reviewBook?.label ?? reviewTask.wordBookId}。{reviewTask.wordBookId !== settings.todayWordBookId ? '当前设置已更换词书，今天的复习任务保持不变。' : ''}已完成 {reviewOverview.completedCount} / {reviewOverview.taskCount} 词；尚未分配 {reviewOverview.unassignedCount} 词。</p>}
+      <RecommendationCard recommendation={recommendation} settings={settings} reviewOverview={reviewOverview} />
       {confirmExtra && <ExtraLearningConfirmation onCancel={() => setConfirmExtra(false)} onConfirm={() => {
         setConfirmExtra(false)
         // The date may have changed while the confirmation was open.
@@ -127,7 +132,7 @@ function StatusMetric({ label, value }) {
   )
 }
 
-function RecommendationCard({ recommendation, settings }) {
+function RecommendationCard({ recommendation, settings, reviewOverview }) {
   const deadlinePlan = recommendation.deadlineDailyWords === null
     ? '设置未来考试日期后计算'
     : `每天 ${formatNumber(recommendation.deadlineDailyWords)} 词`
@@ -149,7 +154,7 @@ function RecommendationCard({ recommendation, settings }) {
       </header>
 
       <dl className="learning-recommendation__rows">
-        <RecommendationRow label="学习方法建议" value="使用间隔学习与主动回忆；复习时优先完成全部到期词" note="尚无到期复习；开始复习后按当天到期词更新" />
+        <RecommendationRow label="学习方法建议" value="使用间隔学习与主动回忆；在设定数量内优先复习逾期词" note={`${reviewOverview.needsReconciliation ? '预计' : '当前'}到期 ${reviewOverview.dueCount} 词${reviewOverview.needsReconciliation ? '；开始复习时核对历史记录' : ''}${!reviewOverview.taskCount ? `；尚未分配 ${reviewOverview.unassignedCount} 词` : ''}`} />
         <RecommendationRow label="考试目标需要" value={deadlinePlan} />
         <RecommendationRow label="系统建议" value={systemPlan} />
         <RecommendationRow label="用户当前设置" value={current} />
