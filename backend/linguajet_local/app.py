@@ -42,6 +42,8 @@ def create_app(*,state=None,clock=None):
             response=await dispatch(request)
         except Exception:
             response=reject(500,'INTERNAL_ERROR')
+        if allowed and response.status_code==429:
+            headers['Access-Control-Expose-Headers']='Retry-After'
         response.headers.update(headers)
         return response
     async def dispatch(request: Request):

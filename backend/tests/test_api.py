@@ -251,3 +251,17 @@ def test_isolated_surrogate_code_is_invalid_credential(escaped_code,caplog):
     assert escaped_code not in response.text+caplog.text
     assert s.session_token is None
     assert c.post('/api/v1/session',json={'connectionCode':s.connection_code},headers=HEAD).status_code==200
+
+def test_allowed_origin_rate_limit_exposes_retry_after():
+    c,s,n=setup()
+    for _ in range(10):
+        assert c.post('/api/v1/session',json={'connectionCode':'invalid'},headers=HEAD).status_code==401
+    response=c.post('/api/v1/session',json={},headers=HEAD)
+    assert response.status_code==429
+    assert response.headers['access-control-allow-origin']==HEAD['origin']
+    assert response.headers.get('access-control-expose-headers')=='Retry-After'
+    assert int(response.headers['retry-after'])>0
+    forbidden=c.post('/api/v1/session',json={},headers={**HEAD,'origin':'https://evil.example'})
+    assert forbidden.status_code==403
+    assert 'access-control-allow-origin' not in forbidden.headers
+    assert 'access-control-expose-headers' not in forbidden.headers
