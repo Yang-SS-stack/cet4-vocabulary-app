@@ -257,3 +257,55 @@ it('handles a nonserializable request without network or secret error text', asy
   await expect(client.check(cyclic)).rejects.toMatchObject({ code: 'INVALID_JSON' })
   expect(fetchImpl).toHaveBeenCalledTimes(2)
 })
+it('notifies health success exactly once without arguments before pairing', async () => {
+  const { client, fetchImpl } = setup(health(), pair())
+  const onHealthChecked = vi.fn(() => expect(fetchImpl).toHaveBeenCalledTimes(1))
+  await client.connect(code, { onHealthChecked })
+  expect(onHealthChecked.mock.calls).toEqual([[]])
+  expect(fetchImpl).toHaveBeenCalledTimes(2)
+})
+it('does not notify invalid health', async () => {
+  const { client } = setup(response({ service: 'wrong', contractVersion: 1 }))
+  const onHealthChecked = vi.fn()
+  await expect(client.connect(code, { onHealthChecked })).rejects.toMatchObject({ code: 'RESPONSE_INVALID' })
+  expect(onHealthChecked).not.toHaveBeenCalled()
+})
+it('does not notify health cancelled before its late valid response', async () => {
+  const late = deferred(); const { client } = setup(() => late.promise)
+  const controller = new AbortController(); const onHealthChecked = vi.fn()
+  const pending = client.connect(code, { signal: controller.signal, onHealthChecked }); controller.abort()
+  await expect(pending).rejects.toMatchObject({ code: 'CANCELLED' })
+  late.resolve(health()); await Promise.resolve(); expect(onHealthChecked).not.toHaveBeenCalled()
+})
+it('does not pair when the health callback disconnects', async () => {
+  const { client, fetchImpl } = setup(health(), pair())
+  await expect(client.connect(code, { onHealthChecked: () => client.disconnect() })).rejects.toMatchObject({ code: 'CANCELLED', restartRequired: false })
+  expect(fetchImpl).toHaveBeenCalledTimes(1)
+  expect(client.getState().status).toBe('disconnected')
+})
+it('does not pair the old operation when the health callback starts a new connection', async () => {
+  const { client, fetchImpl } = setup(health(), health(), pair())
+  let second
+  const first = client.connect(code, { onHealthChecked: () => { second = client.connect(code) } })
+  await expect(first).rejects.toMatchObject({ code: 'CANCELLED' })
+  await second
+  expect(fetchImpl.mock.calls.map(([url]) => url.split('/').at(-1))).toEqual(['health', 'health', 'session'])
+  expect(client.getState().status).toBe('connected')
+})
+it('safely rejects a throwing health callback without pairing or exposing its error', async () => {
+  const { client, fetchImpl } = setup(health(), pair())
+  await expect(client.connect(code, { onHealthChecked: () => { throw new Error('SECRET_CALLBACK') } })).rejects.toMatchObject({ code: 'CONNECTION_FAILED', restartRequired: false })
+  expect(fetchImpl).toHaveBeenCalledTimes(1)
+  expect(JSON.stringify(client.getState())).not.toContain('SECRET_CALLBACK')
+})
+it('health completion near sixty seconds starts a full independent five second pairing bound', async () => {
+  vi.useFakeTimers(); const lateHealth = deferred(); const { client, fetchImpl } = setup(() => lateHealth.promise, () => new Promise(() => {}))
+  const onHealthChecked = vi.fn()
+  const pending = client.connect(code, { onHealthChecked })
+  const assertion = expect(pending).rejects.toMatchObject({ code: 'TIMEOUT', restartRequired: true })
+  await vi.advanceTimersByTimeAsync(59999); expect(onHealthChecked).not.toHaveBeenCalled()
+  lateHealth.resolve(health()); await vi.advanceTimersByTimeAsync(0)
+  expect(onHealthChecked).toHaveBeenCalledOnce(); expect(fetchImpl).toHaveBeenCalledTimes(2)
+  await vi.advanceTimersByTimeAsync(4999); expect(client.getState().status).toBe('connecting')
+  await vi.advanceTimersByTimeAsync(1); await assertion
+})

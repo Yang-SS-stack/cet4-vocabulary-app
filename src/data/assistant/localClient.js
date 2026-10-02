@@ -117,7 +117,7 @@ export function createLocalClient({ fetchImpl = globalThis.fetch, now = () => ne
       signal.removeEventListener('abort', onAbort)
     }
   }
-  async function connect(connectionCode, { signal } = {}) {
+  async function connect(connectionCode, { signal, onHealthChecked } = {}) {
     const operation = begin(signal)
     sessionToken = null
     update('connecting', null)
@@ -125,6 +125,9 @@ export function createLocalClient({ fetchImpl = globalThis.fetch, now = () => ne
     try {
       const health = await send(operation, '/health', { method: 'GET' }, 60000)
       if (!exact(health, ['service', 'contractVersion']) || health.service !== 'linguajet-local' || health.contractVersion !== 1) throw failure('RESPONSE_INVALID')
+      assertActive(operation)
+      // Trusted synchronous phase notification: no credentials or response data.
+      try { onHealthChecked?.() } catch { throw failure('CONNECTION_FAILED') }
       assertActive(operation)
       if (!credential(connectionCode)) throw failure('CONNECTION_CODE_INVALID')
       pairingStarted = true
