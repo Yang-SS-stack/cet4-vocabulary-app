@@ -450,3 +450,7 @@ R2 自检要求：全文不再安排导出导入或真实迁移；不再要求�
 - [MDN：CORS 与预检](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS)。
 - [FastAPI：接口测试](https://fastapi.tiangolo.com/tutorial/testing/)。
 - [Pydantic：严格模式](https://docs.pydantic.dev/latest/concepts/strict_mode/)，额外字段、重复键和算术关系仍需显式处理。
+
+## 实施授权恢复记录（2026-10-02）
+
+用户明确回复：『好的，批准当前完整 P-03-A 方案并开始制作』。完整 R2、工程参数和实施流程已批准，已进入隔离分支制作；正文中形成审核稿时的『待审核／本轮不实施』状态由本条更新，需求和参数保持。线上发布和 Obsidian 写入仍未批准。实际实施计划为 docs/superpowers/plans/2026-10-02-p03a-implementation.md；实际结果以随后验收报告为准，不把实施授权视为验收通过。
