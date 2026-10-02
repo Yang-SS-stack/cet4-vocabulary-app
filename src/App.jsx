@@ -11,6 +11,7 @@ import VocabularyPage from './components/VocabularyPage'
 import { initialSetupComplete } from './components/setupDraft'
 import { LEARNING_STORAGE_KEY, LearningStoreProvider, useLearningStore } from './data/learning'
 import { createBrowserLearningStore } from './data/learning/browserStore'
+import { AssistantProvider } from './data/assistant/react'
 
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 const RECOVERY_CLOSE_DURATION = 180
@@ -147,19 +148,21 @@ function LearningApp({ learningStore }) {
   return (
     <>
       <LearningStoreProvider store={learningStore}>
-        <LearningSurface
-          selectedPage={selectedPage}
-          isNavOpen={isNavOpen}
-          onNavToggle={() => setIsNavOpen((isOpen) => !isOpen)}
-          onPageChange={setSelectedPage}
-          logoRef={setParticleLogoElement}
-          pageTitleRef={pageTitleRef}
-          isBrandConcealed={showSplash}
-          isTransitionPrepared={!isLearningRevealed}
-        />
-        {showInitialSetup && (
-          <InitialLearningSetup onClose={closeInitialSetup} />
-        )}
+        <AssistantProvider>
+          <LearningSurface
+            selectedPage={selectedPage}
+            isNavOpen={isNavOpen}
+            onNavToggle={() => setIsNavOpen((isOpen) => !isOpen)}
+            onPageChange={setSelectedPage}
+            logoRef={setParticleLogoElement}
+            pageTitleRef={pageTitleRef}
+            isBrandConcealed={showSplash}
+            isTransitionPrepared={!isLearningRevealed}
+          />
+          {showInitialSetup && (
+            <InitialLearningSetup onClose={closeInitialSetup} />
+          )}
+        </AssistantProvider>
       </LearningStoreProvider>
       {showSplash && (
         <SplashScreen

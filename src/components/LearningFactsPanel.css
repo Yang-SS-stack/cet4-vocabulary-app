@@ -1,0 +1,10 @@
+.learning-facts { border-top: 1px solid #dcd6c7; margin-top: 2rem; padding-top: 1.4rem; color: #526176; line-height: 1.7; }
+.learning-facts h2, .learning-facts h3 { color: #394555; font-weight: 600; }
+.learning-facts__tabs { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; }
+.learning-facts button { background: #fffdf8; color: #76591e; border: 1px solid #dcd6c7; border-radius: .4rem; padding: .5rem .8rem; cursor: pointer; }
+.learning-facts button[aria-pressed=true] { border-color: #76591e; font-weight: 600; }
+.learning-facts button:disabled { opacity: .5; cursor: default; }
+.learning-facts summary { cursor: pointer; color: #76591e; padding: .5rem 0; }
+.learning-facts :focus-visible { outline: 2px solid #76591e; outline-offset: 3px; }
+.learning-facts__evidence pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .8rem; }
+.learning-facts__evidence li { overflow-wrap: anywhere; border-bottom: 1px solid #e4dfd2; padding-bottom: .5rem; }

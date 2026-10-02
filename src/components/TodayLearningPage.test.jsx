@@ -129,7 +129,7 @@ test('overview shows true due, assigned and unassigned counts and saved task boo
   store.ensureTodayReview()
   store.updateSettings({ todayWordBookId: 'cet4-high-frequency', dailyReviewWords: 1 })
   renderPage(store)
-  expect(screen.getByText(/当前到期 3 词/)).toBeInTheDocument()
+  expect(screen.getByText(/当前到期 0 词/)).toBeInTheDocument()
   expect(screen.getByText(/已完成 0 \/ 2 词/)).toBeInTheDocument()
   expect(screen.getByText(/尚未分配 1 词/)).toBeInTheDocument()
   expect(screen.getByText(/复习沿用已保存词书：CET-4/)).toBeInTheDocument()

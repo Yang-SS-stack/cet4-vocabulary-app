@@ -2,31 +2,21 @@ import LearningSession from './LearningSession'
 import ReviewSession from './ReviewSession'
 import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
-import {
-  buildLearningRecommendation,
-  completedWordCount,
-  daysUntilExam,
-} from '../data/learning/recommendations'
+import { useLearningFacts } from '../data/assistant/react'
+import LearningFactsPanel from './LearningFactsPanel'
 import { wordBooks } from '../data/wordBooks'
 import './TodayLearningPage.css'
 
-function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
+function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
   const { store, snapshot } = useLearningStore()
   const { settings } = snapshot
   const reviewOverview = store.getReviewOverview()
   const reviewTask = store.getTask('review')
   const reviewBook = wordBooks.find(book => book.id === reviewOverview.bookId)
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
-  const completedWords = completedWordCount(snapshot, selectedWordBook.id)
-  const daysRemaining = daysUntilExam(settings.examDate, now)
-  const recommendation = buildLearningRecommendation({
-    totalWords: selectedWordBook.totalWords,
-    completedWords,
-    daysRemaining,
-    dailyNewWords: settings.dailyNewWords ?? 0,
-    dailyReviewWords: settings.dailyReviewWords ?? 0,
-    dailyStudyMinutes: settings.dailyStudyMinutes ?? 0,
-  })
+  const { facts, error: factsError } = useLearningFacts({ now })
+  const recommendation = facts?.ruleRecommendation ?? null
+  const daysRemaining = recommendation?.daysRemaining ?? null
   const [status, setStatus] = useState('')
   const [learning, setLearning] = useState(false)
   const [confirmExtra, setConfirmExtra] = useState(false)
@@ -84,7 +74,7 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
         <StatusMetric label="距离考试" value={formatDays(daysRemaining)} />
         <StatusMetric
           label={`${selectedWordBook.label} 剩余`}
-          value={`${formatNumber(recommendation.remainingWords)} / ${formatNumber(selectedWordBook.totalWords)} 词`}
+          value={recommendation ? `${formatNumber(recommendation.remainingWords)} / ${formatNumber(selectedWordBook.totalWords)} 词` : '词书资料不完整或不一致，无法计算'}
         />
       </div>
 
@@ -96,7 +86,8 @@ function TodayLearningPage({ now = new Date(), loadBook, onFocusModeChange }) {
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
 
       {reviewTask && <p className="learning-overview__flow-status">复习沿用已保存词书：{reviewBook?.label ?? reviewTask.wordBookId}。{reviewTask.wordBookId !== settings.todayWordBookId ? '当前设置已更换词书，今天的复习任务保持不变。' : ''}已完成 {reviewOverview.completedCount} / {reviewOverview.taskCount} 词；尚未分配 {reviewOverview.unassignedCount} 词。</p>}
-      <RecommendationCard recommendation={recommendation} settings={settings} reviewOverview={reviewOverview} />
+      {recommendation ? <RecommendationCard recommendation={recommendation} settings={settings} reviewLoad={facts.reviewLoad} /> : <p>规则建议无法计算：请选择词书并核对词书资料。</p>}
+      <LearningFactsPanel facts={facts} error={factsError} />
       {confirmExtra && <ExtraLearningConfirmation onCancel={() => setConfirmExtra(false)} onConfirm={() => {
         setConfirmExtra(false)
         // The date may have changed while the confirmation was open.
@@ -132,12 +123,13 @@ function StatusMetric({ label, value }) {
   )
 }
 
-function RecommendationCard({ recommendation, settings, reviewOverview }) {
-  const deadlinePlan = recommendation.deadlineDailyWords === null
-    ? '设置未来考试日期后计算'
+function RecommendationCard({ recommendation, settings, reviewLoad }) {
+  const unavailableDeadline = recommendation.daysRemaining !== null && recommendation.daysRemaining <= 0 ? '不适用：考试日期为今天或已过去' : '设置未来考试日期后计算'
+  const deadlinePlan = recommendation.remainingWords === 0 ? '当前词书新词已完成' : recommendation.deadlineDailyWords === null
+    ? unavailableDeadline
     : `每天 ${formatNumber(recommendation.deadlineDailyWords)} 词`
-  const systemPlan = recommendation.recommendedDailyWords === null
-    ? '设置未来考试日期后计算'
+  const systemPlan = recommendation.remainingWords === 0 ? '当前词书新词已完成' : recommendation.recommendedDailyWords === null
+    ? unavailableDeadline
     : `每天 ${formatNumber(recommendation.recommendedDailyWords)} 词`
   const current = settings.dailyNewWords === null
     && settings.dailyReviewWords === null
@@ -150,15 +142,15 @@ function RecommendationCard({ recommendation, settings, reviewOverview }) {
     <article className="learning-recommendation" aria-labelledby="learning-recommendation-title">
       <header className="learning-recommendation__header">
         <h2 id="learning-recommendation-title">学习建议</h2>
-        <p>研究原则、计划估算和你的选择分别呈现</p>
+        <p>规则建议、计划估算和你的选择分别呈现</p>
       </header>
 
       <dl className="learning-recommendation__rows">
-        <RecommendationRow label="学习方法建议" value="使用间隔学习与主动回忆；在设定数量内优先复习逾期词" note={`${reviewOverview.needsReconciliation ? '预计' : '当前'}到期 ${reviewOverview.dueCount} 词${reviewOverview.needsReconciliation ? '；开始复习时核对历史记录' : ''}${!reviewOverview.taskCount ? `；尚未分配 ${reviewOverview.unassignedCount} 词` : ''}`} />
+        <RecommendationRow label="学习方法建议" value="使用间隔学习与主动回忆；在设定数量内优先复习逾期词" note={`${reviewLoad.needsReconciliation ? '预计' : '当前'}到期 ${reviewLoad.dueCount ?? '无法计算'} 词${reviewLoad.needsReconciliation ? '；开始复习时核对历史记录' : ''}；当前词书任务外积压 ${reviewLoad.outsideTodayTaskCount ?? '无法计算'} 词`} />
         <RecommendationRow label="考试目标需要" value={deadlinePlan} />
         <RecommendationRow label="系统建议" value={systemPlan} />
         <RecommendationRow label="用户当前设置" value={current} />
-        <RecommendationRow label="预计每日学习时间" value={`约 ${formatNumber(recommendation.estimatedMinutes)} 分钟`} />
+        <RecommendationRow label="预计每日学习时间" value={recommendation.estimatedMinutes === null ? '无法估算：每日新词或复习数量未设置' : `约 ${formatNumber(recommendation.estimatedMinutes)} 分钟`} note="按当前设置估算，新词每词 60 秒、复习每词 20 秒；不含额外学习，不是实际计时。" />
         <RecommendationRow label="计划结果" value={planResult} />
       </dl>
 
@@ -182,9 +174,11 @@ function RecommendationCard({ recommendation, settings, reviewOverview }) {
 }
 
 function formatPlanResult(recommendation, settings) {
+  if (recommendation.remainingWords === 0) return '当前词书新词已完成。'
   const required = recommendation.deadlineDailyWords
   if (required === null) return '请先设置未来的考试日期。'
-  if ((settings.dailyNewWords ?? 0) >= required) return '当前设置可以在考试前完成。'
+  if (settings.dailyNewWords === null) return '每日新词数量尚未设置，无法判断计划结果。'
+  if (settings.dailyNewWords >= required) return '当前设置可以在考试前完成。'
   return `当前设置可能无法在考试前完成，建议每天至少学习 ${formatNumber(required)} 个新词。`
 }
 

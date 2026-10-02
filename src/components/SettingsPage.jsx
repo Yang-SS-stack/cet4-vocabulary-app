@@ -5,6 +5,7 @@ import { estimateDailyStudyMinutes } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
 import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
+import LocalBackendCheckPanel from './LocalBackendCheckPanel'
 import './SettingsPage.css'
 
 const FIELD_SWITCH_DURATION = 220
@@ -204,6 +205,7 @@ function SettingsPage({ now = new Date() }) {
           {isSaving ? '正在保存…' : '保存设置'}
         </button>
       </footer>
+      <LocalBackendCheckPanel />
     </section>
   )
 }
