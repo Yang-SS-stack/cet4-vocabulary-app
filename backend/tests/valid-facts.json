@@ -1,0 +1,127 @@
+{
+  "contractVersion": 1,
+  "requestId": "af7f248a-308c-4492-9b34-0c2b8c1e9ba0",
+  "basis": {
+    "localDate": "2026-10-02",
+    "generatedAt": "2026-10-02T04:00:00.000Z",
+    "timeZone": "Asia/Shanghai",
+    "selectedWordBookId": "a",
+    "snapshotToken": "e0bd4c59200287d16c9f7f46c3445d5b4870e473c4e16626c446b5200844b8bd",
+    "factsToken": "eeb648dbda66aa87fc9ec94bcb7e7d33a84c09c899b72b312065b26fe46d7eae"
+  },
+  "settings": {
+    "examDate": "2026-10-20",
+    "todayWordBookId": "a",
+    "dailyNewWords": 2,
+    "dailyReviewWords": 3,
+    "dailyStudyMinutes": 10,
+    "pronunciation": "en-GB",
+    "mistakeStudyWords": null
+  },
+  "book": {
+    "id": "a",
+    "label": "Synthetic A",
+    "totalWords": 20,
+    "completedWords": 0
+  },
+  "today": {
+    "learning": {
+      "wordBookId": "a",
+      "assignedWords": 2,
+      "completedWords": 0,
+      "remainingWords": 2
+    },
+    "review": null,
+    "extraLearning": null
+  },
+  "reviewLoad": {
+    "wordBookId": "a",
+    "dueCount": 0,
+    "outsideTodayTaskCount": 0,
+    "needsReconciliation": false
+  },
+  "history": {
+    "today": {
+      "fromDate": "2026-10-02",
+      "toDate": "2026-10-02",
+      "wordBookId": "a",
+      "completions": {
+        "learningWords": 0,
+        "extraLearningWords": 0,
+        "reviewWords": 0
+      },
+      "selfAssessments": {
+        "known": 0,
+        "fuzzy": 0,
+        "unknown": 0
+      },
+      "choices": {
+        "correct": 0,
+        "incorrect": 0,
+        "showAnswer": 0
+      },
+      "corrections": {
+        "fromSelfAssessment": 0,
+        "fromChoice": 0
+      },
+      "effectiveSelfAssessments": {
+        "known": 0,
+        "fuzzy": 0,
+        "unknown": 0
+      },
+      "coverage": {
+        "eventCompleteness": "not-provable",
+        "taskCount": 1,
+        "tasksWithoutEvents": 1,
+        "legacyTaskCount": 0
+      },
+      "issues": []
+    },
+    "last7Days": {
+      "fromDate": "2026-09-26",
+      "toDate": "2026-10-02",
+      "wordBookId": "a",
+      "completions": {
+        "learningWords": 0,
+        "extraLearningWords": 0,
+        "reviewWords": 0
+      },
+      "selfAssessments": {
+        "known": 0,
+        "fuzzy": 0,
+        "unknown": 0
+      },
+      "choices": {
+        "correct": 0,
+        "incorrect": 0,
+        "showAnswer": 0
+      },
+      "corrections": {
+        "fromSelfAssessment": 0,
+        "fromChoice": 0
+      },
+      "effectiveSelfAssessments": {
+        "known": 0,
+        "fuzzy": 0,
+        "unknown": 0
+      },
+      "coverage": {
+        "eventCompleteness": "not-provable",
+        "taskCount": 1,
+        "tasksWithoutEvents": 1,
+        "legacyTaskCount": 0
+      },
+      "issues": []
+    }
+  },
+  "ruleRecommendation": {
+    "source": "rules",
+    "remainingWords": 20,
+    "daysRemaining": 18,
+    "deadlineDailyWords": 2,
+    "recommendedDailyWords": 2,
+    "exceedsDailyWordLimit": false,
+    "estimatedMinutes": 5,
+    "overloaded": false
+  }
+}

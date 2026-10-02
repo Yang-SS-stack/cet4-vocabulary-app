@@ -24,3 +24,10 @@ worktrees/
 *.njsproj
 *.sln
 *.sw?
+
+# Isolated Python backend and task scratch
+backend/.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.superpowers/sdd/
