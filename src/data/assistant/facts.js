@@ -47,20 +47,28 @@ function period(tasks, fromDate, toDate, wordBookId, catalogMismatch) {
           completed.set(key, field)
           if (result.completions[field] !== null) result.completions[field]++
         } else {
-          issue('completion-source-conflict')
-          result.completions[field] = null
+          evidence.anomalies.push({ code: 'duplicate-completion', taskIdentity, itemId: item.itemId })
         }
       }
     }
-    const revisions = new Map(), ordered = [], conflictedRevisions = new Set()
+    const revisions = new Map(), ordered = [], conflictedRevisions = new Set(), variants = new Map(), eventRows = new Map()
     const affected = new Set()
     const distribution = event => event.source === 'self-assessment' ? 'selfAssessments' : event.source === 'guided-choice' ? 'choices' : 'corrections'
     let lastRevision = -1
     for (const event of events) {
+      const signature = content(event)
+      const seen = variants.get(event.revision) ?? new Set()
+      if (seen.has(signature)) {
+        issue('duplicate-event'); evidence.anomalies.push({ code: 'duplicate-event', taskIdentity, revision: event.revision }); continue
+      }
+      seen.add(signature); variants.set(event.revision, seen)
+      const row = { taskIdentity, date: task.date, kind: task.kind, wordBookId: task.wordBookId, ...event }
+      evidence.events.push(row); eventRows.set(event, row)
       const previous = revisions.get(event.revision)
       if (previous) {
-        if (content(previous) === content(event)) { issue('duplicate-event'); evidence.anomalies.push({ code: 'duplicate-event', taskIdentity, revision: event.revision }); continue }
         issue('conflicting-event'); affected.add(distribution(previous)); affected.add(distribution(event)); conflictedRevisions.add(event.revision)
+        for (const variant of evidence.events) if (variant.taskIdentity === taskIdentity && variant.revision === event.revision) variant.conflictingEvent = true
+        evidence.anomalies.push({ code: 'conflicting-event', taskIdentity, revision: event.revision })
       } else {
         if (event.revision <= lastRevision) { issue('conflicting-event'); affected.add(distribution(event)) }
         revisions.set(event.revision, event); ordered.push(event)
@@ -69,8 +77,7 @@ function period(tasks, fromDate, toDate, wordBookId, catalogMismatch) {
     }
     const corrected = new Set()
     for (const event of ordered) {
-      const row = { taskIdentity, date: task.date, kind: task.kind, wordBookId: task.wordBookId, ...event }
-      evidence.events.push(row)
+      const row = eventRows.get(event)
       if (event.source === 'self-assessment') { if (result.selfAssessments) result.selfAssessments[event.feedback]++ }
       else if (event.source === 'guided-choice') { if (result.choices) result.choices[event.outcome === 'show-answer' ? 'showAnswer' : event.outcome]++ }
       else {

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { spawnSync } from 'node:child_process'
 import { buildLearningFacts } from './facts'
 import { context, setup, token, finish, anomalousTask } from './fixtures'
 describe('assistant facts', () => {
@@ -98,6 +99,21 @@ it('deduplicates identical events but nulls conflicting distributions only', () 
   expect(facts.history.today.selfAssessments).toBeNull()
   expect(facts.history.today.effectiveSelfAssessments).toBeNull()
   expect(facts.history.today.choices).toEqual({ correct: 0, incorrect: 0, showAnswer: 0 })
+  expect(facts.evidence.today.events.map(event => event.feedback)).toEqual(['known', 'fuzzy'])
+  expect(facts.evidence.today.events.every(event => event.conflictingEvent === true)).toBe(true)
+  expect(facts.evidence.today.anomalies).toContainEqual({ code: 'conflicting-event', taskIdentity: facts.evidence.today.events[0].taskIdentity, revision: 0 })
+})
+
+it('deduplicates same-source new-word completions while retaining both batch rows', () => {
+  const snapshot = anomalousTask(), task = snapshot.days['2026-10-02'].learning
+  task.items[task.currentItemId].completed = true
+  delete snapshot.days['2026-10-02'].learning
+  snapshot.extraLearning['2026-10-02'] = { batches: [1, 2].map(number => ({ ...task, kind: 'extra-learning', taskId: `extra-${number}` })), exhausted: false }
+  const facts = buildLearningFacts(snapshot, context)
+  expect(facts.history.today.completions).toEqual({ learningWords: 0, extraLearningWords: 1, reviewWords: 0 })
+  expect(facts.evidence.today.tasks).toHaveLength(2)
+  expect(facts.evidence.today.tasks.flatMap(row => row.completedItems)).toHaveLength(2)
+  expect(facts.evidence.today.anomalies).toContainEqual({ code: 'duplicate-completion', taskIdentity: facts.evidence.today.tasks[1].taskIdentity, itemId: task.currentItemId })
 })
 it('rejects missing correction targets and retains completion facts', () => {
   const snapshot = anomalousTask(), task = snapshot.days['2026-10-02'].learning
@@ -170,7 +186,7 @@ it('conflicting corrected target cannot yield an apparently certain correction c
   expect(buildLearningFacts(snapshot, context).history.today.corrections).toBeNull()
 })
 
-it.each([[2026, 0, 2, '2025-12-27'], [2026, 2, 10, '2026-03-04'], [2026, 10, 3, '2026-10-28']])('uses calendar days across year and DST transition dates', (year, month, day, from) => {
+it.each([[2026, 0, 2, '2025-12-27'], [2026, 2, 10, '2026-03-04'], [2026, 10, 3, '2026-10-28']])('uses calendar days across year and transition-date samples', (year, month, day, from) => {
   const { store } = setup()
   expect(buildLearningFacts(store.getSnapshot(), { ...context, now: new Date(year, month, day) }).history.last7Days.fromDate).toBe(from)
 })
@@ -207,4 +223,22 @@ it('invalidates distributions on contradictory revision order', () => {
   const facts = buildLearningFacts(snapshot, context)
   expect(facts.history.today.issues).toContain('conflicting-event')
   expect(facts.history.today.selfAssessments).toBeNull()
+})
+
+it.each([[2, 10, '2026-03-04', 143], [10, 3, '2026-10-28', 145]])('projects six calendar days in an actual DST timezone', (month, day, fromDate, hours) => {
+  const script = `
+    const { readFileSync } = require('node:fs'); const { resolve, dirname } = require('node:path');
+    function moduleUrl(path) {
+      const source = readFileSync(path, 'utf8').replace(/from '([^']+)'/g, (_, specifier) => "from '" + moduleUrl(resolve(dirname(path), specifier + '.js')) + "'");
+      return 'data:text/javascript;base64,' + Buffer.from(source).toString('base64');
+    }
+    import(moduleUrl(resolve('src/data/assistant/facts.js'))).then(({buildLearningFacts}) => {
+      const now = new Date(2026, ${month}, ${day});
+      const before = new Date(2026, ${month}, ${day} - 6);
+      const facts = buildLearningFacts({days:{},extraLearning:{},wordBooks:{},settings:{}}, {now, wordBooks:[],selectedWordBookId:null});
+      console.log(JSON.stringify({fromDate:facts.history.last7Days.fromDate,hours:(now-before)/3600000,zone:Intl.DateTimeFormat().resolvedOptions().timeZone}));
+    });`
+  const result = spawnSync(process.execPath, ['-e', script], { env: { ...process.env, TZ: 'America/New_York' }, encoding: 'utf8' })
+  expect(result.status, result.stderr).toBe(0)
+  expect(JSON.parse(result.stdout)).toEqual({ fromDate, hours, zone: 'America/New_York' })
 })
