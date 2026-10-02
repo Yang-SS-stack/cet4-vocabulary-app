@@ -240,3 +240,14 @@ def test_pair_shape_is_strict(body):
     c,s,n=setup()
     r=c.post('/api/v1/session',json=body,headers=HEAD)
     assert r.status_code==422 and 'private' not in r.text
+
+@pytest.mark.parametrize('escaped_code',[r'\ud800',r'\udfff'],ids=['high-surrogate','low-surrogate'])
+def test_isolated_surrogate_code_is_invalid_credential(escaped_code,caplog):
+    c,s,n=setup()
+    body='{"connectionCode":"'+escaped_code+'"}'
+    response=c.post('/api/v1/session',content=body,headers={**HEAD,'content-type':'application/json'})
+    assert response.status_code==401
+    assert response.json()['error']['code']=='CONNECTION_CODE_INVALID'
+    assert escaped_code not in response.text+caplog.text
+    assert s.session_token is None
+    assert c.post('/api/v1/session',json={'connectionCode':s.connection_code},headers=HEAD).status_code==200

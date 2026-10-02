@@ -22,7 +22,11 @@ class SessionState:
         queue.append(now)
         return None
     def pair(self, code):
-        if self.session_token is not None or self.clock()>=self.started_at+300 or not hmac.compare_digest(code.encode('utf-8'),self.connection_code.encode('ascii')): return None
+        try:
+            encoded_code=code.encode('ascii')
+        except UnicodeEncodeError:
+            return None
+        if self.session_token is not None or self.clock()>=self.started_at+300 or not hmac.compare_digest(encoded_code,self.connection_code.encode('ascii')): return None
         self.session_token=secrets.token_urlsafe(32)
         self.expires_at=self.clock()+43200
         return self.session_token
