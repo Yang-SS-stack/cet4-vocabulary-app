@@ -15,6 +15,12 @@ function shared() {
   }
 }
 
+test('assistant snapshot is synchronous and read-only without browser locks', () => {
+  const env = shared()
+  const store = createBrowserLearningStore({ ...env, locks: null })
+  expect(store.readAssistantSnapshot()).toEqual({ snapshot: store.getSnapshot(), raw: null })
+})
+
 test('concurrent browser writes serialize and stale tab must reload before retrying', async () => {
   const env = shared()
   const a = createBrowserLearningStore(env)

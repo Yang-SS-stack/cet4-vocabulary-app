@@ -5,7 +5,7 @@ import { assert, LEARNING_STORAGE_KEY } from './model'
 // The synchronous core is retained for deterministic tests and legacy callers.
 export function createBrowserLearningStore({ locks = globalThis.navigator?.locks, ...options } = {}) {
   const core = createLearningStore(options)
-  const reads = new Set(['getSnapshot', 'subscribe', 'getWord', 'getMistake', 'getTask',
+  const reads = new Set(['getSnapshot', 'readAssistantSnapshot', 'subscribe', 'getWord', 'getMistake', 'getTask',
     'getReviewLibrary', 'getDueReviews', 'getMistakes', 'getDailyStats', 'getToday', 'reload',
     'getExtraLearning', 'getExtraLearningProcess', 'getReviewOverview'])
   const writes = new Set(['updateSettings', 'ensureTodayLearning', 'prepareLearningChoice',

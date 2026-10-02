@@ -389,6 +389,10 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
       })
     },
     getSnapshot: () => state,
+    readAssistantSnapshot() {
+      assert(storage.getItem(LEARNING_STORAGE_KEY) === saved, 'Learning data changed elsewhere; reopen the store')
+      return { snapshot: state, raw: saved }
+    },
     subscribe(listener) {
       assert(typeof listener === 'function', 'Invalid subscriber')
       listeners.add(listener)
