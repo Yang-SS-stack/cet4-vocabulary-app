@@ -2,6 +2,8 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 import { createLearningStore, LearningStoreProvider } from '../data/learning'
+import { createBrowserLearningStore } from '../data/learning/browserStore'
+import { LEARNING_STORAGE_KEY } from '../data/learning/model'
 import { AssistantProvider } from '../data/assistant/react'
 import { createLocalClient } from '../data/assistant/localClient'
 import SettingsPage from './SettingsPage'
@@ -9,18 +11,21 @@ import TodayLearningPage from './TodayLearningPage'
 
 const start = new Date(2026, 9, 2, 12)
 afterEach(() => vi.useRealTimers())
-function setup({ permission = 'prompt', fetchImpl = vi.fn(), clock = () => start, permissionQuery, prepare = () => {} } = {}) {
+function setup({ permission = 'prompt', fetchImpl = vi.fn(), clock = () => start, permissionQuery, prepare = () => {}, browserStore = false } = {}) {
   let raw = null
   const storage = { getItem: () => raw, setItem: vi.fn((_, value) => { raw = value }) }
-  const store = createLearningStore({ storage, now: clock })
-  store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 2, dailyReviewWords: 3, dailyStudyMinutes: 10 })
-  prepare(store)
+  const core = createLearningStore({ storage, now: clock })
+  core.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 2, dailyReviewWords: 3, dailyStudyMinutes: 10 })
+  prepare(core)
+  // Synthetic tests run these synchronous mutations serially; no browser storage is used.
+  const locks = { request: async (_key, _options, update) => update() }
+  const store = browserStore ? createBrowserLearningStore({ storage, now: clock, locks }) : core
   storage.setItem.mockClear()
   const queryPermission = permissionQuery ?? vi.fn(async () => ({ state: permission }))
   const client = createLocalClient({ fetchImpl, now: clock })
   const content = page => <LearningStoreProvider store={store}><AssistantProvider client={client} clock={clock} queryPermission={queryPermission}>{page}</AssistantProvider></LearningStoreProvider>
   const view = render(content(<SettingsPage now={start} />))
-  return { store, storage, client, queryPermission, fetchImpl, navigate: page => view.rerender(content(page)) }
+  return { store, storage, locks, client, queryPermission, fetchImpl, navigate: page => view.rerender(content(page)) }
 }
 async function openAndConnect() {
   const user = userEvent.setup()
@@ -49,6 +54,82 @@ test('U01 rendering and opening stays read-only and offline until explicit conne
   expect(queryPermission).not.toHaveBeenCalled()
   expect(fetchImpl).not.toHaveBeenCalled()
   expect(storage.setItem).not.toHaveBeenCalled()
+})
+
+test.each(['unconnected', 'checked'])('storage conflict preserves the %s settings draft until explicit reread', async mode => {
+  const fetchImpl = service(request => request.invalidSyntheticExample
+    ? response({ error: { code: 'FACTS_INVALID', message: 'safe' } }, 422)
+    : response({ contractVersion: 1, requestId: request.requestId, snapshotToken: request.basis.snapshotToken, factsToken: request.basis.factsToken, status: 'validated', receivedAt: start.toISOString() }))
+  const { store, storage, locks } = setup({ fetchImpl, browserStore: true, prepare: core => core.updateSettings({ dailyNewWords: 20, dailyReviewWords: 20, dailyStudyMinutes: 90 }) })
+  const user = mode === 'checked' ? await openAndConnect() : userEvent.setup()
+  if (mode === 'checked') {
+    await waitFor(() => expect(screen.getByRole('button', { name: '检查当前学习摘要' })).toBeEnabled())
+    await user.click(screen.getByRole('button', { name: '检查当前学习摘要' }))
+    expect(await screen.findByText('连接正常，摘要格式检查通过')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '检查非法示例' }))
+    expect(await screen.findByText('错误输入已被拒绝')).toBeInTheDocument()
+  }
+  const oldSnapshot = store.getSnapshot()
+  const oldRaw = storage.getItem(LEARNING_STORAGE_KEY)
+  const otherTab = createBrowserLearningStore({ storage, now: () => start, locks })
+  await otherTab.updateSettings({ dailyNewWords: 40 })
+  const latestRaw = storage.getItem(LEARNING_STORAGE_KEY)
+  expect(latestRaw).not.toBe(oldRaw)
+  storage.setItem.mockClear()
+
+  act(() => window.dispatchEvent(new StorageEvent('storage', { key: LEARNING_STORAGE_KEY, oldValue: oldRaw, newValue: latestRaw })))
+  expect(screen.getByRole('button', { name: '每日新词数量 20 词' })).toBeInTheDocument()
+  if (mode === 'checked') {
+    expect(screen.getByText('记录或日期已变化，请重新检查')).toBeInTheDocument()
+    expect(screen.queryByText('连接正常，摘要格式检查通过')).not.toBeInTheDocument()
+    expect(screen.queryByText(/本次检查时间/)).not.toBeInTheDocument()
+    expect(screen.getByText('错误输入已被拒绝')).toBeInTheDocument()
+  }
+
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  const reread = await screen.findByRole('button', { name: '重新读取已保存设置' })
+  expect(screen.getByText(/记录已在其他页面更新/)).toBeInTheDocument()
+  expect(store.getSnapshot()).toBe(oldSnapshot)
+  expect(() => store.readAssistantSnapshot()).toThrow(/changed elsewhere/)
+  expect(storage.getItem(LEARNING_STORAGE_KEY)).toBe(latestRaw)
+  expect(storage.setItem).not.toHaveBeenCalled()
+  if (mode === 'checked') {
+    const calls = fetchImpl.mock.calls.length
+    await user.click(screen.getByRole('button', { name: '检查当前学习摘要' }))
+    expect(await screen.findByText('摘要无法生成，请重新载入记录后再检查。')).toBeInTheDocument()
+    expect(fetchImpl).toHaveBeenCalledTimes(calls)
+    expect(screen.getByText('错误输入已被拒绝')).toBeInTheDocument()
+  } else expect(fetchImpl).not.toHaveBeenCalled()
+
+  await user.click(reread)
+  expect(screen.getByRole('button', { name: '每日新词数量 40 词' })).toBeInTheDocument()
+  expect(screen.getByText('已读取最新设置，请核对后再保存。')).toBeInTheDocument()
+  expect(store.readAssistantSnapshot().raw).toBe(latestRaw)
+  expect(storage.setItem).not.toHaveBeenCalled()
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  expect(await screen.findByText('设置已保存。已开始的今日任务保持原计划。')).toBeInTheDocument()
+  expect(storage.setItem).toHaveBeenCalledOnce()
+  expect(JSON.parse(storage.getItem(LEARNING_STORAGE_KEY)).settings.dailyNewWords).toBe(40)
+})
+
+test('storage conflict makes the live Today facts unavailable without adopting the other tab state', async () => {
+  const { store, storage, locks, navigate, fetchImpl } = setup({ browserStore: true })
+  navigate(<TodayLearningPage />)
+  expect(screen.getByRole('heading', { name: '计划依据' })).toBeInTheDocument()
+  const oldSnapshot = store.getSnapshot()
+  const oldRaw = storage.getItem(LEARNING_STORAGE_KEY)
+  const otherTab = createBrowserLearningStore({ storage, now: () => start, locks })
+  await otherTab.updateSettings({ dailyNewWords: 40 })
+  const latestRaw = storage.getItem(LEARNING_STORAGE_KEY)
+  storage.setItem.mockClear()
+  act(() => window.dispatchEvent(new StorageEvent('storage', { key: LEARNING_STORAGE_KEY, oldValue: oldRaw, newValue: latestRaw })))
+  expect(await screen.findByText('学习记录已变化或无法读取，请重新载入页面。', {}, { timeout: 1500 })).toBeInTheDocument()
+  expect(screen.queryByRole('heading', { name: '计划依据' })).not.toBeInTheDocument()
+  expect(store.getSnapshot()).toBe(oldSnapshot)
+  expect(() => store.readAssistantSnapshot()).toThrow(/changed elsewhere/)
+  expect(storage.getItem(LEARNING_STORAGE_KEY)).toBe(latestRaw)
+  expect(storage.setItem).not.toHaveBeenCalled()
+  expect(fetchImpl).not.toHaveBeenCalled()
 })
 test('denied permission never pairs and accurately provides recovery', async () => {
   const { fetchImpl, queryPermission } = setup({ permission: 'denied' })
@@ -185,14 +266,19 @@ test.each(['book', 'feedback', 'storage', 'midnight', 'due-time'])('S04 %s chang
     change()
     return response({ contractVersion: 1, requestId: request.requestId, snapshotToken: request.basis.snapshotToken, factsToken: request.basis.factsToken, status: 'validated', receivedAt: start.toISOString() })
   }, now)
-  const { store } = setup({ fetchImpl, clock: () => now, prepare: store => {
+  const { store, storage } = setup({ fetchImpl, clock: () => now, prepare: store => {
     store.ensureTask('learning', ['alpha'], 'cet4')
     if (kind === 'due-time') store.addToReview('cet4', 'future', { nextReviewAt: new Date(start.getTime() + 1000).toISOString() })
   } })
   change = () => {
     if (kind === 'book') store.updateSettings({ todayWordBookId: 'cet4-high-frequency' })
     else if (kind === 'feedback') store.recordFeedback('learning', 'alpha', 'known')
-    else if (kind === 'storage') window.dispatchEvent(new StorageEvent('storage'))
+    else if (kind === 'storage') {
+      const oldRaw = storage.getItem(LEARNING_STORAGE_KEY)
+      const otherTab = createLearningStore({ storage, now: () => now })
+      otherTab.updateSettings({ dailyNewWords: 40 })
+      window.dispatchEvent(new StorageEvent('storage', { key: LEARNING_STORAGE_KEY, oldValue: oldRaw, newValue: storage.getItem(LEARNING_STORAGE_KEY) }))
+    }
     else now = kind === 'midnight' ? new Date(2026, 9, 3) : new Date(start.getTime() + 2000)
   }
   const user = await openAndConnect()

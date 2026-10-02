@@ -74,7 +74,8 @@ export function AssistantProvider({ children, client: suppliedClient, clock = ac
     const onStorage = event => {
       if (event.key !== null && event.key !== LEARNING_STORAGE_KEY) return
       invalidate()
-      try { store.reload() } catch { setMessage('学习记录已变化或无法读取，请重新载入页面。') }
+      // Keep the saved baseline so stale drafts/readers still fail the core guard.
+      // Only an explicit user reload may adopt another tab's persisted state.
     }
     window.addEventListener('storage', onStorage)
     const timer = window.setInterval(() => {
