@@ -31,4 +31,3 @@ class SessionState:
         if expected is None or not hmac.compare_digest(header.encode('utf-8'),expected.encode('ascii')): return 'SESSION_REQUIRED'
         if self.clock()>=self.expires_at: return 'SESSION_EXPIRED'
         return None
-

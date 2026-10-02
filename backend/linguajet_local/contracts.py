@@ -183,5 +183,3 @@ class Facts(StrictModel):
         return self
 class Pairing(StrictModel):
     connectionCode: str
-
-

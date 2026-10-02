@@ -85,5 +85,3 @@ def create_app(*,state=None,clock=None):
             return JSONResponse({'sessionToken':token,'expiresAt':utc(state.expires_at)})
         return JSONResponse({'contractVersion':1,'requestId':model.requestId,'snapshotToken':model.basis.snapshotToken,'factsToken':model.basis.factsToken,'status':'validated','receivedAt':received})
     return app
-
-
