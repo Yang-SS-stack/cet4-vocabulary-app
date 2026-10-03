@@ -21,6 +21,9 @@ def main():
     config=uvicorn.Config(create_app(state=state),host='127.0.0.1',port=5280,workers=1,reload=False,access_log=False,log_config=None,log_level='critical')
     try:
         uvicorn.Server(config).run(sockets=[sock])
+    except KeyboardInterrupt:
+        print('本机服务已停止。',flush=True)
+        return 0
     except Exception:
         print('本机服务无法继续运行，请重新启动。',file=sys.stderr)
         return 1
