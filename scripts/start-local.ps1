@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 $backendPath = Join-Path (Split-Path $PSScriptRoot -Parent) 'backend'
 $pythonPath = Join-Path $backendPath '.venv/Scripts/python.exe'
 if (-not (Test-Path -LiteralPath $pythonPath)) {

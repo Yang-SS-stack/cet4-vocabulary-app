@@ -155,3 +155,11 @@
 只读 GitHub API 对账确认部署 ID `6821609517`、准确提交 `7042da4913216f40759fc8192473541ee564d95c`、来源 `codex/p03a-local-foundation`；状态列表的最新项为 `success`，时间 `2026-10-03T01:28:06Z`，部署地址 https://yang-ss-stack.github.io/cet4-vocabulary-app/ 。工作流记录：https://github.com/Yang-SS-stack/cet4-vocabulary-app/actions/runs/37086109676/job/111096650847 。此前 main 版本的恢复依据仍保留在上一条记录。
 
 发布成功仅确认制作版前端已由 Pages 部署，不等于浏览器已加载该版本、真实学习记录已对账、本机 Python 服务已启动或 E01–E03 已通过。下一步由用户在原 Edge 学习入口查看页面，后续继续一次一个操作的人工验收；尚未合并 main，也不提前判定整体验收通过。
+
+### 2026-10-03：在线验收发现 Windows PowerShell 启动脚本编码问题
+
+用户按 README 启动命令操作时出现 `TerminatorExpectedAtEndOfString`、`MissingEndCurlyBrace`，服务未启动。在实际 Windows PowerShell `5.1.26100.9444` 中直接 ParseFile 稳定复现；同一内容显式按 UTF-8 解码再 ParseInput 无错误，确认原因是中文脚本为 UTF-8 无 BOM，被 Windows PowerShell 按旧编码误读。参考：https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_character_encoding?view=powershell-5.1 。
+
+增加真实 Windows PowerShell ParseFile 回归测试，修复前按相同两个错误失败；只为 `scripts/start-local.ps1` 添加 UTF-8 BOM，逐字节核对原内容保持不变，未改端口、服务逻辑或前端。修复后后端全套测试 `67 passed, 1 warning in 1.91s`；warning 为既有 Starlette/httpx 弃用提醒，未屏蔽或升级。
+
+这是本地制作分支修复，尚未上传；线上前端仍为此前部署的 `7042da4`，产品前端代码不受本次修改影响。下一步由用户重新执行原命令，确认实际启动输出；解析通过与后端测试不能替代完整脚本启动、真实配对或实体 Ctrl+C 验收。
