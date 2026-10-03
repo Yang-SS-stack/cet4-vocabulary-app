@@ -147,3 +147,11 @@
 发布前只读核对：GitHub 登记的最新 `github-pages` 部署 ID 为 `6768216121`，来源 `main`，准确提交 `3c54e55dca477cedab51106a29fa04a91c2697ff`；最新状态为 `success`，成功时间 `2026-09-30T19:27:46Z`。部署地址为 https://yang-ss-stack.github.io/cet4-vocabulary-app/ ，成功工作流记录为 https://github.com/Yang-SS-stack/cet4-vocabulary-app/actions/runs/36765673107/job/110059092773 。这些是 GitHub 部署记录，尚未代替浏览器实际验收。
 
 同时核对远端制作分支提交仍为 `7042da4913216f40759fc8192473541ee564d95c`；本地新增的验收文档提交未上传，不影响该制作版产品代码。该远端提交为拟测试发布版本；发布前若分支发生变化，重新记录准确提交。本轮未触发发布工作流、未合入 main、未启动本机后端，在线联调继续待验收。
+
+### 2026-10-03：制作分支在线发布成功，人工验收继续
+
+用户明确同意继续发布，并在 Edge 手动触发制作分支工作流。用户截图显示来源 `codex/p03a-local-foundation`、提交 `7042da4`，状态 `Success`，49 个测试文件、523 项测试全部通过，工作流总时长 1 分 29 秒。
+
+只读 GitHub API 对账确认部署 ID `6821609517`、准确提交 `7042da4913216f40759fc8192473541ee564d95c`、来源 `codex/p03a-local-foundation`；状态列表的最新项为 `success`，时间 `2026-10-03T01:28:06Z`，部署地址 https://yang-ss-stack.github.io/cet4-vocabulary-app/ 。工作流记录：https://github.com/Yang-SS-stack/cet4-vocabulary-app/actions/runs/37086109676/job/111096650847 。此前 main 版本的恢复依据仍保留在上一条记录。
+
+发布成功仅确认制作版前端已由 Pages 部署，不等于浏览器已加载该版本、真实学习记录已对账、本机 Python 服务已启动或 E01–E03 已通过。下一步由用户在原 Edge 学习入口查看页面，后续继续一次一个操作的人工验收；尚未合并 main，也不提前判定整体验收通过。
