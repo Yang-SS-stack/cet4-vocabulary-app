@@ -27,4 +27,4 @@ backend/.venv/Scripts/python.exe -m pytest backend/tests -q
 
 已验证的测试环境有一条兼容性弃用提醒：`StarletteDeprecationWarning: Using httpx with starlette.testclient is deprecated; install httpx2 instead.` 当前 Starlette 1.7.0 明确保留此兼容路径；测试正常通过，未增加无必要依赖或隐藏警告。维护时参考 https://starlette.dev/testclient/ 和 https://starlette.dev/release-notes/，更新需重新验证与锁定。
 
-2026-10-03：本轮制作分支已获授权在原 GitHub Pages 地址发布，并完成实际 Edge 154.0.4258.48 的在线与人工验收。已核对实际来源/响应标头、合法 200、固定非法 422、建立连接接口预检 204、权限拒绝/恢复、刷新丢连接与新码配对，以及实际停止后继续学习和刷新保留进度。权限恢复后没有弹窗，用户未单独确认停止提示原文；准确证据与自动测试的区别见 [验收记录](../docs/p03a-acceptance.md)。main 合并与正式版发布仍待确认；以后后端改动不能把本次结果预填为新版本验收。
+2026-10-03：本轮完成实际 Edge 154.0.4258.48 的在线与人工验收，用户随后确认合并和上传，后端源文件已合入 main；原 GitHub Pages 地址已从 main 正式发布前端。已核对实际来源/响应标头、合法 200、固定非法 422、建立连接接口预检 204、权限拒绝/恢复、刷新丢连接与新码配对，以及实际停止后继续学习和刷新保留进度。权限恢复后没有弹窗，用户未单独确认停止提示原文；准确证据与自动测试的区别见 [验收记录](../docs/p03a-acceptance.md)。main 合并后的后端复查为 69 passed、1 warning。源码已合并不代表 main 目录已安装独立环境，原制作工作区环境继续保留；以后后端改动不能把本次结果预填为新版本验收。
