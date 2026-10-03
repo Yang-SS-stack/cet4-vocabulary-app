@@ -48,6 +48,7 @@ test('Chinese restored question never starts audio even when a delayed manifest 
   let resolveAudio; loadAudioManifest.mockImplementation(() => new Promise(resolve => { resolveAudio = resolve }))
   const e = reviewFixture(); e.store.ensureTodayReview(); e.feedback('known'); e.advance(); e.show()
   await screen.findByRole('heading', { name: '首字母；开端' })
+  await waitFor(() => expect(resolveAudio).toBeTypeOf('function'))
   await act(async () => resolveAudio({ words: { alpha: { 'en-GB': '/alpha', example: '/example' } } }))
   expect(sounds).toHaveLength(0); expect(synthesis.speak).not.toHaveBeenCalled()
 })
