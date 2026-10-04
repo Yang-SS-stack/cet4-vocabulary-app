@@ -5,7 +5,7 @@ const OPTION_HEIGHT = 48
 const WHEEL_STEP_DELTA = 48
 const CLOSE_DURATION = 220
 
-function WheelColumn({ label, value, options, onChange }) {
+function WheelColumn({ label, value, options, onChange, onSettlingChange }) {
   const labelId = useId()
   const listRef = useRef(null)
   const optionRefs = useRef([])
@@ -14,6 +14,8 @@ function WheelColumn({ label, value, options, onChange }) {
   const selectedIndexRef = useRef(selectedIndex)
   const programmaticTopRef = useRef(null)
   const wheelDeltaRef = useRef(0)
+  const settlingCallbackRef = useRef(onSettlingChange)
+  settlingCallbackRef.current = onSettlingChange
   selectedIndexRef.current = selectedIndex
 
   useLayoutEffect(() => {
@@ -31,6 +33,7 @@ function WheelColumn({ label, value, options, onChange }) {
       if (event.deltaY === 0) return
       event.preventDefault()
       window.clearTimeout(scrollTimer.current)
+      settlingCallbackRef.current?.(false)
       const deltaScale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 180 : 1
       wheelDeltaRef.current += event.deltaY * deltaScale
       if (Math.abs(wheelDeltaRef.current) < WHEEL_STEP_DELTA) return
@@ -45,10 +48,14 @@ function WheelColumn({ label, value, options, onChange }) {
     return () => list.removeEventListener('wheel', handleWheel)
   }, [label, onChange, options])
 
-  useEffect(() => () => window.clearTimeout(scrollTimer.current), [])
+  useEffect(() => () => {
+    window.clearTimeout(scrollTimer.current)
+    settlingCallbackRef.current?.(false)
+  }, [])
 
   const selectOption = (option, index) => {
     window.clearTimeout(scrollTimer.current)
+    settlingCallbackRef.current?.(false)
     wheelDeltaRef.current = 0
     selectedIndexRef.current = index
     onChange(option.value, label)
@@ -73,7 +80,8 @@ function WheelColumn({ label, value, options, onChange }) {
   const handleScroll = (event) => {
     const scrollTop = event.currentTarget.scrollTop
     window.clearTimeout(scrollTimer.current)
-    if (scrollTop === programmaticTopRef.current) return
+    if (scrollTop === programmaticTopRef.current) { settlingCallbackRef.current?.(false); return }
+    settlingCallbackRef.current?.(true)
     wheelDeltaRef.current = 0
     scrollTimer.current = window.setTimeout(() => {
       const index = Math.min(options.length - 1, Math.max(0, Math.round(scrollTop / OPTION_HEIGHT)))
@@ -82,6 +90,7 @@ function WheelColumn({ label, value, options, onChange }) {
         selectedIndexRef.current = index
         onChange(option.value, label)
       }
+      settlingCallbackRef.current?.(false)
     }, 100)
   }
 
@@ -109,10 +118,15 @@ function WheelColumn({ label, value, options, onChange }) {
   )
 }
 
-function SettingsWheel({ label, value, displayValue, isOpen, isAnotherOpen = false, onToggle, onChange, columns }) {
+function SettingsWheel({ label, value, displayValue, isOpen, isAnotherOpen = false, onToggle, onChange, onSettlingChange, columns }) {
   const [isTrayMounted, setIsTrayMounted] = useState(isOpen)
   const [isClosing, setIsClosing] = useState(false)
   const trayRef = useRef(null)
+  const columnSettlementRef = useRef({})
+  const reportSettlement = (label, pending) => {
+    columnSettlementRef.current[label] = pending
+    onSettlingChange?.(Object.values(columnSettlementRef.current).some(Boolean))
+  }
 
   useLayoutEffect(() => {
     if (isOpen) {
@@ -150,7 +164,7 @@ function SettingsWheel({ label, value, displayValue, isOpen, isAnotherOpen = fal
       </button>
       {isTrayMounted && (isOpen || !isAnotherOpen) && (
         <div ref={trayRef} className={isClosing ? 'settings-wheel__tray is-closing' : 'settings-wheel__tray'} aria-hidden={isClosing || undefined} inert={isClosing || undefined}>
-          {columns.map((column) => <WheelColumn key={column.label} {...column} onChange={onChange} />)}
+          {columns.map((column) => <WheelColumn key={column.label} {...column} onChange={onChange} onSettlingChange={pending => reportSettlement(column.label, pending)} />)}
         </div>
       )}
     </section>

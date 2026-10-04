@@ -65,6 +65,19 @@ function configureFirstRun() {
   })
 }
 
+test('opens a dedicated maintenance page and returns focus to the Settings entry', async () => {
+  configureFirstRun()
+  const user = userEvent.setup()
+  render(<App />)
+  await enterApp(user)
+  await user.click(screen.getByRole('button', { name: '设置' }))
+  await user.click(screen.getByRole('button', { name: '开发验收与维护' }))
+  expect(screen.getByRole('heading', { name: '开发验收与维护', level: 1 })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '设置' })).toHaveAttribute('aria-current', 'location')
+  await user.click(screen.getByRole('button', { name: '返回设置' }))
+  await waitFor(() => expect(screen.getByRole('button', { name: '开发验收与维护' })).toHaveFocus())
+})
+
 test('opens one combined setup dialog only after the welcome animation finishes', async () => {
   const user = userEvent.setup()
   render(<App />)

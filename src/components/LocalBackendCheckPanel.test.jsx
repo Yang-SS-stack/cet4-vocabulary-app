@@ -8,6 +8,8 @@ import { AssistantProvider } from '../data/assistant/react'
 import { createLocalClient } from '../data/assistant/localClient'
 import SettingsPage from './SettingsPage'
 import TodayLearningPage from './TodayLearningPage'
+import LocalBackendCheckPanel from './LocalBackendCheckPanel'
+import StatisticsPage from './StatisticsPage'
 
 const start = new Date(2026, 9, 2, 12)
 afterEach(() => vi.useRealTimers())
@@ -23,7 +25,7 @@ function setup({ permission = 'prompt', fetchImpl = vi.fn(), clock = () => start
   storage.setItem.mockClear()
   const queryPermission = permissionQuery ?? vi.fn(async () => ({ state: permission }))
   const client = createLocalClient({ fetchImpl, now: clock })
-  const content = page => <LearningStoreProvider store={store}><AssistantProvider client={client} clock={clock} queryPermission={queryPermission}>{page}</AssistantProvider></LearningStoreProvider>
+  const content = page => <LearningStoreProvider store={store}><AssistantProvider client={client} clock={clock} queryPermission={queryPermission}>{page}<LocalBackendCheckPanel /></AssistantProvider></LearningStoreProvider>
   const view = render(content(<SettingsPage now={start} />))
   return { store, storage, locks, client, queryPermission, fetchImpl, navigate: page => view.rerender(content(page)) }
 }
@@ -114,7 +116,7 @@ test.each(['unconnected', 'checked'])('storage conflict preserves the %s setting
 
 test('storage conflict makes the live Today facts unavailable without adopting the other tab state', async () => {
   const { store, storage, locks, navigate, fetchImpl } = setup({ browserStore: true })
-  navigate(<TodayLearningPage />)
+  navigate(<StatisticsPage />)
   expect(screen.getByRole('heading', { name: '计划依据' })).toBeInTheDocument()
   const oldSnapshot = store.getSnapshot()
   const oldRaw = storage.getItem(LEARNING_STORAGE_KEY)

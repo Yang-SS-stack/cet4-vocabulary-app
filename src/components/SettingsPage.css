@@ -99,6 +99,10 @@
 
 .settings-page__save-button:disabled { cursor: wait; opacity: 0.62; }
 
+.settings-page__maintenance-entry { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); }
+.settings-page__maintenance-entry h2 { margin: 0; font-size: 22px; font-weight: 500; }
+.settings-page__maintenance-entry p { color: var(--ink-soft); line-height: 1.7; }
+
 @media (max-width: 640px) {
   .settings-page { margin-top: 30px; }
 

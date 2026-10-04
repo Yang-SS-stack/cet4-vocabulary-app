@@ -6,6 +6,8 @@ import LearningSetupModal from './components/LearningSetupModal'
 import ParticleTextTransition from './components/ParticleTextTransition'
 import SplashScreen from './components/SplashScreen'
 import SettingsPage from './components/SettingsPage'
+import StatisticsPage from './components/StatisticsPage'
+import DevelopmentMaintenancePage from './components/DevelopmentMaintenancePage'
 import TodayLearningPage from './components/TodayLearningPage'
 import VocabularyPage from './components/VocabularyPage'
 import { initialSetupComplete } from './components/setupDraft'
@@ -18,6 +20,22 @@ const RECOVERY_CLOSE_DURATION = 180
 
 function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, pageTitleRef, isBrandConcealed, isTransitionPrepared }) {
   const [focusMode, setFocusMode] = useState(false)
+  const maintenanceEntryRef = useRef(null)
+  const focusAfterNavigation = useRef(null)
+  const navigateFromMaintenance = page => {
+    focusAfterNavigation.current = page === '设置' ? 'entry' : 'title'
+    onPageChange(page)
+  }
+  useEffect(() => {
+    if (!focusAfterNavigation.current) return undefined
+    const destination = focusAfterNavigation.current
+    focusAfterNavigation.current = null
+    const timer = window.setTimeout(() => {
+      if (destination === 'entry') maintenanceEntryRef.current?.focus()
+      else pageTitleRef.current?.focus()
+    }, 0)
+    return () => window.clearTimeout(timer)
+  }, [selectedPage, pageTitleRef])
   return (
     <div className={[
       'app-shell',
@@ -37,6 +55,8 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
         <LineSidebar
           className="app-sidebar-nav"
           items={pages}
+          activeIndex={pages.indexOf(selectedPage === '开发验收与维护' ? '设置' : selectedPage)}
+          current={selectedPage === '开发验收与维护' ? 'location' : 'page'}
           accentColor="#76591e"
           textColor="#526176"
           markerColor="#b6a982"
@@ -72,6 +92,10 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
               <p className="page-lede">查找单词，浏览释义与例句</p>
             ) : selectedPage === '设置' ? (
               <p className="page-lede">按你的时间，调整之后的学习计划</p>
+            ) : selectedPage === '统计' ? (
+              <p className="page-lede">查看已记录的进度与反馈</p>
+            ) : selectedPage === '开发验收与维护' ? (
+              <p className="page-lede">按项目检查，查看依据与检查记录</p>
             ) : (
               <p className="page-lede">这一部分即将准备好</p>
             )}
@@ -84,7 +108,14 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
           ) : selectedPage === '词表' ? (
             <VocabularyPage />
           ) : selectedPage === '设置' ? (
-            <SettingsPage />
+            <SettingsPage maintenanceEntryRef={maintenanceEntryRef} onOpenMaintenance={() => {
+              focusAfterNavigation.current = 'title'
+              onPageChange('开发验收与维护')
+            }} />
+          ) : selectedPage === '统计' ? (
+            <StatisticsPage />
+          ) : selectedPage === '开发验收与维护' ? (
+            <DevelopmentMaintenancePage onReturnSettings={() => navigateFromMaintenance('设置')} onReturnToday={() => navigateFromMaintenance('今日学习')} />
           ) : (
             <section className="empty-panel" aria-label={`${selectedPage}内容`}>
               <span className="panel-number">A</span>

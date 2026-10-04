@@ -5,7 +5,7 @@ import { estimateDailyStudyMinutes } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
 import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
-import LocalBackendCheckPanel from './LocalBackendCheckPanel'
+import MaintenanceConfirmation from './MaintenanceConfirmation'
 import './SettingsPage.css'
 
 const FIELD_SWITCH_DURATION = 220
@@ -31,13 +31,17 @@ const MINUTE_OPTIONS = Array.from({ length: 48 }, (_, index) => ({
   label: `${(index + 1) * 5} 分钟`,
 }))
 
-function SettingsPage({ now = new Date() }) {
+function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef }) {
   const { store, snapshot } = useLearningStore()
   const initialDraftRef = useRef(null)
   if (initialDraftRef.current === null) initialDraftRef.current = createDraft(snapshot.settings, now)
 
   const [draft, setDraft] = useState(initialDraftRef.current)
   const draftRef = useRef(initialDraftRef.current)
+  const baselineRef = useRef(draftValue(initialDraftRef.current))
+  const [showMaintenanceConfirmation, setShowMaintenanceConfirmation] = useState(false)
+  const [isWheelSettling, setIsWheelSettling] = useState(false)
+  const [isFieldSwitching, setIsFieldSwitching] = useState(false)
   const [activeField, setActiveField] = useState(null)
   const [status, setStatus] = useState('')
   const [showOverload, setShowOverload] = useState(false)
@@ -81,6 +85,7 @@ function SettingsPage({ now = new Date() }) {
     }
 
     wheelSettlingRef.current = true
+    setIsFieldSwitching(true)
     window.clearTimeout(settleTimerRef.current)
     settleTimerRef.current = window.setTimeout(() => {
       wheelSettlingRef.current = false
@@ -88,7 +93,10 @@ function SettingsPage({ now = new Date() }) {
 
     const nextField = activeField === field ? null : field
     if (!prefersReducedMotion()) setActiveField(null)
-    scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, requestedFieldRef, setActiveField)
+    scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, requestedFieldRef, field => {
+      setActiveField(field)
+      setIsFieldSwitching(false)
+    })
   }
 
   const persist = async (confirmed) => {
@@ -109,6 +117,8 @@ function SettingsPage({ now = new Date() }) {
 
     try {
       await store.updateSettings(Object.fromEntries(FIELDS.map((field) => [field, currentDraft[field]])))
+      baselineRef.current = draftValue(currentDraft)
+      setConflict(false)
       setShowOverload(false)
       setStatus('设置已保存。已开始的今日任务保持原计划。')
     } catch (error) {
@@ -128,6 +138,7 @@ function SettingsPage({ now = new Date() }) {
     const wasSwitching = isSwitchingRef.current
     window.clearTimeout(switchTimerRef.current)
     isSwitchingRef.current = false
+    setIsFieldSwitching(false)
     const needsSettlement = activeField !== null || wheelSettlingRef.current || wasSwitching
     if (!needsSettlement) {
       persist(confirmed)
@@ -166,6 +177,7 @@ function SettingsPage({ now = new Date() }) {
               isAnotherOpen={activeField !== null && activeField !== field}
               onToggle={() => toggleField(field)}
               onChange={(value, columnLabel) => changeField(field, value, columnLabel)}
+              onSettlingChange={setIsWheelSettling}
             />
           )
         })}
@@ -194,6 +206,7 @@ function SettingsPage({ now = new Date() }) {
             store.reload()
             const latest = createDraft(store.getSnapshot().settings, now)
             draftRef.current = latest
+            baselineRef.current = draftValue(latest)
             setDraft(latest)
             setActiveField(null)
             setShowOverload(false)
@@ -205,9 +218,26 @@ function SettingsPage({ now = new Date() }) {
           {isSaving ? '正在保存…' : '保存设置'}
         </button>
       </footer>
-      <LocalBackendCheckPanel />
+      <section className="settings-page__maintenance-entry">
+        <h2>开发验收与维护</h2>
+        <p>连接与检查、记录依据和本标签页的检查记录。</p>
+        <button ref={maintenanceEntryRef} type="button" disabled={isSaving || isWheelSettling || isFieldSwitching || !onOpenMaintenance}
+          onClick={() => {
+            if (draftValue(draftRef.current) !== baselineRef.current) setShowMaintenanceConfirmation(true)
+            else onOpenMaintenance()
+          }}>开发验收与维护</button>
+      </section>
+      {showMaintenanceConfirmation && <MaintenanceConfirmation title="设置尚未保存" confirmLabel="放弃修改并进入"
+        onCancel={() => setShowMaintenanceConfirmation(false)}
+        onConfirm={() => { setShowMaintenanceConfirmation(false); onOpenMaintenance() }}>
+        <p>进入维护页面会放弃这里尚未保存的修改。已保存设置保持不变。</p>
+      </MaintenanceConfirmation>}
     </section>
   )
+}
+
+function draftValue(draft) {
+  return JSON.stringify(FIELDS.map(field => draft[field]))
 }
 
 function wheelProps(field, draft, now) {

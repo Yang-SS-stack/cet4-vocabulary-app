@@ -30,10 +30,10 @@ function createStore() {
   return store
 }
 
-function renderPage(store, now = new Date(2026, 8, 11, 10)) {
+function renderPage(store, now = new Date(2026, 8, 11, 10), onOpenMaintenance = vi.fn()) {
   return render(
     <LearningStoreProvider store={store}>
-      <SettingsPage now={now} />
+      <SettingsPage now={now} onOpenMaintenance={onOpenMaintenance} />
     </LearningStoreProvider>,
   )
 }
@@ -45,6 +45,71 @@ function summary(label) {
 afterEach(() => {
   vi.useRealTimers()
   vi.unstubAllGlobals()
+})
+
+test('opens maintenance from an unchanged normalized draft without saving', async () => {
+  const store = createStore()
+  const save = vi.spyOn(store, 'updateSettings')
+  const open = vi.fn()
+  renderPage(store, undefined, open)
+  await userEvent.setup().click(screen.getByRole('button', { name: '开发验收与维护' }))
+  expect(open).toHaveBeenCalledOnce()
+  expect(save).not.toHaveBeenCalled()
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(screen.queryByText('开发验收：本机后端')).not.toBeInTheDocument()
+})
+
+test('keeps unsaved settings on the default choice and Escape, and discards only explicitly', async () => {
+  const user = userEvent.setup()
+  const store = createStore()
+  const open = vi.fn()
+  renderPage(store, undefined, open)
+  await user.click(summary('发音偏好'))
+  await user.click(screen.getByRole('option', { name: '美音' }))
+  await user.click(screen.getByRole('button', { name: '开发验收与维护' }))
+  expect(screen.getByRole('button', { name: '留在设置' })).toHaveFocus()
+  await user.keyboard('{Escape}')
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(summary('发音偏好')).toHaveAccessibleName('发音偏好 美音')
+  expect(open).not.toHaveBeenCalled()
+  await user.click(screen.getByRole('button', { name: '开发验收与维护' }))
+  await user.click(screen.getByRole('button', { name: '放弃修改并进入' }))
+  expect(open).toHaveBeenCalledOnce()
+  expect(store.getSnapshot().settings.pronunciation).toBe('en-GB')
+})
+
+test('successful save updates the entry baseline and a failed save keeps the draft protected', async () => {
+  const user = userEvent.setup()
+  const store = createStore()
+  const open = vi.fn()
+  renderPage(store, undefined, open)
+  await user.click(summary('发音偏好'))
+  await user.click(screen.getByRole('option', { name: '美音' }))
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('设置已保存'))
+  await user.click(screen.getByRole('button', { name: '开发验收与维护' }))
+  expect(open).toHaveBeenCalledOnce()
+  open.mockClear()
+  await user.click(summary('发音偏好'))
+  await user.click(screen.getByRole('option', { name: '英音' }))
+  store.updateSettings = () => Promise.reject(Error('quota'))
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('保存失败'))
+  await user.click(screen.getByRole('button', { name: '开发验收与维护' }))
+  expect(screen.getByRole('dialog', { name: '设置尚未保存' })).toBeInTheDocument()
+  expect(open).not.toHaveBeenCalled()
+})
+
+test('disables maintenance while a scroll has an unsettled draft value', () => {
+  vi.useFakeTimers()
+  renderPage(createStore())
+  fireEvent.click(summary('每日新词数量'))
+  const listbox = screen.getByRole('listbox', { name: '每日新词数量' })
+  listbox.scrollTop = 9 * 48
+  fireEvent.scroll(listbox)
+  expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeDisabled()
+  act(() => vi.advanceTimersByTime(100))
+  expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeEnabled()
 })
 
 test('shows all seven editable settings as collapsed wheels', () => {

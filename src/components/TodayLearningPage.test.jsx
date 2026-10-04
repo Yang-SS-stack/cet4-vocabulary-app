@@ -160,3 +160,43 @@ test('reveals the research sources without presenting them as a fixed word-count
   expect(screen.getByRole('link', { name: /分散练习综述/ })).toHaveAttribute('href', 'https://pubmed.ncbi.nlm.nih.gov/16719566/')
   expect(screen.getByRole('link', { name: /主动回忆研究/ })).toHaveAttribute('href', 'https://doi.org/10.1126/science.1152408')
 })
+
+test('today retains necessary task progress and suggestions without full feedback or original record fields', () => {
+  const store = createStore()
+  configure(store)
+  store.ensureTask('learning', ['ability'], 'cet4')
+  renderPage(store)
+  expect(screen.getByRole('region', { name: '今日任务进度' })).toBeInTheDocument()
+  expect(screen.getByText('今日固定学习：CET-4 · 分配 1 · 完成 0 · 剩余 1 词')).toBeInTheDocument()
+  expect(screen.getByText('今日额外学习：尚未创建')).toBeInTheDocument()
+  expect(screen.getByText('学习建议')).toBeInTheDocument()
+  expect(screen.queryByText('已记录反馈')).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: '近 7 天' })).not.toBeInTheDocument()
+  expect(screen.queryByText('原始对账字段')).not.toBeInTheDocument()
+  expect(screen.getByText('今日固定复习：尚未创建')).toBeInTheDocument()
+})
+
+test('unconfigured learning suggestions preserve unavailable daily estimate', () => {
+  const store = createStore()
+  store.updateSettings({ todayWordBookId: 'cet4' })
+  renderPage(store)
+  expect(screen.getByText('无法估算：每日新词或复习数量未设置')).toBeInTheDocument()
+})
+
+test('today or past exam labels recommendations inapplicable and actual zero minutes separately', () => {
+  const store = createStore()
+  configure(store, { examDate: '2026-09-11', dailyNewWords: 0, dailyReviewWords: 0 })
+  renderPage(store)
+  expect(screen.getAllByText('不适用：考试日期为今天或已过去')).toHaveLength(2)
+  expect(screen.getByText('约 0 分钟')).toBeInTheDocument()
+})
+
+
+test('an existing review task keeps its original explanation without a duplicate progress row', () => {
+  const store = createStore()
+  configure(store)
+  store.ensureTask('review', [], 'cet4')
+  renderPage(store)
+  expect(screen.getByText(/复习沿用已保存词书：CET-4/)).toBeInTheDocument()
+  expect(screen.queryByText(/今日固定复习/)).not.toBeInTheDocument()
+})

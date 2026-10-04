@@ -1,0 +1,38 @@
+.development-maintenance { margin-top: 28px; min-width: 0; color: var(--ink); line-height: 1.7; }
+.development-maintenance :is(button, textarea) { font: inherit; }
+.development-maintenance button, .maintenance-confirmation button, .settings-page__maintenance-entry button {
+  padding: 9px 16px; min-height: 44px; border: 1px solid var(--line); border-radius: 8px;
+  color: var(--ink); background: var(--white); cursor: pointer;
+}
+.development-maintenance button:disabled, .settings-page__maintenance-entry button:disabled { opacity: .5; cursor: default; }
+.development-maintenance :is(button, textarea):focus-visible, .maintenance-confirmation button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.development-maintenance__return { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+.development-maintenance__overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; padding-block: 20px; border-block: 1px solid var(--line); }
+.development-maintenance h2 { margin: 0 0 10px; font-size: 24px; font-weight: 500; }
+.development-maintenance h3 { font-size: 17px; font-weight: 600; }
+.development-maintenance p { margin: 8px 0; }
+.development-maintenance dl { margin: 0; font-size: 14px; }
+.development-maintenance dl div { display: grid; grid-template-columns: 6em minmax(0, 1fr); gap: 12px; padding-block: 4px; }
+.development-maintenance dt { color: var(--ink-soft); }
+.development-maintenance dd { margin: 0; overflow-wrap: anywhere; }
+.development-maintenance__view { margin-top: 24px; }
+.development-maintenance__tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.development-maintenance__tabs [aria-selected="true"] { border-color: var(--gold); background: var(--paper-deep); }
+.development-maintenance__records { padding: 0; list-style: none; }
+.development-maintenance__records li { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-block: 18px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.development-maintenance__records h3 { margin: 0; }
+.development-maintenance__records button { flex-shrink: 0; }
+.development-maintenance__report { margin-top: 24px; }
+.development-maintenance__report textarea { display: block; width: 100%; box-sizing: border-box; margin-block: 14px; padding: 16px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--white); resize: vertical; overflow-wrap: anywhere; }
+.maintenance-confirmation { width: min(480px, calc(100vw - 48px)); box-sizing: border-box; padding: 26px; border: 1px solid var(--gold-soft); border-radius: 14px; background: var(--paper); color: var(--ink); }
+.maintenance-confirmation::backdrop { background: rgb(11 34 68 / .32); }
+.maintenance-confirmation h2 { font-size: 24px; margin-top: 0; }
+.maintenance-confirmation p { line-height: 1.7; }
+.maintenance-confirmation__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+@media (max-width: 640px) {
+  .development-maintenance__overview { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .development-maintenance__records li { align-items: stretch; flex-direction: column; gap: 10px; }
+  .development-maintenance__return, .maintenance-confirmation__actions { flex-direction: column; }
+  .development-maintenance__tabs { gap: 6px; }
+  .development-maintenance__tabs button { flex: 1; padding-inline: 9px; }
+}

@@ -1,0 +1,17 @@
+.learning-statistics {
+  width: 100%;
+  padding-top: 32px;
+  color: var(--ink, #0b2244);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.learning-statistics__intro, .learning-statistics__note {
+  color: var(--ink-soft, #526176);
+  margin: 0;
+}
+.learning-statistics .learning-facts { margin-top: 1.4rem; }
+.learning-statistics__note {
+  border-top: 1px solid var(--line, #dcd6c7);
+  padding-top: 1rem;
+  margin-top: 1.4rem;
+}

@@ -14,11 +14,14 @@ function LineSidebar({
   itemGap = 18,
   fontSize = 1,
   defaultActive = 0,
+  activeIndex: controlledIndex,
+  current = 'page',
   onItemClick,
   ariaHidden = false,
   className = '',
 }) {
-  const [activeIndex, setActiveIndex] = useState(defaultActive)
+  const [localActiveIndex, setActiveIndex] = useState(defaultActive)
+  const activeIndex = controlledIndex ?? localActiveIndex
 
   const handleItemClick = (index, label) => {
     setActiveIndex(index)
@@ -59,7 +62,7 @@ function LineSidebar({
               }`}
               type="button"
               onClick={() => handleItemClick(index, label)}
-              aria-current={activeIndex === index ? 'page' : undefined}
+              aria-current={activeIndex === index ? current : undefined}
             >
               {showIndex && (
                 <span className="line-sidebar__index">{String(index + 1).padStart(2, '0')}</span>

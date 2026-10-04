@@ -3,7 +3,7 @@ import ReviewSession from './ReviewSession'
 import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
 import { useLearningFacts } from '../data/assistant/react'
-import LearningFactsPanel from './LearningFactsPanel'
+import { TodayTaskProgress } from './LearningFactsPanel'
 import { wordBooks } from '../data/wordBooks'
 import './TodayLearningPage.css'
 
@@ -87,7 +87,7 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
 
       {reviewTask && <p className="learning-overview__flow-status">复习沿用已保存词书：{reviewBook?.label ?? reviewTask.wordBookId}。{reviewTask.wordBookId !== settings.todayWordBookId ? '当前设置已更换词书，今天的复习任务保持不变。' : ''}已完成 {reviewOverview.completedCount} / {reviewOverview.taskCount} 词；尚未分配 {reviewOverview.unassignedCount} 词。</p>}
       {recommendation ? <RecommendationCard recommendation={recommendation} settings={settings} reviewLoad={facts.reviewLoad} /> : <p>规则建议无法计算：请选择词书并核对词书资料。</p>}
-      <LearningFactsPanel facts={facts} error={factsError} />
+      <TodayTaskProgress facts={facts} error={factsError} includeReview={!reviewTask} />
       {confirmExtra && <ExtraLearningConfirmation onCancel={() => setConfirmExtra(false)} onConfirm={() => {
         setConfirmExtra(false)
         // The date may have changed while the confirmation was open.

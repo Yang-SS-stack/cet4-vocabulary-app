@@ -5,26 +5,35 @@ import './LearningFactsPanel.css'
 const bookLabel = id => wordBooks.find(book => book.id === id)?.label ?? id ?? '尚未选择'
 const count = value => value === null ? '无法计算' : value
 const distribution = (value, labels) => value === null ? '记录存在冲突，无法计算' : labels.map(([key, label]) => `${label} ${value[key]}`).join(' · ')
+
 export default function LearningFactsPanel({ facts, error }) {
+  return <section aria-label="计划依据与已记录反馈">
+    <LearningFactsSummary facts={facts} error={error} />
+    {facts && <LearningFactsEvidence facts={facts} error={error} />}
+  </section>
+}
+
+export function TodayTaskProgress({ facts, error, includeReview = true }) {
+  return <section className="learning-facts learning-facts--progress" aria-label="今日任务进度">
+    <h2>今日任务进度</h2>
+    {facts ? <TaskProgressRows today={facts.today} includeReview={includeReview} /> : <p>{error}</p>}
+  </section>
+}
+
+export function LearningFactsSummary({ facts, error }) {
   const [period, setPeriod] = useState('today')
-  if (!facts) return <section className="learning-facts" aria-label="计划依据与已记录反馈"><p>{error}</p></section>
+  if (!facts) return <section className="learning-facts" aria-label="学习统计汇总"><p>{error}</p></section>
   const history = facts.history[period]
-  const evidence = facts.evidence[period]
-  return <section className="learning-facts" aria-label="计划依据与已记录反馈">
+  return <section className="learning-facts" aria-label="学习统计汇总">
     <h2>计划依据</h2>
     <p>当前词书：{facts.book.label ?? facts.book.id ?? '尚未选择'}</p>
     <p>累计完成 {facts.book.completedWords} 词；词书总量 {count(facts.book.totalWords)}。</p>
-    <TaskProgress label="今日固定学习" task={facts.today.learning} />
-    <TaskProgress label="今日额外学习" task={facts.today.extraLearning} />
-    <TaskProgress label="今日固定复习" task={facts.today.review} />
+    <TaskProgressRows today={facts.today} />
     <p>当前词书到期：{count(facts.reviewLoad.dueCount)} 词；任务外积压：{count(facts.reviewLoad.outsideTodayTaskCount)} 词。任务剩余独立计算。</p>
     {facts.reviewLoad.needsReconciliation && <p>包含历史补齐估算；开始复习时核对历史记录。</p>}
     <h3>已记录反馈</h3>
-    <div className="learning-facts__tabs" aria-label="反馈日期范围">
-      <button type="button" aria-pressed={period === 'today'} onClick={() => setPeriod('today')}>今日</button>
-      <button type="button" aria-pressed={period === 'last7Days'} onClick={() => setPeriod('last7Days')}>近 7 天</button>
-    </div>
-    <p>{history.fromDate} 至 {history.toDate} · 当前词书；按任务日期归属。</p>
+    <PeriodSelector period={period} onChange={setPeriod} label="反馈日期范围" />
+    <HistoryScope history={history} />
     <p>已完成：固定学习 {count(history.completions.learningWords)} · 额外学习 {count(history.completions.extraLearningWords)} · 复习 {count(history.completions.reviewWords)} 词次</p>
     <p>自评：{distribution(history.selfAssessments, [['known', '认识'], ['fuzzy', '模糊'], ['unknown', '不认识']])}</p>
     <p>选择作答：{distribution(history.choices, [['correct', '正确'], ['incorrect', '错误'], ['showAnswer', '看答案']])}</p>
@@ -32,6 +41,17 @@ export default function LearningFactsPanel({ facts, error }) {
     <p>有效自评：{distribution(history.effectiveSelfAssessments, [['known', '认识'], ['fuzzy', '模糊'], ['unknown', '不认识']])}</p>
     <p>历史反馈完整性无法证明；旧记录可能没有逐次反馈。任务 {history.coverage.taskCount} 个，无事件任务 {history.coverage.tasksWithoutEvents} 个，旧方法任务 {history.coverage.legacyTaskCount} 个。</p>
     {history.issues.length > 0 && <p>记录异常：{history.issues.join('、')}；受影响指标无法计算。</p>}
+  </section>
+}
+
+export function LearningFactsEvidence({ facts, error }) {
+  const [period, setPeriod] = useState('today')
+  if (!facts) return <section className="learning-facts" aria-label="学习记录对账依据"><p>{error}</p></section>
+  const evidence = facts.evidence[period]
+  return <section className="learning-facts" aria-label="学习记录对账依据">
+    <h2>记录依据</h2>
+    <PeriodSelector period={period} onChange={setPeriod} label="依据日期范围" />
+    <HistoryScope history={facts.history[period]} />
     <details>
       <summary>查看记录依据</summary>
       <p>仅在浏览器查看，不发送明细。完成包括已移出任务的词；选择后的更正不计入自评。</p>
@@ -41,8 +61,25 @@ export default function LearningFactsPanel({ facts, error }) {
     </details>
   </section>
 }
+
+function TaskProgressRows({ today, includeReview = true }) {
+  return <>
+    <TaskProgress label="今日固定学习" task={today.learning} />
+    <TaskProgress label="今日额外学习" task={today.extraLearning} />
+    {includeReview && <TaskProgress label="今日固定复习" task={today.review} />}
+  </>
+}
 function TaskProgress({ label, task }) {
   return <p>{label}：{task === null ? '尚未创建' : `${bookLabel(task.wordBookId)} · 分配 ${task.assignedWords} · 完成 ${task.completedWords} · 剩余 ${task.remainingWords} 词${task.batchCount !== undefined ? ` · ${task.batchCount} 批` : ''}`}</p>
+}
+function PeriodSelector({ period, onChange, label }) {
+  return <div className="learning-facts__tabs" role="group" aria-label={label}>
+    <button type="button" aria-pressed={period === 'today'} onClick={() => onChange('today')}>今日</button>
+    <button type="button" aria-pressed={period === 'last7Days'} onClick={() => onChange('last7Days')}>近 7 天</button>
+  </div>
+}
+function HistoryScope({ history }) {
+  return <p>{history.fromDate} 至 {history.toDate} · 当前词书；按任务日期归属。</p>
 }
 function EvidencePages({ label, rows }) {
   const [page, setPage] = useState(0)

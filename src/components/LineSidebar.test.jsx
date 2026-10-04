@@ -3,6 +3,14 @@ import userEvent from '@testing-library/user-event'
 import { expect, test, vi } from 'vitest'
 import LineSidebar from './LineSidebar'
 
+test('follows controlled navigation and identifies a page within Settings', () => {
+  const { rerender } = render(<LineSidebar items={['今日学习', '设置']} activeIndex={1} current="location" />)
+  expect(screen.getByRole('button', { name: '设置' })).toHaveAttribute('aria-current', 'location')
+  rerender(<LineSidebar items={['今日学习', '设置']} activeIndex={0} />)
+  expect(screen.getByRole('button', { name: '今日学习' })).toHaveAttribute('aria-current', 'page')
+  expect(screen.getByRole('button', { name: '设置' })).not.toHaveAttribute('aria-current')
+})
+
 test('selecting an item reports its index and label', async () => {
   const user = userEvent.setup()
   const onItemClick = vi.fn()
