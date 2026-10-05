@@ -52,7 +52,7 @@
   min-width: 0;
   margin: 0;
   color: var(--ink);
-  font: 400 32px/1.15 Georgia, 'Times New Roman', serif;
+  font: 700 36px/1.1 Georgia, 'Times New Roman', serif;
 }
 
 .word-card__topline > span,
@@ -128,6 +128,11 @@
 }
 
 .word-card :is(.word-card__actions, .word-card__pronunciations, .word-card__example) button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 44px;
   min-height: 44px;
   padding: 8px;
   border: 0;
@@ -141,11 +146,17 @@
 
 .word-card :is(.word-card__actions, .word-card__pronunciations, .word-card__example) button:hover:not(:disabled) { color: var(--gold); background: transparent; }
 .word-card button:disabled { color: var(--ink-soft); cursor: not-allowed; }
-.word-card__pronunciations { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 6px; }
+.word-card__pronunciations { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 6px; }
+.word-card__speaker { flex: none; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .word-card__frequency { margin: 8px 0 0; color: var(--ink-soft); font-size: 12px; font-variant-numeric: tabular-nums; }
-.word-card__example { margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
-.word-card__example-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px; color: var(--ink-soft); font-size: 12px; }
+.word-card__example { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: start; margin-top: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
+.word-card__example > button { grid-column: 1; grid-row: 1; color: var(--ink-soft); }
+.word-card__example > .word-card__speech-message { grid-column: 1 / -1; grid-row: 2; }
+.word-card__example-copy { min-width: 0; grid-column: 2; grid-row: 1; padding-top: 8px; }
+.word-card__example--missing .word-card__example-copy { grid-column: 1 / -1; }
+.word-card__example-source { display: block; margin-bottom: 4px; color: var(--ink-soft); font-size: 12px; }
 .word-card__example p { margin: 6px 0 0; line-height: 1.65; }
+.word-card__example-copy > p:first-of-type { margin-top: 0; }
 .word-card__example p[lang='en'] { color: var(--ink); font: 400 16px/1.6 Georgia, 'Times New Roman', serif; }
 .word-card__back .word-card__topline { flex-wrap: wrap; }
 .word-card__speech-message { flex-basis: 100%; color: var(--ink-soft); font-size: 12px; }

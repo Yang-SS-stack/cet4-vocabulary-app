@@ -19,17 +19,17 @@ export default function WordCard({ item, audioManifest = null, showFrequency = t
   const translation = supplemental?.translation ?? item.translation
   const frequency = hasFrequency ? `词频 ${item.frequency.toLocaleString('en-US')}` : ''
   const pronunciations = (active) => <div className="word-card__pronunciations">
-    <SpeechButton active={active} src={audio?.['en-GB']} word={item.word} lang="en-GB" label="英音" accessibleLabel={`${item.word} 英音`} />
-    <SpeechButton active={active} src={audio?.['en-US']} word={item.word} lang="en-US" label="美音" accessibleLabel={`${item.word} 美音`} />
+    <SpeechButton active={active} src={audio?.['en-GB']} word={item.word} lang="en-GB" label="英音" accessibleLabel={`${item.word} 英音`} showIcon />
+    <SpeechButton active={active} src={audio?.['en-US']} word={item.word} lang="en-US" label="美音" accessibleLabel={`${item.word} 美音`} showIcon />
   </div>
-  const exampleContent = (active) => <div className="word-card__example">
-    <div className="word-card__example-heading">
-      <span>{supplemental ? '补充例句' : '例句'}</span>
-      {example && <SpeechButton active={active} src={audio?.example} word={example} label="朗读例句" accessibleLabel={`朗读 ${item.word} 的例句`} />}
+  const exampleContent = (active) => <div className={`word-card__example${example ? '' : ' word-card__example--missing'}`}>
+    {example && <SpeechButton active={active} src={audio?.example} word={example} label="朗读例句" accessibleLabel={`朗读 ${item.word} 的例句`} iconOnly />}
+    <div className="word-card__example-copy">
+      {supplemental && <span className="word-card__example-source">补充例句</span>}
+      <p lang={example ? 'en' : undefined}>{example || '暂无例句'}</p>
+      {translation && <p className="word-card__translation">{translation}</p>}
+      {supplemental && item.word === 'reservior' && <p className="word-card__translation">例句采用规范拼写 reservoir。</p>}
     </div>
-    <p lang={example ? 'en' : undefined}>{example || '暂无例句'}</p>
-    {translation && <p className="word-card__translation">{translation}</p>}
-    {supplemental && item.word === 'reservior' && <p className="word-card__translation">例句采用规范拼写 reservoir。</p>}
   </div>
 
   useLayoutEffect(() => {

@@ -84,6 +84,22 @@ test('uses the matching British or American voice and can read an entire example
   expect(synthesis.speak).toHaveBeenLastCalledWith(expect.objectContaining({ text: 'I ate an apple.' }))
 })
 
+test('icon-only example playback retains its accessible name and string replay hint with keyboard use', async () => {
+  window.Audio = undefined
+  const synthesis = mockSpeech()
+  const user = userEvent.setup()
+  render(<SpeechButton word="I ate an apple." label="朗读例句" accessibleLabel="朗读 apple 的例句" iconOnly />)
+  const button = screen.getByRole('button', { name: '朗读 apple 的例句' })
+  expect(button).toHaveAttribute('title', '朗读例句')
+  button.focus()
+  await user.keyboard('{Enter}')
+  expect(synthesis.speak).toHaveBeenCalledWith(expect.objectContaining({ text: 'I ate an apple.' }))
+  expect(button).toHaveAccessibleName('朗读 apple 的例句')
+  expect(button).toHaveAttribute('title', '朗读例句 · 重播')
+  await act(async () => synthesis.speak.mock.calls[0][0].onend())
+  expect(button).toHaveAttribute('title', '朗读例句')
+})
+
 test('does not silently substitute a different accent and retries when voices become available', async () => {
   const synthesis = mockSpeech()
   synthesis.getVoices = () => [{ lang: 'en-US' }]
