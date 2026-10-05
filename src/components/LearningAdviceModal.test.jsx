@@ -9,7 +9,7 @@ beforeAll(() => {
 })
 afterAll(() => { delete HTMLDialogElement.prototype.showModal; delete HTMLDialogElement.prototype.close })
 beforeEach(() => { document.body.removeAttribute('style'); vi.spyOn(window, 'scrollTo').mockImplementation(() => {}) })
-afterEach(() => { cleanup(); document.body.removeAttribute('style'); delete Element.prototype.animate })
+afterEach(() => { cleanup(); document.body.removeAttribute('style'); document.documentElement.style.removeProperty('scrollbar-gutter'); delete Element.prototype.animate })
 const now = new Date(2026, 9, 6, 10)
 function page(patch = {}) {
   let raw = null
@@ -68,6 +68,38 @@ test('closing and Escape restore entry focus, original scroll and compensated in
   fireEvent.click(screen.getByRole('button', { name: '我知道了' }))
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   expect(entry).toHaveFocus()
+})
+
+test.each([[null, '未设置'], ['missing-book', '无法确认']])('saved book %s keeps its actual unknown context in the advice dialog', (todayWordBookId, expected) => {
+  const { store } = page({ todayWordBookId })
+  expect(store.getSnapshot().settings.todayWordBookId).toBe(todayWordBookId)
+  const { dialog } = open()
+  const panel = within(dialog).getByRole('tabpanel', { name: '建议' })
+  expect(panel).toHaveTextContent(`当前词书 ${expected}`)
+  expect(panel).not.toHaveTextContent('CET-4')
+  expect(panel).toHaveTextContent('请选择词书并核对词书资料')
+})
+
+test.each(['stable', 'stable both-edges'])('root gutter %s reserves the gap without added body padding and restores styles', gutter => {
+  document.documentElement.style.scrollbarGutter = gutter
+  document.body.style.setProperty('overflow', 'auto', 'important')
+  document.body.style.setProperty('padding-right', '7px', 'important')
+  vi.spyOn(window, 'innerWidth', 'get').mockReturnValue(1024)
+  vi.spyOn(document.documentElement, 'clientWidth', 'get').mockReturnValue(1000)
+  const { unmount } = page()
+  const { dialog } = open()
+  expect(document.body.style.overflow).toBe('hidden')
+  expect(document.body.style.paddingRight).toBe('7px')
+  fireEvent.click(within(dialog).getByRole('button', { name: '关闭学习建议' }))
+  expect(document.body.style.overflow).toBe('auto')
+  expect(document.body.style.getPropertyPriority('overflow')).toBe('important')
+  expect(document.body.style.paddingRight).toBe('7px')
+  expect(document.body.style.getPropertyPriority('padding-right')).toBe('important')
+  open()
+  unmount()
+  expect(document.body.style.overflow).toBe('auto')
+  expect(document.body.style.paddingRight).toBe('7px')
+  expect(document.body.style.getPropertyPriority('padding-right')).toBe('important')
 })
 test('tabs support arrows, Home/End and keep inactive evidence outside the tab order', () => {
   page()

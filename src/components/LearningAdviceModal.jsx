@@ -46,9 +46,10 @@ export default function LearningAdviceModal({ recommendation, settings, bookLabe
     const trigger = returnFocus.current
     const saved = ['overflow', 'padding-right'].map(property => [property, body.style.getPropertyValue(property), body.style.getPropertyPriority(property)])
     const gap = Math.max(0, window.innerWidth - document.documentElement.clientWidth)
+    const reservesGutter = window.getComputedStyle(document.documentElement).scrollbarGutter?.split(/\s+/).includes('stable')
     const padding = parseFloat(window.getComputedStyle(body).paddingRight) || 0
     body.style.setProperty('overflow', 'hidden')
-    if (gap) body.style.setProperty('padding-right', `${padding + gap}px`)
+    if (gap && !reservesGutter) body.style.setProperty('padding-right', `${padding + gap}px`)
     node.showModal()
     closeButton.current?.focus({ preventScroll: true })
     const preference = window.matchMedia?.('(prefers-reduced-motion: reduce)')

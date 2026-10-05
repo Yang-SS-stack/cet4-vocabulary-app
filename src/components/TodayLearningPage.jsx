@@ -12,6 +12,7 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
   const { store, snapshot } = useLearningStore()
   const { settings } = snapshot
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
+  const adviceBookLabel = wordBooks.find(({ id }) => id === settings.todayWordBookId)?.label ?? (settings.todayWordBookId ? '无法确认' : '未设置')
   const { facts, error: factsError } = useLearningFacts({ now })
   const recommendation = facts?.ruleRecommendation ?? null
   const date = store.getToday()
@@ -97,7 +98,7 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
       {factsError && <p className="learning-overview__error">{factsError}</p>}
       <button ref={adviceEntry} type="button" className="learning-advice-entry" aria-haspopup="dialog" onClick={() => setAdviceOpen(true)}>学习建议 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6" /></svg></button>
-      {adviceOpen && <LearningAdviceModal recommendation={recommendation} settings={settings} bookLabel={selectedWordBook.label} daysLabel={formatDays(daysRemaining)} planResult={recommendation ? formatPlanResult(recommendation, settings) : null} returnFocus={adviceEntry} onClose={() => setAdviceOpen(false)}>
+      {adviceOpen && <LearningAdviceModal recommendation={recommendation} settings={settings} bookLabel={adviceBookLabel} daysLabel={formatDays(daysRemaining)} planResult={recommendation ? formatPlanResult(recommendation, settings) : null} returnFocus={adviceEntry} onClose={() => setAdviceOpen(false)}>
         {recommendation ? <RecommendationCard recommendation={recommendation} settings={settings} reviewLoad={facts.reviewLoad} /> : <p>规则建议无法计算：请选择词书并核对词书资料。</p>}
       </LearningAdviceModal>}
       {confirmExtra && <ExtraLearningConfirmation onCancel={() => setConfirmExtra(false)} onConfirm={() => {
