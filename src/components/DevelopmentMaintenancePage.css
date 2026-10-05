@@ -3,6 +3,19 @@
 .development-maintenance button, .maintenance-confirmation button, .settings-page__maintenance-entry button {
   padding: 9px 16px; min-height: 44px; border: 1px solid var(--line); border-radius: 8px;
   color: var(--ink); background: var(--white); cursor: pointer;
+  transition: background-color 160ms ease-out, border-color 160ms ease-out, color 160ms ease-out;
+}
+@media (hover: hover) {
+  .development-maintenance button:hover:not(:disabled),
+  .maintenance-confirmation button:hover:not(:disabled),
+  .settings-page__maintenance-entry button:hover:not(:disabled) {
+    color: var(--ink); border-color: var(--gold); background: var(--gold-soft);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .development-maintenance button,
+  .maintenance-confirmation button,
+  .settings-page__maintenance-entry button { transition: none; }
 }
 .development-maintenance button:disabled, .settings-page__maintenance-entry button:disabled { opacity: .5; cursor: default; }
 .development-maintenance :is(button, textarea):focus-visible, .maintenance-confirmation button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
