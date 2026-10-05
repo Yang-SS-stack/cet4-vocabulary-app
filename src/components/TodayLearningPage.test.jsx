@@ -130,9 +130,8 @@ test('overview shows true due, assigned and unassigned counts and saved task boo
   store.updateSettings({ todayWordBookId: 'cet4-high-frequency', dailyReviewWords: 1 })
   renderPage(store)
   expect(screen.getByText(/当前到期 0 词/)).toBeInTheDocument()
-  expect(screen.getByText(/已完成 0 \/ 2 词/)).toBeInTheDocument()
-  expect(screen.getByText(/尚未分配 1 词/)).toBeInTheDocument()
-  expect(screen.getByText(/复习沿用已保存词书：CET-4/)).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: '今日复习：已完成 0 / 2 词，0%' })).toBeInTheDocument()
+  expect(screen.getByText('已保存词书：CET-4')).toBeInTheDocument()
 })
 
 test('overview labels projected historical due counts without writing or silently assigning them', () => {
@@ -154,6 +153,7 @@ test('reveals the research sources without presenting them as a fixed word-count
   configure(store)
   renderPage(store)
 
+  await user.click(screen.getByText('学习建议'))
   await user.click(screen.getByText('查看依据'))
 
   expect(screen.getByText(/间隔学习与主动回忆是学习方法证据/)).toBeInTheDocument()
@@ -167,13 +167,13 @@ test('today retains necessary task progress and suggestions without full feedbac
   store.ensureTask('learning', ['ability'], 'cet4')
   renderPage(store)
   expect(screen.getByRole('region', { name: '今日任务进度' })).toBeInTheDocument()
-  expect(screen.getByText('今日固定学习：CET-4 · 分配 1 · 完成 0 · 剩余 1 词')).toBeInTheDocument()
-  expect(screen.getByText('今日额外学习：尚未创建')).toBeInTheDocument()
+  expect(screen.getByRole('img', { name: '今日新词：已完成 0 / 1 词，0%' })).toBeInTheDocument()
+  expect(screen.getByRole('region', { name: '额外学习' })).toHaveTextContent('尚未创建')
   expect(screen.getByText('学习建议')).toBeInTheDocument()
   expect(screen.queryByText('已记录反馈')).not.toBeInTheDocument()
   expect(screen.queryByRole('button', { name: '近 7 天' })).not.toBeInTheDocument()
   expect(screen.queryByText('原始对账字段')).not.toBeInTheDocument()
-  expect(screen.getByText('今日固定复习：尚未创建')).toBeInTheDocument()
+  expect(screen.getByRole('region', { name: '今日复习' })).toHaveTextContent('尚未创建')
 })
 
 test('unconfigured learning suggestions preserve unavailable daily estimate', () => {
@@ -192,11 +192,11 @@ test('today or past exam labels recommendations inapplicable and actual zero min
 })
 
 
-test('an existing review task keeps its original explanation without a duplicate progress row', () => {
+test('an existing empty review task has one honest ring state without a duplicate progress row', () => {
   const store = createStore()
   configure(store)
   store.ensureTask('review', [], 'cet4')
   renderPage(store)
-  expect(screen.getByText(/复习沿用已保存词书：CET-4/)).toBeInTheDocument()
+  expect(screen.getByRole('region', { name: '今日复习' })).toHaveTextContent('本日无复习任务')
   expect(screen.queryByText(/今日固定复习/)).not.toBeInTheDocument()
 })

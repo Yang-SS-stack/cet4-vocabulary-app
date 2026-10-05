@@ -3,19 +3,20 @@ import ReviewSession from './ReviewSession'
 import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
 import { useLearningFacts } from '../data/assistant/react'
-import { TodayTaskProgress } from './LearningFactsPanel'
+import { ProgressRing } from './DataMotion'
 import { wordBooks } from '../data/wordBooks'
 import './TodayLearningPage.css'
 
 function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
   const { store, snapshot } = useLearningStore()
   const { settings } = snapshot
-  const reviewOverview = store.getReviewOverview()
-  const reviewTask = store.getTask('review')
-  const reviewBook = wordBooks.find(book => book.id === reviewOverview.bookId)
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
   const { facts, error: factsError } = useLearningFacts({ now })
   const recommendation = facts?.ruleRecommendation ?? null
+  const date = store.getToday()
+  const extraProcess = snapshot.extraLearning[date]
+  const currentExtra = extraProcess?.batches.at(-1)
+  const extraProgress = currentExtra ? { wordBookId: currentExtra.wordBookId, assignedWords: currentExtra.itemIds.length, completedWords: currentExtra.itemIds.filter(id => currentExtra.items[id].completed).length } : null
   const daysRemaining = recommendation?.daysRemaining ?? null
   const [status, setStatus] = useState('')
   const [learning, setLearning] = useState(false)
@@ -78,16 +79,24 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
         />
       </div>
 
+      <section className="today-tasks" aria-label="今日任务进度">
+        <h2>今日任务</h2>
+        <div className="today-tasks__rings">
+          <TaskRing label="今日新词" progress={facts?.today.learning} currentBook={settings.todayWordBookId} error={factsError} empty="本日无新词任务" />
+          <TaskRing label="额外学习" progress={factsError ? null : extraProgress} currentBook={settings.todayWordBookId} error={factsError} empty="本轮无额外任务" exhausted={extraProcess?.exhausted} extra />
+          <TaskRing label="今日复习" progress={facts?.today.review} currentBook={settings.todayWordBookId} error={factsError} empty="本日无复习任务" />
+        </div>
+      </section>
       <div className="learning-overview__actions">
-        <button ref={entryButton} type="button" onClick={() => start('learning')}>今日学习</button>
-        <button ref={reviewButton} type="button" onClick={() => start('review')}>今日复习</button>
+        <button ref={entryButton} type="button" onClick={() => start('learning')}>今日学习 <ActionArrow /></button>
+        <button ref={reviewButton} type="button" onClick={() => start('review')}>今日复习 <ActionArrow /></button>
       </div>
-
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
-
-      {reviewTask && <p className="learning-overview__flow-status">复习沿用已保存词书：{reviewBook?.label ?? reviewTask.wordBookId}。{reviewTask.wordBookId !== settings.todayWordBookId ? '当前设置已更换词书，今天的复习任务保持不变。' : ''}已完成 {reviewOverview.completedCount} / {reviewOverview.taskCount} 词；尚未分配 {reviewOverview.unassignedCount} 词。</p>}
-      {recommendation ? <RecommendationCard recommendation={recommendation} settings={settings} reviewLoad={facts.reviewLoad} /> : <p>规则建议无法计算：请选择词书并核对词书资料。</p>}
-      <TodayTaskProgress facts={facts} error={factsError} includeReview={!reviewTask} />
+      {factsError && <p className="learning-overview__error">{factsError}</p>}
+      <details className="learning-recommendation-disclosure">
+        <summary>学习建议 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6" /></svg></summary>
+        {recommendation ? <RecommendationCard recommendation={recommendation} settings={settings} reviewLoad={facts.reviewLoad} /> : <p>规则建议无法计算：请选择词书并核对词书资料。</p>}
+      </details>
       {confirmExtra && <ExtraLearningConfirmation onCancel={() => setConfirmExtra(false)} onConfirm={() => {
         setConfirmExtra(false)
         // The date may have changed while the confirmation was open.
@@ -95,6 +104,19 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
       }} />}
     </section>
   )
+}
+
+function ActionArrow() { return <svg className="learning-action-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg> }
+
+function TaskRing({ label, progress, currentBook, error, empty, extra = false, exhausted = false }) {
+  const valid = progress && Number.isSafeInteger(progress.assignedWords) && Number.isSafeInteger(progress.completedWords) && progress.assignedWords >= 0 && progress.completedWords >= 0 && progress.completedWords <= progress.assignedWords
+  const state = error || (progress && !valid) ? '资料异常' : !progress ? (exhausted ? '词书已无剩余新词' : '尚未创建') : progress.assignedWords === 0 ? empty : null
+  const book = wordBooks.find(book => book.id === progress?.wordBookId)
+  return <section className="today-task" aria-label={label}>
+    <h3>{label}</h3>
+    <ProgressRing label={label} value={state ? null : progress.completedWords} total={state ? null : progress.assignedWords} state={state} accent={extra} />
+    <div className="today-task__note">{extra && <span>本轮进度</span>}{progress && progress.wordBookId !== currentBook && <span>已保存词书：{book?.label ?? progress.wordBookId}</span>}{valid && progress.assignedWords > 0 && progress.completedWords === progress.assignedWords && <span>已完成</span>}</div>
+  </section>
 }
 
 function ExtraLearningConfirmation({ onConfirm, onCancel }) {
@@ -141,8 +163,7 @@ function RecommendationCard({ recommendation, settings, reviewLoad }) {
   return (
     <article className="learning-recommendation" aria-labelledby="learning-recommendation-title">
       <header className="learning-recommendation__header">
-        <h2 id="learning-recommendation-title">学习建议</h2>
-        <p>规则建议、计划估算和你的选择分别呈现</p>
+        <p id="learning-recommendation-title">规则建议、计划估算和你的选择分别呈现</p>
       </header>
 
       <dl className="learning-recommendation__rows">

@@ -10,6 +10,7 @@ import StatisticsPage from './components/StatisticsPage'
 import DevelopmentMaintenancePage from './components/DevelopmentMaintenancePage'
 import TodayLearningPage from './components/TodayLearningPage'
 import VocabularyPage from './components/VocabularyPage'
+import { wordBooks } from './data/wordBooks'
 import { initialSetupComplete } from './components/setupDraft'
 import { LEARNING_STORAGE_KEY, LearningStoreProvider, useLearningStore } from './data/learning'
 import { createBrowserLearningStore } from './data/learning/browserStore'
@@ -20,6 +21,9 @@ const RECOVERY_CLOSE_DURATION = 180
 
 function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, pageTitleRef, isBrandConcealed, isTransitionPrepared }) {
   const [focusMode, setFocusMode] = useState(false)
+  const { snapshot } = useLearningStore()
+  const overviewPage = selectedPage === '今日学习' || selectedPage === '统计'
+  const currentBook = wordBooks.find(book => book.id === snapshot.settings.todayWordBookId)
   const maintenanceEntryRef = useRef(null)
   const focusAfterNavigation = useRef(null)
   const navigateFromMaintenance = page => {
@@ -82,18 +86,18 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
         <span aria-hidden="true" />
       </button>
 
-      <main className="content-area">
+      <main className={`content-area ${overviewPage ? 'content-area--overview' : ''}`}>
         <FadeContent key={selectedPage}>
-          <section className="page-intro" aria-labelledby="page-title" hidden={focusMode}>
-            <h1 ref={pageTitleRef} id="page-title" tabIndex={-1}>{selectedPage}</h1>
+          <section className={`page-intro ${overviewPage ? 'page-intro--overview' : ''}`} aria-labelledby="page-title" hidden={focusMode}>
+            <h1 ref={pageTitleRef} id="page-title" tabIndex={-1}>{selectedPage === '统计' ? '学习统计' : selectedPage}</h1>
             {selectedPage === '今日学习' ? (
-              <p className="page-lede">从今天的单词开始</p>
+              <p className="page-lede">当前词书 · {currentBook?.label ?? '尚未设置'}</p>
             ) : selectedPage === '词表' ? (
               <p className="page-lede">查找单词，浏览释义与例句</p>
             ) : selectedPage === '设置' ? (
               <p className="page-lede">按你的时间，调整之后的学习计划</p>
             ) : selectedPage === '统计' ? (
-              <p className="page-lede">查看已记录的进度与反馈</p>
+              null
             ) : selectedPage === '开发验收与维护' ? (
               <p className="page-lede">按项目检查，查看依据与检查记录</p>
             ) : (
@@ -101,7 +105,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
             )}
           </section>
 
-          <div className="content-rule" hidden={focusMode} />
+          <div className="content-rule" hidden={focusMode || overviewPage} />
 
           {selectedPage === '今日学习' ? (
             <TodayLearningPage onFocusModeChange={setFocusMode} />

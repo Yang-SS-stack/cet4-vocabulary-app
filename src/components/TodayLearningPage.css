@@ -271,3 +271,51 @@
 @media (prefers-reduced-motion: reduce) {
   .learning-overview.is-entering, .learning-overview.is-leaving { animation: none; }
 }
+/* Approved open task composition; recommendation detail retains the existing copy. */
+.learning-overview { padding-top: 32px; }
+.learning-overview__status-strip { gap: 0; padding-bottom: 25px; border-bottom: 1px solid var(--line); }
+.learning-overview__metric { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 8px 16px; border-bottom: 0; padding: 0 15px; }
+.learning-overview__metric + .learning-overview__metric { border-left: 1px solid var(--line); }
+.learning-overview__metric p { margin: 0; font-family: inherit; font-size: 15px; }
+.learning-overview__metric strong { font-family: inherit; font-size: clamp(21px, 2.7vw, 35px); font-weight: 650; line-height: 1.4; letter-spacing: -.025em; }
+.learning-overview__metric:first-child strong::first-letter { color: inherit; }
+.today-tasks > h2 { margin: 25px 0 23px; font-size: 23px; font-weight: 700; }
+.today-tasks__rings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.today-task { padding: 0 20px; min-width: 0; }
+.today-task + .today-task { border-left: 1px solid var(--line); }
+.today-task h3 { text-align: center; font-size: 20px; margin: 0 0 12px; font-weight: 700; }
+.today-task__note { min-height: 44px; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 9px; color: var(--ink-soft); font-size: 13px; text-align: center; }
+.learning-overview__actions { margin-top: 30px; gap: 22px; }
+.learning-overview__actions button { display: flex; align-items: center; justify-content: center; gap: 15px; min-height: 57px; font-family: inherit; font-size: 19px; font-weight: 650; border-radius: 8px; color: var(--gold); }
+.learning-overview__actions button:first-child { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.learning-overview__actions button:first-child:hover { background: #204168; border-color: #204168; }
+.learning-overview__actions button:hover { box-shadow: none; }
+.learning-action-arrow { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+.learning-overview__flow-status { min-height: 0; margin: 0; }
+.learning-overview__flow-status:not(:empty) { margin-top: 13px; }
+.learning-overview__error { color: var(--ink-soft); font-size: 14px; }
+.learning-recommendation-disclosure { margin-top: 23px; border: 1px solid var(--line); border-radius: 10px; }
+.learning-recommendation-disclosure > summary { display: flex; align-items: center; justify-content: space-between; list-style: none; padding: 17px 22px; cursor: pointer; font-size: 17px; font-weight: 650; }
+.learning-recommendation-disclosure > summary::-webkit-details-marker { display: none; }
+.learning-recommendation-disclosure > summary svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; transition: transform 150ms; }
+.learning-recommendation-disclosure[open] > summary svg { transform: rotate(180deg); }
+.learning-recommendation-disclosure > summary:hover { color: var(--gold); background: rgba(216,200,155,.13); }
+.learning-recommendation-disclosure > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.learning-recommendation-disclosure .learning-recommendation { margin: 0; padding: 0 23px 23px; background: transparent; border: 0; border-radius: 0; }
+.learning-recommendation-disclosure .learning-recommendation__header { padding: 8px 0 17px; }
+.learning-recommendation-disclosure .learning-recommendation__header p { text-align: left; }
+.learning-recommendation-disclosure > p { padding: 0 22px 15px; }
+.learning-recommendation a:hover, .learning-recommendation summary:hover { color: var(--gold); }
+@media (max-width: 640px) {
+  .learning-overview { padding-top: 27px; }
+  .learning-overview__status-strip { grid-template-columns: 1fr; gap: 15px; }
+  .learning-overview__metric { justify-content: space-between; padding: 0; }
+  .learning-overview__metric + .learning-overview__metric { border: 0; }
+  .today-tasks__rings { grid-template-columns: 1fr; gap: 21px; }
+  .today-task { padding: 0 0 20px; }
+  .today-task + .today-task { border-left: 0; border-top: 1px solid var(--line); padding-top: 22px; }
+  .today-task__note { min-height: 0; }
+  .today-task h3 { font-size: 20px; }
+  .learning-overview__actions { margin-top: 5px; }
+}
+@media (prefers-reduced-motion: reduce) { .learning-recommendation-disclosure > summary svg { transition: none; } }

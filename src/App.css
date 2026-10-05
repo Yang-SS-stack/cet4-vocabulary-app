@@ -480,3 +480,10 @@ h1 {
 .is-study-focused .content-rule { display: none; }
 .app-shell.is-study-focused .content-area { padding: 0; min-width: 0; width: 100%; }
 .is-study-focused .fade-content { transform: none !important; }
+/* Compact composition is scoped to the two approved overview pages. */
+.content-area--overview { width: min(100%, 1320px); padding: 35px clamp(26px, 3.6vw, 58px) 42px; }
+.page-intro--overview { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 25px; padding: 0; }
+.page-intro--overview h1 { font-family: 'Manrope Variable', 'Microsoft YaHei', 'PingFang SC', sans-serif; font-weight: 750; font-size: clamp(30px, 3.5vw, 46px); line-height: 1.2; letter-spacing: -.03em; }
+.page-intro--overview .page-lede { margin: 0; padding-left: 24px; border-left: 1px solid var(--line); font-size: 15px; }
+@media (max-width: 800px) { .content-area--overview { padding: 26px 24px 38px; } }
+@media (max-width: 480px) { .content-area--overview { padding: 25px 18px 32px; } .page-intro--overview { gap: 10px; } .page-intro--overview .page-lede { font-size: 12px; padding-left: 12px; } }
