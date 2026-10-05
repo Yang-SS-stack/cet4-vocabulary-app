@@ -23,6 +23,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
   const [focusMode, setFocusMode] = useState(false)
   const { snapshot } = useLearningStore()
   const overviewPage = selectedPage === '今日学习' || selectedPage === '统计'
+  const compactPage = overviewPage || selectedPage === '设置' || selectedPage === '词表'
   const currentBook = wordBooks.find(book => book.id === snapshot.settings.todayWordBookId)
   const maintenanceEntryRef = useRef(null)
   const focusAfterNavigation = useRef(null)
@@ -86,16 +87,16 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
         <span aria-hidden="true" />
       </button>
 
-      <main className={`content-area ${overviewPage ? 'content-area--overview' : ''}`}>
+      <main className={`content-area ${compactPage ? 'content-area--overview' : ''}`}>
         <FadeContent key={selectedPage}>
-          <section className={`page-intro ${overviewPage ? 'page-intro--overview' : ''}`} aria-labelledby="page-title" hidden={focusMode}>
+          {selectedPage !== '词表' && <section className={`page-intro ${compactPage ? 'page-intro--overview' : ''}`} aria-labelledby="page-title" hidden={focusMode}>
             <h1 ref={pageTitleRef} id="page-title" tabIndex={-1}>{selectedPage === '统计' ? '学习统计' : selectedPage}</h1>
             {selectedPage === '今日学习' ? (
               <p className="page-lede">当前词书 · {currentBook?.label ?? '尚未设置'}</p>
             ) : selectedPage === '词表' ? (
-              <p className="page-lede">查找单词，浏览释义与例句</p>
+              null
             ) : selectedPage === '设置' ? (
-              <p className="page-lede">按你的时间，调整之后的学习计划</p>
+              <p className="page-lede">学习目标与每日计划</p>
             ) : selectedPage === '统计' ? (
               null
             ) : selectedPage === '开发验收与维护' ? (
@@ -103,9 +104,9 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
             ) : (
               <p className="page-lede">这一部分即将准备好</p>
             )}
-          </section>
+          </section>}
 
-          <div className="content-rule" hidden={focusMode || overviewPage} />
+          <div className="content-rule" hidden={focusMode || compactPage} />
 
           {selectedPage === '今日学习' ? (
             <TodayLearningPage onFocusModeChange={setFocusMode} />
