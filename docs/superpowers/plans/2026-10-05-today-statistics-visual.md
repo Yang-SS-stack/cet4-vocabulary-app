@@ -17,7 +17,7 @@
 - 零值保持空轨道；未知、未创建、异常不启动数值动画。
 - 开启减少动态效果时立即显示终值；页面不可见时停止无意义的动画工作。动效失败仍能直接看到真实内容。
 - 用户人工验收一次只给一步，回复1只代表当步完成。不重复已通过的P-03-A验收，不开始P-03-B，不擅自合并、上传、发布或写Obsidian。
-- Preserve the existing uncommitted maintenance hover fix. Commit task-owned files only; do not commit neighboring task changes.
+- Preserve the committed maintenance hover fix (a8a0e133). Commit task-owned files only; do not commit neighboring task changes.
 
 ### Task 1: Read-only all-history statistics projection
 
@@ -25,7 +25,7 @@
 
 **Interfaces:** Produce `buildStatisticsFacts(snapshot, { now, wordBooks, selectedWordBookId, period = 'all' })` with `{ book, reviewLoad, history, buckets, granularity }`. `history` uses existing period-result fields including fromDate/toDate/completions/selfAssessments/choices/corrections/effectiveSelfAssessments/coverage/issues. Each bucket is `{ fromDate, toDate, label, completions }`; granularity is day/week/month. Keep `buildLearningFacts` return shape and behavior unchanged.
 
-- [ ] RED: Assert exported statistics function exists; construct saved tasks from several dates/books with real store APIs. Check all-history vs seven-day/today, no writes, unique book counts vs repeated review word-times, all extra batches, correction semantics, duplicate/conflicting sources, empty history, DST-safe dates, and bucket sums. Example assertion:
+- [x] RED: Assert exported statistics function exists; construct saved tasks from several dates/books with real store APIs. Check all-history vs seven-day/today, no writes, unique book counts vs repeated review word-times, all extra batches, correction semantics, duplicate/conflicting sources, empty history, DST-safe dates, and bucket sums. Example assertion:
 
 ```js
 expect(Facts.buildStatisticsFacts).toBeTypeOf('function')
@@ -35,10 +35,10 @@ expect(result.buckets.reduce((sum, row) => sum + row.completions.reviewWords, 0)
 expect(JSON.stringify(snapshot)).toBe(before)
 ```
 
-- [ ] Run `npm test -- src/data/assistant/statistics.test.js --maxWorkers=2`, observe expected missing feature failure.
-- [ ] GREEN: Reuse the existing `period` reducer inside the same module. All starts at the earliest saved selected-book task at/before today; empty range is today. Keep selected-book lifetime progress/current reviewLoad independent of period. Include zero-date buckets; <=62 days use daily, <=370 use 7-calendar-day bins, otherwise month bins (combine adjacent months when needed to bound visual bucket count). Preserve affected null fields in buckets and totals. Never send this result to backend.
-- [ ] Run new tests and existing facts/snapshotToken tests, then commit only these task files and write `.superpowers/sdd/visual-task1-report.md` with RED/GREEN evidence and interfaces.
-- [ ] Independent review and resolve actionable findings before Task2 implementation.
+- [x] Run `npm test -- src/data/assistant/statistics.test.js --maxWorkers=2`, observe expected missing feature failure.
+- [x] GREEN: Reuse the existing `period` reducer inside the same module. All starts at the earliest saved selected-book task at/before today; empty range is today. Keep selected-book lifetime progress/current reviewLoad independent of period. Include zero-date buckets; <=62 days use daily, <=370 use 7-calendar-day bins, otherwise month bins (combine adjacent months when needed to bound visual bucket count). Preserve affected null fields in buckets and totals. Never send this result to backend.
+- [x] Run new tests and existing facts/snapshotToken tests, then commit only these task files and write `.superpowers/sdd/visual-task1-report.md` with RED/GREEN evidence and interfaces.
+- [x] Independent review and resolve actionable findings before Task2 implementation.
 
 ### Task 2: Both pages and shared motion/chart presentation
 
@@ -46,17 +46,19 @@ expect(JSON.stringify(snapshot)).toBe(before)
 
 **Interfaces:** Consume Task1 statistics function and the existing learning-store/provider. Use a shared, cancelable count/reveal implementation; final data always remains available to assistive reading. Chart primitive names are implementation choices, responsibilities must stay separated.
 
-- [ ] RED: New behavior tests for book/time filters staying read-only, full history default, raw/effective feedback, unknown vs0, Today absent/empty/saved-book/current-extra-batch states and collapsed recommendations. Count/motion tests must cover target reached, interruption/unmount, replay key, reduced-motion preference changes and hidden document. Update old text assertions only where approved layout supersedes them.
-- [ ] Run these selected tests before implementation and record missing feature failures.
-- [ ] GREEN: Match the approved comps linked in the spec; capture visual authority in the emitted root comment or durable component contract. Today top strip, three open rings, two actions, collapsed existing recommendation. Statistics book/time controls, unique progress, activity totals, stacked date chart, self feedback toggle/donut, raw choice and corrections bars, current review strip, collapsed data notes. Zero/unknown/error states render honest labels; no demo data in production.
-- [ ] Number duration600–1100ms based on magnitude, only2 primary stats values; chart fill700–900ms, Today rings700ms. Default final content, accessible real final value, no live per-frame announcements, stable tabular widths, reduced-motion direct final, cancel stale animations on rapid filters, hide/unmount cleanup. Re-render without dataset changes does not replay whole page. No blocking animation on learning/session navigation.
-- [ ] Use transform/clip/SVG reveals for segmented/stacked charts to preserve ratios. No expensive independent React updates per bar. Complete keyboard/hover states and responsive stacking, no horizontal overflow.
-- [ ] Run relevant page/motion/learning/review/assistant compatibility checks; commit only owned page/motion/test files, write `.superpowers/sdd/visual-task2-report.md`, then independent spec/quality review.
+- [x] RED: New behavior tests for book/time filters staying read-only, full history default, raw/effective feedback, unknown vs0, Today absent/empty/saved-book/current-extra-batch states and collapsed recommendations. Count/motion tests must cover target reached, interruption/unmount, replay key, reduced-motion preference changes and hidden document. Update old text assertions only where approved layout supersedes them.
+- [x] Run these selected tests before implementation and record missing feature failures.
+- [x] GREEN: Match the approved comps linked in the spec; capture visual authority in the emitted root comment or durable component contract. Today top strip, three open rings, two actions, collapsed existing recommendation. Statistics book/time controls, unique progress, activity totals, stacked date chart, self feedback toggle/donut, raw choice and corrections bars, current review strip, collapsed data notes. Zero/unknown/error states render honest labels; no demo data in production.
+- [x] Number duration600–1100ms based on magnitude, only2 primary stats values; chart fill700–900ms, Today rings700ms. Default final content, accessible real final value, no live per-frame announcements, stable tabular widths, reduced-motion direct final, cancel stale animations on rapid filters, hide/unmount cleanup. Re-render without dataset changes does not replay whole page. No blocking animation on learning/session navigation.
+- [x] Use transform/clip/SVG reveals for segmented/stacked charts to preserve ratios. No expensive independent React updates per bar. Complete keyboard/hover states and responsive stacking, no horizontal overflow.
+- [x] Run relevant page/motion/learning/review/assistant compatibility checks; commit only owned page/motion/test files, write `.superpowers/sdd/visual-task2-report.md`, then independent spec/quality review.
 
 ## Final local delivery
 
-- [ ] Review approved design and implementation side by side at desktop/narrow viewports; one batched fix round, then confirm. Save screenshots, verify replay/interrupt/reduced-motion and real empty-state usability. Use isolated disposable local test sample only, label it in test evidence.
-- [ ] Run one mechanical detector on changed UI targets, address meaningful findings; final whole-branch code review plus fresh screenshot-based design review.
-- [ ] Run stable full tests, lint, diff check and production build with `--base=/cet4-vocabulary-app/`. Preserve existing lint/audio warnings if unchanged.
-- [ ] Update approval/delivery handoff and ignored ledger/receipt, make local task commit if needed, rebuild to show current commit, retain local preview. No merge/push/publish.
+- [x] Review approved design and implementation side by side at desktop/narrow viewports; one batched fix round, then confirm. Save screenshots, verify replay/interrupt/reduced-motion and real empty-state usability. Use isolated disposable local test sample only, label it in test evidence.
+- [x] Run one mechanical detector on changed UI targets, address meaningful findings; final whole-branch code review plus fresh screenshot-based design review. Same reviewer scored F1/F2 resolved after one finish-fix batch; disposition ship. No second detector.
+- [x] Run stable full tests, lint, diff check and production build with `--base=/cet4-vocabulary-app/`. Latest source9fe307e:58files631tests passed193.49s, lint0 and build29.00s. Existing lint/audio warnings unchanged.
+- [x] Update approval/delivery handoff and ignored ledger/receipt, save DESIGN.md and schemaVersion2 sidecar, make documentation-only local commit, rebuild to show current commit, retain local preview. Exact post-document version and build outcome are recorded in the ignored delivery receipt. No merge/push/publish.
 - [ ] Give user only first new manual acceptance action; await1 before next. Maintenance manual/P-03-B sequencing remains in the spec.
+
+Current human checkpoint: V-01, one click on主导航“今日学习”from the isolated Statistics preview, observe the three ring fills. Await user1; no passed P-03-A or M-01/M-02 repetition. Impeccable approved4.4.0 update installed with4.0.4 backup retained.

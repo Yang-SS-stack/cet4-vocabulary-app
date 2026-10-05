@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-05T12:16:50.635Z",
+  "title": "Design System: 捷语 · LinguaJet",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "paper",
+        "tonalRamp": [
+          "oklch(15% 0.0057 84.57)",
+          "oklch(25% 0.0057 84.57)",
+          "oklch(35% 0.0057 84.57)",
+          "oklch(45% 0.0057 84.57)",
+          "oklch(55% 0.0057 84.57)",
+          "oklch(65% 0.0057 84.57)",
+          "oklch(80% 0.0057 84.57)",
+          "oklch(95% 0.0057 84.57)"
+        ]
+      },
+      "paper-deep": {
+        "role": "neutral",
+        "displayName": "paper-deep",
+        "tonalRamp": [
+          "oklch(15% 0.0104 81.79)",
+          "oklch(25% 0.0104 81.79)",
+          "oklch(35% 0.0104 81.79)",
+          "oklch(45% 0.0104 81.79)",
+          "oklch(55% 0.0104 81.79)",
+          "oklch(65% 0.0104 81.79)",
+          "oklch(80% 0.0104 81.79)",
+          "oklch(95% 0.0104 81.79)"
+        ]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "ink",
+        "tonalRamp": [
+          "oklch(15% 0.0703 258.32)",
+          "oklch(25% 0.0703 258.32)",
+          "oklch(35% 0.0703 258.32)",
+          "oklch(45% 0.0703 258.32)",
+          "oklch(55% 0.0703 258.32)",
+          "oklch(65% 0.0703 258.32)",
+          "oklch(80% 0.0703 258.32)",
+          "oklch(95% 0.0703 258.32)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "ink-soft",
+        "tonalRamp": [
+          "oklch(15% 0.0386 256.82)",
+          "oklch(25% 0.0386 256.82)",
+          "oklch(35% 0.0386 256.82)",
+          "oklch(45% 0.0386 256.82)",
+          "oklch(55% 0.0386 256.82)",
+          "oklch(65% 0.0386 256.82)",
+          "oklch(80% 0.0386 256.82)",
+          "oklch(95% 0.0386 256.82)"
+        ]
+      },
+      "gold": {
+        "role": "primary",
+        "displayName": "gold",
+        "tonalRamp": [
+          "oklch(15% 0.0977 84.59)",
+          "oklch(25% 0.0977 84.59)",
+          "oklch(35% 0.0977 84.59)",
+          "oklch(45% 0.0977 84.59)",
+          "oklch(55% 0.0977 84.59)",
+          "oklch(65% 0.0977 84.59)",
+          "oklch(80% 0.0977 84.59)",
+          "oklch(95% 0.0977 84.59)"
+        ]
+      },
+      "gold-soft": {
+        "role": "primary",
+        "displayName": "gold-soft",
+        "tonalRamp": [
+          "oklch(15% 0.0622 90.80)",
+          "oklch(25% 0.0622 90.80)",
+          "oklch(35% 0.0622 90.80)",
+          "oklch(45% 0.0622 90.80)",
+          "oklch(55% 0.0622 90.80)",
+          "oklch(65% 0.0622 90.80)",
+          "oklch(80% 0.0622 90.80)",
+          "oklch(95% 0.0622 90.80)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "white",
+        "tonalRamp": [
+          "oklch(15% 0.0054 95.10)",
+          "oklch(25% 0.0054 95.10)",
+          "oklch(35% 0.0054 95.10)",
+          "oklch(45% 0.0054 95.10)",
+          "oklch(55% 0.0054 95.10)",
+          "oklch(65% 0.0054 95.10)",
+          "oklch(80% 0.0054 95.10)",
+          "oklch(95% 0.0054 95.10)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "line",
+        "tonalRamp": [
+          "oklch(15% 0.0703 258.32)",
+          "oklch(25% 0.0703 258.32)",
+          "oklch(35% 0.0703 258.32)",
+          "oklch(45% 0.0703 258.32)",
+          "oklch(55% 0.0703 258.32)",
+          "oklch(65% 0.0703 258.32)",
+          "oklch(80% 0.0703 258.32)",
+          "oklch(95% 0.0703 258.32)"
+        ]
+      },
+      "ink-hover": {
+        "role": "primary",
+        "displayName": "ink-hover",
+        "tonalRamp": [
+          "oklch(15% 0.0779 253.94)",
+          "oklch(25% 0.0779 253.94)",
+          "oklch(35% 0.0779 253.94)",
+          "oklch(45% 0.0779 253.94)",
+          "oklch(55% 0.0779 253.94)",
+          "oklch(65% 0.0779 253.94)",
+          "oklch(80% 0.0779 253.94)",
+          "oklch(95% 0.0779 253.94)"
+        ]
+      },
+      "chart-learning": {
+        "role": "secondary",
+        "displayName": "chart-learning",
+        "tonalRamp": [
+          "oklch(15% 0.0870 250.88)",
+          "oklch(25% 0.0870 250.88)",
+          "oklch(35% 0.0870 250.88)",
+          "oklch(45% 0.0870 250.88)",
+          "oklch(55% 0.0870 250.88)",
+          "oklch(65% 0.0870 250.88)",
+          "oklch(80% 0.0870 250.88)",
+          "oklch(95% 0.0870 250.88)"
+        ]
+      },
+      "chart-extra": {
+        "role": "secondary",
+        "displayName": "chart-extra",
+        "tonalRamp": [
+          "oklch(15% 0.1057 86.02)",
+          "oklch(25% 0.1057 86.02)",
+          "oklch(35% 0.1057 86.02)",
+          "oklch(45% 0.1057 86.02)",
+          "oklch(55% 0.1057 86.02)",
+          "oklch(65% 0.1057 86.02)",
+          "oklch(80% 0.1057 86.02)",
+          "oklch(95% 0.1057 86.02)"
+        ]
+      },
+      "chart-review": {
+        "role": "secondary",
+        "displayName": "chart-review",
+        "tonalRamp": [
+          "oklch(15% 0.1047 244.17)",
+          "oklch(25% 0.1047 244.17)",
+          "oklch(35% 0.1047 244.17)",
+          "oklch(45% 0.1047 244.17)",
+          "oklch(55% 0.1047 244.17)",
+          "oklch(65% 0.1047 244.17)",
+          "oklch(80% 0.1047 244.17)",
+          "oklch(95% 0.1047 244.17)"
+        ]
+      },
+      "chart-known": {
+        "role": "secondary",
+        "displayName": "chart-known",
+        "tonalRamp": [
+          "oklch(15% 0.0820 186.79)",
+          "oklch(25% 0.0820 186.79)",
+          "oklch(35% 0.0820 186.79)",
+          "oklch(45% 0.0820 186.79)",
+          "oklch(55% 0.0820 186.79)",
+          "oklch(65% 0.0820 186.79)",
+          "oklch(80% 0.0820 186.79)",
+          "oklch(95% 0.0820 186.79)"
+        ]
+      },
+      "chart-unknown": {
+        "role": "secondary",
+        "displayName": "chart-unknown",
+        "tonalRamp": [
+          "oklch(15% 0.1183 28.15)",
+          "oklch(25% 0.1183 28.15)",
+          "oklch(35% 0.1183 28.15)",
+          "oklch(45% 0.1183 28.15)",
+          "oklch(55% 0.1183 28.15)",
+          "oklch(65% 0.1183 28.15)",
+          "oklch(80% 0.1183 28.15)",
+          "oklch(95% 0.1183 28.15)"
+        ]
+      },
+      "chart-answer": {
+        "role": "secondary",
+        "displayName": "chart-answer",
+        "tonalRamp": [
+          "oklch(15% 0.0057 95.12)",
+          "oklch(25% 0.0057 95.12)",
+          "oklch(35% 0.0057 95.12)",
+          "oklch(45% 0.0057 95.12)",
+          "oklch(55% 0.0057 95.12)",
+          "oklch(65% 0.0057 95.12)",
+          "oklch(80% 0.0057 95.12)",
+          "oklch(95% 0.0057 95.12)"
+        ]
+      },
+      "warning-ink": {
+        "role": "secondary",
+        "displayName": "warning-ink",
+        "tonalRamp": [
+          "oklch(15% 0.0903 80.08)",
+          "oklch(25% 0.0903 80.08)",
+          "oklch(35% 0.0903 80.08)",
+          "oklch(45% 0.0903 80.08)",
+          "oklch(55% 0.0903 80.08)",
+          "oklch(65% 0.0903 80.08)",
+          "oklch(80% 0.0903 80.08)",
+          "oklch(95% 0.0903 80.08)"
+        ]
+      },
+      "warning-paper": {
+        "role": "secondary",
+        "displayName": "warning-paper",
+        "tonalRamp": [
+          "oklch(15% 0.0392 87.57)",
+          "oklch(25% 0.0392 87.57)",
+          "oklch(35% 0.0392 87.57)",
+          "oklch(45% 0.0392 87.57)",
+          "oklch(55% 0.0392 87.57)",
+          "oklch(65% 0.0392 87.57)",
+          "oklch(80% 0.0392 87.57)",
+          "oklch(95% 0.0392 87.57)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "概览标题",
+        "purpose": "今日与统计紧凑页头。"
+      },
+      "numeric": {
+        "displayName": "主数字",
+        "purpose": "统计两主数字、等宽数字与终值占位。"
+      },
+      "title": {
+        "displayName": "标题",
+        "purpose": "任务和统计分区。"
+      },
+      "body": {
+        "displayName": "正文",
+        "purpose": "中文正文。"
+      },
+      "label": {
+        "displayName": "标签",
+        "purpose": "图例和说明。"
+      },
+      "word": {
+        "displayName": "英文词卡",
+        "purpose": "原有词卡衬线标题。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "sort-selected",
+        "value": "0 1px 2px rgba(11, 34, 68, 0.08)",
+        "purpose": "词表排序选中面。"
+      },
+      {
+        "name": "recovery-notice",
+        "value": "0 20px 60px rgb(66 55 34 / 8%)",
+        "purpose": "恢复通知。"
+      },
+      {
+        "name": "recovery-confirmation",
+        "value": "0 18px 46px rgb(11 34 68 / 20%)",
+        "purpose": "恢复确认。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "root主要缓出曲线。"
+      },
+      {
+        "name": "task-ring",
+        "value": "700ms",
+        "purpose": "有效非零比例填充。"
+      },
+      {
+        "name": "chart-reveal",
+        "value": "800ms",
+        "purpose": "条整体揭示、柱体共同底线、反馈环共享时间线。"
+      },
+      {
+        "name": "count-duration",
+        "value": "min(1100, max(600, 250 + log10(value + 1) * 190))ms",
+        "purpose": "统计两主数字，三次缓出，辅助阅读仅终值。"
+      },
+      {
+        "name": "shell-transition",
+        "value": "320ms",
+        "purpose": "外壳网格/侧栏位置。"
+      },
+      {
+        "name": "page-enter",
+        "value": "360ms / translateY(8px)",
+        "purpose": "既有页级进入。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "取消非必要动画并显示终值；隐藏页面也停止。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "statistics-intermediate",
+        "value": "1120px"
+      },
+      {
+        "name": "top-navigation",
+        "value": "800px"
+      },
+      {
+        "name": "single-column",
+        "value": "640px"
+      },
+      {
+        "name": "compact-ring",
+        "value": "560px"
+      },
+      {
+        "name": "compact-header",
+        "value": "480px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "学习入口",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "实际概览动作样式；示例不进入学习流程。",
+      "html": "<button class=\"ds-primary\" type=\"button\">今日学习<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 12h15m-6-6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-primary{font-family:Inter,ui-sans-serif,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;gap:15px;min-height:57px;padding:12px 22px;border:1px solid var(--ink,#0b2244);border-radius:8px;color:var(--white,#fffefa);background:var(--ink,#0b2244);font-size:19px;font-weight:650;cursor:pointer;transition:color 180ms var(--ease-out,cubic-bezier(.16,1,.3,1)),background 180ms var(--ease-out,cubic-bezier(.16,1,.3,1)),border-color 180ms var(--ease-out,cubic-bezier(.16,1,.3,1))}.ds-primary svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7}.ds-primary:hover{background:#204168;border-color:#204168;color:var(--white,#fffefa)}.ds-primary:focus-visible{outline:2px solid var(--gold,#96762e);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "复习入口",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "实际概览动作样式；示例不进入学习流程。",
+      "html": "<button class=\"ds-outline\" type=\"button\">今日复习<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 12h15m-6-6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-outline{font-family:Inter,ui-sans-serif,system-ui,sans-serif;display:flex;align-items:center;justify-content:center;gap:15px;min-height:57px;padding:12px 22px;border:1px solid var(--gold,#96762e);border-radius:8px;color:var(--gold,#96762e);background:transparent;font-size:19px;font-weight:650;cursor:pointer;transition:color 180ms var(--ease-out,cubic-bezier(.16,1,.3,1)),background 180ms var(--ease-out,cubic-bezier(.16,1,.3,1)),border-color 180ms var(--ease-out,cubic-bezier(.16,1,.3,1))}.ds-outline svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7}.ds-outline:hover{background:var(--ink,#0b2244);border-color:var(--ink,#0b2244);color:var(--white,#fffefa)}.ds-outline:focus-visible{outline:2px solid var(--gold,#96762e);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-outline{transition:none}}"
+    },
+    {
+      "name": "维护按钮",
+      "kind": "button",
+      "refersTo": "button-neutral",
+      "description": "已实现的浅色维护原语。",
+      "html": "<button class=\"ds-neutral\" type=\"button\">返回设置</button>",
+      "css": ".ds-neutral{font-family:Inter,ui-sans-serif,system-ui,sans-serif;padding:9px 16px;min-height:44px;border:1px solid var(--line,rgba(11,34,68,.16));border-radius:8px;color:var(--ink,#0b2244);background:var(--white,#fffefa);cursor:pointer;transition:background-color 160ms ease-out,border-color 160ms ease-out,color 160ms ease-out}.ds-neutral:disabled{opacity:.5;cursor:default}.ds-neutral:focus-visible{outline:2px solid var(--gold,#96762e);outline-offset:3px}@media(hover:hover){.ds-neutral:hover:not(:disabled){border-color:var(--gold,#96762e);background:var(--gold-soft,#d8c89b)}}@media(prefers-reduced-motion:reduce){.ds-neutral{transition:none}}"
+    },
+    {
+      "name": "搜索输入",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "词表已有搜索原语，未编造错误态。",
+      "html": "<label class=\"ds-label\">搜索单词<input class=\"ds-search\" type=\"search\" placeholder=\"输入单词\"></label>",
+      "css": ".ds-label{font-family:Inter,ui-sans-serif,system-ui,sans-serif;display:grid;gap:8px;color:var(--ink-soft,#526176);font-size:13px}.ds-search{font-family:Inter,ui-sans-serif,system-ui,sans-serif;min-width:0;width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line,rgba(11,34,68,.16));border-radius:4px;color:var(--ink,#0b2244);background:var(--white,#fffefa);font-size:15px;caret-color:var(--ink,#0b2244)}.ds-search::placeholder{color:var(--ink-soft,#526176);opacity:1}.ds-search:focus-visible{outline:2px solid var(--gold,#96762e);outline-offset:3px}"
+    },
+    {
+      "name": "五项导航",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "实际导航的短线、选中、焦点和手机横排；此例不切页。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"主导航\"><div class=\"ds-nav-item\"><i class=\"ds-nav-marker\" aria-hidden=\"true\"></i><button class=\"ds-nav-button\" type=\"button\" aria-current=\"page\">今日学习</button></div><div class=\"ds-nav-item\"><i class=\"ds-nav-marker\" aria-hidden=\"true\"></i><button class=\"ds-nav-button\" type=\"button\">词表</button></div><div class=\"ds-nav-item\"><i class=\"ds-nav-marker\" aria-hidden=\"true\"></i><button class=\"ds-nav-button\" type=\"button\">模拟练习</button></div><div class=\"ds-nav-item\"><i class=\"ds-nav-marker\" aria-hidden=\"true\"></i><button class=\"ds-nav-button\" type=\"button\">统计</button></div><div class=\"ds-nav-item\"><i class=\"ds-nav-marker\" aria-hidden=\"true\"></i><button class=\"ds-nav-button\" type=\"button\">设置</button></div></nav>",
+      "css": ".ds-nav{font-family:Inter,ui-sans-serif,system-ui,sans-serif;display:flex;flex-direction:column;gap:18px;padding-left:34px}.ds-nav-item{position:relative}.ds-nav-button{font-family:Inter,ui-sans-serif,system-ui,sans-serif;min-height:28px;padding:0;border:0;color:var(--ink-soft,#526176);background:transparent;font-size:16px;line-height:1.2;cursor:pointer;transition:color 160ms var(--ease-out,cubic-bezier(.16,1,.3,1)),transform 180ms var(--ease-out,cubic-bezier(.16,1,.3,1))}.ds-nav-marker{position:absolute;top:50%;left:-34px;width:26px;height:1px;background:#b6a982;transform:translateY(-50%);transition:width 180ms var(--ease-out,cubic-bezier(.16,1,.3,1)),background-color 160ms var(--ease-out,cubic-bezier(.16,1,.3,1))}.ds-nav-button[aria-current=page]{transform:translateX(10px)}.ds-nav-button:hover,.ds-nav-button[aria-current=page]{color:var(--gold,#96762e)}.ds-nav-item:has([aria-current=page]) .ds-nav-marker{width:36px;background:var(--gold,#96762e)}.ds-nav-item:hover .ds-nav-marker{background:var(--gold,#96762e)}.ds-nav-button:focus-visible{outline:2px solid var(--gold,#96762e);outline-offset:5px}@media(max-width:800px){.ds-nav{flex-direction:row;gap:20px;overflow-x:auto;padding:2px 16px 6px 0}.ds-nav-item{flex:0 0 auto}.ds-nav-button{min-height:44px;white-space:nowrap}.ds-nav-button[aria-current=page]{transform:none}.ds-nav-marker{display:none}}@media(prefers-reduced-motion:reduce){.ds-nav-button,.ds-nav-marker{transition:none}}"
+    },
+    {
+      "name": "统计提示",
+      "kind": "chip",
+      "refersTo": "warning-tag",
+      "description": "非交互缺失/冲突标签。",
+      "html": "<span class=\"ds-warning\">部分反馈缺失</span>",
+      "css": ".ds-warning{font-family:Inter,ui-sans-serif,system-ui,sans-serif;display:inline-block;padding:5px 10px;border-radius:6px;color:#795816;background:#f2e6ca;font-size:12px}"
+    },
+    {
+      "name": "设置面板",
+      "kind": "card",
+      "refersTo": "settings-panel",
+      "description": "实际面板容器，文字仅为示例。",
+      "html": "<section class=\"ds-panel\"><p class=\"ds-panel-copy\">学习设置 · 容器样式示例</p></section>",
+      "css": ".ds-panel{font-family:Inter,ui-sans-serif,system-ui,sans-serif;padding:10px 24px;border:1px solid var(--line,rgba(11,34,68,.16));border-radius:14px;color:var(--ink,#0b2244);background:var(--white,#fffefa)}.ds-panel-copy{line-height:1.7}@media(max-width:640px){.ds-panel{padding-inline:16px}}"
+    },
+    {
+      "name": "统计切换",
+      "kind": "button",
+      "refersTo": "statistics-toggle",
+      "description": "实际按压状态与悬停/焦点；此片段无数据切换逻辑。",
+      "html": "<div class=\"ds-toggle\" role=\"group\" aria-label=\"统计时间样式\"><button type=\"button\" aria-pressed=\"true\">全部</button><button type=\"button\" aria-pressed=\"false\">近7天</button><button type=\"button\" aria-pressed=\"false\">今日</button></div>",
+      "css": ".ds-toggle{font-family:Inter,ui-sans-serif,system-ui,sans-serif;display:inline-flex;max-width:100%;border:1px solid rgba(11,34,68,.23);border-radius:7px;overflow:hidden}.ds-toggle button{font-family:Inter,ui-sans-serif,system-ui,sans-serif;min-height:39px;padding:7px 21px;border:0;border-right:1px solid var(--line,rgba(11,34,68,.16));background:transparent;color:var(--ink,#0b2244);font-size:15px;cursor:pointer;transition:background 150ms,color 150ms}.ds-toggle button:last-child{border-right:0}.ds-toggle button[aria-pressed=true]{background:var(--ink,#0b2244);color:var(--white,#fffefa)}.ds-toggle button:hover{background:var(--gold-soft,#d8c89b);color:var(--ink,#0b2244)}.ds-toggle button[aria-pressed=true]:hover{background:#204168;color:var(--white,#fffefa)}.ds-toggle button:focus-visible{outline:2px solid var(--gold,#96762e);outline-offset:-4px}@media(max-width:640px){.ds-toggle button{padding-inline:17px;min-height:42px}}@media(prefers-reduced-motion:reduce){.ds-toggle button{transition:none}}"
+    },
+    {
+      "name": "任务环",
+      "kind": "custom",
+      "refersTo": "progress-ring",
+      "description": "示例6/10；不是生产数据。静态片段保留真实结构，React的可取消填充由源码负责。",
+      "html": "<figure class=\"ds-ring-demo\"><div class=\"ds-ring\" role=\"img\" aria-label=\"示例：6 / 10，60%\"><svg viewBox=\"0 0 200 200\" aria-hidden=\"true\"><circle class=\"ds-track\" cx=\"100\" cy=\"100\" r=\"86\"/><circle class=\"ds-fill\" cx=\"100\" cy=\"100\" r=\"86\" pathLength=\"100\" stroke-dasharray=\"100\" stroke-dashoffset=\"40\"/></svg><div class=\"ds-center\" aria-hidden=\"true\"><div><strong>6</strong><span> / 10</span></div><small>60%</small></div></div><figcaption class=\"ds-ring-note\">示例 · 本轮进度</figcaption></figure>",
+      "css": ".ds-ring-demo{font-family:Inter,ui-sans-serif,system-ui,sans-serif;margin:0;color:var(--ink,#0b2244)}.ds-ring{position:relative;width:min(100%,244px);aspect-ratio:1;margin:0 auto}.ds-ring svg{display:block;width:100%;height:100%;overflow:visible}.ds-ring circle{fill:none;stroke-width:15}.ds-track{stroke:var(--line,rgba(11,34,68,.16));opacity:.65}.ds-fill{stroke:var(--gold,#96762e);stroke-linecap:round;transform:rotate(-90deg);transform-origin:center}.ds-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}.ds-center strong{font-size:clamp(34px,3.8vw,57px);font-weight:750;letter-spacing:-.03em}.ds-center span{font-size:20px;font-weight:600;color:var(--ink-soft,#526176)}.ds-center small{margin-top:8px;padding-top:8px;width:44%;border-top:1px solid var(--line,rgba(11,34,68,.16));font-size:19px;color:var(--ink-soft,#526176);text-align:center}.ds-ring-note{margin-top:9px;text-align:center;font-size:13px;color:var(--ink-soft,#526176)}@media(max-width:560px){.ds-ring{width:190px}.ds-center strong{font-size:42px}}"
+    },
+    {
+      "name": "分段完成条",
+      "kind": "custom",
+      "refersTo": "segmented-bar",
+      "description": "示例3/1/2词次；几何、轨道与图例来自实际组件。",
+      "html": "<figure class=\"ds-bar-demo\"><figcaption class=\"ds-bar-note\">示例 · 完成6词次</figcaption><div class=\"ds-bar\" role=\"img\" aria-label=\"示例：新词3、额外1、复习2词次\"><span class=\"ds-learning\"></span><span class=\"ds-extra\"></span><span class=\"ds-review\"></span></div><ul class=\"ds-legend\"><li><i class=\"ds-key-learning\"></i>新词3</li><li><i class=\"ds-key-extra\"></i>额外1</li><li><i class=\"ds-key-review\"></i>复习2</li></ul></figure>",
+      "css": ".ds-bar-demo{font-family:Inter,ui-sans-serif,system-ui,sans-serif;margin:0;color:var(--ink,#0b2244)}.ds-bar-note{font-size:14px;margin-bottom:12px}.ds-bar{display:flex;height:19px;border-radius:6px;overflow:hidden;background:rgba(11,34,68,.09)}.ds-bar>span{height:100%;flex-shrink:0}.ds-bar>span+span{border-left:1px solid var(--white,#fffefa)}.ds-learning{width:50%;background:#123e68}.ds-extra{width:16.6667%;background:#b89647}.ds-review{width:33.3333%;background:#589bd0}.ds-legend{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 18px;list-style:none;padding:0;margin:15px 0 0;font-size:14px;font-variant-numeric:tabular-nums}.ds-legend li{display:flex;align-items:baseline;gap:8px}.ds-legend i{width:11px;height:11px;border-radius:50%;flex-shrink:0}.ds-key-learning{background:#123e68}.ds-key-extra{background:#b89647}.ds-key-review{background:#589bd0}"
+    }
+  ],
+  "narrative": {
+    "northStar": "安静、稳定的纸面式学习空间",
+    "overview": "沿用 PRODUCT.md 的品牌承诺和 2026-10-05 已批准方案中的暖纸色、深蓝、柔金与五项导航；没有另取新隐喻。纸底承载内容，深蓝组织阅读和主要动作，金色标记导航与局部重点。开放、细线分隔的概览与原有浅色词卡并存。\n\n这是实现后的扫描记录，依据源码 `9fe307e` 的样式与组件，以及四张最终桌面/手机截图。两页构图来自用户指定底稿，方向合同位于 index.html；没有概念随机抽选或虚构种子。具体构图仍归属 [已批准方案](docs/superpowers/specs/2026-10-05-today-statistics-visual-design.md)，不强制推广到所有页面。",
+    "keyCharacteristics": [
+      "暖纸底、深蓝文字、柔金重点与细线边界。",
+      "紧凑中文概览标题、强数字层级与等宽数字。",
+      "任务环、条形与图例保留单位、范围和真实数据状态。",
+      "可取消的数据揭示；减少动态效果时直接显示终值。",
+      "桌面侧栏与手机横向五项导航保持相同入口。"
+    ],
+    "rules": [
+      {
+        "name": "The 有文字的数据色 Rule",
+        "body": "类别颜色始终伴随文字和数值，自评环不代表客观掌握率。",
+        "section": "colors"
+      },
+      {
+        "name": "The 稳定数字 Rule",
+        "body": "用等宽数字、千分位与终值占位保持布局稳定；只让统计“已学”和“累计完成”两主数字递增，单位和普通数字直接显示。",
+        "section": "typography"
+      },
+      {
+        "name": "The 开放概览 Rule",
+        "body": "今日和统计主数据区直接落在纸底上，以规则线分节，不为每项数值加带阴影的浮卡。",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do 延续暖纸、深蓝、柔金和五项导航，保留词卡与概览的不同角色。",
+      "Do 用文字、单位和范围解释图形，让缺失、冲突、未创建与真实零值各自可辨。",
+      "Do 保持轴标签 12 CSS px、等宽数字与最终值占位。",
+      "Do 保持键盘焦点、窄屏顺序堆叠和减少动态效果终值。",
+      "Do 标注示例数值，生产数据取自本地保存记录。"
+    ],
+    "donts": [
+      "Don't 将已学、词次或自评次数说成已掌握或客观掌握率。",
+      "Don't 给开放数据区加重复浮卡、硬阴影或妨碍动作的动效。",
+      "Don't 给未知值补零/比例，或复制底稿/验收样本数字为生产事实。",
+      "Don't 将概览构图强制用于全站，臆造概念抽选或用户人工验收。"
+    ]
+  }
+}

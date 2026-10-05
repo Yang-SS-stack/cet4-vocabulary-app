@@ -1,14 +1,21 @@
 # 今日学习与统计：同步实施交接卡
 
-日期：2026-10-05。当前状态：已批准，实施中。用户最终批准文字：“可以开工了”。
+日期：2026-10-05。当前状态：制作及自动核验完成，等待新页面逐步人工验收。用户最终批准文字：“可以开工了”。
 
 ## 接手入口
 
 - 方案：`docs/superpowers/specs/2026-10-05-today-statistics-visual-design.md`。
 - 制作工作区：`C:/Users/29864/.codex/worktrees/development-maintenance/单词学习软件`。
 - 分支：`codex/development-maintenance`；页面初版基线提交：`7a6537b91b847a7deb6807c22c9b4eee1a4a7c35`。开工前核对实际HEAD与未提交改动，不能以基线当最新版本。
-- 已有未提交修复：`src/components/DevelopmentMaintenancePage.css`，补维护入口及页内按钮悬停，构建及实际浏览器验证已完成。保留，不覆盖。
+- 维护悬停修复已纳入提交a8a0e133：`src/components/DevelopmentMaintenancePage.css`，补维护入口及页内按钮悬停，构建及实际浏览器验证已完成。保留，不覆盖。
 - 主项目代码未合并此制作分支。人工验收最新进度看工作区`.superpowers/sdd/progress.md`及`delivery-receipt.json`，不要依据旧文档待验收表重做已完成步骤。
+- 全历史统计计算已提交1bb4dcc，相关42项通过，独立规格/代码质量复核通过；两页初版7451539e，四项复核意见已在e18e979修正，专项43项及独立复核通过。旧统计标题兼容断言已在a2b79cf修正。手机纵轴字号与效果图来源已在9fe307e修正；该版本稳定单工作进程完整检查58个文件、631项全部通过，耗时193.49秒，构建29.00秒通过。源码整合和本次增量复核均通过；浏览器实际连续图形更新、快速打断圆环、动态关闭效果已核验。修正后的四张桌面/手机图已获原视觉审查确认，两项意见均已解决。最终版本以实际HEAD与交付收据为准。增量记录见`docs/today-statistics-visual-acceptance.md`。
+
+设计规范：[DESIGN.md](../DESIGN.md)，组件预览记录：`.impeccable/design.json`。依据已实现样式记录，不替代页面方案；PRODUCT旧阶段快照未作无关修订。Impeccable已按用户批准更新至4.4.0，4.0.4备份位于Codex的skill-backups目录。
+
+人工验收预览：`http://127.0.0.1:43167/cet4-vocabulary-app/qa.html`，当前显示统计。它带有隔离样本标识；每次构建后重新运行工作区`.superpowers/sdd/install-qa-preview.mjs`补回验收入口。正式4173预览的存储未替换。
+
+原视觉审查已确认F1设计来源、F2手机纵轴字号均resolved，结论ship。源码9fe307e为最后行为变更，后续提交仅保存文档与设计规范；当前提交和重建版本见交付收据。
 
 ## 决策与批准条件
 
