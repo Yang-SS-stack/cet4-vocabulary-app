@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
 import { useLearningFacts } from '../data/assistant/react'
 import { ProgressRing } from './DataMotion'
-import AnimatedDisclosure from './AnimatedDisclosure'
+import LearningAdviceModal from './LearningAdviceModal'
 import { wordBooks } from '../data/wordBooks'
 import './TodayLearningPage.css'
 
@@ -22,6 +22,8 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
   const [status, setStatus] = useState('')
   const [learning, setLearning] = useState(false)
   const [confirmExtra, setConfirmExtra] = useState(false)
+  const [adviceOpen, setAdviceOpen] = useState(false)
+  const adviceEntry = useRef(null)
   const [returned, setReturned] = useState(false)
   const entryButton = useRef(null)
   const reviewButton = useRef(null)
@@ -94,9 +96,10 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
       </div>
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
       {factsError && <p className="learning-overview__error">{factsError}</p>}
-      <AnimatedDisclosure title="学习建议">
+      <button ref={adviceEntry} type="button" className="learning-advice-entry" aria-haspopup="dialog" onClick={() => setAdviceOpen(true)}>学习建议 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6" /></svg></button>
+      {adviceOpen && <LearningAdviceModal recommendation={recommendation} settings={settings} bookLabel={selectedWordBook.label} daysLabel={formatDays(daysRemaining)} planResult={recommendation ? formatPlanResult(recommendation, settings) : null} returnFocus={adviceEntry} onClose={() => setAdviceOpen(false)}>
         {recommendation ? <RecommendationCard recommendation={recommendation} settings={settings} reviewLoad={facts.reviewLoad} /> : <p>规则建议无法计算：请选择词书并核对词书资料。</p>}
-      </AnimatedDisclosure>
+      </LearningAdviceModal>}
       {confirmExtra && <ExtraLearningConfirmation onCancel={() => setConfirmExtra(false)} onConfirm={() => {
         setConfirmExtra(false)
         // The date may have changed while the confirmation was open.
@@ -179,8 +182,8 @@ function RecommendationCard({ recommendation, settings, reviewLoad }) {
         <p role="status">按当前日期和剩余词量，考试前可能无法完成，请调整考试日期或学习计划。</p>
       )}
 
-      <details className="learning-recommendation__evidence">
-        <summary>查看依据</summary>
+      <section className="learning-recommendation__evidence" aria-label="研究依据">
+        <h3>研究依据</h3>
         <div>
           <p>间隔学习与主动回忆是学习方法证据，不是固定每日词数的研究处方。</p>
           <ul>
@@ -189,7 +192,7 @@ function RecommendationCard({ recommendation, settings, reviewLoad }) {
             <li><a href="https://pubmed.ncbi.nlm.nih.gov/35303977/" target="_blank" rel="noreferrer">词汇间隔研究</a></li>
           </ul>
         </div>
-      </details>
+      </section>
     </article>
   )
 }

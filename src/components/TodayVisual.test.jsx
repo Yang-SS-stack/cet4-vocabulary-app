@@ -1,8 +1,10 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react'
-import { expect, test } from 'vitest'
+import { afterAll, beforeAll, expect, test, vi } from 'vitest'
 import { createLearningStore, LearningStoreProvider } from '../data/learning'
 import TodayLearningPage from './TodayLearningPage'
 const now = new Date(2026, 9, 2, 12)
+beforeAll(() => { HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }; HTMLDialogElement.prototype.close = function () { this.removeAttribute('open') } })
+afterAll(() => { delete HTMLDialogElement.prototype.showModal; delete HTMLDialogElement.prototype.close })
 function page(prepare = () => {}) {
   let raw = null
   const store = createLearningStore({ storage: { getItem: () => raw, setItem: (_, value) => { raw = value } }, now: () => now })
@@ -17,15 +19,18 @@ function finish(store, task = () => store.getTask('learning')) {
     store.submitSelfAssessment(token(), 'known'); store.advanceLearning(token())
   }
 }
-test('three rings distinguish absent tasks from assigned empty tasks and collapse recommendations', () => {
+test('three rings distinguish absent tasks from empty tasks and advice opens without an extending disclosure', () => {
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
   page(store => store.ensureTask('review', [], 'cet4'))
   expect(screen.getByRole('region', { name: '今日新词' })).toHaveTextContent('尚未创建')
   expect(screen.getByRole('region', { name: '额外学习' })).toHaveTextContent('尚未创建')
   expect(screen.getByRole('region', { name: '今日复习' })).toHaveTextContent('本日无复习任务')
   expect(screen.queryByText('0%')).not.toBeInTheDocument()
-  const details = screen.getByText('学习建议').closest('details')
-  expect(details).not.toHaveAttribute('open')
-  fireEvent.click(screen.getByText('学习建议')); expect(details).toHaveAttribute('open')
+  const entry = screen.getByRole('button', { name: '学习建议' })
+  expect(entry.closest('details')).toBeNull()
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  fireEvent.click(entry)
+  expect(screen.getByRole('dialog', { name: '学习建议' })).toHaveAttribute('open')
 })
 test('fixed rings retain task books and assigned counts after settings change', () => {
   page(store => { store.ensureTask('learning', ['a', 'b'], 'cet4'); store.ensureTask('review', ['c'], 'cet4'); store.updateSettings({ todayWordBookId: 'cet4-high-frequency', dailyNewWords: 20 }) })

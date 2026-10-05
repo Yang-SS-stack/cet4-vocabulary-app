@@ -1,9 +1,15 @@
-import { render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect, test } from 'vitest'
+import { afterAll, afterEach, beforeAll, beforeEach, expect, test, vi } from 'vitest'
 
 import { createLearningStore, LearningStoreProvider } from '../data/learning'
 import TodayLearningPage from './TodayLearningPage'
+
+beforeAll(() => { HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }; HTMLDialogElement.prototype.close = function () { this.removeAttribute('open') } })
+afterAll(() => { delete HTMLDialogElement.prototype.showModal; delete HTMLDialogElement.prototype.close })
+beforeEach(() => { vi.spyOn(window, 'scrollTo').mockImplementation(() => {}) })
+afterEach(() => cleanup())
+function showEvidence() { fireEvent.click(screen.getByRole('button', { name: '学习建议' })); fireEvent.click(screen.getByRole('tab', { name: '依据' })) }
 
 function createMemoryStorage() {
   const values = new Map()
@@ -48,6 +54,7 @@ test('shows exam progress, word-book progress, both actions, and all six recomme
   store.recordFeedback('learning', 'ability', 'known')
 
   renderPage(store)
+  showEvidence()
 
   expect(screen.getByText('距离考试')).toBeInTheDocument()
   expect(screen.getByText('10 天')).toBeInTheDocument()
@@ -69,13 +76,14 @@ test('shows exam progress, word-book progress, both actions, and all six recomme
   expect(screen.getByText('约 15 分钟')).toBeInTheDocument()
   expect(screen.getByText('计划结果')).toBeInTheDocument()
   expect(screen.getByText('当前设置可能无法在考试前完成，建议每天至少学习 455 个新词。')).toBeInTheDocument()
-  expect(screen.getByText('查看依据')).toBeInTheDocument()
+  expect(screen.getByRole('region', { name: '研究依据' })).toBeInTheDocument()
 })
 
 test('separates an impossible raw deadline from the capped editable suggestion', () => {
   const store = createStore()
   configure(store, { examDate: '2026-09-12', dailyNewWords: 100, dailyStudyMinutes: 110 })
   renderPage(store)
+  showEvidence()
 
   expect(screen.getByText('每天 4,544 词')).toBeInTheDocument()
   expect(screen.getByText('每天 100 词')).toBeInTheDocument()
@@ -87,6 +95,7 @@ test('shows saved daily quantities and planned minutes separately from the formu
   const store = createStore()
   configure(store, { dailyNewWords: 100, dailyReviewWords: 20, dailyStudyMinutes: 30 })
   renderPage(store)
+  showEvidence()
 
   expect(screen.getByText('新词 100 · 复习 20 · 计划 30 分钟')).toBeInTheDocument()
   expect(screen.getByText('约 110 分钟')).toBeInTheDocument()
@@ -96,6 +105,7 @@ test('reports when the saved daily quantity can meet the deadline', () => {
   const store = createStore()
   configure(store, { examDate: '2027-09-11', dailyNewWords: 13 })
   renderPage(store)
+  showEvidence()
 
   expect(screen.getByText('当前设置可以在考试前完成。')).toBeInTheDocument()
 })
@@ -104,6 +114,7 @@ test('prompts for a future date when deadline plans are unavailable', () => {
   const store = createStore()
   configure(store, { examDate: null })
   renderPage(store)
+  showEvidence()
 
   expect(screen.getAllByText('设置未来考试日期后计算')).toHaveLength(2)
   expect(screen.getByText('请先设置未来的考试日期。')).toBeInTheDocument()
@@ -129,6 +140,7 @@ test('overview shows true due, assigned and unassigned counts and saved task boo
   store.ensureTodayReview()
   store.updateSettings({ todayWordBookId: 'cet4-high-frequency', dailyReviewWords: 1 })
   renderPage(store)
+  showEvidence()
   expect(screen.getByText(/当前到期 0 词/)).toBeInTheDocument()
   expect(screen.getByRole('img', { name: '今日复习：已完成 0 / 2 词，0%' })).toBeInTheDocument()
   expect(screen.getByText('已保存词书：CET-4')).toBeInTheDocument()
@@ -143,6 +155,7 @@ test('overview labels projected historical due counts without writing or silentl
   const snapshot = JSON.parse(raw); snapshot.wordBooks.cet4.words.alpha.review = null; raw = JSON.stringify(snapshot)
   date = new Date(2026, 8, 11, 12); store.reload(); const before = raw
   renderPage(store)
+  showEvidence()
   expect(screen.getByText(/预计到期 1 词；开始复习时核对历史记录/)).toBeInTheDocument()
   expect(raw).toBe(before); expect(store.getTask('review')).toBeNull()
 })
@@ -153,8 +166,8 @@ test('reveals the research sources without presenting them as a fixed word-count
   configure(store)
   renderPage(store)
 
-  await user.click(screen.getByText('学习建议'))
-  await user.click(screen.getByText('查看依据'))
+  await user.click(screen.getByRole('button', { name: '学习建议' }))
+  await user.click(screen.getByRole('tab', { name: '依据' }))
 
   expect(screen.getByText(/间隔学习与主动回忆是学习方法证据/)).toBeInTheDocument()
   expect(screen.getByRole('link', { name: /分散练习综述/ })).toHaveAttribute('href', 'https://pubmed.ncbi.nlm.nih.gov/16719566/')
@@ -180,6 +193,7 @@ test('unconfigured learning suggestions preserve unavailable daily estimate', ()
   const store = createStore()
   store.updateSettings({ todayWordBookId: 'cet4' })
   renderPage(store)
+  showEvidence()
   expect(screen.getByText('无法估算：每日新词或复习数量未设置')).toBeInTheDocument()
 })
 
@@ -187,6 +201,7 @@ test('today or past exam labels recommendations inapplicable and actual zero min
   const store = createStore()
   configure(store, { examDate: '2026-09-11', dailyNewWords: 0, dailyReviewWords: 0 })
   renderPage(store)
+  showEvidence()
   expect(screen.getAllByText('不适用：考试日期为今天或已过去')).toHaveLength(2)
   expect(screen.getByText('约 0 分钟')).toBeInTheDocument()
 })

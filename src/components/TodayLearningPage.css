@@ -294,6 +294,11 @@
 .learning-overview__flow-status { min-height: 0; margin: 0; }
 .learning-overview__flow-status:not(:empty) { margin-top: 13px; }
 .learning-overview__error { color: var(--ink-soft); font-size: 14px; }
+.learning-advice-entry { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; min-height: 62px; margin-top: 23px; padding: 17px 22px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: transparent; font: inherit; font-size: 17px; font-weight: 650; cursor: pointer; transition: background-color 160ms var(--ease-out); }
+.learning-advice-entry svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.learning-advice-entry:hover { background: var(--gold-soft); }
+.learning-advice-entry:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .learning-advice-entry { transition: none; } }
 .learning-recommendation-disclosure { margin-top: 23px; border: 1px solid var(--line); border-radius: 10px; }
 .learning-recommendation-disclosure > summary { display: flex; align-items: center; justify-content: space-between; list-style: none; padding: 17px 22px; cursor: pointer; font-size: 17px; font-weight: 650; border-radius: 9px; transition: color 160ms ease-out, background-color 160ms ease-out; }
 .learning-recommendation-disclosure > summary::-webkit-details-marker { display: none; }
