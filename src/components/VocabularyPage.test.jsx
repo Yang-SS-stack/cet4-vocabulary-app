@@ -31,7 +31,7 @@ test('previous and next page return to the document top after rendering the new 
   expect(scroll).not.toHaveBeenCalled()
   await user.click(screen.getByRole('button', { name: '下一页' }))
   expect(visibleWordNames()[0]).toBe('word-22')
-  expect(screen.getByRole('heading', { name: 'CET-4', exact: true })).toHaveFocus()
+  expect(screen.getByRole('heading', { name: '词表', exact: true })).toHaveFocus()
   expect(scroll).toHaveBeenLastCalledWith({ top: 0, left: 0, behavior: 'instant' })
   await user.click(screen.getByRole('button', { name: '上一页' }))
   expect(visibleWordNames()[0]).toBe('word-01')
@@ -363,7 +363,7 @@ test('fades back in when a cached word book is reopened after returning to the c
   const user = userEvent.setup()
   render(<VocabularyPage books={[{ id: 'cet4', label: 'CET-4', wordListLabel: '测试单词' }]} loadWords={loadWords} loadAudio={() => Promise.resolve({})} />)
   await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
-  await screen.findByRole('heading', { name: 'CET-4', exact: true })
+  await screen.findByRole('heading', { name: '词表', exact: true })
   const root = document.querySelector('.vocabulary-transition')
   root.animate = vi.fn(() => ({ cancel: vi.fn(), finished: Promise.resolve() }))
 
@@ -372,7 +372,7 @@ test('fades back in when a cached word book is reopened after returning to the c
   root.animate.mockClear()
 
   await user.click(screen.getByRole('button', { name: 'CET-4', exact: true }))
-  await screen.findByRole('heading', { name: 'CET-4', exact: true })
+  await screen.findByRole('heading', { name: '词表', exact: true })
 
   expect(loadWords).toHaveBeenCalledTimes(2)
   expect(loadWords.mock.results[0].value).toBe(loadWords.mock.results[1].value)
@@ -421,7 +421,7 @@ test('fades out before paging and scrolling, then fades in and restores keyboard
   expect(root.inert).toBe(true)
   await act(async () => finishes[1]())
   expect(root.inert).toBe(false)
-  expect(screen.getByRole('heading', { name: 'CET-4', exact: true })).toHaveFocus()
+  expect(screen.getByRole('heading', { name: '词表', exact: true })).toHaveFocus()
 })
 
 test('skips page animation for reduced motion and still returns to the top', async () => {
@@ -552,7 +552,7 @@ test('opens the CET-4 high-frequency book in descending frequency order and retu
 
   await user.click(bookButton)
 
-  expect(screen.getByRole('heading', { name: 'CET-4高频词汇' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '词表' })).toBeInTheDocument()
   expect(screen.getAllByRole('listitem').map((item) => item.textContent)).toEqual([
     expect.stringContaining('access'),
     expect.stringContaining('ability'),

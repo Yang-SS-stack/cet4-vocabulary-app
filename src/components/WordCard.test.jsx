@@ -160,7 +160,7 @@ test('uses resolved audio URLs after the manifest becomes available', async () =
 test('flip hint is plain text and clicking the hint or card heading flips the card', async () => {
   const user = userEvent.setup()
   const { container } = render(<WordCard item={word} />)
-  const hint = screen.getByText('点击翻页')
+  const hint = screen.getByText('详情')
   expect(hint.closest('button')).toBeNull()
   expect(container.querySelector('.word-card__open')).toBeNull()
   await user.click(hint)

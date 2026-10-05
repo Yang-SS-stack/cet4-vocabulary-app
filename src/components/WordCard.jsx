@@ -79,7 +79,7 @@ export default function WordCard({ item, audioManifest = null, showFrequency = t
           <p className="word-card__brief">{briefMeaning}</p>
           {hasFrequency && <p className="word-card__frequency">{frequency}</p>}
           {exampleContent(!flipped)}
-          <span className="word-card__hint">点击翻页</span>
+          <span className="word-card__hint">详情<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10" /></svg></span>
         </div>
         <div
           className="word-card__face word-card__back"

@@ -1,8 +1,7 @@
 .word-card {
   min-width: 0;
-  min-height: 430px;
+  min-height: 360px;
   list-style: none;
-  transition: transform 180ms var(--ease-out);
 }
 
 .word-card__rotator {
@@ -35,7 +34,7 @@
 
 .word-card__front {
   position: relative;
-  min-height: 430px;
+  min-height: 360px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -44,7 +43,7 @@
 
 .word-card__topline {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 12px;
 }
@@ -53,7 +52,7 @@
   min-width: 0;
   margin: 0;
   color: var(--ink);
-  font: 400 25px/1.25 Georgia, 'Times New Roman', serif;
+  font: 400 32px/1.15 Georgia, 'Times New Roman', serif;
 }
 
 .word-card__topline > span,
@@ -63,6 +62,8 @@
   font-size: 13px;
 }
 
+.word-card__topline > span { padding: 2px 8px; border-radius: 4px; color: var(--ink); background: rgba(11, 34, 68, .07); font-family: Georgia, 'Times New Roman', serif; }
+
 .word-card__phonetic { margin: 8px 0 0; }
 
 .word-card__brief {
@@ -70,25 +71,23 @@
   color: var(--ink);
   font-size: 16px;
   line-height: 1.7;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .word-card__hint {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
   margin-top: auto;
-  padding-top: 24px;
-  color: var(--ink-soft);
+  padding-top: 16px;
+  color: var(--gold);
   font-size: 13px;
-  text-align: center;
   transition: color 160ms var(--ease-out);
 }
 
-.word-card:hover { transform: translateX(6px); }
-.word-card:hover .word-card__face { border-color: var(--gold); }
-.word-card:hover .word-card__hint { color: var(--gold); }
+.word-card__hint svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.word-card:focus-within .word-card__face { border-color: var(--gold); }
+@media (hover: hover) { .word-card:hover .word-card__face { border-color: var(--gold); } }
 
 .word-card__back {
   display: grid;

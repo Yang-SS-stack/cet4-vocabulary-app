@@ -209,29 +209,28 @@ function VocabularyPage({ books = wordBooks, loadWords = loadWordBook, loadAudio
   const isInitialError = pageLoadState === 'error' && !hasLoadedPage
 
   return <div ref={contentRef} className="vocabulary-transition">{!selectedBook ? <section className="vocabulary-page" aria-labelledby="vocabulary-heading">
-    <div className="vocabulary-intro"><p className="panel-label">词书</p><h2 id="vocabulary-heading">选择一本词书</h2><p>从一套明确的学习范围开始，逐步扩充你的词汇库。</p></div>
+    <div className="vocabulary-intro"><h2 id="vocabulary-heading">词表</h2><p className="vocabulary-book-prompt">选择一本词书</p></div>
     <ul className="book-list" aria-label="词书列表">{books.map((book) => <li key={book.id}><button className="book-entry" type="button" aria-label={book.label} onClick={() => selectBook(book)}><span className="book-entry__name">{book.label}</span><span className="book-entry__description">{book.description}</span></button></li>)}</ul>
-  </section> : isInitialLoading ? <section className="vocabulary-page" aria-live="polite"><LoadingIndicator label="正在读取词书" /><button type="button" onClick={returnToBookList}>返回词书</button></section> : isInitialError ? <section className="vocabulary-page" aria-live="polite"><p>词库读取失败</p><button type="button" onClick={() => selectBook(selectedBook)}>重试读取词书</button><button type="button" onClick={returnToBookList}>返回词书</button></section> : <BookContent book={selectedBook} bookId={selectedBookId} pageData={pageData} pageLoadState={pageLoadState} indexState={indexState} pageError={pageError} currentPage={currentPage} query={query} sort={sort} displayedQuery={displayedQuery} displayedSort={displayedSort} audioManifest={audioManifest} searchRef={searchRef} headingRef={headingRef} onBack={returnToBookList} onQuery={(value) => updateView({ page: 1, nextQuery: value })} onSort={(value) => updateView({ page: 1, nextSort: value })} onPage={changePage} onClearSearch={clearSearch} onRetryPage={retryPage} onRetryIndex={retryIndex} />}</div>
+  </section> : isInitialLoading ? <section className="vocabulary-page" aria-live="polite"><div className="vocabulary-intro"><h2>词表</h2></div><LoadingIndicator label="正在读取词书" /><button type="button" onClick={returnToBookList}>返回词书</button></section> : isInitialError ? <section className="vocabulary-page" aria-live="polite"><div className="vocabulary-intro"><h2>词表</h2></div><p>词库读取失败</p><button type="button" onClick={() => selectBook(selectedBook)}>重试读取词书</button><button type="button" onClick={returnToBookList}>返回词书</button></section> : <BookContent book={selectedBook} bookId={selectedBookId} pageData={pageData} pageLoadState={pageLoadState} indexState={indexState} pageError={pageError} currentPage={currentPage} query={query} sort={sort} displayedQuery={displayedQuery} displayedSort={displayedSort} audioManifest={audioManifest} searchRef={searchRef} headingRef={headingRef} onBack={returnToBookList} onQuery={(value) => updateView({ page: 1, nextQuery: value })} onSort={(value) => updateView({ page: 1, nextSort: value })} onPage={changePage} onClearSearch={clearSearch} onRetryPage={retryPage} onRetryIndex={retryIndex} />}</div>
 }
 
 function BookContent({ book, bookId, pageData, pageLoadState, indexState, pageError, currentPage, query, sort, displayedQuery, displayedSort, audioManifest, searchRef, headingRef, onBack, onQuery, onSort, onPage, onClearSearch, onRetryPage, onRetryIndex }) {
   const hasFrequency = pageData.words.some((item) => Number.isFinite(item.frequency) && item.frequency >= 0)
   return <section className="vocabulary-page" aria-labelledby="vocabulary-heading">
     <div className="vocabulary-intro">
-      <div className="vocabulary-toolbar"><button className="book-back" type="button" aria-label="返回词书" onClick={onBack}>← 返回词书</button></div>
-      <h2 ref={headingRef} tabIndex={-1} id="vocabulary-heading">{book.label}</h2>
-      <p>按拼写、中文释义或词性查找，点击词卡查看详情。</p>
+      <button className="book-back" type="button" aria-label="返回词书" onClick={onBack}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg>返回词书</button>
+      <h2 ref={headingRef} tabIndex={-1} id="vocabulary-heading">词表</h2>
+      <div className="vocabulary-summary"><span>{book.label}</span><p className="vocabulary-result-count" aria-live="polite" aria-atomic="true">{displayedQuery.trim() ? `找到 ${pageData.total} 个单词` : `共 ${pageData.total} 个单词`}</p></div>
     </div>
     <div className="vocabulary-filters">
-      <label className="vocabulary-search"><span>搜索单词、中文释义或词性</span><input ref={searchRef} type="search" placeholder="例如 apple、苹果、名词或 n." value={query} onChange={(event) => onQuery(event.target.value)} /></label>
+      <label className="vocabulary-search"><span className="vocabulary-visually-hidden">搜索单词、中文释义或词性</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg><input ref={searchRef} type="search" placeholder="搜索单词、中文释义或词性" value={query} onChange={(event) => onQuery(event.target.value)} /></label>
       <div className="vocabulary-sort" role="group" aria-labelledby="vocabulary-sort-label">
-        <span id="vocabulary-sort-label">排序方式</span>
+        <span id="vocabulary-sort-label" className="vocabulary-visually-hidden">排序方式</span>
         <div className="vocabulary-sort__choices">{[
           { value: 'alphabetical', label: '字母顺序 A–Z', text: '字母顺序' },
           { value: 'frequency', label: '词频从高到低', text: '词频高低' },
         ].map((option) => <button key={option.value} type="button" aria-label={option.label} aria-pressed={sort === option.value} onClick={() => onSort(option.value)}>{option.text}</button>)}</div>
       </div>
-      <p className="vocabulary-result-count" aria-live="polite" aria-atomic="true">{displayedQuery.trim() ? `找到 ${pageData.total} 个单词` : `共 ${pageData.total} 个单词`}</p>
       <LoadingIndicator active={indexState === 'loading' && pageLoadState !== 'loading'} compact label="正在准备搜索" />
       {indexState === 'error' && <p className="vocabulary-load-status" role="status">搜索索引读取失败，词卡浏览仍可继续。 <button type="button" onClick={onRetryIndex}>重试搜索</button></p>}
       <LoadingIndicator active={pageLoadState === 'loading'} compact label="正在加载当前结果..." />
