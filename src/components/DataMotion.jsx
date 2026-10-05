@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import './DataCharts.css'
 
 const format = value => new Intl.NumberFormat('zh-CN').format(value)
@@ -7,7 +7,7 @@ const format = value => new Intl.NumberFormat('zh-CN').format(value)
 function useManagedMotion(start, identity) {
   const latest = useRef(start)
   latest.current = start
-  useEffect(() => {
+  useLayoutEffect(() => {
     const media = window.matchMedia?.('(prefers-reduced-motion: reduce)')
     let cancel = () => {}
     const stop = (settle = false) => { cancel(settle); cancel = () => {} }
@@ -58,20 +58,67 @@ export function AnimatedCount({ value, label, replayKey }) {
   return <span className="data-count" aria-label={label}><span ref={element} className="data-count__value" aria-hidden="true">{valid ? format(value) : '不可计算'}</span><span className="data-count__measure" aria-hidden="true">{valid ? format(value) : '不可计算'}</span><span className="data-sr-only">{valid ? format(value) : '不可计算'}</span></span>
 }
 
-export function DataReveal({ children, replayKey, dataKey = '', direction = 'horizontal', enabled = true, className = '' }) {
+const chartTiming = { duration: 800, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+
+// Read animated styles before canceling: React's underlying DOM already holds
+// the final data, while computed styles still describe the visible animation.
+function visibleProperties(node, animation, fallback) {
+  if (!animation || !['running', 'pending', 'paused'].includes(animation.playState)) return fallback
+  try {
+    const style = window.getComputedStyle(node)
+    return Object.fromEntries(Object.entries(fallback).map(([property, value]) => [property, style[property] || value]))
+  } catch {
+    return fallback
+  }
+}
+
+export function DataReveal({ children, replayKey, dataKey = '', geometry = [], direction = 'horizontal', enabled = true, className = '' }) {
   const element = useRef(null)
   const previous = useRef(null)
   useManagedMotion(animate => {
-    const liveUpdate = previous.current === replayKey
-    previous.current = replayKey
+    const old = previous.current
+    const liveUpdate = old?.key === replayKey
+    const current = { key: replayKey, geometry: new Map(geometry.map(item => [item.key, item.properties])), reveal: null }
+    previous.current = current
     if (!animate || !enabled) return
-    const keyframes = liveUpdate ? [{ opacity: .65 }, { opacity: 1 }] : direction === 'vertical' ? [
+    const reveal = direction === 'vertical' ? [
       { transform: 'scaleY(0)', transformOrigin: 'bottom' },
       { transform: 'scaleY(1)', transformOrigin: 'bottom' },
     ] : [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }]
-    const animation = element.current?.animate?.(keyframes, { duration: 800, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' })
-    return () => animation?.cancel()
-  }, JSON.stringify([replayKey, dataKey, direction, enabled]))
+    const running = []
+    const startTime = document.timeline?.currentTime
+    const start = (node, from, to, key) => {
+      const animation = node?.animate?.([from, to], chartTiming)
+      if (!animation) return
+      running.push({ node, animation, to, key })
+      // All parts use one browser timeline and easing, so adjoining stack edges
+      // and donut arcs stay aligned throughout the transition. No React frames.
+      if (typeof startTime === 'number') animation.startTime = startTime
+    }
+    const stop = (settle = false) => {
+      for (const { node, animation, to, key } of running) {
+        const visible = settle ? to : visibleProperties(node, animation, to)
+        if (key === null) current.reveal = settle || animation.playState === 'finished' ? null : visible
+        else current.geometry.set(key, visible)
+        animation.cancel()
+      }
+    }
+    try {
+      if (liveUpdate) {
+        const nodes = new Map([...element.current.querySelectorAll('[data-motion-key]')].map(node => [node.dataset.motionKey, node]))
+        for (const item of geometry) {
+          const from = old.geometry.get(item.key) ?? item.empty ?? item.properties
+          if (JSON.stringify(from) !== JSON.stringify(item.properties)) start(nodes.get(item.key), from, item.properties, item.key)
+        }
+        if (old.reveal) start(element.current, old.reveal, reveal[1], null)
+      } else {
+        start(element.current, reveal[0], reveal[1], null)
+      }
+    } catch {
+      stop(true)
+    }
+    return stop
+  }, JSON.stringify([replayKey, dataKey, geometry, direction, enabled]))
   return <div ref={element} className={className}>{children}</div>
 }
 
@@ -82,11 +129,16 @@ export function ProgressRing({ value, total, label, state, accent = false }) {
   const ratio = valid ? value / total : 0
   const percentage = Math.round(ratio * 100)
   useManagedMotion(animate => {
-    const from = previous.current ?? 0
-    previous.current = ratio
+    const from = previous.current ?? { strokeDashoffset: 100 }
+    const to = { strokeDashoffset: 100 * (1 - ratio) }
+    previous.current = to
     if (!animate || !valid || !ratio) return
-    const animation = stroke.current?.animate?.([{ strokeDashoffset: 100 * (1 - from) }, { strokeDashoffset: 100 * (1 - ratio) }], { duration: 700, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' })
-    return () => animation?.cancel()
+    const node = stroke.current
+    const animation = node?.animate?.([from, to], { ...chartTiming, duration: 700 })
+    return (settle = false) => {
+      previous.current = settle ? to : visibleProperties(node, animation, to)
+      animation?.cancel()
+    }
   }, JSON.stringify([valid, ratio]))
   return <div className={`progress-ring ${accent ? 'progress-ring--gold' : ''}`} role="img" aria-label={valid ? `${label}：已完成 ${value} / ${total} 词，${percentage}%` : `${label}：${state}`}>
     <svg viewBox="0 0 200 200" aria-hidden="true"><circle className="progress-ring__track" cx="100" cy="100" r="86" /><circle ref={stroke} className="progress-ring__fill" cx="100" cy="100" r="86" pathLength="100" strokeDasharray="100" strokeDashoffset={100 * (1 - ratio)} style={{ visibility: valid && value > 0 ? 'visible' : 'hidden' }} /></svg>

@@ -53,6 +53,19 @@ test('empty history retains true zero, empty tracks, and no invented feedback', 
   expect(screen.getByText('这段时间尚无完成记录')).toBeInTheDocument()
   expect(screen.getByText('尚无自评反馈')).toBeInTheDocument()
 })
+
+test('full history exceeding 24 months labels grouped months honestly and retains the actual bucket ranges', () => {
+  page((store, date) => {
+    date(new Date(2024, 9, 1, 12)); store.ensureTask('learning', ['old'], 'cet4'); finish(store, 'old')
+    date(now); store.ensureTask('learning', ['today'], 'cet4'); finish(store, 'today')
+  })
+  expect(screen.getByRole('heading', { name: '按月份区间完成' })).toBeVisible()
+  expect(screen.queryByRole('heading', { name: '每月完成' })).not.toBeInTheDocument()
+  const chart = screen.getByRole('region', { name: '按月份区间完成' })
+  expect(within(chart).getByText('2024-10–2024-11')).toBeInTheDocument()
+  expect(within(chart).getByText('2026-10')).toBeInTheDocument()
+  expect(screen.getByLabelText('累计完成 2 词次')).toBeInTheDocument()
+})
 test('failed consistent read is unavailable, never zero', () => {
   const { rerender, store, storage, fetch, changeRaw } = page()
   changeRaw('changed externally')
