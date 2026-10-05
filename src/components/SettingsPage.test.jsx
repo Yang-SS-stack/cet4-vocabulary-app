@@ -265,6 +265,45 @@ test('a year choice captures pending month and day values before batched date up
   expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeEnabled()
 })
 
+test.each([
+  ['year then month', ['年', '月']],
+  ['month then year', ['月', '年']],
+])('pending leap-year date parts normalize once when scrolling %s', (_description, order) => {
+  vi.useFakeTimers()
+  const store = createStore()
+  store.updateSettings({ examDate: '2027-01-31' })
+  const save = vi.spyOn(store, 'updateSettings')
+  renderPage(store)
+  fireEvent.click(summary('考试日期'))
+  for (const label of order) {
+    const list = screen.getByRole('listbox', { name: label })
+    list.scrollTop = label === '年' ? 2 * 48 : 48
+    fireEvent.scroll(list)
+    act(() => vi.advanceTimersByTime(10))
+  }
+  act(() => vi.advanceTimersByTime(100))
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2028 年 2 月 29 日')
+  fireEvent.click(screen.getByRole('button', { name: '保存设置' }))
+  expect(save).toHaveBeenCalledWith(expect.objectContaining({ examDate: '2028-02-29' }))
+})
+
+test('saving pending year and month applies the final leap-year date parts together', () => {
+  vi.useFakeTimers()
+  const store = createStore()
+  store.updateSettings({ examDate: '2027-01-31' })
+  const save = vi.spyOn(store, 'updateSettings')
+  renderPage(store)
+  fireEvent.click(summary('考试日期'))
+  const year = screen.getByRole('listbox', { name: '年' })
+  const month = screen.getByRole('listbox', { name: '月' })
+  year.scrollTop = 2 * 48
+  fireEvent.scroll(year)
+  month.scrollTop = 48
+  fireEvent.scroll(month)
+  fireEvent.click(screen.getByRole('button', { name: '保存设置' }))
+  expect(save).toHaveBeenCalledWith(expect.objectContaining({ examDate: '2028-02-29' }))
+})
+
 test('a date sibling choice leaves nonpending authored movement at its visible offset', () => {
   const frames = new Map()
   let nextId = 0

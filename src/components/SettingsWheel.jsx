@@ -191,7 +191,7 @@ const WheelColumn = forwardRef(function WheelColumn({ label, value, options, act
   )
 })
 
-const SettingsWheel = forwardRef(function SettingsWheel({ label, value, displayValue, variant = 'number', disabled = false, isOpen, isAnotherOpen = false, onToggle, onChange, onSettlingChange, columns }, ref) {
+const SettingsWheel = forwardRef(function SettingsWheel({ label, value, displayValue, variant = 'number', disabled = false, isOpen, isAnotherOpen = false, onToggle, onChange, onColumnsChange, onSettlingChange, columns }, ref) {
   const [isTrayMounted, setIsTrayMounted] = useState(isOpen)
   const [isClosing, setIsClosing] = useState(false)
   const columnRefs = useRef({})
@@ -200,19 +200,21 @@ const SettingsWheel = forwardRef(function SettingsWheel({ label, value, displayV
     columnSettlementRef.current[label] = pending
     onSettlingChange?.(Object.values(columnSettlementRef.current).some(Boolean))
   }
-  const commitPendingColumns = () => {
-    // Capture every offset before a callback can normalize another date column.
-    // Day comes before month/year so its old range is still authoritative.
-    const pending = columns.slice().reverse()
+  const takePendingColumns = () => {
+    // Capture every offset before a callback can change another column's range.
+    return columns
       .map(column => columnRefs.current[column.label]?.takePendingSelection()).filter(Boolean)
-    pending.forEach(selection => onChange(selection.value, selection.label))
+  }
+  const commitColumns = changes => {
+    if (!changes.length) return
+    if (onColumnsChange) onColumnsChange(changes)
+    else changes.forEach(selection => onChange(selection.value, selection.label))
   }
   const changeColumn = (value, columnLabel) => {
-    commitPendingColumns()
-    onChange(value, columnLabel)
+    commitColumns([...takePendingColumns(), { value, label: columnLabel }])
   }
   useImperativeHandle(ref, () => ({ flush: () => {
-    commitPendingColumns()
+    commitColumns(takePendingColumns())
     Object.values(columnRefs.current).forEach(column => column?.flush())
   } }))
 

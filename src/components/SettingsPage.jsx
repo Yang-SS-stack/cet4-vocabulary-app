@@ -57,7 +57,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
     setShowOverload(false)
     const current = draftRef.current
     const changed = field === 'examDate'
-      ? { ...current, examDate: changeDatePart(current.examDate, columnLabel, value) }
+      ? { ...current, examDate: changeDateParts(current.examDate, Array.isArray(value) ? value : [{ label: columnLabel, value }]) }
       : { ...current, [field]: value }
     const next = synchronizeSetupDraft({ draft: changed, changedField: field, snapshot, now })
     draftRef.current = next
@@ -140,6 +140,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
                   isAnotherOpen={activeField !== null && activeField !== field}
                   onToggle={() => toggleField(field)}
                   onChange={(value, columnLabel) => changeField(field, value, columnLabel)}
+                  onColumnsChange={field === 'examDate' ? changes => changeField(field, changes) : undefined}
                   onSettlingChange={pending => reportSettlement(field, pending)}
                 />
               ))}
@@ -303,11 +304,13 @@ function validDateKey(value) {
   return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
 }
 
-function changeDatePart(dateKey, label, value) {
+function changeDateParts(dateKey, changes) {
   const parts = dateParts(dateKey)
-  if (label === '年') parts.year = value
-  if (label === '月') parts.month = value
-  if (label === '日') parts.day = value
+  for (const { label, value } of changes) {
+    if (label === '年') parts.year = value
+    if (label === '月') parts.month = value
+    if (label === '日') parts.day = value
+  }
   parts.day = Math.min(parts.day, daysInMonth(parts.year, parts.month))
   return `${parts.year}-${pad(parts.month)}-${pad(parts.day)}`
 }
