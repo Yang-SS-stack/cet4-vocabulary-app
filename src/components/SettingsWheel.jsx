@@ -52,18 +52,22 @@ const WheelColumn = forwardRef(function WheelColumn({ label, value, options, act
     animationRef.current = window.requestAnimationFrame(tick)
   }
 
-  const finishScroll = () => {
+  const takePendingSelection = () => {
+    if (!pendingScrollRef.current || !listRef.current) return null
     window.clearTimeout(scrollTimer.current)
     const current = callbacksRef.current
-    if (pendingScrollRef.current && listRef.current) {
-      pendingScrollRef.current = false
-      const index = Math.min(current.options.length - 1, Math.max(0, Math.round(listRef.current.scrollTop / OPTION_HEIGHT)))
-      if (index !== selectedIndexRef.current) {
-        selectedIndexRef.current = index
-        current.onChange(current.options[index].value, current.label)
-      } else animateTo(index * OPTION_HEIGHT)
-    }
+    pendingScrollRef.current = false
+    const index = Math.min(current.options.length - 1, Math.max(0, Math.round(listRef.current.scrollTop / OPTION_HEIGHT)))
+    const changed = index !== selectedIndexRef.current
+    selectedIndexRef.current = index
+    animateTo(index * OPTION_HEIGHT)
     current.onSettlingChange?.(false)
+    return changed ? { value: current.options[index].value, label: current.label } : null
+  }
+
+  const finishScroll = () => {
+    const selection = takePendingSelection()
+    if (selection) callbacksRef.current.onChange(selection.value, selection.label)
   }
 
   const flush = () => {
@@ -71,7 +75,7 @@ const WheelColumn = forwardRef(function WheelColumn({ label, value, options, act
     stopAnimation()
     position(selectedIndexRef.current * OPTION_HEIGHT)
   }
-  useImperativeHandle(ref, () => ({ flush }))
+  useImperativeHandle(ref, () => ({ flush, takePendingSelection }))
 
   useLayoutEffect(() => {
     stopAnimation()
@@ -137,6 +141,7 @@ const WheelColumn = forwardRef(function WheelColumn({ label, value, options, act
     onSettlingChange?.(false)
     wheelDeltaRef.current = 0
     selectedIndexRef.current = index
+    animateTo(index * OPTION_HEIGHT)
     onChange(option.value, label)
     optionRefs.current[index]?.focus({ preventScroll: true })
   }
@@ -195,7 +200,21 @@ const SettingsWheel = forwardRef(function SettingsWheel({ label, value, displayV
     columnSettlementRef.current[label] = pending
     onSettlingChange?.(Object.values(columnSettlementRef.current).some(Boolean))
   }
-  useImperativeHandle(ref, () => ({ flush: () => Object.values(columnRefs.current).forEach(column => column?.flush()) }))
+  const commitPendingColumns = () => {
+    // Capture every offset before a callback can normalize another date column.
+    // Day comes before month/year so its old range is still authoritative.
+    const pending = columns.slice().reverse()
+      .map(column => columnRefs.current[column.label]?.takePendingSelection()).filter(Boolean)
+    pending.forEach(selection => onChange(selection.value, selection.label))
+  }
+  const changeColumn = (value, columnLabel) => {
+    commitPendingColumns()
+    onChange(value, columnLabel)
+  }
+  useImperativeHandle(ref, () => ({ flush: () => {
+    commitPendingColumns()
+    Object.values(columnRefs.current).forEach(column => column?.flush())
+  } }))
 
   useLayoutEffect(() => {
     if (isOpen) { setIsTrayMounted(true); setIsClosing(false); return undefined }
@@ -221,7 +240,7 @@ const SettingsWheel = forwardRef(function SettingsWheel({ label, value, displayV
         {isTrayMounted && (isOpen || !isAnotherOpen) && (
           <div className={isClosing ? 'settings-wheel__tray is-closing' : 'settings-wheel__tray'} aria-hidden={isClosing || undefined} inert={isClosing || undefined}>
             {columns.map(column => <WheelColumn key={column.label} ref={instance => { columnRefs.current[column.label] = instance }} {...column}
-              active={isOpen} disabled={disabled} onChange={onChange} onSettlingChange={pending => reportSettlement(column.label, pending)} />)}
+              active={isOpen} disabled={disabled} onChange={changeColumn} onSettlingChange={pending => reportSettlement(column.label, pending)} />)}
           </div>
         )}
       </div>

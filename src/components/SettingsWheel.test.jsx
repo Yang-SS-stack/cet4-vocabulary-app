@@ -333,6 +333,51 @@ test('a reversed choice animates from the visible offset and cancels on unmount'
   }
 })
 
+test.each([
+  ['click', '30', null, 96],
+  ['Home', '10', 'Home', 0],
+  ['End', '30', 'End', 96],
+])('a repeated %s after pointer interruption resumes alignment from the visible offset', (_name, optionName, key, target) => {
+  const frames = new Map()
+  let nextId = 0
+  const request = vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+    frames.set(++nextId, callback)
+    return nextId
+  })
+  const cancel = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(id => frames.delete(id))
+  const advance = time => act(() => {
+    const pending = [...frames.values()]
+    frames.clear()
+    pending.forEach(callback => callback(time))
+  })
+  try {
+    render(<ControlledWheels onChange={vi.fn()} initialOpen="newWords" />)
+    const list = screen.getByRole('listbox', { name: '每日新词' })
+    fireEvent.click(screen.getByRole('option', { name: optionName }))
+    advance(0)
+    advance(90)
+    const visibleOffset = list.scrollTop
+    expect(visibleOffset).not.toBe(target)
+    fireEvent.pointerDown(list)
+    expect(frames.size).toBe(0)
+    const option = screen.getByRole('option', { name: optionName, selected: true })
+    if (key) fireEvent.keyDown(option, { key })
+    else fireEvent.click(option)
+    expect(list.scrollTop).toBe(visibleOffset)
+    expect(frames.size).toBe(1)
+    advance(100)
+    expect(list.scrollTop).toBe(visibleOffset)
+    advance(190)
+    expect(Math.abs(list.scrollTop - target)).toBeLessThan(Math.abs(visibleOffset - target))
+    expect(list.scrollTop).not.toBe(target)
+    advance(280)
+    expect(list.scrollTop).toBe(target)
+  } finally {
+    request.mockRestore()
+    cancel.mockRestore()
+  }
+})
+
 
 test('hiding the page cancels scroll animation at its final selected value', () => {
   const frames = new Map()

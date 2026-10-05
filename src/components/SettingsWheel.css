@@ -71,7 +71,7 @@
 .settings-wheel__summary:disabled { opacity: .62; }
 
 .settings-wheel--date, .settings-wheel--book, .settings-wheel--short { --wheel-slot-height: 164px; --wheel-closed-height: 140px; --wheel-open-height: 164px; --wheel-options-height: 120px; --wheel-options-padding: 36px; }
-.settings-wheel--date { --wheel-open-width: 100%; }
+.settings-wheel--date { --wheel-open-width: 300px; }
 .settings-wheel--book { --wheel-open-width: 260px; }
 .settings-wheel--short { --wheel-open-width: 168px; }
 .settings-wheel:is(.settings-wheel--date, .settings-wheel--book, .settings-wheel--short) .settings-wheel__summary strong { font-size: clamp(18px, 1.75vw, 24px); font-weight: 650; }

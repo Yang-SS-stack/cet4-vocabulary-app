@@ -208,7 +208,7 @@ test('save flushes the visible pending option and disables every field until per
   expect(summary('每日新词数量')).toBeEnabled()
 })
 
-test('date column settlement stays protected until all pending columns finish', () => {
+test('date settlement protects maintenance until a sibling change settles every pending column', () => {
   vi.useFakeTimers()
   renderPage(createStore())
   fireEvent.click(summary('考试日期'))
@@ -219,10 +219,85 @@ test('date column settlement stays protected until all pending columns finish', 
   act(() => vi.advanceTimersByTime(50))
   day.scrollTop = 48
   fireEvent.scroll(day)
-  act(() => vi.advanceTimersByTime(50))
   expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeDisabled()
-  act(() => vi.advanceTimersByTime(50))
+  act(() => vi.advanceTimersByTime(49))
+  expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeDisabled()
+  act(() => vi.advanceTimersByTime(1))
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2026 年 2 月 2 日')
   expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeEnabled()
+  act(() => vi.advanceTimersByTime(50))
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2026 年 2 月 2 日')
+  expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeEnabled()
+})
+
+test('a month choice preserves the pending day before shortening its range and saves that date', () => {
+  vi.useFakeTimers()
+  const store = createStore()
+  store.updateSettings({ examDate: '2027-01-31' })
+  const save = vi.spyOn(store, 'updateSettings')
+  renderPage(store)
+  fireEvent.click(summary('考试日期'))
+  const day = screen.getByRole('listbox', { name: '日' })
+  day.scrollTop = 14 * 48
+  fireEvent.scroll(day)
+  fireEvent.click(screen.getByRole('option', { name: '2 月' }))
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2027 年 2 月 15 日')
+  fireEvent.click(screen.getByRole('button', { name: '保存设置' }))
+  expect(save).toHaveBeenCalledWith(expect.objectContaining({ examDate: '2027-02-15' }))
+})
+
+test('a year choice captures pending month and day values before batched date updates clamp them', () => {
+  vi.useFakeTimers()
+  const store = createStore()
+  store.updateSettings({ examDate: '2027-01-31' })
+  renderPage(store)
+  fireEvent.click(summary('考试日期'))
+  const month = screen.getByRole('listbox', { name: '月' })
+  const day = screen.getByRole('listbox', { name: '日' })
+  month.scrollTop = 48
+  fireEvent.scroll(month)
+  day.scrollTop = 14 * 48
+  fireEvent.scroll(day)
+  fireEvent.click(screen.getByRole('option', { name: '2028 年' }))
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2028 年 2 月 15 日')
+  act(() => vi.advanceTimersByTime(100))
+  expect(summary('考试日期')).toHaveAccessibleName('考试日期 2028 年 2 月 15 日')
+  expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeEnabled()
+})
+
+test('a date sibling choice leaves nonpending authored movement at its visible offset', () => {
+  const frames = new Map()
+  let nextId = 0
+  const request = vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+    frames.set(++nextId, callback)
+    return nextId
+  })
+  const cancel = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(id => frames.delete(id))
+  const advance = time => act(() => {
+    const pending = [...frames.values()]
+    frames.clear()
+    pending.forEach(callback => callback(time))
+  })
+  try {
+    const store = createStore()
+    store.updateSettings({ examDate: '2027-01-31' })
+    renderPage(store)
+    fireEvent.click(summary('考试日期'))
+    const year = screen.getByRole('listbox', { name: '年' })
+    fireEvent.click(screen.getByRole('option', { name: '2028 年' }))
+    advance(0)
+    advance(90)
+    const visibleOffset = year.scrollTop
+    expect(visibleOffset).toBeGreaterThan(48)
+    expect(visibleOffset).toBeLessThan(96)
+    fireEvent.click(screen.getByRole('option', { name: '2 月' }))
+    expect(year.scrollTop).toBe(visibleOffset)
+    advance(180)
+    expect(year.scrollTop).toBe(96)
+  } finally {
+    request.mockRestore()
+    cancel.mockRestore()
+  }
 })
 
 test('recalculates study minutes when either word count changes', async () => {
