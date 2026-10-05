@@ -154,3 +154,47 @@ export function buildLearningFacts(snapshot, { now, wordBooks, selectedWordBookI
   assertSafeNumbers(summary)
   return { ...summary, evidence: { today: one.evidence, last7Days: seven.evidence } }
 }
+
+const dayNumber = key => Date.parse(`${key}T00:00:00.000Z`) / 86400000
+const dayKey = number => new Date(number * 86400000).toISOString().slice(0, 10)
+const monthNumber = key => Number(key.slice(0, 4)) * 12 + Number(key.slice(5, 7)) - 1
+const monthKey = number => `${Math.floor(number / 12)}-${String(number % 12 + 1).padStart(2, '0')}`
+
+/** Local, read-only chart projection. It is never part of the assistant request basis. */
+export function buildStatisticsFacts(snapshot, { now, wordBooks, selectedWordBookId, period: selectedPeriod = 'all' }) {
+  if (!['all', 'last7Days', 'today'].includes(selectedPeriod)) throw new Error('Invalid statistics period')
+  const date = localDateKey(now)
+  const tasks = Object.values(snapshot.days).flatMap(day => [day.learning, day.review].filter(Boolean))
+    .concat(Object.values(snapshot.extraLearning).flatMap(process => process.batches))
+  const selected = selectedWordBookId === null ? [] : tasks.filter(task => task.wordBookId === selectedWordBookId && task.date <= date)
+  const fromDate = selectedPeriod === 'today' ? date
+    : selectedPeriod === 'last7Days' ? dayKey(dayNumber(date) - 6)
+      : selected.reduce((earliest, task) => task.date < earliest ? task.date : earliest, date)
+  const { book, reviewLoad } = buildLearningFacts(snapshot, { now, wordBooks, selectedWordBookId })
+  const mismatch = book.totalWords !== null && book.completedWords > book.totalWords
+  const history = period(tasks, fromDate, date, selectedWordBookId, mismatch).result
+  const days = dayNumber(date) - dayNumber(fromDate) + 1
+  const granularity = days <= 62 ? 'day' : days <= 370 ? 'week' : 'month'
+  const ranges = []
+  if (granularity === 'month') {
+    const first = monthNumber(fromDate), last = monthNumber(date)
+    const groupSize = Math.ceil((last - first + 1) / 24)
+    for (let month = first; month <= last; month += groupSize) {
+      const endMonth = Math.min(month + groupSize - 1, last)
+      const start = month === first ? fromDate : `${monthKey(month)}-01`
+      const end = endMonth === last ? date : dayKey(dayNumber(`${monthKey(endMonth + 1)}-01`) - 1)
+      ranges.push({ fromDate: start, toDate: end, label: month === endMonth ? monthKey(month) : `${monthKey(month)}–${monthKey(endMonth)}` })
+    }
+  } else {
+    const size = granularity === 'day' ? 1 : 7
+    for (let first = dayNumber(fromDate), last = dayNumber(date); first <= last; first += size) {
+      const start = dayKey(first), end = dayKey(Math.min(first + size - 1, last))
+      ranges.push({ fromDate: start, toDate: end, label: start === end ? start : `${start}–${end}` })
+    }
+  }
+  const buckets = ranges.map(range => ({ ...range,
+    completions: period(tasks, range.fromDate, range.toDate, selectedWordBookId, mismatch).result.completions }))
+  const result = { book, reviewLoad, history, buckets, granularity }
+  assertSafeNumbers(result)
+  return result
+}
