@@ -114,10 +114,10 @@ test.each(['unconnected', 'checked'])('storage conflict preserves the %s setting
   expect(JSON.parse(storage.getItem(LEARNING_STORAGE_KEY)).settings.dailyNewWords).toBe(40)
 })
 
-test('storage conflict makes the live Today facts unavailable without adopting the other tab state', async () => {
+test('storage conflict makes the live statistics unavailable without adopting the other tab state', async () => {
   const { store, storage, locks, navigate, fetchImpl } = setup({ browserStore: true })
   navigate(<StatisticsPage />)
-  expect(screen.getByRole('heading', { name: '计划依据' })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: '词书进度' })).toBeInTheDocument()
   const oldSnapshot = store.getSnapshot()
   const oldRaw = storage.getItem(LEARNING_STORAGE_KEY)
   const otherTab = createBrowserLearningStore({ storage, now: () => start, locks })
@@ -126,7 +126,7 @@ test('storage conflict makes the live Today facts unavailable without adopting t
   storage.setItem.mockClear()
   act(() => window.dispatchEvent(new StorageEvent('storage', { key: LEARNING_STORAGE_KEY, oldValue: oldRaw, newValue: latestRaw })))
   expect(await screen.findByText('学习记录已变化或无法读取，请重新载入页面。', {}, { timeout: 1500 })).toBeInTheDocument()
-  expect(screen.queryByRole('heading', { name: '计划依据' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('heading', { name: '词书进度' })).not.toBeInTheDocument()
   expect(store.getSnapshot()).toBe(oldSnapshot)
   expect(() => store.readAssistantSnapshot()).toThrow(/changed elsewhere/)
   expect(storage.getItem(LEARNING_STORAGE_KEY)).toBe(latestRaw)
