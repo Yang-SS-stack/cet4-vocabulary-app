@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { useLearningStore } from '../data/learning'
 import { estimateDailyStudyMinutes } from '../data/learning/recommendations'
@@ -7,9 +7,6 @@ import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
 import MaintenanceConfirmation from './MaintenanceConfirmation'
 import './SettingsPage.css'
-
-const FIELD_SWITCH_DURATION = 220
-const SCROLL_SETTLE_DURATION = 110
 
 const FIELDS = [
   'examDate',
@@ -41,62 +38,36 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
   const baselineRef = useRef(draftValue(initialDraftRef.current))
   const [showMaintenanceConfirmation, setShowMaintenanceConfirmation] = useState(false)
   const [isWheelSettling, setIsWheelSettling] = useState(false)
-  const [isFieldSwitching, setIsFieldSwitching] = useState(false)
   const [activeField, setActiveField] = useState(null)
   const [status, setStatus] = useState('')
   const [showOverload, setShowOverload] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [conflict, setConflict] = useState(false)
-  const switchTimerRef = useRef(null)
-  const settleTimerRef = useRef(null)
-  const wheelSettlingRef = useRef(false)
-  const isSwitchingRef = useRef(false)
-  const requestedFieldRef = useRef(null)
+  const wheelRefs = useRef({})
+  const settlementRef = useRef({})
+  const savingRef = useRef(false)
 
-  useEffect(() => () => {
-    window.clearTimeout(switchTimerRef.current)
-    window.clearTimeout(settleTimerRef.current)
-  }, [])
+  const reportSettlement = (field, pending) => {
+    settlementRef.current[field] = pending
+    setIsWheelSettling(Object.values(settlementRef.current).some(Boolean))
+  }
 
   const changeField = (field, value, columnLabel) => {
     setStatus('')
     setShowOverload(false)
-    setDraft((current) => {
-      const changed = field === 'examDate'
-        ? { ...current, examDate: changeDatePart(current.examDate, columnLabel, value) }
-        : { ...current, [field]: value }
-      const next = synchronizeSetupDraft({ draft: changed, changedField: field, snapshot, now })
-      draftRef.current = next
-      return next
-    })
+    const current = draftRef.current
+    const changed = field === 'examDate'
+      ? { ...current, examDate: changeDatePart(current.examDate, columnLabel, value) }
+      : { ...current, [field]: value }
+    const next = synchronizeSetupDraft({ draft: changed, changedField: field, snapshot, now })
+    draftRef.current = next
+    setDraft(next)
   }
 
   const toggleField = (field) => {
-    if (isSaving) return
-
-    if (isSwitchingRef.current) {
-      requestedFieldRef.current = field
-      return
-    }
-
-    if (activeField === null) {
-      setActiveField(field)
-      return
-    }
-
-    wheelSettlingRef.current = true
-    setIsFieldSwitching(true)
-    window.clearTimeout(settleTimerRef.current)
-    settleTimerRef.current = window.setTimeout(() => {
-      wheelSettlingRef.current = false
-    }, SCROLL_SETTLE_DURATION)
-
-    const nextField = activeField === field ? null : field
-    if (!prefersReducedMotion()) setActiveField(null)
-    scheduleFieldOpen(nextField, switchTimerRef, isSwitchingRef, requestedFieldRef, field => {
-      setActiveField(field)
-      setIsFieldSwitching(false)
-    })
+    if (savingRef.current) return
+    wheelRefs.current[activeField]?.flush()
+    setActiveField(activeField === field ? null : field)
   }
 
   const persist = async (confirmed) => {
@@ -104,6 +75,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
     const currentPlanStatus = setupPlanStatus({ draft: currentDraft, snapshot, now })
     if (currentPlanStatus.invalidExamDate) {
       setStatus('请选择未来的考试日期。')
+      savingRef.current = false
       setIsSaving(false)
       return
     }
@@ -111,6 +83,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
     const estimatedMinutes = estimateDailyStudyMinutes(currentDraft.dailyNewWords, currentDraft.dailyReviewWords)
     if (!confirmed && estimatedMinutes > currentDraft.dailyStudyMinutes) {
       setShowOverload(true)
+      savingRef.current = false
       setIsSaving(false)
       return
     }
@@ -128,31 +101,18 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
         : /lock unavailable/.test(error.message) ? '当前浏览器无法安全保存，请使用支持 Web Locks 的浏览器本机地址或 HTTPS 页面。'
           : '保存失败，请重试。你的修改仍保留在这里。')
     } finally {
+      savingRef.current = false
       setIsSaving(false)
     }
   }
 
   const requestSave = (confirmed = false) => {
-    if (isSaving) return
+    if (savingRef.current) return
+    wheelRefs.current[activeField]?.flush()
+    savingRef.current = true
     setIsSaving(true)
-    const wasSwitching = isSwitchingRef.current
-    window.clearTimeout(switchTimerRef.current)
-    isSwitchingRef.current = false
-    setIsFieldSwitching(false)
-    const needsSettlement = activeField !== null || wheelSettlingRef.current || wasSwitching
-    if (!needsSettlement) {
-      persist(confirmed)
-      return
-    }
-
-    const reducedMotion = prefersReducedMotion()
-    if (!reducedMotion) setActiveField(null)
-    window.clearTimeout(settleTimerRef.current)
-    settleTimerRef.current = window.setTimeout(() => {
-      wheelSettlingRef.current = false
-      if (reducedMotion) setActiveField(null)
-      persist(confirmed)
-    }, SCROLL_SETTLE_DURATION)
+    setActiveField(null)
+    persist(confirmed)
   }
 
   const estimatedMinutes = estimateDailyStudyMinutes(draft.dailyNewWords, draft.dailyReviewWords)
@@ -160,27 +120,32 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
 
   return (
     <section className="settings-page" aria-label="学习设置">
-      <header className="settings-page__header">
-        <h2>调整学习计划</h2>
-        <p>新的设置用于之后创建的任务；今天已经开始的任务不会被改写。</p>
-      </header>
-
       <div className="settings-page__panel">
-        {FIELDS.map((field) => {
-          const props = wheelProps(field, draft, now)
-          return (
-            <SettingsWheel
-              key={field}
-              {...props}
-              value={draft[field]}
-              isOpen={activeField === field}
-              isAnotherOpen={activeField !== null && activeField !== field}
-              onToggle={() => toggleField(field)}
-              onChange={(value, columnLabel) => changeField(field, value, columnLabel)}
-              onSettlingChange={setIsWheelSettling}
-            />
-          )
-        })}
+        {[
+          { title: '学习目标', kind: 'goals', fields: ['examDate', 'todayWordBookId', 'pronunciation'] },
+          { title: '每日计划', kind: 'plan', fields: ['dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes', 'mistakeStudyWords'] },
+        ].map(group => (
+          <section key={group.kind} className={`settings-page__group settings-page__group--${group.kind}`} aria-label={group.title}>
+            <h3>{group.title}</h3>
+            <div className="settings-page__fields">
+              {group.fields.map(field => (
+                <SettingsWheel
+                  key={field}
+                  ref={wheel => { wheelRefs.current[field] = wheel }}
+                  {...wheelProps(field, draft, now)}
+                  variant={field === 'examDate' ? 'date' : field === 'todayWordBookId' ? 'book' : group.kind === 'plan' ? 'number' : 'short'}
+                  value={draft[field]}
+                  disabled={isSaving}
+                  isOpen={activeField === field}
+                  isAnotherOpen={activeField !== null && activeField !== field}
+                  onToggle={() => toggleField(field)}
+                  onChange={(value, columnLabel) => changeField(field, value, columnLabel)}
+                  onSettlingChange={pending => reportSettlement(field, pending)}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
 
       {planStatus.exceedsDailyWordLimit && (
@@ -200,7 +165,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
       )}
 
       <footer className="settings-page__footer">
-        <p role="status" aria-live="polite">{status}</p>
+        <p role="status" aria-live="polite">{status || '新设置用于之后创建的任务；今天已经开始的任务不会被改写。'}</p>
         {conflict && <button type="button" disabled={isSaving} onClick={() => {
           try {
             store.reload()
@@ -221,7 +186,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
       <section className="settings-page__maintenance-entry">
         <h2>开发验收与维护</h2>
         <p>连接与检查、记录依据和本标签页的检查记录。</p>
-        <button ref={maintenanceEntryRef} type="button" disabled={isSaving || isWheelSettling || isFieldSwitching || !onOpenMaintenance}
+        <button ref={maintenanceEntryRef} type="button" disabled={isSaving || isWheelSettling || !onOpenMaintenance}
           onClick={() => {
             if (draftValue(draftRef.current) !== baselineRef.current) setShowMaintenanceConfirmation(true)
             else onOpenMaintenance()
@@ -364,18 +329,5 @@ function pad(value) {
   return String(value).padStart(2, '0')
 }
 
-function prefersReducedMotion() {
-  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-}
-
-function scheduleFieldOpen(field, timerRef, switchingRef, requestedFieldRef, setActiveField) {
-  switchingRef.current = true
-  requestedFieldRef.current = field
-  const delay = prefersReducedMotion() ? SCROLL_SETTLE_DURATION : FIELD_SWITCH_DURATION
-  timerRef.current = window.setTimeout(() => {
-    switchingRef.current = false
-    setActiveField(requestedFieldRef.current)
-  }, delay)
-}
 
 export default SettingsPage

@@ -93,18 +93,14 @@ test('reports the option aligned by a touch or mouse scroll', async () => {
   await waitFor(() => expect(onChange).toHaveBeenCalledWith(30, '每日新词'))
 })
 
-test('collapse begins at the tray height reached when opening is interrupted', () => {
-  const onChange = vi.fn()
-  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+test('rapid reopening preserves the same tray instead of restarting an entering mount', () => {
+  render(<ControlledWheels onChange={vi.fn()} initialOpen="newWords" />)
   const tray = document.querySelector('.settings-wheel__tray')
-  const rect = vi.spyOn(tray, 'getBoundingClientRect').mockReturnValue({ height: 64 })
-  try {
-    fireEvent.click(screen.getByRole('button', { name: '每日新词 20' }))
-    expect(tray).toHaveClass('is-closing')
-    expect(tray.style.getPropertyValue('--wheel-close-from')).toBe('64px')
-  } finally {
-    rect.mockRestore()
-  }
+  fireEvent.click(screen.getByRole('button', { name: '每日新词 20' }))
+  expect(tray).toHaveClass('is-closing')
+  fireEvent.click(screen.getByRole('button', { name: '每日新词 20' }))
+  expect(document.querySelector('.settings-wheel__tray')).toBe(tray)
+  expect(tray).not.toHaveClass('is-closing')
 })
 
 test('one mouse wheel notch selects only the adjacent option and prevents native scrolling', () => {
@@ -129,7 +125,7 @@ test('one mouse wheel notch selects only the adjacent option and prevents native
   expect(onChange).toHaveBeenCalledTimes(2)
 })
 
-test('positions the selected value without scrollIntoView or a selection feedback event', () => {
+test('positions the initial value directly and settles later selections without ancestor scrolling', async () => {
   const onChange = vi.fn()
   const scrollIntoView = vi.fn()
   const original = HTMLElement.prototype.scrollIntoView
@@ -143,7 +139,7 @@ test('positions the selected value without scrollIntoView or a selection feedbac
     expect(scrollIntoView).not.toHaveBeenCalled()
 
     fireEvent.click(screen.getByRole('option', { name: '30' }))
-    expect(listbox.scrollTop).toBe(96)
+    await waitFor(() => expect(listbox.scrollTop).toBe(96))
     fireEvent.scroll(listbox)
     expect(onChange).toHaveBeenCalledTimes(1)
     expect(scrollIntoView).not.toHaveBeenCalled()
@@ -262,3 +258,118 @@ function ControlledWheels({ onChange, initialOpen = null }) {
     </div>
   )
 }
+
+
+test('disabled options cannot change a draft through clicks, keyboard, wheel or scroll', () => {
+  const onChange = vi.fn()
+  render(<SettingsWheel label="数量" value={20} displayValue="20" disabled isOpen onToggle={vi.fn()} onChange={onChange}
+    columns={[{ label: '数量', value: 20, options: [{ value: 10, label: '10' }, { value: 20, label: '20' }] }]} />)
+  const option = screen.getByRole('option', { name: '20' })
+  expect(option).toBeDisabled()
+  fireEvent.click(option)
+  fireEvent.keyDown(option, { key: 'Home' })
+  const list = screen.getByRole('listbox')
+  fireEvent.wheel(list, { deltaY: -100 })
+  list.scrollTop = 0
+  fireEvent.scroll(list)
+  expect(onChange).not.toHaveBeenCalled()
+})
+
+test('Home and End choose the first and last values', () => {
+  const onChange = vi.fn()
+  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+  fireEvent.keyDown(screen.getByRole('option', { name: '20' }), { key: 'Home' })
+  expect(onChange).toHaveBeenLastCalledWith(10, '每日新词')
+  fireEvent.keyDown(screen.getByRole('option', { name: '10' }), { key: 'End' })
+  expect(onChange).toHaveBeenLastCalledWith(30, '每日新词')
+})
+
+
+test('touch settlement aligns the current option even if its value does not change', async () => {
+  const onChange = vi.fn()
+  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+  const list = screen.getByRole('listbox', { name: '每日新词' })
+  list.scrollTop = 54
+  fireEvent.scroll(list)
+  await waitFor(() => expect(list.scrollTop).toBe(48))
+  expect(onChange).not.toHaveBeenCalled()
+})
+
+test('a reversed choice animates from the visible offset and cancels on unmount', () => {
+  const frames = new Map()
+  let nextId = 0
+  const request = vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+    frames.set(++nextId, callback)
+    return nextId
+  })
+  const cancel = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(id => frames.delete(id))
+  const advance = time => act(() => {
+    const pending = [...frames.values()]
+    frames.clear()
+    pending.forEach(callback => callback(time))
+  })
+  try {
+    const rendered = render(<ControlledWheels onChange={vi.fn()} initialOpen="newWords" />)
+    const list = screen.getByRole('listbox', { name: '每日新词' })
+    expect(list.scrollTop).toBe(48)
+    fireEvent.click(screen.getByRole('option', { name: '30' }))
+    advance(0)
+    advance(90)
+    const visibleOffset = list.scrollTop
+    expect(visibleOffset).toBeGreaterThan(48)
+    expect(visibleOffset).toBeLessThan(96)
+    fireEvent.click(screen.getByRole('option', { name: '10' }))
+    expect(list.scrollTop).toBe(visibleOffset)
+    advance(100)
+    expect(list.scrollTop).toBe(visibleOffset)
+    advance(190)
+    expect(list.scrollTop).toBeLessThan(visibleOffset)
+    expect(cancel).toHaveBeenCalled()
+    rendered.unmount()
+    expect(frames.size).toBe(0)
+  } finally {
+    request.mockRestore()
+    cancel.mockRestore()
+  }
+})
+
+
+test('hiding the page cancels scroll animation at its final selected value', () => {
+  const frames = new Map()
+  let nextId = 0
+  const request = vi.spyOn(window, 'requestAnimationFrame').mockImplementation(callback => {
+    frames.set(++nextId, callback)
+    return nextId
+  })
+  const cancel = vi.spyOn(window, 'cancelAnimationFrame').mockImplementation(id => frames.delete(id))
+  const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(false)
+  try {
+    render(<ControlledWheels onChange={vi.fn()} initialOpen="newWords" />)
+    const list = screen.getByRole('listbox', { name: '每日新词' })
+    fireEvent.click(screen.getByRole('option', { name: '30' }))
+    expect(frames.size).toBe(1)
+    hidden.mockReturnValue(true)
+    fireEvent(document, new Event('visibilitychange'))
+    expect(frames.size).toBe(0)
+    expect(list.scrollTop).toBe(96)
+  } finally {
+    hidden.mockRestore()
+    request.mockRestore()
+    cancel.mockRestore()
+  }
+})
+
+test('reduced motion selects directly without scheduling a scroll animation', () => {
+  vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))
+  const request = vi.spyOn(window, 'requestAnimationFrame')
+  try {
+    render(<ControlledWheels onChange={vi.fn()} initialOpen="newWords" />)
+    const list = screen.getByRole('listbox', { name: '每日新词' })
+    fireEvent.click(screen.getByRole('option', { name: '30' }))
+    expect(list.scrollTop).toBe(96)
+    expect(request).not.toHaveBeenCalled()
+  } finally {
+    vi.unstubAllGlobals()
+    request.mockRestore()
+  }
+})

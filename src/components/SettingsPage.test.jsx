@@ -156,94 +156,73 @@ test('does not overlap wheel trays when the user changes the pending field quick
   expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })
 
-test('opens the latest requested wheel as soon as the 220ms collapse finishes', () => {
-  vi.useFakeTimers()
+test('switches and rapidly reverses in the same card slots without a waiting state', () => {
   renderPage(createStore())
+  const first = summary('每日新词数量').closest('.settings-wheel')
+  const second = summary('每日复习数量').closest('.settings-wheel')
   fireEvent.click(summary('每日新词数量'))
   fireEvent.click(summary('每日复习数量'))
-  fireEvent.click(summary('发音偏好'))
-
-  act(() => vi.advanceTimersByTime(219))
-  expect(screen.queryByRole('listbox', { name: '发音偏好' })).not.toBeInTheDocument()
-  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
-
-  act(() => vi.advanceTimersByTime(1))
-  expect(screen.getByRole('listbox', { name: '发音偏好' })).toBeInTheDocument()
-  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
-})
-
-test('a later field click does not restart the current collapse', () => {
-  vi.useFakeTimers()
-  renderPage(createStore())
+  expect(screen.getByRole('listbox', { name: '每日复习数量' })).toBeInTheDocument()
+  expect(screen.queryByRole('listbox', { name: '每日新词数量' })).not.toBeInTheDocument()
   fireEvent.click(summary('每日新词数量'))
-  fireEvent.click(summary('每日复习数量'))
-
-  act(() => vi.advanceTimersByTime(100))
-  fireEvent.click(summary('发音偏好'))
-  act(() => vi.advanceTimersByTime(119))
-  expect(screen.queryByRole('listbox', { name: '发音偏好' })).not.toBeInTheDocument()
-
-  act(() => vi.advanceTimersByTime(1))
-  expect(screen.getByRole('listbox', { name: '发音偏好' })).toBeInTheDocument()
-  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
+  expect(screen.getByRole('listbox', { name: '每日新词数量' })).toBeInTheDocument()
+  expect(summary('每日新词数量').closest('.settings-wheel')).toBe(first)
+  expect(summary('每日复习数量').closest('.settings-wheel')).toBe(second)
 })
 
-test('reduced motion commits the scrolled value before a rapid three-field switch opens only the latest field', () => {
+test('commits a pending touch scroll immediately on switching even with reduced motion', () => {
   vi.useFakeTimers()
   vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))
   renderPage(createStore())
-
   fireEvent.click(summary('每日新词数量'))
   const listbox = screen.getByRole('listbox', { name: '每日新词数量' })
   listbox.scrollTop = 9 * 48
   fireEvent.scroll(listbox)
-
   fireEvent.click(summary('每日复习数量'))
   fireEvent.click(summary('每日学习时长'))
-
-  expect(screen.getByRole('listbox', { name: '每日新词数量' })).toBeInTheDocument()
-  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
-  expect(screen.queryByRole('listbox', { name: '每日复习数量' })).not.toBeInTheDocument()
-  expect(screen.queryByRole('listbox', { name: '每日学习时长' })).not.toBeInTheDocument()
-
-  act(() => vi.advanceTimersByTime(100))
-
   expect(summary('每日新词数量')).toHaveAccessibleName('每日新词数量 10 词')
-  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
-
-  act(() => vi.advanceTimersByTime(10))
-
   expect(screen.getByRole('listbox', { name: '每日学习时长' })).toBeInTheDocument()
+  act(() => vi.advanceTimersByTime(400))
   expect(screen.queryByRole('listbox', { name: '每日复习数量' })).not.toBeInTheDocument()
-  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
 })
 
-test('reduced motion commits the scrolled value before an immediate save', () => {
-  vi.useFakeTimers()
-  vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))
+test('save flushes the visible pending option and disables every field until persistence ends', async () => {
   const store = createStore()
-  store.updateSettings({ dailyStudyMinutes: 240 })
+  let resolveSave
+  const save = vi.fn(() => new Promise(resolve => { resolveSave = resolve }))
+  store.updateSettings = save
   renderPage(store)
-
   fireEvent.click(summary('每日新词数量'))
   const listbox = screen.getByRole('listbox', { name: '每日新词数量' })
   listbox.scrollTop = 9 * 48
   fireEvent.scroll(listbox)
   fireEvent.click(screen.getByRole('button', { name: '保存设置' }))
-
-  expect(screen.getByRole('listbox', { name: '每日新词数量' })).toBeInTheDocument()
-  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(1)
-  expect(store.getSnapshot().settings.dailyNewWords).toBe(15)
-
-  act(() => vi.advanceTimersByTime(100))
-
+  expect(save).toHaveBeenCalledWith(expect.objectContaining({ dailyNewWords: 10 }))
+  for (const label of ['考试日期', '今日学习词表', '每日新词数量', '每日复习数量', '每日学习时长', '发音偏好', '错题本每日学习数量']) {
+    expect(summary(label)).toBeDisabled()
+    fireEvent.click(summary(label))
+  }
+  expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeDisabled()
   expect(summary('每日新词数量')).toHaveAccessibleName('每日新词数量 10 词')
-  expect(store.getSnapshot().settings.dailyNewWords).toBe(15)
+  await act(async () => resolveSave())
+  expect(summary('每日新词数量')).toBeEnabled()
+})
 
-  act(() => vi.advanceTimersByTime(10))
-
-  expect(store.getSnapshot().settings.dailyNewWords).toBe(10)
-  expect(document.querySelectorAll('.settings-wheel__tray')).toHaveLength(0)
+test('date column settlement stays protected until all pending columns finish', () => {
+  vi.useFakeTimers()
+  renderPage(createStore())
+  fireEvent.click(summary('考试日期'))
+  const month = screen.getByRole('listbox', { name: '月' })
+  const day = screen.getByRole('listbox', { name: '日' })
+  month.scrollTop = 48
+  fireEvent.scroll(month)
+  act(() => vi.advanceTimersByTime(50))
+  day.scrollTop = 48
+  fireEvent.scroll(day)
+  act(() => vi.advanceTimersByTime(50))
+  expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeDisabled()
+  act(() => vi.advanceTimersByTime(50))
+  expect(screen.getByRole('button', { name: '开发验收与维护' })).toBeEnabled()
 })
 
 test('recalculates study minutes when either word count changes', async () => {
