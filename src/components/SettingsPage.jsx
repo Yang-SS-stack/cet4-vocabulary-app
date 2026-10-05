@@ -4,7 +4,7 @@ import { useLearningStore } from '../data/learning'
 import { estimateDailyStudyMinutes } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
 import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
-import SettingsWheel from './SettingsWheel'
+import SettingsWheel, { SettingsIcon } from './SettingsWheel'
 import MaintenanceConfirmation from './MaintenanceConfirmation'
 import './SettingsPage.css'
 
@@ -182,6 +182,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
         }}>重新读取已保存设置</button>}
         <button type="button" className="settings-page__save-button" disabled={isSaving} onClick={() => requestSave(false)}>
           {isSaving ? '正在保存…' : '保存设置'}
+          <SettingsIcon name="arrow" />
         </button>
       </footer>
       <section className="settings-page__maintenance-entry">
@@ -191,7 +192,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
           onClick={() => {
             if (draftValue(draftRef.current) !== baselineRef.current) setShowMaintenanceConfirmation(true)
             else onOpenMaintenance()
-          }}>开发验收与维护</button>
+          }}><SettingsIcon name="wrench" />开发验收与维护</button>
       </section>
       {showMaintenanceConfirmation && <MaintenanceConfirmation title="设置尚未保存" confirmLabel="放弃修改并进入"
         onCancel={() => setShowMaintenanceConfirmation(false)}

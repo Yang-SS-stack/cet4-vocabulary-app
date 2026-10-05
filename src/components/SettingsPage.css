@@ -12,13 +12,14 @@
 .settings-page__footer p { max-width: 54ch; min-height: 1.5em; margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
 .settings-page__save-button, .settings-page__confirm-button, .settings-page__text-button { min-height: 44px; border-radius: 8px; font: inherit; cursor: pointer; transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out), color 160ms var(--ease-out); }
 .settings-page__save-button, .settings-page__confirm-button { padding: 12px 26px; border: 1px solid var(--ink); color: var(--white); background: var(--ink); font-weight: 700; }
-.settings-page__save-button { min-width: min(36%, 340px); min-height: 54px; flex-shrink: 0; }
+.settings-page__save-button { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-width: min(36%, 340px); min-height: 54px; flex-shrink: 0; }
 .settings-page__text-button { padding: 10px 16px; border: 1px solid var(--line); color: var(--ink); background: transparent; }
 .settings-page button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .settings-page__save-button:disabled { cursor: wait; opacity: .62; }
 .settings-page__maintenance-entry { margin-top: 20px; }
 .settings-page__maintenance-entry h2, .settings-page__maintenance-entry p { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-.settings-page__maintenance-entry > button { width: 100%; min-height: 56px; padding: 14px 22px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); color: var(--ink); font: inherit; font-weight: 650; text-align: left; cursor: pointer; transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out); }
+.settings-page__maintenance-entry > button { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 56px; padding: 14px 22px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); color: var(--ink); font: inherit; font-weight: 650; text-align: left; cursor: pointer; transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out); }
+.settings-page :is(.settings-page__save-button, .settings-page__maintenance-entry > button) .settings-icon { width: 22px; height: 22px; }
 .settings-page__maintenance-entry > button:disabled { opacity: .5; cursor: default; }
 @media (hover: hover) {
   .settings-page :is(.settings-page__save-button, .settings-page__confirm-button):not(:disabled):hover { background: var(--ink-hover); }
