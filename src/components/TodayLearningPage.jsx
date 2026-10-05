@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
 import { useLearningFacts } from '../data/assistant/react'
 import { ProgressRing } from './DataMotion'
+import AnimatedDisclosure from './AnimatedDisclosure'
 import { wordBooks } from '../data/wordBooks'
 import './TodayLearningPage.css'
 
@@ -93,10 +94,9 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
       </div>
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
       {factsError && <p className="learning-overview__error">{factsError}</p>}
-      <details className="learning-recommendation-disclosure">
-        <summary>学习建议 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6" /></svg></summary>
+      <AnimatedDisclosure title="学习建议">
         {recommendation ? <RecommendationCard recommendation={recommendation} settings={settings} reviewLoad={facts.reviewLoad} /> : <p>规则建议无法计算：请选择词书并核对词书资料。</p>}
-      </details>
+      </AnimatedDisclosure>
       {confirmExtra && <ExtraLearningConfirmation onCancel={() => setConfirmExtra(false)} onConfirm={() => {
         setConfirmExtra(false)
         // The date may have changed while the confirmation was open.

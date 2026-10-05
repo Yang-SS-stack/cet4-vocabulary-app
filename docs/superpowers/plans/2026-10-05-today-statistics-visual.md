@@ -61,4 +61,11 @@ expect(JSON.stringify(snapshot)).toBe(before)
 - [x] Update approval/delivery handoff and ignored ledger/receipt, save DESIGN.md and schemaVersion2 sidecar, make documentation-only local commit, rebuild to show current commit, retain local preview. Exact post-document version and build outcome are recorded in the ignored delivery receipt. No merge/push/publish.
 - [ ] Give user only first new manual acceptance action; await1 before next. Maintenance manual/P-03-B sequencing remains in the spec.
 
-Current human checkpoint: V-01, one click on主导航“今日学习”from the isolated Statistics preview, observe the three ring fills. Await user1; no passed P-03-A or M-01/M-02 repetition. Impeccable approved4.4.0 update installed with4.0.4 backup retained.
+Current human checkpoint: F-01, one click on主导航“统计”from the isolated Today preview, observe the self-feedback donut fill clockwise from the top. V-01 received two bug reports and is not accepted. Await user1; no passed P-03-A or M-01/M-02 repetition. Impeccable approved4.4.0 update installed with4.0.4 backup retained.
+
+## 2026-10-06: User feedback correction checkpoint
+
+- [x] Reproduce the horizontal donut reveal and immediate native advice disclosure; preserve the approved layout and original learning data behavior.
+- [x] RED: six expected behavior failures before implementation. GREEN: radial SVG mask and cancellable native disclosure, obvious existing gold-soft hover. Focused36 + compatibility48 =84 checks passed; original631 full suite remains a prior baseline.
+- [x] Bounded independent source review found no actionable issues; actual browser verified circumferential stroke reveal, advice height/opacity animation, Enter collapse, hover contrast,375px sizing and reduced-motion final state. Evidence: `.superpowers/sdd/feedback-motion-report.md`.
+- [ ] F-01 human check; do not begin the next human action until reply1.

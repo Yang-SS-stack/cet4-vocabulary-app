@@ -81,7 +81,8 @@ export function DataReveal({ children, replayKey, dataKey = '', geometry = [], d
     const current = { key: replayKey, geometry: new Map(geometry.map(item => [item.key, item.properties])), reveal: null }
     previous.current = current
     if (!animate || !enabled) return
-    const reveal = direction === 'vertical' ? [
+    const revealNode = direction === 'radial' ? element.current.querySelector('[data-motion-reveal]') : element.current
+    const reveal = direction === 'radial' ? [{ strokeDashoffset: '100' }, { strokeDashoffset: '0' }] : direction === 'vertical' ? [
       { transform: 'scaleY(0)', transformOrigin: 'bottom' },
       { transform: 'scaleY(1)', transformOrigin: 'bottom' },
     ] : [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }]
@@ -110,9 +111,9 @@ export function DataReveal({ children, replayKey, dataKey = '', geometry = [], d
           const from = old.geometry.get(item.key) ?? item.empty ?? item.properties
           if (JSON.stringify(from) !== JSON.stringify(item.properties)) start(nodes.get(item.key), from, item.properties, item.key)
         }
-        if (old.reveal) start(element.current, old.reveal, reveal[1], null)
+        if (old.reveal) start(revealNode, old.reveal, reveal[1], null)
       } else {
-        start(element.current, reveal[0], reveal[1], null)
+        start(revealNode, reveal[0], reveal[1], null)
       }
     } catch {
       stop(true)

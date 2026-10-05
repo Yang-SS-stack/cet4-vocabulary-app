@@ -295,16 +295,17 @@
 .learning-overview__flow-status:not(:empty) { margin-top: 13px; }
 .learning-overview__error { color: var(--ink-soft); font-size: 14px; }
 .learning-recommendation-disclosure { margin-top: 23px; border: 1px solid var(--line); border-radius: 10px; }
-.learning-recommendation-disclosure > summary { display: flex; align-items: center; justify-content: space-between; list-style: none; padding: 17px 22px; cursor: pointer; font-size: 17px; font-weight: 650; }
+.learning-recommendation-disclosure > summary { display: flex; align-items: center; justify-content: space-between; list-style: none; padding: 17px 22px; cursor: pointer; font-size: 17px; font-weight: 650; border-radius: 9px; transition: color 160ms ease-out, background-color 160ms ease-out; }
 .learning-recommendation-disclosure > summary::-webkit-details-marker { display: none; }
 .learning-recommendation-disclosure > summary svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; transition: transform 150ms; }
-.learning-recommendation-disclosure[open] > summary svg { transform: rotate(180deg); }
-.learning-recommendation-disclosure > summary:hover { color: var(--gold); background: rgba(216,200,155,.13); }
+.learning-recommendation-disclosure[data-expanded="true"] > summary svg { transform: rotate(180deg); }
+.learning-recommendation-disclosure > summary:hover { color: var(--ink); background: var(--gold-soft); }
+.learning-recommendation-disclosure__body { overflow: hidden; }
 .learning-recommendation-disclosure > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 .learning-recommendation-disclosure .learning-recommendation { margin: 0; padding: 0 23px 23px; background: transparent; border: 0; border-radius: 0; }
 .learning-recommendation-disclosure .learning-recommendation__header { padding: 8px 0 17px; }
 .learning-recommendation-disclosure .learning-recommendation__header p { text-align: left; }
-.learning-recommendation-disclosure > p { padding: 0 22px 15px; }
+.learning-recommendation-disclosure__body > p { padding: 0 22px 15px; }
 .learning-recommendation a:hover, .learning-recommendation summary:hover { color: var(--gold); }
 @media (max-width: 640px) {
   .learning-overview { padding-top: 27px; }
@@ -318,4 +319,4 @@
   .today-task h3 { font-size: 20px; }
   .learning-overview__actions { margin-top: 5px; }
 }
-@media (prefers-reduced-motion: reduce) { .learning-recommendation-disclosure > summary svg { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .learning-recommendation-disclosure > summary, .learning-recommendation-disclosure > summary svg { transition: none; } }

@@ -1,4 +1,5 @@
 import { DataReveal } from './DataMotion'
+import { useId } from 'react'
 import './DataCharts.css'
 const format = value => new Intl.NumberFormat('zh-CN').format(value)
 const valid = values => values.every(value => Number.isSafeInteger(value) && value >= 0)
@@ -20,6 +21,7 @@ export function SegmentedBar({ items, replayKey, label, total: suppliedTotal }) 
   )
 }
 export function FeedbackDonut({ items, replayKey }) {
+  const maskId = `feedback-sweep-${useId()}`
   const total = items.reduce((sum, item) => sum + item.value, 0)
   let offset = 0
   const geometry = items.map(item => {
@@ -30,12 +32,17 @@ export function FeedbackDonut({ items, replayKey }) {
   })
   return (
     <div className="feedback-donut">
-      <DataReveal replayKey={replayKey} geometry={geometry} enabled={total > 0}>
+      <DataReveal replayKey={replayKey} geometry={geometry} direction="radial" enabled={total > 0}>
         <svg viewBox="0 0 200 200" aria-hidden="true">
+          <defs><mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="200">
+            <circle data-motion-reveal cx="100" cy="100" r="77" pathLength="100" fill="none" stroke="white" strokeWidth="38" strokeDasharray="100" strokeDashoffset="0" transform="rotate(-90 100 100)" />
+          </mask></defs>
           <circle className="feedback-donut__track" cx="100" cy="100" r="77" />
+          <g mask={`url(#${maskId})`}>
           {items.map((item, index) => (
             <circle key={item.label} data-motion-key={item.label} cx="100" cy="100" r="77" pathLength="100" fill="none" stroke={item.color} strokeWidth="36" {...geometry[index].properties} transform="rotate(-90 100 100)" />
           ))}
+          </g>
         </svg>
       </DataReveal>
       <div className="feedback-donut__total"><strong>{format(total)}</strong><span>次反馈</span></div>

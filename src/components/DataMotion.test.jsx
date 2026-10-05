@@ -96,13 +96,40 @@ test('donut arcs interpolate together including zero segments and keep the final
   const { rerender, container } = render(<FeedbackDonut items={items([1, 3, 0])} replayKey="book" />)
   animations[0].playState = 'finished'
   rerender(<FeedbackDonut items={items([2, 1, 1])} replayKey="book" />)
-  const updates = animations.filter(animation => animation.target.tagName === 'circle')
+  const updates = animations.filter(animation => animation.target.tagName === 'circle' && animation.target.hasAttribute('data-motion-key'))
   expect(updates).toHaveLength(3)
   expect(updates[0].keyframes).toEqual([{ strokeDasharray: '25 75', strokeDashoffset: '0' }, { strokeDasharray: '50 50', strokeDashoffset: '0' }])
   expect(updates[1].keyframes).toEqual([{ strokeDasharray: '75 25', strokeDashoffset: '-25' }, { strokeDasharray: '25 75', strokeDashoffset: '-50' }])
   expect(updates[2].keyframes[0].strokeDasharray).toBe('0 100')
   expect(updates.every(animation => animation.startTime === 123)).toBe(true)
   expect(container.querySelector('.feedback-donut__total')).toHaveTextContent('4次反馈')
+})
+
+test('donut entry reveals clockwise around the circle instead of wiping horizontally', () => {
+  const items = [{ label: '认识', value: 3, color: 'blue' }, { label: '模糊', value: 1, color: 'gold' }]
+  const { container } = render(<FeedbackDonut items={items} replayKey="book" />)
+  const sweep = container.querySelector('mask circle')
+  expect(sweep).not.toBeNull()
+  expect(sweep).toHaveAttribute('transform', 'rotate(-90 100 100)')
+  const entry = animations.find(animation => animation.target === sweep)
+  expect(entry?.keyframes).toEqual([{ strokeDashoffset: '100' }, { strokeDashoffset: '0' }])
+  expect(animations.some(animation => animation.keyframes.some(frame => frame.clipPath))).toBe(false)
+  expect(container.querySelector('.feedback-donut__total')).toHaveTextContent('4次反馈')
+})
+
+test('an interrupted donut sweep continues from its visible arc and settles on reduced motion', () => {
+  const view = value => <FeedbackDonut items={[{ label: '认识', value, color: 'blue' }, { label: '模糊', value: 4 - value, color: 'gold' }]} replayKey="book" />
+  const { container, rerender } = render(view(1))
+  const sweep = container.querySelector('mask circle')
+  expect(sweep).not.toBeNull()
+  const style = window.getComputedStyle
+  vi.spyOn(window, 'getComputedStyle').mockImplementation(node => node === sweep ? { strokeDashoffset: '63' } : style(node))
+  rerender(view(3))
+  const continuation = animations.filter(animation => animation.target === sweep).at(-1)
+  expect(continuation?.keyframes).toEqual([{ strokeDashoffset: '63' }, { strokeDashoffset: '0' }])
+  act(() => { media.matches = true; listeners.forEach(fn => fn()) })
+  expect(continuation.cancel).toHaveBeenCalled()
+  expect(sweep).toHaveAttribute('stroke-dashoffset', '0')
 })
 
 test('stacked columns interpolate from old heights with a common baseline and synchronized timing', () => {
