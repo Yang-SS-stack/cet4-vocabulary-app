@@ -59,11 +59,13 @@ export function CompletionChart({ buckets, granularity, replayKey, colors }) {
     })
   }) : []
   const geometry = columns.flat().map(segment => ({ ...segment, empty: { ...segment.properties, y: '204px', height: '0px' } }))
-  return <section className="completion-chart" aria-label={title}>
+  return <section className="completion-chart" aria-label={title} style={{ '--completion-axis-label-width': `${String(ceiling).length}ch` }}>
     <header className="statistics-section-heading"><h2>{title}</h2><div className="chart-key">{['新词', '额外', '复习'].map((label, i) => <span key={label}><i style={{ background: colors[i] }} />{label}</span>)}</div></header>
     {!sound ? <p className="data-unavailable">不可计算：记录存在冲突</p> : maximum === 0 ? <div className="chart-empty">这段时间尚无完成记录</div> : <>
       <div className="completion-chart__axis-unit">词次</div>
-      <div className="completion-chart__plot"><svg className="completion-chart__grid" viewBox="0 0 660 244" preserveAspectRatio="none" aria-hidden="true">{[0, 1, 2, 3, 4].map(tick => <g key={tick}><line x1="42" x2="656" y1={12 + tick * 51} y2={12 + tick * 51} /><text x="32" y={16 + tick * 51} textAnchor="end">{ceiling * (4 - tick) / 4}</text></g>)}</svg>
+      <div className="completion-chart__plot">
+      <div className="completion-chart__axis" aria-hidden="true">{[0, 1, 2, 3, 4].map(tick => <span key={tick} style={{ top: `${tick * 25}%` }}>{ceiling * (4 - tick) / 4}</span>)}</div>
+      <svg className="completion-chart__grid" viewBox="0 0 614 244" preserveAspectRatio="none" aria-hidden="true">{[0, 1, 2, 3, 4].map(tick => <line key={tick} x1="0" x2="614" y1={12 + tick * 51} y2={12 + tick * 51} />)}</svg>
       <DataReveal replayKey={replayKey} geometry={geometry} direction="vertical" className="completion-chart__bars">
         <svg viewBox="0 0 600 204" preserveAspectRatio="none" aria-hidden="true">
           {columns.map((column, index) => <g key={buckets[index].fromDate}>{column.map(segment => <rect key={segment.key} data-motion-key={segment.key} style={segment.properties} fill={segment.color} />)}</g>)}

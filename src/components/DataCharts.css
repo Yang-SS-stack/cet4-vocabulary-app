@@ -30,13 +30,16 @@
 .chart-key { display: flex; flex-wrap: wrap; gap: 15px; font-size: 12px; color: var(--ink-soft); }
 .chart-key span { display: inline-flex; align-items: center; gap: 6px; }
 .completion-chart__axis-unit { font-size: 11px; color: var(--ink-soft); margin-top: 18px; }
-.completion-chart__plot { position: relative; height: 232px; }
-.completion-chart__grid { width: 100%; height: 100%; }
+.completion-chart { --completion-axis-gutter: max(6.36%, calc(var(--completion-axis-label-width) + 6px)); }
+.completion-chart__plot { position: relative; height: 232px; font-size: 12px; }
+.completion-chart__axis { position: absolute; top: 4.92%; bottom: 11.48%; left: 0; width: calc(var(--completion-axis-gutter) - 6px); color: var(--ink-soft); line-height: 1; font-variant-numeric: tabular-nums; }
+.completion-chart__axis span { position: absolute; right: 0; transform: translateY(-50%); white-space: nowrap; }
+.completion-chart__grid { position: absolute; top: 0; left: var(--completion-axis-gutter); width: calc(100% - var(--completion-axis-gutter) - .6%); height: 100%; }
 .completion-chart__grid line { stroke: var(--line); stroke-width: .7; }
-.completion-chart__grid text { font-size: 12px; fill: var(--ink-soft); font-family: inherit; }
-.completion-chart__bars { position: absolute; top: 4.92%; bottom: 11.48%; left: 6.36%; right: .6%; }
+.completion-chart__bars { position: absolute; top: 4.92%; bottom: 11.48%; left: var(--completion-axis-gutter); right: .6%; }
 .completion-chart__bars svg { display: block; width: 100%; height: 100%; }
-.completion-chart__dates { display: flex; justify-content: space-between; gap: 8px; margin: -12px 0 0 6.36%; color: var(--ink-soft); font-size: 11px; font-variant-numeric: tabular-nums; }
+.completion-chart__dates { display: flex; justify-content: space-between; gap: 8px; margin: -12px 0 0 var(--completion-axis-gutter); color: var(--ink-soft); font-size: 12px; font-variant-numeric: tabular-nums; }
+.completion-chart__dates span { font-size: 11px; }
 .chart-empty { min-height: 220px; display: grid; place-items: center; color: var(--ink-soft); font-size: 14px; border-bottom: 1px solid var(--line); }
 .chart-values { margin-top: 13px; font-size: 12px; color: var(--ink-soft); }
 .chart-values summary { width: fit-content; cursor: pointer; }
