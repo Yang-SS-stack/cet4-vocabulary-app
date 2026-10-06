@@ -3,6 +3,7 @@ import './SettingsWheel.css'
 
 const OPTION_HEIGHT = 48
 const WHEEL_STEP_DELTA = 48
+const WHEEL_GESTURE_GAP = 250
 const CLOSE_DURATION = 220
 
 const WheelColumn = forwardRef(function WheelColumn({ label, value, options, active, disabled, onChange, onSettlingChange }, ref) {
@@ -17,6 +18,7 @@ const WheelColumn = forwardRef(function WheelColumn({ label, value, options, act
   const selectedIndexRef = useRef(selectedIndex)
   const programmaticTopRef = useRef(null)
   const wheelDeltaRef = useRef(0)
+  const lastWheelTimeRef = useRef(null)
   const callbacksRef = useRef({ onChange, onSettlingChange, options, label, disabled, active })
   callbacksRef.current = { onChange, onSettlingChange, options, label, disabled, active }
   selectedIndexRef.current = selectedIndex
@@ -121,7 +123,12 @@ const WheelColumn = forwardRef(function WheelColumn({ label, value, options, act
       if (current.disabled || !current.active) return
       finishScroll()
       const deltaScale = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 180 : 1
-      wheelDeltaRef.current += event.deltaY * deltaScale
+      const delta = event.deltaY * deltaScale
+      const now = performance.now()
+      if ((lastWheelTimeRef.current !== null && now - lastWheelTimeRef.current > WHEEL_GESTURE_GAP)
+        || Math.sign(delta) !== Math.sign(wheelDeltaRef.current)) wheelDeltaRef.current = 0
+      lastWheelTimeRef.current = now
+      wheelDeltaRef.current += delta
       if (Math.abs(wheelDeltaRef.current) < WHEEL_STEP_DELTA) return
       const direction = Math.sign(wheelDeltaRef.current)
       wheelDeltaRef.current = 0

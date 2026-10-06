@@ -63,7 +63,7 @@
 .settings-wheel__column { position: relative; min-width: 0; flex: 1; }
 .settings-wheel__column::before { position: absolute; z-index: 0; left: 6px; right: 6px; top: var(--wheel-options-padding); height: 48px; border-radius: 24px; background: rgba(216, 200, 155, .25); content: ''; pointer-events: none; }
 .settings-wheel__column-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.settings-wheel__options { position: relative; height: var(--wheel-options-height); overflow-y: auto; overscroll-behavior: contain; padding-block: var(--wheel-options-padding); scrollbar-width: none; scroll-behavior: auto; touch-action: pan-y; mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent); }
+.settings-wheel__options { position: relative; height: var(--wheel-options-height); overflow-y: auto; overflow-anchor: none; overscroll-behavior: contain; padding-block: var(--wheel-options-padding); scrollbar-width: none; scroll-behavior: auto; touch-action: pan-y; mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent); }
 .settings-wheel__options::-webkit-scrollbar { display: none; }
 .settings-wheel__option { display: block; width: 100%; height: 48px; padding: 0 8px; border: 0; color: var(--ink-soft); background: transparent; font: inherit; font-size: 18px; font-variant-numeric: tabular-nums; text-align: center; cursor: pointer; white-space: nowrap; transition: color 160ms var(--ease-out), font-size 160ms var(--ease-out); }
 .settings-wheel__option[aria-selected='true'] { color: var(--ink); font-size: 24px; font-weight: 750; }

@@ -184,6 +184,63 @@ test('small touchpad deltas accumulate before one adjacent choice', () => {
   expect(onChange).toHaveBeenLastCalledWith(30, '每日新词')
 })
 
+test.each([
+  [40, -55, 10],
+  [-40, 55, 30],
+])('a reversed wheel gesture discards the previous direction remainder (%s then %s)', (first, reversed, expected) => {
+  const onChange = vi.fn()
+  render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+  const list = screen.getByRole('listbox', { name: '每日新词' })
+  list.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: first }))
+  expect(onChange).not.toHaveBeenCalled()
+  list.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: reversed }))
+  expect(onChange).toHaveBeenCalledOnce()
+  expect(onChange).toHaveBeenLastCalledWith(expected, '每日新词')
+})
+
+test('a fresh wheel gesture does not inherit a remainder after a pause', () => {
+  const clock = vi.spyOn(performance, 'now')
+  try {
+    clock.mockReturnValue(100)
+    const onChange = vi.fn()
+    render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
+    const list = screen.getByRole('listbox', { name: '每日新词' })
+    list.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: -40 }))
+    clock.mockReturnValue(1000)
+    list.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: -10 }))
+    expect(onChange).not.toHaveBeenCalled()
+    for (let index = 0; index < 4; index++) {
+      list.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: -10 }))
+    }
+    expect(onChange).toHaveBeenCalledOnce()
+    expect(onChange).toHaveBeenLastCalledWith(10, '每日新词')
+  } finally {
+    clock.mockRestore()
+  }
+})
+
+test('rapid upward mouse notches all advance before the previous animation finishes', async () => {
+  const onChange = vi.fn()
+  function NumericWheel() {
+    const [value, setValue] = useState(50)
+    return <SettingsWheel label="数量" value={value} displayValue={String(value)} isOpen onToggle={vi.fn()}
+      onChange={next => { setValue(next); onChange(next) }}
+      columns={[{ label: '数量', value, options: Array.from({ length: 100 }, (_, index) => ({ value: index + 1, label: String(index + 1) })) }]} />
+  }
+  render(<NumericWheel />)
+  const list = screen.getByRole('listbox', { name: '数量' })
+  act(() => {
+    for (let index = 0; index < 5; index++) {
+      const event = new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: -120 })
+      list.dispatchEvent(event)
+      expect(event.defaultPrevented).toBe(true)
+    }
+  })
+  expect(onChange.mock.calls.map(([next]) => next)).toEqual([49, 48, 47, 46, 45])
+  expect(screen.getByRole('option', { name: '45', selected: true })).toBeInTheDocument()
+  await waitFor(() => expect(list.scrollTop).toBe(44 * 48))
+})
+
 test('a click starts a fresh touchpad gesture instead of using leftover delta', () => {
   const onChange = vi.fn()
   render(<ControlledWheels onChange={onChange} initialOpen="newWords" />)
