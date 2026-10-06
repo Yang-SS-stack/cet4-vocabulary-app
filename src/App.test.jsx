@@ -185,8 +185,10 @@ test('mounts setup dialogs outside the animated page and disables the app shell 
 
   await user.keyboard('{Escape}')
   await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
-  expect(document.querySelector('.app-shell')).not.toHaveAttribute('inert')
-  expect(document.querySelector('.app-shell')).toHaveAttribute('aria-hidden', 'false')
+  await waitFor(() => {
+    expect(document.querySelector('.app-shell')).not.toHaveAttribute('inert')
+    expect(document.querySelector('.app-shell')).toHaveAttribute('aria-hidden', 'false')
+  })
   await waitFor(() => expect(screen.getByRole('heading', { name: '今日学习' })).toHaveFocus())
 })
 

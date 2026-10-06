@@ -61,3 +61,7 @@ P-03-A 已通过的权限、连接、合法/非法接口、停服后学习/音�
 ## 恢复入口
 
 先看本卡人工验收当前行及最新用户回复，再看 [实施交接卡](development-acceptance-maintenance-handoff.md)、[执行计划](superpowers/plans/2026-10-05-development-maintenance.md)、[已批准详细设计](superpowers/specs/2026-10-05-development-acceptance-maintenance-design.md)。制作工作区保留到验收完成，不能归档或删除其未跟踪证据。Obsidian新状态仍须先展示拟写文本、得到确认后追加。
+
+## 2026-10-06 用户整体确认
+
+用户明确确认“全部审核完毕，合并到main并推送至远程仓库”。本页及关联界面、动效修复按整体确认验收通过；上表是当时逐步操作快照，由本条更新。不将整体确认编造为每个按钮的操作日志，不重复 P-03-A 或原通过项。本轮 main 合并及远程推送已获明确授权，现有自动发布随 main 推送执行。下一项为 P-03-B 模型建议草稿详细方案与实施交接卡审核，批准后才实施；无付费调用或 Obsidian 写入授权。
