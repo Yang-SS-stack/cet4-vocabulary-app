@@ -1,3 +1,4 @@
+import { removeSelectionPreference } from '../../test/legacyLearningSnapshot'
 import { expect, test } from 'vitest'
 import { createLearningStore } from './store'
 import { completedWordCount } from './recommendations'
@@ -94,7 +95,7 @@ test('legacy v4 feedback history migrates losslessly and correction remains avai
   const env = setup({ id: 'self-assessment', rulesVersion: 1 })
   env.store.submitSelfAssessment(token(env.store.getTask('learning')), 'known')
   const old = JSON.parse(env.storage.getItem(LEARNING_STORAGE_KEY))
-  old.version = 4
+  old.version = 4; removeSelectionPreference(old)
   env.storage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(old))
   const reopened = env.open()
   expect(reopened.getTask('learning').feedbackEvents).toEqual(old.days[reopened.getToday()].learning.feedbackEvents)
@@ -116,13 +117,13 @@ test('extra correction checks batch and word identity, undoes completion and pre
     if (n < 2) env.store.advanceLearning(token(env.store.getExtraLearning()))
   }
   const old = JSON.parse(env.storage.getItem())
-  old.version = 4
+  old.version = 4; removeSelectionPreference(old)
   for (const book of Object.values(old.wordBooks)) for (const word of Object.values(book.words)) {
     if (word.review) delete word.review.provenance
   }
   env.storage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(old))
   const store = env.open()
-  expect(store.getSnapshot().extraLearning).toEqual(old.extraLearning)
+  expect(store.getSnapshot().extraLearning).toMatchObject(old.extraLearning)
   const extra = store.getExtraLearning()
   for (const bad of [{ taskId: 'wrong' }, { kind: 'learning' }, { itemId: daily.itemIds[0] }, { revision: 0 }]) {
     expect(() => store.correctLearningFeedback({ ...token(extra), ...bad })).toThrow()

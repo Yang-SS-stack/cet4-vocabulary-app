@@ -25,12 +25,12 @@ function finish(store, get = () => store.getTask('learning')) {
     store.advanceLearning(token(get()))
   }
 }
-function setup(method) {
+function setup(method, selectionMode = 'sequential') {
   let raw = null, fail = false, date = new Date(2026, 8, 29)
   const storage = { getItem: () => raw, setItem: vi.fn((_, value) => { if (fail) throw Error('quota'); raw = value }) }
   const open = () => createLearningStore({ storage, now: () => date })
   const store = open()
-  store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1 })
+  store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1, newWordSelectionMode: selectionMode })
   store.ensureTodayLearning('cet4', ['daily'], store.getToday(), store.getSnapshot().settings, method)
   finish(store)
   const session = createInlineWordBookSession(words)
@@ -39,6 +39,37 @@ function setup(method) {
   const show = (s = store) => render(<LearningStoreProvider store={s}><TodayLearningPage loadBook={loader} onFocusModeChange={focus} /></LearningStoreProvider>)
   return { store, open, loader, session, storage, focus, show, fail: value => { fail = value }, nextDay: () => { date = new Date(2026, 8, 30) } }
 }
+
+test('extra random batch uses the daily mode after a global change and restores its drawn order', async () => {
+  const env = setup(undefined, 'random')
+  env.store.updateSettings({ newWordSelectionMode: 'sequential' })
+  vi.spyOn(Math, 'random').mockReturnValue(0)
+  const view = env.show(), user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await user.click(screen.getByRole('button', { name: '继续学习更多单词' }))
+  await screen.findByRole('heading', { name: 'word1' })
+  const extra = env.store.getExtraLearning()
+  expect(extra.settings.newWordSelectionMode).toBe('random')
+  expect(extra.itemIds.map(id => extra.items[id].wordId)).toEqual(Array.from({ length: 10 }, (_, i) => `word${i + 1}`))
+  view.unmount()
+  env.show(env.open())
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await screen.findByRole('heading', { name: 'word1' })
+  expect(env.store.getExtraLearning()).toEqual(extra)
+})
+
+test('state changed while extra details load cannot silently create a different batch', async () => {
+  const env = setup(undefined, 'random')
+  const loadWords = env.session.loadWords
+  env.loader.mockResolvedValueOnce({ ...env.session, loadLearningOrder: async () => words.map(word => word.word),
+    loadWords: async ids => { env.store.updateSettings({ pronunciation: 'en-US' }); return loadWords(ids) } })
+  env.show()
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await user.click(screen.getByRole('button', { name: '继续学习更多单词' }))
+  expect(await screen.findByRole('alert')).toHaveTextContent('重新读取进度')
+  expect(env.store.getExtraLearningProcess()).toBeNull()
+})
 
 test.each([
   ['without a batch', false],

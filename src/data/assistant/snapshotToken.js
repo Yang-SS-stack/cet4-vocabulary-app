@@ -1,5 +1,9 @@
 import { buildLearningFacts } from './facts'
-import { localDateKey, DEFAULT_SETTINGS } from '../learning/model'
+import { localDateKey } from '../learning/model'
+
+// Contract v1 accepts these seven fields, independent of browser preferences.
+const REQUEST_SETTINGS = ['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyReviewWords',
+  'dailyStudyMinutes', 'pronunciation', 'mistakeStudyWords']
 
 export function canonicalStringify(value) {
   if (value === null) return 'null'
@@ -34,7 +38,7 @@ export async function buildFactsRequest(store, context) {
   const { localDate, timeZone, selectedWordBookId, ...facts } = initial.facts
   return { contractVersion: 1, requestId: globalThis.crypto.randomUUID(),
     basis: { localDate, generatedAt: context.now.toISOString(), timeZone, selectedWordBookId, snapshotToken, factsToken },
-    settings: Object.fromEntries(Object.keys(DEFAULT_SETTINGS).map(key => [key, initial.snapshot.settings[key]])), ...facts }
+    settings: Object.fromEntries(REQUEST_SETTINGS.map(key => [key, initial.snapshot.settings[key]])), ...facts }
 }
 export async function isFactsRequestCurrent(store, context, request) {
   try {

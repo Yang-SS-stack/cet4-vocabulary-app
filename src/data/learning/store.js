@@ -2,6 +2,7 @@ import { SELF_ASSESSMENT, GUIDED_RECALL, nextLearningItem, requireLearningTurn, 
 import { REVIEW_GUIDED_RECALL, isReviewSession, requireReviewTurn, createReviewProgress, nextReviewItem,
   applyReviewFeedback, canCorrectReviewFeedback } from './reviewSession'
 import { addCompletedLearningReview, withdrawLearningReview, projectedMissingReviews, dueReviewWords } from './reviewLibrary'
+import { selectLearningWords } from './selection'
 import {
   assert, createMistakeRecord, createProgress, createState, createWordBookWord, DEFAULT_SETTINGS, freeze,
   LEARNING_STORAGE_KEY, localDateKey, localDayStartIso, TASK_KINDS, validateDateKey, validatePatch, validateState,
@@ -239,8 +240,9 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
       state = loaded
       for (const listener of [...listeners]) listener()
     },
-    ensureTodayLearning(wordBookId, orderedWords, expectedDate = today(), expectedSettings = state.settings, method = SELF_ASSESSMENT) {
+    ensureTodayLearning(wordBookId, orderedWords, expectedDate = today(), expectedSettings = state.settings, method = SELF_ASSESSMENT, expectedSnapshot) {
       assert(expectedDate === today(), 'Learning date changed; start today again')
+      if (expectedSnapshot) assert(state === expectedSnapshot, 'Learning candidates changed; reload progress')
       const existing = taskAt(state, 'learning', today())
       if (existing) return existing
       assert(JSON.stringify(expectedSettings) === JSON.stringify(state.settings), 'Learning settings changed; start today again')
@@ -248,15 +250,17 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
       const count = state.settings.dailyNewWords
       assert(Number.isSafeInteger(count) && count >= 1 && count <= 100, 'Set daily new words first')
       assert(Array.isArray(orderedWords), 'Invalid task candidates')
-      const candidates = [...new Set(orderedWords.map(wordId))]
-        .filter((word) => !api.getWord(wordBookId, word)?.learning.completed).slice(0, count)
+      const candidates = selectLearningWords({ orderedWords, count,
+        completedWords: Object.values(state.wordBooks[wordBookId]?.words ?? {}).filter(word => word.learning.completed).map(word => word.wordId) })
+      if (expectedSnapshot) assert(JSON.stringify(candidates) === JSON.stringify(orderedWords), 'Learning candidates changed; reload progress')
       return api.ensureTask('learning', candidates, wordBookId, method)
     },
     getExtraLearningProcess(date = today()) { return extraProcessAt(state, date) },
     getExtraLearning(date = today()) { return extraProcessAt(state, date)?.batches.at(-1) ?? null },
-    ensureExtraLearning(orderedWords, expectedDate = today()) {
+    ensureExtraLearning(orderedWords, expectedDate = today(), expectedSnapshot) {
       const date = today()
       assert(expectedDate === date, 'Learning date changed; start today again')
+      if (expectedSnapshot) assert(state === expectedSnapshot, 'Learning candidates changed; reload progress')
       const daily = taskAt(state, 'learning', date)
       assert(daily?.currentItemId === null && daily.itemIds.every(id => daily.items[id].completed), 'Finish the daily task before extra learning')
       const process = extraProcessAt(state, date)
@@ -264,8 +268,9 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
       const current = process?.batches.at(-1)
       if (current && current.currentItemId !== null) return current
       assert(Array.isArray(orderedWords), 'Invalid task candidates')
-      const candidates = [...new Set(orderedWords.map(wordId))]
-        .filter(word => !api.getWord(daily.wordBookId, word)?.learning.completed).slice(0, EXTRA_LEARNING_BATCH_SIZE)
+      const candidates = selectLearningWords({ orderedWords, count: EXTRA_LEARNING_BATCH_SIZE,
+        completedWords: Object.values(state.wordBooks[daily.wordBookId]?.words ?? {}).filter(word => word.learning.completed).map(word => word.wordId) })
+      if (expectedSnapshot) assert(JSON.stringify(candidates) === JSON.stringify(orderedWords), 'Learning candidates changed; reload progress')
       const items = candidates.map(word => normalizeTaskItem('learning', word, daily.wordBookId))
       const createdAt = timestamp()
       change(next => {

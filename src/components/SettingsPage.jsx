@@ -16,6 +16,7 @@ const FIELDS = [
   'dailyStudyMinutes',
   'pronunciation',
   'mistakeStudyWords',
+  'newWordSelectionMode',
 ]
 
 const NUMBER_OPTIONS = Array.from({ length: 100 }, (_, index) => ({
@@ -120,6 +121,14 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
 
   return (
     <section className="settings-page" aria-label="学习设置">
+      <section className="settings-page__selection" aria-labelledby="new-word-selection-title">
+          <h3 id="new-word-selection-title">新词选取</h3>
+          <div className="settings-page__selection-options" role="group" aria-label="新词选取">
+            {[['sequential', '顺序选词'], ['random', '随机选词']].map(([mode, label]) =>
+              <button key={mode} type="button" disabled={isSaving} aria-pressed={draft.newWordSelectionMode === mode}
+                onClick={() => changeField('newWordSelectionMode', mode)}>{label}</button>)}
+          </div>
+      </section>
       <div className="settings-page__panel">
         {[
           { title: '学习目标', kind: 'goals', fields: ['examDate', 'todayWordBookId', 'pronunciation'] },

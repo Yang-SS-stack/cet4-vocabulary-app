@@ -34,6 +34,7 @@ test('stores daily study time only as a planned duration in minutes', () => {
     dailyStudyMinutes: null,
     pronunciation: 'en-GB',
     mistakeStudyWords: null,
+    newWordSelectionMode: 'sequential',
   })
 
   store.updateSettings({ dailyStudyMinutes: 30 })
@@ -262,7 +263,7 @@ test('persists settings and freezes the settings snapshot captured by an existin
   store.ensureTask('learning', ['apple'], 'cet4')
   store.updateSettings({ dailyNewWords: 40 })
 
-  expect(env.open().getSnapshot().settings).toEqual({ ...settings, dailyNewWords: 40 })
+  expect(env.open().getSnapshot().settings).toEqual({ ...settings, dailyNewWords: 40, newWordSelectionMode: 'sequential' })
   expect(store.getTask('learning').settings.dailyNewWords).toBe(20)
   expect(() => { store.getSnapshot().settings.dailyNewWords = 99 }).toThrow()
 })

@@ -18,6 +18,8 @@ function LineSidebar({
   current = 'page',
   onItemClick,
   ariaHidden = false,
+  icons = [],
+  collapsed = false,
   className = '',
 }) {
   const [localActiveIndex, setActiveIndex] = useState(defaultActive)
@@ -31,6 +33,8 @@ function LineSidebar({
   const navigationClassName = [
     'line-sidebar',
     showMarker && 'line-sidebar--markers',
+    icons.length > 0 && 'line-sidebar--icons',
+    collapsed && 'line-sidebar--collapsed',
     className,
   ]
     .filter(Boolean)
@@ -50,6 +54,7 @@ function LineSidebar({
         '--tick-scale': tickScale,
         '--item-gap': itemGap + 'px',
         '--font-size': fontSize + 'rem',
+        '--active-index': activeIndex,
       }}
     >
       <ul className="line-sidebar__list">
@@ -63,11 +68,14 @@ function LineSidebar({
               type="button"
               onClick={() => handleItemClick(index, label)}
               aria-current={activeIndex === index ? current : undefined}
+              aria-label={icons.length ? label : undefined}
+              title={collapsed ? label : undefined}
             >
               {showIndex && (
                 <span className="line-sidebar__index">{String(index + 1).padStart(2, '0')}</span>
               )}
-              <span>{label}</span>
+              {icons[index] && <span className="line-sidebar__icon" aria-hidden="true">{icons[index]}</span>}
+              <span className="line-sidebar__label">{label}</span>
             </button>
           </li>
         ))}

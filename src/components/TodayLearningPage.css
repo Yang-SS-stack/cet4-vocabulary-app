@@ -285,7 +285,7 @@
 .today-task + .today-task { border-left: 1px solid var(--line); }
 .today-task h3 { text-align: center; font-size: 20px; margin: 0 0 12px; font-weight: 700; }
 .today-task__note { min-height: 44px; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 9px; color: var(--ink-soft); font-size: 13px; text-align: center; }
-.learning-overview__actions { margin-top: 30px; gap: 22px; }
+.learning-overview__actions { margin-top: 0; margin-bottom: 28px; gap: 22px; }
 .learning-overview__actions button { display: flex; align-items: center; justify-content: center; gap: 15px; min-height: 57px; font-family: inherit; font-size: 19px; font-weight: 650; border-radius: 8px; color: var(--gold); }
 .learning-overview__actions button:first-child { background: var(--ink); color: var(--white); border-color: var(--ink); }
 .learning-overview__actions button:first-child:hover { background: #204168; border-color: #204168; }
@@ -322,6 +322,7 @@
   .today-task + .today-task { border-left: 0; border-top: 1px solid var(--line); padding-top: 22px; }
   .today-task__note { min-height: 0; }
   .today-task h3 { font-size: 20px; }
-  .learning-overview__actions { margin-top: 5px; }
+  .learning-overview__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 0; margin-bottom: 27px; }
+  .learning-overview__actions button { min-height: 48px; padding: 10px 8px; font-size: 16px; gap: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .learning-recommendation-disclosure > summary, .learning-recommendation-disclosure > summary svg { transition: none; } }

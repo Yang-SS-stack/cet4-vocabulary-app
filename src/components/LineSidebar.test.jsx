@@ -3,6 +3,17 @@ import userEvent from '@testing-library/user-event'
 import { expect, test, vi } from 'vitest'
 import LineSidebar from './LineSidebar'
 
+test('collapsed icons preserve names, keyboard access and selection', async () => {
+  const click = vi.fn()
+  render(<LineSidebar items={['今日学习', '设置']} icons={[<svg key="a" />, <svg key="b" />]} collapsed activeIndex={1} onItemClick={click} />)
+  const settings = screen.getByRole('button', { name: '设置' })
+  expect(settings).toHaveAttribute('title', '设置')
+  expect(settings).toHaveAttribute('aria-current', 'page')
+  settings.focus()
+  await userEvent.setup().keyboard('{Enter}')
+  expect(click).toHaveBeenCalledWith(1, '设置')
+})
+
 test('follows controlled navigation and identifies a page within Settings', () => {
   const { rerender } = render(<LineSidebar items={['今日学习', '设置']} activeIndex={1} current="location" />)
   expect(screen.getByRole('button', { name: '设置' })).toHaveAttribute('aria-current', 'location')

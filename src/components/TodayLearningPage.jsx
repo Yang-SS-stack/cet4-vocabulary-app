@@ -75,6 +75,10 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
 
   return (
     <section className={`learning-overview ${pendingEntry ? 'is-leaving' : returned ? 'is-entering' : ''}`} inert={Boolean(pendingEntry)} aria-label="今日学习概览">
+      <div className="learning-overview__actions">
+        <button ref={entryButton} type="button" onClick={() => start('learning')}>今日学习 <ActionArrow /></button>
+        <button ref={reviewButton} type="button" onClick={() => start('review')}>今日复习 <ActionArrow /></button>
+      </div>
       <div className="learning-overview__status-strip">
         <StatusMetric label="距离考试" value={formatDays(daysRemaining)} />
         <StatusMetric
@@ -91,10 +95,6 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
           <TaskRing label="今日复习" progress={facts?.today.review} currentBook={settings.todayWordBookId} error={factsError} empty="本日无复习任务" />
         </div>
       </section>
-      <div className="learning-overview__actions">
-        <button ref={entryButton} type="button" onClick={() => start('learning')}>今日学习 <ActionArrow /></button>
-        <button ref={reviewButton} type="button" onClick={() => start('review')}>今日复习 <ActionArrow /></button>
-      </div>
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
       {factsError && <p className="learning-overview__error">{factsError}</p>}
       <button ref={adviceEntry} type="button" className="learning-advice-entry" aria-haspopup="dialog" onClick={() => setAdviceOpen(true)}>学习建议 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6" /></svg></button>

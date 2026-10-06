@@ -380,34 +380,59 @@ test('vocabulary page can return from a book to the book list', async () => {
   expect(screen.getByRole('button', { name: 'CET-4' })).toBeInTheDocument()
 })
 
-test('hiding navigation keeps a control for showing it again', async () => {
+test('collapsing navigation keeps a control for expanding it again', async () => {
   const user = userEvent.setup()
   configureFirstRun()
   render(<App />)
   await enterApp(user)
 
-  await user.click(screen.getByRole('button', { name: '隐藏导航栏' }))
+  await user.click(screen.getByRole('button', { name: '收起导航栏' }))
 
-  expect(screen.getByRole('button', { name: '显示导航栏' })).toBeVisible()
+  expect(screen.getByRole('button', { name: '展开导航栏' })).toBeVisible()
 })
 
-test('hiding navigation makes the entire sidebar inert', async () => {
+test('mobile page selection focuses the destination and resizing cleans up an open drawer', async () => {
+  const media = { matches: true, addEventListener: vi.fn(), removeEventListener: vi.fn() }
+  vi.stubGlobal('matchMedia', query => query === '(max-width: 800px)' ? media : { matches: true })
+  HTMLDialogElement.prototype.close = function () { this.removeAttribute('open') }
+  configureFirstRun()
+  const user = userEvent.setup()
+  render(<App />)
+  await enterApp(user)
+  await user.click(screen.getByRole('button', { name: '打开菜单' }))
+  await user.click(screen.getByRole('button', { name: '设置' }))
+  await waitFor(() => expect(screen.getByRole('heading', { name: '设置', level: 1 })).toHaveFocus())
+  await user.click(screen.getByRole('button', { name: '打开菜单' }))
+  expect(document.body.style.overflow).toBe('hidden')
+  media.matches = false
+  const listener = media.addEventListener.mock.calls.find(([event]) => event === 'change')[1]
+  const { act } = await import('@testing-library/react')
+  act(() => listener())
+  await waitFor(() => expect(document.body.style.overflow).not.toBe('hidden'))
+  expect(screen.queryByRole('dialog', { name: '主菜单' })).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '收起导航栏' })).toBeInTheDocument()
+  delete HTMLDialogElement.prototype.close
+})
+
+test('collapsed navigation still allows choosing all five pages', async () => {
   const user = userEvent.setup()
   configureFirstRun()
   const { container } = render(<App />)
   await enterApp(user)
 
-  await user.click(screen.getByRole('button', { name: '隐藏导航栏' }))
+  await user.click(screen.getByRole('button', { name: '收起导航栏' }))
 
   const sidebar = container.querySelector('.sidebar')
-  expect(sidebar).toHaveAttribute('aria-hidden', 'true')
-  expect(sidebar).toHaveAttribute('inert')
+  expect(sidebar).toHaveAttribute('aria-hidden', 'false')
+  expect(sidebar).not.toHaveAttribute('inert')
+  await user.click(screen.getByRole('button', { name: '设置' }))
+  expect(screen.getByRole('heading', { name: '设置', level: 1 })).toBeInTheDocument()
 })
 
-test('navigation toggle stays fixed in the viewport while scrolling', () => {
+test('navigation toggle remains inside the sticky sidebar', () => {
   const appStyles = readFileSync('src/App.css', 'utf8')
 
-  expect(appStyles).toMatch(/\.nav-toggle\s*\{[^}]*position:\s*fixed/s)
+  expect(appStyles).toMatch(/\.nav-toggle\s*\{[^}]*position:\s*absolute/s)
 })
 
 test('navigation stays visible while the page scrolls', () => {

@@ -157,3 +157,23 @@
     transition: none;
   }
 }
+
+/* B navigation keeps its icons in a stable column as labels fade. */
+.line-sidebar--icons { padding-left: 0; }
+.line-sidebar--icons .line-sidebar__list { position: relative; flex-direction: column; overflow: visible; gap: 8px; padding: 0; }
+.line-sidebar--icons .line-sidebar__list::before { position: absolute; z-index: 1; content: ''; left: 0; top: 25px; width: 20px; height: 2px; border-radius: 2px; background: var(--gold, #96762e); transform: translateY(calc(var(--active-index) * 60px)); transition: transform 200ms var(--ease-out, ease); pointer-events: none; }
+.line-sidebar--icons .line-sidebar__item { flex: initial; }
+.line-sidebar--icons .line-sidebar__item::after { display: none; }
+.line-sidebar--icons .line-sidebar__marker { display: block; left: 0; width: 12px; height: 2px; border-radius: 2px; }
+.line-sidebar--icons .line-sidebar__item:has(.line-sidebar__button--active) .line-sidebar__marker { opacity: 0; }
+.line-sidebar--icons .line-sidebar__button { display: flex; width: 100%; min-height: 52px; align-items: center; gap: 14px; padding: 6px 0 6px 30px; transform: none; white-space: nowrap; transition: padding-left 280ms var(--ease-out, ease), color 150ms var(--ease-out, ease); }
+.line-sidebar--icons .line-sidebar__button--active { color: var(--ink, #0b2244); font-weight: 750; }
+.line-sidebar__icon { display: flex; flex: 0 0 24px; width: 24px; height: 24px; }
+.line-sidebar__icon svg { width: 100%; height: 100%; }
+.line-sidebar__label { transition: opacity 150ms ease-out; }
+.line-sidebar--collapsed .line-sidebar__label { position: absolute; left: 55px; opacity: 0; }
+.line-sidebar--collapsed .line-sidebar__button { padding-left: 8px; justify-content: flex-start; }
+.line-sidebar--collapsed .line-sidebar__marker { left: -10px; width: 2px; height: 12px; }
+.line-sidebar--collapsed .line-sidebar__list::before { left: -10px; top: 14px; width: 2px; height: 24px; }
+.line-sidebar--collapsed .line-sidebar__button:is(:hover, :focus-visible) .line-sidebar__label { opacity: 1; z-index: 5; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--white, #fffefa); color: var(--ink); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .line-sidebar__label, .line-sidebar--icons .line-sidebar__list::before, .line-sidebar--icons .line-sidebar__button { transition: none; } }

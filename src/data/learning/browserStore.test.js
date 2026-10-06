@@ -78,6 +78,21 @@ test('queued task creation rejects settings changed since loading instead of cre
   expect(store.getTask('learning')).toBe(null)
 })
 
+test('two prepared random selections competing for the write lock create only one stable task', async () => {
+  const store = createBrowserLearningStore(shared())
+  await store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1, newWordSelectionMode: 'random' })
+  const initial = store.getSnapshot()
+  const args = [store.getToday(), initial.settings, { id: 'guided-recall', rulesVersion: 1 }, initial]
+  const results = await Promise.allSettled([
+    store.ensureTodayLearning('cet4', ['alpha'], ...args),
+    store.ensureTodayLearning('cet4', ['beta'], ...args),
+  ])
+  expect(results.map(result => result.status)).toEqual(['fulfilled', 'rejected'])
+  expect(results[1].reason.message).toMatch(/candidates changed/)
+  const task = store.getTask('learning')
+  expect(task.itemIds.map(id => task.items[id].wordId)).toEqual(['alpha'])
+})
+
 
 test('corrections use the browser lock, reject duplicates and stale tabs, and check the date after waiting', async () => {
   const env = shared()

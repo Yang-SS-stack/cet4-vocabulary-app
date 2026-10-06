@@ -3,6 +3,7 @@ import { useLearningStore } from '../data/learning'
 import { canCorrectLearningFeedback } from '../data/learning/selfAssessment'
 import { canCorrectReviewFeedback, REVIEW_GUIDED_RECALL } from '../data/learning/reviewSession'
 import { EXTRA_LEARNING_BATCH_SIZE, wordId } from '../data/learning/model'
+import { selectLearningWords } from '../data/learning/selection'
 import { loadWordBook } from '../data/loadWordBook'
 import { loadAudioManifest } from '../data/audioManifest'
 import { wordBooks } from '../data/wordBooks'
@@ -20,7 +21,7 @@ function messageFor(error, loading, review = false) {
   if (/Set review settings/.test(error.message)) return '请先在设置中选择词书和每日复习数量（1–100）。'
   if (/choice content/.test(error.message)) return '暂时无法准备四个有效选项，请重新加载词书后重试。进度保持不变。'
   if (/date changed|today's task/.test(error.message)) return '日期已变化。昨日进度已保留，请开始今天的任务。'
-  if (/elsewhere|turn changed/.test(error.message)) return '学习记录已在其他页面更新，请重新读取进度后继续。'
+  if (/elsewhere|turn changed|candidates changed/.test(error.message)) return '学习记录已在其他页面更新，请重新读取进度后继续。'
   if (/lock unavailable/.test(error.message)) return '当前浏览器无法安全保存，请在支持 Web Locks 的浏览器本机地址或 HTTPS 页面重试。'
   if (/settings changed/.test(error.message)) return review ? '复习设置已变化，请重新进入今日复习。' : '学习设置已变化，请重新进入今日学习。'
   return loading ? '词书加载失败，请检查网络后重试。已有学习记录保持不变。' : '保存失败，请检查浏览器存储空间或权限后重试。此次操作未计入。'
@@ -139,21 +140,27 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
           return
         }
         const session = await loadBook(book)
+        const selectionSettings = mode === 'extra' ? daily.settings : initial.settings
         const ids = existing ? existing.itemIds.map(id => existing.items[id].wordId)
-          : [...new Set((await session.loadLearningOrder()).map(wordId))]
-            .filter(id => !store.getWord(book.id, id)?.learning.completed).slice(0, mode === 'extra' ? EXTRA_LEARNING_BATCH_SIZE : initial.settings.dailyNewWords)
+          : selectLearningWords({
+            orderedWords: await session.loadLearningOrder(),
+            completedWords: Object.values(initial.wordBooks[book.id]?.words ?? {}).filter(word => word.learning.completed).map(word => word.wordId),
+            count: mode === 'extra' ? EXTRA_LEARNING_BATCH_SIZE : selectionSettings.dailyNewWords,
+            mode: selectionSettings.newWordSelectionMode,
+          })
         const details = await session.loadWords(ids)
         const words = new Map(details.map(item => [wordId(item.word), item]))
         if (ids.some(id => !words.has(id))) throw Error('Word book details are missing')
         if (cancelled || exitRequested.current) return
         loading = false
         if (store.getToday() !== date) throw Error('Learning date changed')
-        if (mode !== 'extra' && !existing && store.getSnapshot() !== initial) throw Error('Learning settings changed')
+        if (!existing && store.getSnapshot() !== initial) throw Error(mode === 'extra' ? 'Learning candidates changed' : 'Learning settings changed')
         if (exitRequested.current) return
         const savedTask = mode === 'extra'
-          ? existing ?? await store.ensureExtraLearning(ids, date)
-          : existing ?? await store.ensureTodayLearning(book.id, ids, date, initial.settings, { id: 'guided-recall', rulesVersion: 1 })
+          ? existing ?? await store.ensureExtraLearning(ids, date, initial)
+          : existing ?? await store.ensureTodayLearning(book.id, ids, date, initial.settings, { id: 'guided-recall', rulesVersion: 1 }, initial)
         if (cancelled || exitRequested.current) return
+        if (savedTask && JSON.stringify(savedTask.itemIds.map(id => savedTask.items[id].wordId)) !== JSON.stringify(ids)) throw Error('Learning candidates changed')
         setLoaded({ date: savedTask?.date ?? date, taskId: savedTask?.taskId, book, session, words })
         setClock(store.getToday())
       } catch (failure) {

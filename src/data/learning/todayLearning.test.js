@@ -1,3 +1,4 @@
+import { removeSelectionPreference } from '../../test/legacyLearningSnapshot'
 import { expect, test } from 'vitest'
 import { createLearningStore } from './store'
 import { LEARNING_STORAGE_KEY } from './model'
@@ -13,6 +14,14 @@ function environment() {
   return { store, open, storage, nextDay: () => { date = new Date(2026, 8, 25) }, fail: (value) => { fail = value } }
 }
 const token = (task) => ({ date: task.date, itemId: task.currentItemId, revision: task.sessionRevision })
+
+test('selected candidates cannot silently change between detail loading and persistence', () => {
+  const { store } = environment()
+  const initial = store.getSnapshot()
+  store.ensureTask('review', [], 'cet4')
+  expect(() => store.ensureTodayLearning('cet4', ['alpha'], store.getToday(), initial.settings, undefined, initial)).toThrow(/candidates changed/)
+  expect(store.getTask('learning')).toBeNull()
+})
 function answer(store, feedback) { store.submitSelfAssessment(token(store.getTask('learning')), feedback) }
 function advance(store) { store.advanceLearning(token(store.getTask('learning'))) }
 
@@ -92,7 +101,7 @@ test('version one records migrate without changing old progress or overwriting u
   env.store.ensureTask('learning', ['alpha'], 'cet4')
   env.store.recordFeedback('learning', 'alpha', 'known')
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
-  legacy.version = 1
+  legacy.version = 1; removeSelectionPreference(legacy)
   delete legacy.extraLearning
   for (const tasks of Object.values(legacy.days)) for (const task of Object.values(tasks)) {
     delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
@@ -100,7 +109,7 @@ test('version one records migrate without changing old progress or overwriting u
   const raw = JSON.stringify(legacy)
   env.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = env.open()
-  expect(migrated.getSnapshot().version).toBe(6)
+  expect(migrated.getSnapshot().version).toBe(7)
   expect(migrated.getTask('learning').items).toEqual(legacy.days['2026-09-24'].learning.items)
   expect(env.storage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
   migrated.updateSettings({ dailyNewWords: 3 })
@@ -142,7 +151,7 @@ test('migration preserves review/mistake records and history, corrupt versions s
   env.store.addToReview('cet4', 'alpha')
   env.store.addToMistakes('alpha')
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
-  legacy.version = 1
+  legacy.version = 1; removeSelectionPreference(legacy)
   delete legacy.extraLearning
   for (const tasks of Object.values(legacy.days)) for (const task of Object.values(tasks)) {
     delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice
@@ -164,7 +173,7 @@ test('legacy completed question resumes in details and can advance without losin
   env.store.ensureTask('learning', ['alpha', 'beta'], 'cet4')
   for (let i = 0; i < 3; i++) env.store.recordFeedback('learning', 'alpha', 'known')
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
-  legacy.version = 1
+  legacy.version = 1; removeSelectionPreference(legacy)
   for (const book of Object.values(legacy.wordBooks)) for (const word of Object.values(book.words)) {
     if (word.review) delete word.review.provenance
   }
@@ -184,7 +193,7 @@ test('legacy null position resumes the first unfinished word without changing co
   env.store.ensureTask('learning', ['alpha'], 'cet4')
   env.store.setTaskSession('learning', { currentItemId: null })
   const legacy = JSON.parse(JSON.stringify(env.store.getSnapshot()))
-  legacy.version = 1
+  legacy.version = 1; removeSelectionPreference(legacy)
   delete legacy.extraLearning
   const task = legacy.days['2026-09-24'].learning
   delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice

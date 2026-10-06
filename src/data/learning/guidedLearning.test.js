@@ -1,3 +1,4 @@
+import { removeSelectionPreference } from '../../test/legacyLearningSnapshot'
 import { expect, test } from 'vitest'
 import { createLearningStore } from './store'
 import { createBrowserLearningStore } from './browserStore'
@@ -118,7 +119,7 @@ test('guided later encounters use self assessment and a wrong first pick cannot 
 test('v2 migration adds choice without changing legacy method and persists only after successful write', () => {
   const env = environment()
   const old = JSON.parse(JSON.stringify(env.store.getSnapshot()))
-  old.version = 2
+  old.version = 2; removeSelectionPreference(old)
   delete old.extraLearning
   for (const tasks of Object.values(old.days)) for (const task of Object.values(tasks)) {
     task.method = { id: 'self-assessment', rulesVersion: 1 }

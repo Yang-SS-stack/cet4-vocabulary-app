@@ -3,6 +3,17 @@ import { createHash } from 'node:crypto'
 import { canonicalStringify, buildFactsRequest, isFactsRequestCurrent } from './snapshotToken'
 import { context, setup } from './fixtures'
 
+it('keeps the seven-field service contract but invalidates requests when mode changes', async () => {
+  const { store } = setup()
+  const request = await buildFactsRequest(store, context)
+  expect(Object.keys(request.settings).sort()).toEqual(['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes', 'pronunciation', 'mistakeStudyWords'].sort())
+  store.updateSettings({ newWordSelectionMode: 'random' })
+  expect(await isFactsRequestCurrent(store, context, request)).toBe(false)
+  const next = await buildFactsRequest(store, context)
+  expect(next.settings).toEqual(request.settings)
+  expect(next.basis.snapshotToken).not.toBe(request.basis.snapshotToken)
+})
+
 it('canonicalizes keys but preserves arrays and null', () => {
   expect(canonicalStringify({ z: null, a: [{ b: 2, a: 1 }, 0] })).toBe('{"a":[{"a":1,"b":2},0],"z":null}')
 })

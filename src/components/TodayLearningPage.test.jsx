@@ -45,6 +45,17 @@ function configure(store, patch = {}) {
   })
 }
 
+test('one pair of study actions precedes status and task progress', () => {
+  const store = createStore()
+  configure(store)
+  renderPage(store)
+  const study = screen.getByRole('button', { name: '今日学习' })
+  const progress = screen.getByRole('region', { name: '今日任务进度' })
+  expect(study.compareDocumentPosition(progress) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  expect(screen.getAllByRole('button', { name: '今日学习' })).toHaveLength(1)
+  expect(screen.getAllByRole('button', { name: '今日复习' })).toHaveLength(1)
+})
+
 test('shows exam progress, word-book progress, both actions, and all six recommendation rows', () => {
   const store = createStore()
   configure(store)

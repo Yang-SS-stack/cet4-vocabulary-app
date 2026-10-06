@@ -19,6 +19,24 @@ function setup() {
   return { store, open, loader, show, fail: value => { fail = value }, nextDay: () => { date = new Date(2026, 8, 25) } }
 }
 
+test('random creation samples beyond the original first words and restores the exact task', async () => {
+  const env = setup()
+  env.store.updateSettings({ newWordSelectionMode: 'random' })
+  const random = vi.spyOn(Math, 'random').mockReturnValue(0)
+  const view = env.show()
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await screen.findByRole('heading', { name: 'beta' })
+  const original = env.store.getTask('learning')
+  expect(original.itemIds.map(id => original.items[id].wordId)).toEqual(['beta', 'delta'])
+  view.unmount()
+  random.mockReturnValue(.99)
+  env.show(env.open())
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await screen.findByRole('heading', { name: 'beta' })
+  expect(env.store.getTask('learning')).toEqual(original)
+})
+
 test('hides answers, saves feedback/details, restores after remount and advances persistently', async () => {
   const env = setup()
   env.store.ensureTodayLearning('cet4', ['alpha', 'beta'])

@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import './App.css'
 import FadeContent from './components/FadeContent'
 import LineSidebar from './components/LineSidebar'
+import NavigationIcon from './components/NavigationIcon'
+import MobileNavigation from './components/MobileNavigation'
 import LearningSetupModal from './components/LearningSetupModal'
 import ParticleTextTransition from './components/ParticleTextTransition'
 import SplashScreen from './components/SplashScreen'
@@ -21,6 +23,14 @@ const RECOVERY_CLOSE_DURATION = 180
 
 function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, pageTitleRef, isBrandConcealed, isTransitionPrepared }) {
   const [focusMode, setFocusMode] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => globalThis.matchMedia?.('(max-width: 800px)').matches ?? false)
+  useEffect(() => {
+    const media = globalThis.matchMedia?.('(max-width: 800px)')
+    if (!media) return undefined
+    const update = () => setIsMobile(media.matches)
+    media.addEventListener?.('change', update)
+    return () => media.removeEventListener?.('change', update)
+  }, [])
   const { snapshot } = useLearningStore()
   const overviewPage = selectedPage === '今日学习' || selectedPage === '统计'
   const compactPage = overviewPage || selectedPage === '设置' || selectedPage === '词表'
@@ -50,19 +60,30 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
     ].filter(Boolean).join(' ')} aria-hidden={isTransitionPrepared} inert={isTransitionPrepared}>
       <aside
         className="sidebar"
-        aria-hidden={focusMode || !isNavOpen}
-        inert={focusMode || !isNavOpen}
+        aria-hidden={focusMode || isMobile}
+        inert={focusMode || isMobile}
       >
         <div className="brand-mark" aria-label="LinguaJet">
-          <span ref={logoRef} className={isBrandConcealed ? 'brand-name is-brand-concealed' : 'brand-name'}>LinguaJet</span>
+          <span ref={isMobile ? undefined : logoRef} className={isBrandConcealed ? 'brand-name is-brand-concealed' : 'brand-name'}>LinguaJet</span>
+          <span className="brand-initial" aria-hidden="true">L</span>
         </div>
+        <button
+          className={isNavOpen ? 'nav-toggle is-open' : 'nav-toggle'}
+          type="button"
+          onClick={onNavToggle} hidden={focusMode}
+          aria-label={isNavOpen ? '收起导航栏' : '展开导航栏'}
+          aria-expanded={isNavOpen}
+          title={isNavOpen ? '收起导航栏' : '展开导航栏'}
+        ><span aria-hidden="true" /></button>
 
         <LineSidebar
           className="app-sidebar-nav"
           items={pages}
+          icons={pages.map(name => <NavigationIcon key={name} name={name} />)}
+          collapsed={!isNavOpen}
           activeIndex={pages.indexOf(selectedPage === '开发验收与维护' ? '设置' : selectedPage)}
           current={selectedPage === '开发验收与维护' ? 'location' : 'page'}
-          accentColor="#76591e"
+          accentColor="#0b2244"
           textColor="#526176"
           markerColor="#b6a982"
           showIndex={false}
@@ -76,16 +97,14 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
         <p className="sidebar-note">今天也向前一步</p>
       </aside>
 
-      <button
-        className={isNavOpen ? 'nav-toggle is-open' : 'nav-toggle'}
-        type="button"
-        onClick={onNavToggle} hidden={focusMode}
-        aria-label={isNavOpen ? '隐藏导航栏' : '显示导航栏'}
-        aria-expanded={isNavOpen}
-        title={isNavOpen ? '隐藏导航栏' : '显示导航栏'}
-      >
-        <span aria-hidden="true" />
-      </button>
+      {isMobile && <MobileNavigation logoRef={logoRef} isBrandConcealed={isBrandConcealed} items={pages} selectedPage={selectedPage} onPageChange={page => {
+        focusAfterNavigation.current = null
+        onPageChange(page)
+      }} onDestinationFocus={() => window.setTimeout(() => {
+        const heading = pageTitleRef.current ?? document.querySelector('.vocabulary-page h1, .vocabulary-page h2')
+        heading?.setAttribute('tabindex', '-1')
+        heading?.focus()
+      }, 0)} hidden={focusMode} />}
 
       <main className={`content-area ${compactPage ? 'content-area--overview' : ''}`}>
         <FadeContent key={selectedPage}>

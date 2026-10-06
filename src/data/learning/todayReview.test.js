@@ -1,3 +1,4 @@
+import { removeSelectionPreference } from '../../test/legacyLearningSnapshot'
 import { expect, test, vi } from 'vitest'
 import { createLearningStore } from './store'
 import { createBrowserLearningStore } from './browserStore'
@@ -244,14 +245,14 @@ test('browser prepared review choices reject stale reuse after a queued answer u
 test.each([1, 2, 3, 4, 5])('migrates v%i completely without adding initial feedback or modifying old review', version => {
   const e = env(); seed(e); e.store.ensureTask('learning', ['beta'], 'cet4'); e.store.recordFeedback('learning', 'beta', 'known')
   e.store.ensureTask('review', ['alpha'], 'cet4'); e.store.ensureTask('mistakes', ['alpha'])
-  const old = JSON.parse(e.storage.getItem()); old.version = version
+  const old = JSON.parse(e.storage.getItem()); old.version = version; removeSelectionPreference(old)
   if (version < 4) delete old.extraLearning
   for (const task of Object.values(old.days[e.store.getToday()])) {
     if (version < 3) delete task.choice
     if (version < 2) { delete task.method; delete task.sessionRevision; delete task.feedbackEvents }
   }
   e.storage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(old)); const loaded = e.open().getSnapshot()
-  expect(loaded.version).toBe(6); expect(loaded.wordBooks).toEqual(old.wordBooks); expect(loaded.mistakes).toEqual(old.mistakes)
+  expect(loaded.version).toBe(7); expect(loaded.wordBooks).toEqual(old.wordBooks); expect(loaded.mistakes).toEqual(old.mistakes)
   expect(loaded.days[e.store.getToday()].review.method).toBe(null)
   expect(loaded.days[e.store.getToday()].review.items).toEqual(old.days[e.store.getToday()].review.items)
   expect(loaded.days[e.store.getToday()].learning.items).toEqual(old.days[e.store.getToday()].learning.items)
@@ -329,17 +330,17 @@ test.each([4, 5])('real v%i extra batches and correction events migrate unchange
   const extraToken = () => ({ ...token(e.store.getExtraLearning()), kind: 'extra-learning', taskId: e.store.getExtraLearning().taskId })
   e.store.submitSelfAssessment(extraToken(), 'known')
   if (version === 5) e.store.correctLearningFeedback(extraToken())
-  const old = JSON.parse(e.storage.getItem()); old.version = version
+  const old = JSON.parse(e.storage.getItem()); old.version = version; removeSelectionPreference(old)
   for (const book of Object.values(old.wordBooks)) for (const word of Object.values(book.words)) if (word.review) delete word.review.provenance
   const raw = JSON.stringify(old); e.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = e.open()
-  expect(migrated.getSnapshot().version).toBe(6)
-  expect(migrated.getSnapshot().extraLearning).toEqual(old.extraLearning)
+  expect(migrated.getSnapshot().version).toBe(7)
+  expect(migrated.getSnapshot().extraLearning).toMatchObject(old.extraLearning)
   expect(migrated.getSnapshot().wordBooks).toEqual(old.wordBooks)
   expect(e.storage.getItem()).toBe(raw)
   if (version === 5) expect(migrated.getExtraLearning().feedbackEvents.at(-1).source).toBe('feedback-correction')
   e.fail(true); expect(() => migrated.advanceLearning(extraToken())).toThrow('quota')
-  expect(e.storage.getItem()).toBe(raw); expect(migrated.getSnapshot().extraLearning).toEqual(old.extraLearning)
+  expect(e.storage.getItem()).toBe(raw); expect(migrated.getSnapshot().extraLearning).toMatchObject(old.extraLearning)
 })
 test('completion and correction storage failure preserve both review schedule and task progress', () => {
   const e = env(); seed(e); ensure(e.store); feedback(e.store, 'known'); advance(e.store)
@@ -408,7 +409,7 @@ test('browser review failed storage publishes no snapshot and two concurrent cre
 })
 test('legacy v5 review correction event remains unchanged under v6 migration', () => {
   const e = env(); const task = e.store.ensureTask('review', ['alpha'], 'cet4')
-  const old = JSON.parse(e.storage.getItem()); old.version = 5
+  const old = JSON.parse(e.storage.getItem()); old.version = 5; removeSelectionPreference(old)
   const legacy = old.days[task.date].review, item = legacy.items[legacy.currentItemId]
   Object.assign(item, { knownCount: 0, fuzzyCount: 1, lastFeedback: 'fuzzy' })
   legacy.sessionRevision = 2
@@ -417,7 +418,7 @@ test('legacy v5 review correction event remains unchanged under v6 migration', (
     { source: 'feedback-correction', rulesVersion: 1, itemId: item.id, correctedRevision: 0, at: e.now().toISOString(), revision: 1 },
   ]
   e.storage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(old))
-  expect(e.open().getTask('review')).toEqual(legacy)
+  expect(e.open().getTask('review')).toEqual({ ...legacy, settings: { ...legacy.settings, newWordSelectionMode: 'sequential' } })
 })
 test('v6 cannot fabricate a completed item and settlement without completion feedback', () => {
   const e = env(); seed(e); const task = ensure(e.store), saved = JSON.parse(e.storage.getItem())
@@ -431,7 +432,7 @@ test('v6 cannot fabricate a completed item and settlement without completion fee
 test('v1 historical completion with no surviving events uses null identity instead of fabricated feedback', () => {
   const e = env(); e.store.ensureTask('learning', ['alpha'], 'cet4')
   for (let n = 0; n < 3; n++) e.store.recordFeedback('learning', 'alpha', 'known')
-  const old = JSON.parse(e.storage.getItem()); old.version = 1; delete old.extraLearning
+  const old = JSON.parse(e.storage.getItem()); old.version = 1; removeSelectionPreference(old); delete old.extraLearning
   old.wordBooks.cet4.words.alpha.review = null
   const task = old.days[e.store.getToday()].learning
   delete task.method; delete task.sessionRevision; delete task.feedbackEvents; delete task.choice

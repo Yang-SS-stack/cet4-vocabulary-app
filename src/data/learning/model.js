@@ -1,5 +1,5 @@
 export const LEARNING_STORAGE_KEY = 'linguajet.learning'
-export const SCHEMA_VERSION = 6
+export const SCHEMA_VERSION = 7
 export const EXTRA_LEARNING_BATCH_SIZE = 10
 export const MISTAKE_ENTRY_THRESHOLD = 5
 export const REVIEW_STAGE_DAYS = Object.freeze([1, 2, 4, 7, 15])
@@ -12,6 +12,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   dailyStudyMinutes: null,
   pronunciation: 'en-GB',
   mistakeStudyWords: null,
+  newWordSelectionMode: 'sequential',
 })
 
 export function assert(condition, message = 'Invalid learning data') {
@@ -126,7 +127,10 @@ const settingsFields = {
   dailyReviewWords: nullable(integer), dailyStudyMinutes: nullable(integer),
   pronunciation: (value) => ['en-GB', 'en-US'].includes(value), mistakeStudyWords: nullable(integer),
 }
-const settingsValid = (value) => shape(value, settingsFields)
+const settingsValid = (value, version) => shape(value, {
+  ...settingsFields,
+  ...(version >= 7 ? { newWordSelectionMode: (mode) => ['sequential', 'random'].includes(mode) } : {}),
+})
 const reviewFields = {
   enteredAt: timestamp, lastReviewedAt: nullable(timestamp), nextReviewAt: nullable(timestamp),
   stage: (value) => integer(value) && value <= REVIEW_STAGE_DAYS.length,
@@ -183,7 +187,7 @@ export function validateDateKey(value) {
 
 export function validateState(state, version = SCHEMA_VERSION) {
   assert(shape(state, {
-    version: (value) => value === version, settings: settingsValid,
+    version: (value) => value === version, settings: (value) => settingsValid(value, version),
     mistakes: record, wordBooks: record, days: record,
     ...(version >= 4 ? { extraLearning: record } : {}),
   }), 'Invalid or unsupported learning snapshot')
@@ -229,7 +233,7 @@ export function validateState(state, version = SCHEMA_VERSION) {
       assert(shape(task, {
         date: (value) => value === day, kind: (value) => value === kind,
         ...(kind === 'extra-learning' ? { taskId: string } : {}),
-        wordBookId: nullable(string), createdAt: timestamp, settings: settingsValid,
+        wordBookId: nullable(string), createdAt: timestamp, settings: (value) => settingsValid(value, version),
         itemIds: (value) => Array.isArray(value) && value.every(string), items: record,
         currentItemId: nullable(string), previousItemId: nullable(string),
         view: (value) => ['question', 'feedback'].includes(value),
@@ -343,7 +347,7 @@ export function freeze(value) {
 // Validate the entire v1 snapshot before adding fields; never fabricate lost events.
 export function migrateState(state) {
   if (state?.version === SCHEMA_VERSION) return validateState(state)
-  assert([1, 2, 3, 4, 5].includes(state?.version), 'Invalid or unsupported learning snapshot')
+  assert([1, 2, 3, 4, 5, 6].includes(state?.version), 'Invalid or unsupported learning snapshot')
   validateState(state, state.version)
   const next = JSON.parse(JSON.stringify(state))
   if (next.version === 1) {
@@ -372,6 +376,15 @@ export function migrateState(state) {
     next.version = 4
     next.extraLearning = {}
     validateState(next, 4)
+  }
+  next.version = 6
+  validateState(next, 6)
+  next.settings.newWordSelectionMode = 'sequential'
+  for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) {
+    task.settings.newWordSelectionMode = 'sequential'
+  }
+  for (const process of Object.values(next.extraLearning)) for (const task of process.batches) {
+    task.settings.newWordSelectionMode = 'sequential'
   }
   next.version = SCHEMA_VERSION
   return validateState(next)

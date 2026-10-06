@@ -47,6 +47,30 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
+test('selection mode stays in the draft until the shared save action succeeds', async () => {
+  const store = createStore()
+  renderPage(store)
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '随机选词' }))
+  expect(screen.getByRole('button', { name: '随机选词' })).toHaveAttribute('aria-pressed', 'true')
+  expect(store.getSnapshot().settings.newWordSelectionMode).toBe('sequential')
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  await waitFor(() => expect(store.getSnapshot().settings.newWordSelectionMode).toBe('random'))
+})
+test('unsaved mode participates in discard confirmation and failed save preserves it', async () => {
+  const store = createStore(), open = vi.fn()
+  renderPage(store, undefined, open)
+  const user = userEvent.setup()
+  await user.click(screen.getByRole('button', { name: '随机选词' }))
+  vi.spyOn(store, 'updateSettings').mockRejectedValue(Error('quota'))
+  await user.click(screen.getByRole('button', { name: '保存设置' }))
+  await screen.findByText(/保存失败/)
+  expect(screen.getByRole('button', { name: '随机选词' })).toHaveAttribute('aria-pressed', 'true')
+  await user.click(screen.getByRole('button', { name: '开发验收与维护' }))
+  expect(screen.getByRole('dialog', { name: '设置尚未保存' })).toBeInTheDocument()
+  expect(open).not.toHaveBeenCalled()
+})
+
 test('opens maintenance from an unchanged normalized draft without saving', async () => {
   const store = createStore()
   const save = vi.spyOn(store, 'updateSettings')
