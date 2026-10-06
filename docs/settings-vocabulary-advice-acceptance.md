@@ -37,3 +37,7 @@
 ## 恢复入口
 
 实施卡：`docs/settings-vocabulary-advice-implementation.md`。批准图与记录：`docs/settings-vocabulary-visual-review.md`。详细开发证据：工作目录 `.superpowers/sdd/three-ui-*-report.md`、`three-ui-delivery-tests-serial.log`、`three-ui-final-integration-review.md`、`three-ui-finish-review.md` 与 `delivery-receipt.json`。取图证据位于 `.impeccable/review/final-*.png`，未作为产品图片发布。
+
+## 2026-10-06 最终用户确认
+
+用户明确确认“全部审核完毕，合并到main并推送至远程仓库”。本轮三处界面、滚轮维护和前置开发验收与维护页均按这次整体确认验收通过，原待验收状态由本条更新；不编造未逐项回复的操作日志。当前阶段转为已授权的 main 合并、远程推送和既有自动发布结果核对。下一项为 P-03-B 模型建议草稿的详细方案与实施交接卡审核，尚未授权编码或付费调用。既往 P-03-A、维护入口/返回、今日学习和统计页通过记录保留，不重复验收。
