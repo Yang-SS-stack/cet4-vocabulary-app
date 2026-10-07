@@ -247,7 +247,7 @@ test('detail motion is below the heading; next action alone fades the complete c
   expect(document.querySelector('.study-transition--content')).toHaveClass('is-leaving')
   await screen.findByText('例句翻译')
   expect(screen.getByRole('heading', { name: 'alpha' })).toBe(heading)
-  expect(screen.getByRole('region', { name: '单词内容' })).toHaveFocus()
+  await waitFor(() => expect(screen.getByRole('region', { name: '单词内容' })).toHaveFocus())
   await user.click(screen.getByRole('button', { name: '下一词' }))
   expect(outer).toHaveClass('is-leaving')
   expect(outer).toHaveAttribute('inert')
