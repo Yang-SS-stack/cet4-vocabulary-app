@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { buildLearningRecommendation } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
-import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
+import { INITIAL_SETUP_FIELDS, setupPlanStatus, synchronizeSetupDraft, wordSelectionWheelProps } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
 import './LearningSetupModal.css'
 
@@ -10,7 +10,7 @@ const CLOSE_DURATION = 180
 const SCROLL_SETTLE_DURATION = 110
 const FIELD_SWITCH_DURATION = 220
 const MODE_FIELDS = {
-  initial: ['examDate', 'todayWordBookId', 'dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes'],
+  initial: INITIAL_SETUP_FIELDS,
   mistakes: ['mistakeStudyWords'],
 }
 
@@ -40,6 +40,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
 
   const titleId = useId()
   const dialogRef = useRef(null)
+  const bodyRef = useRef(null)
   const overloadRef = useRef(null)
   const returnFocusRef = useRef(document.activeElement)
   const closeTimerRef = useRef(null)
@@ -86,6 +87,18 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   useEffect(() => {
     if (showOverload) focusableElements(overloadRef.current)[0]?.focus()
   }, [showOverload])
+
+  useEffect(() => {
+    if (!activeField) return undefined
+    const timer = window.setTimeout(() => {
+      const body = bodyRef.current
+      const wheel = body?.querySelector('[data-open="true"]')
+      if (!wheel) return
+      const bounds = body.getBoundingClientRect(), row = wheel.getBoundingClientRect()
+      body.scrollTop += Math.max(0, row.bottom - bounds.bottom) + Math.min(0, row.top - bounds.top)
+    }, prefersReducedMotion() ? 0 : 280)
+    return () => window.clearTimeout(timer)
+  }, [activeField])
 
   const finishClose = () => {
     onClose()
@@ -233,7 +246,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
     <div className={isClosing ? 'learning-setup-backdrop is-closing' : 'learning-setup-backdrop'}>
       <div
         ref={dialogRef}
-        className={isClosing ? 'learning-setup-modal is-closing' : 'learning-setup-modal'}
+        className={`learning-setup-modal${mode === 'initial' ? ' learning-setup-modal--initial' : ''}${isClosing ? ' is-closing' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
@@ -245,6 +258,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
           <p>{copy.description}</p>
         </header>
 
+        <div ref={bodyRef} className="learning-setup-modal__body">
         <div className="learning-setup-modal__fields">
           {fields.map((field) => (
             <FieldWheel
@@ -254,17 +268,13 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
               now={now}
               isOpen={activeField === field}
               isAnotherOpen={activeField !== null && activeField !== field}
+              disabled={isSaving || isClosing}
               onToggle={() => toggleField(field)}
               onChange={(value, columnLabel) => changeField(field, value, columnLabel)}
             />
           ))}
         </div>
 
-        {mode === 'initial' && (
-          <p className="learning-setup-modal__estimate-note">
-            预计时间按每个新词约 1 分钟、每个复习词约 20 秒计算，结果向上取整到 5 分钟；你仍可自行调整。
-          </p>
-        )}
         {planStatus.exceedsDailyWordLimit && (
           <p className="learning-setup-modal__plan-warning" role="status">
             按当前日期和剩余词量，考试前可能无法完成，请调整考试日期或学习计划。
@@ -282,6 +292,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
         )}
 
         <p className="learning-setup-modal__status" role="status" aria-live="polite">{error}</p>
+        </div>
 
         <footer className="learning-setup-modal__footer">
           <button type="button" className="learning-setup-modal__text-button" disabled={isSaving} onClick={requestClose}>暂不开始</button>
@@ -294,12 +305,13 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   ), document.body)
 }
 
-function FieldWheel({ field, draft, now, isOpen, isAnotherOpen, onToggle, onChange }) {
+function FieldWheel({ field, draft, now, isOpen, isAnotherOpen, disabled, onToggle, onChange }) {
   const props = wheelProps(field, draft, now)
-  return <SettingsWheel {...props} value={draft[field]} isOpen={isOpen} isAnotherOpen={isAnotherOpen} onToggle={onToggle} onChange={onChange} />
+  return <SettingsWheel {...props} variant={field === 'examDate' ? 'date' : field === 'todayWordBookId' ? 'book' : field === 'newWordSelectionMode' ? 'short' : 'number'} icon={false} disabled={disabled} value={draft[field]} isOpen={isOpen} isAnotherOpen={isAnotherOpen} onToggle={onToggle} onChange={onChange} />
 }
 
 function wheelProps(field, draft, now) {
+  if (field === 'newWordSelectionMode') return wordSelectionWheelProps(draft[field])
   if (field === 'examDate') {
     const { year, month, day } = dateParts(draft.examDate)
     const currentYear = now.getFullYear()
@@ -346,6 +358,7 @@ function wheelProps(field, draft, now) {
 function createDraft(mode, settings, snapshot, now) {
   const normalized = {
     ...settings,
+    newWordSelectionMode: settings.newWordSelectionMode === 'random' ? 'random' : 'sequential',
     examDate: normalizeExamDate(settings.examDate, now),
     todayWordBookId: normalizeWordBookId(settings.todayWordBookId),
     dailyNewWords: normalizeWordCount(settings.dailyNewWords, 15),

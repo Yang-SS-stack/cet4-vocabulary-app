@@ -18,9 +18,11 @@
 
 .learning-setup-modal {
   width: min(100%, 574px);
-  max-height: min(88vh, 760px);
-  overflow-y: auto;
-  padding: clamp(28px, 5vw, 42px);
+  max-height: min(calc(100dvh - 48px), 760px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
   border: 1px solid var(--ink);
   border-radius: 14px;
   color: var(--ink);
@@ -30,6 +32,10 @@
   scrollbar-color: var(--gold-soft) transparent;
   scrollbar-width: thin;
 }
+
+.learning-setup-modal--initial { height: min(620px, calc(100dvh - 48px)); }
+.learning-setup-modal__header, .learning-setup-modal__footer { flex-shrink: 0; }
+.learning-setup-modal__body { min-height: 0; flex: 1; overflow-y: auto; overscroll-behavior: contain; margin-top: 20px; scrollbar-width: thin; }
 
 .learning-setup-modal.is-closing {
   animation: learning-setup-modal-out var(--dialog-exit-duration) var(--ease-out) both;
@@ -42,7 +48,7 @@
 .learning-setup-modal__header h2 {
   margin: 0;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(27px, 5vw, 34px);
+  font-size: 24px;
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.015em;
@@ -56,11 +62,9 @@
 }
 
 .learning-setup-modal__fields {
-  margin-top: 26px;
   border-top: 1px solid var(--line);
 }
 
-.learning-setup-modal__estimate-note,
 .learning-setup-modal__plan-warning {
   margin: 12px 0 0;
   color: var(--ink-soft);
@@ -99,13 +103,14 @@
   color: #8d2e2e;
   font-size: 14px;
 }
+.learning-setup-modal__status:empty { display: none; }
 
 .learning-setup-modal__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  padding-top: 20px;
+  padding-top: 16px;
   border-top: 1px solid var(--line);
 }
 
@@ -138,7 +143,8 @@
   background: var(--ink);
 }
 
-.learning-setup-modal button {
+.learning-setup-modal__footer button,
+.learning-setup-modal__confirmation-actions button {
   transition: color var(--dialog-exit-duration) var(--ease-out), background var(--dialog-exit-duration) var(--ease-out), border-color var(--dialog-exit-duration) var(--ease-out);
 }
 
@@ -196,14 +202,17 @@
 
 @media (max-width: 560px) {
   .learning-setup-backdrop {
-    align-items: end;
     padding: 12px;
   }
 
   .learning-setup-modal {
     max-height: calc(100dvh - 24px);
-    padding: 26px 20px 22px;
+    padding: 24px 20px 20px;
   }
+
+  .learning-setup-modal--initial { height: min(720px, calc(100dvh - 24px)); }
+  .learning-setup-modal__header h2 { font-size: 22px; }
+  .learning-setup-modal__body { margin-top: 16px; }
 
   .learning-setup-modal__footer {
     align-items: stretch;
@@ -214,6 +223,29 @@
     width: 100%;
   }
 }
+
+/* Keep the existing wheel logic and capsule, with compact rows in this dialog. */
+.learning-setup-modal .settings-wheel {
+  --wheel-slot-height: 56px;
+  --wheel-closed-height: 56px;
+  --wheel-open-height: 164px;
+  --wheel-options-height: 120px;
+  --wheel-options-padding: 36px;
+  border-bottom: 1px solid var(--line);
+  transition: height 280ms var(--ease-out);
+}
+.learning-setup-modal .settings-wheel[data-open='true'] { height: var(--wheel-open-height); }
+.learning-setup-modal .settings-wheel__surface { border-color: transparent; border-radius: 0; background: transparent; }
+.learning-setup-modal .settings-wheel[data-open='true'] .settings-wheel__surface { border-color: var(--gold-soft); border-radius: 64px; background: var(--white); }
+.learning-setup-modal .settings-wheel__summary { flex-direction: row; align-items: center; padding: 0 22px 0 2px; gap: 12px; }
+.learning-setup-modal .settings-wheel__label { font-size: 15px; flex-shrink: 0; }
+.learning-setup-modal .settings-wheel .settings-wheel__summary strong, .learning-setup-modal .settings-wheel .settings-wheel__summary small { font-size: 16px; font-weight: 650; }
+.learning-setup-modal .settings-wheel__chevron { right: 5px; }
+.learning-setup-modal .settings-wheel[data-open='true'] .settings-wheel__summary { flex-direction: column; align-items: center; height: 42px; padding: 14px 20px 8px; gap: 0; }
+.learning-setup-modal .settings-wheel[data-open='true'] .settings-wheel__label { font-size: 14px; }
+.learning-setup-modal .settings-wheel[data-open='true'] .settings-wheel__chevron { right: 17px; }
+@media (max-width: 560px) { .learning-setup-modal .settings-wheel { --wheel-slot-height: 64px; --wheel-closed-height: 64px; } }
+@media (prefers-reduced-motion: reduce) { .learning-setup-modal .settings-wheel { transition: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   .learning-setup-backdrop,

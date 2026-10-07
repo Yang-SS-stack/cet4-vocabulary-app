@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { useLearningStore } from '../data/learning'
 import { estimateDailyStudyMinutes } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
-import { setupPlanStatus, synchronizeSetupDraft } from './setupDraft'
+import { setupPlanStatus, synchronizeSetupDraft, wordSelectionWheelProps } from './setupDraft'
 import SettingsWheel, { SettingsIcon } from './SettingsWheel'
 import MaintenanceConfirmation from './MaintenanceConfirmation'
 import './SettingsPage.css'
@@ -121,17 +121,9 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
 
   return (
     <section className="settings-page" aria-label="学习设置">
-      <section className="settings-page__selection" aria-labelledby="new-word-selection-title">
-          <h3 id="new-word-selection-title">新词选取</h3>
-          <div className="settings-page__selection-options" role="group" aria-label="新词选取">
-            {[['sequential', '顺序选词'], ['random', '随机选词']].map(([mode, label]) =>
-              <button key={mode} type="button" disabled={isSaving} aria-pressed={draft.newWordSelectionMode === mode}
-                onClick={() => changeField('newWordSelectionMode', mode)}>{label}</button>)}
-          </div>
-      </section>
       <div className="settings-page__panel">
         {[
-          { title: '学习目标', kind: 'goals', fields: ['examDate', 'todayWordBookId', 'pronunciation'] },
+          { title: '学习目标', kind: 'goals', fields: ['examDate', 'todayWordBookId', 'pronunciation', 'newWordSelectionMode'] },
           { title: '每日计划', kind: 'plan', fields: ['dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes', 'mistakeStudyWords'] },
         ].map(group => (
           <section key={group.kind} className={`settings-page__group settings-page__group--${group.kind}`} aria-label={group.title}>
@@ -143,6 +135,7 @@ function SettingsPage({ now = new Date(), onOpenMaintenance, maintenanceEntryRef
                   ref={wheel => { wheelRefs.current[field] = wheel }}
                   {...wheelProps(field, draft, now)}
                   variant={field === 'examDate' ? 'date' : field === 'todayWordBookId' ? 'book' : group.kind === 'plan' ? 'number' : 'short'}
+                  icon={field === 'newWordSelectionMode' ? 'list' : undefined}
                   value={draft[field]}
                   disabled={isSaving}
                   isOpen={activeField === field}
@@ -217,6 +210,7 @@ function draftValue(draft) {
 }
 
 function wheelProps(field, draft, now) {
+  if (field === 'newWordSelectionMode') return wordSelectionWheelProps(draft[field])
   if (field === 'examDate') {
     const { year, month, day } = dateParts(draft.examDate)
     const currentYear = now.getFullYear()
@@ -279,6 +273,7 @@ function wheelProps(field, draft, now) {
 function createDraft(settings, now) {
   return {
     ...settings,
+    newWordSelectionMode: settings.newWordSelectionMode === 'random' ? 'random' : 'sequential',
     examDate: normalizeExamDate(settings.examDate, now),
     todayWordBookId: wordBooks.some(({ id }) => id === settings.todayWordBookId) ? settings.todayWordBookId : wordBooks[0].id,
     dailyNewWords: normalizeWordCount(settings.dailyNewWords, 15),

@@ -45,16 +45,18 @@
 }
 .nav-toggle {
   position: absolute;
-  top: 18px;
-  right: 8px;
+  top: 50dvh;
+  right: -22px;
+  transform: translateY(-50%);
   width: 44px;
   height: 44px;
   display: grid;
   place-items: center;
   padding: 0;
-  border: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
   color: var(--ink-soft);
-  background: transparent;
+  background: var(--paper-deep);
   cursor: pointer;
   transition: top 280ms var(--ease-out), right 280ms var(--ease-out);
 }
@@ -67,7 +69,6 @@
 .brand-initial { position: absolute; top: 0; left: 8px; font-size: 26px; font-weight: 750; opacity: 0; transition: opacity 150ms ease-out; }
 .is-nav-collapsed .sidebar .brand-name, .is-nav-collapsed .sidebar .sidebar-note { opacity: 0; pointer-events: none; }
 .is-nav-collapsed .brand-initial { opacity: 1; }
-.is-nav-collapsed .nav-toggle { top: 60px; right: 14px; }
 .is-nav-collapsed .brand-mark { height: 104px; }
 .brand-kicker,
 .panel-label {

@@ -51,14 +51,17 @@ test('reports past dates and uncapped plans', () => {
   expect(status.invalidExamDate).toBe(true)
 })
 
-test('requires all five supported first-run fields', () => {
+test('requires all six supported first-run fields', () => {
   const complete = {
     examDate: '2027-09-13', todayWordBookId: 'cet4', dailyNewWords: 20,
     dailyReviewWords: 20, dailyStudyMinutes: 30,
+    newWordSelectionMode: 'sequential',
   }
   const now = new Date(2026, 8, 13)
   expect(initialSetupComplete(complete, now)).toBe(true)
   expect(initialSetupComplete({ ...complete, dailyReviewWords: null })).toBe(false)
+  expect(initialSetupComplete({ ...complete, newWordSelectionMode: 'random' }, now)).toBe(true)
+  expect(initialSetupComplete({ ...complete, newWordSelectionMode: 'invalid' }, now)).toBe(false)
 })
 
 test('rejects an exam date that is today', () => {

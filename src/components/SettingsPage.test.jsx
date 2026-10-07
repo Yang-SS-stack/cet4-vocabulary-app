@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, expect, test, vi } from 'vitest'
 
@@ -51,8 +51,14 @@ test('selection mode stays in the draft until the shared save action succeeds', 
   const store = createStore()
   renderPage(store)
   const user = userEvent.setup()
-  await user.click(screen.getByRole('button', { name: '随机选词' }))
-  expect(screen.getByRole('button', { name: '随机选词' })).toHaveAttribute('aria-pressed', 'true')
+  const goals = screen.getByRole('region', { name: '学习目标' })
+  const selection = within(goals).getByRole('button', { name: '新词选取 顺序选词' })
+  await user.click(selection)
+  const current = screen.getByRole('option', { name: '顺序选词', selected: true })
+  current.focus()
+  await user.keyboard('{ArrowDown}')
+  expect(screen.getByRole('option', { name: '随机选词', selected: true })).toHaveFocus()
+  expect(selection).toHaveAccessibleName('新词选取 随机选词')
   expect(store.getSnapshot().settings.newWordSelectionMode).toBe('sequential')
   await user.click(screen.getByRole('button', { name: '保存设置' }))
   await waitFor(() => expect(store.getSnapshot().settings.newWordSelectionMode).toBe('random'))
@@ -61,11 +67,12 @@ test('unsaved mode participates in discard confirmation and failed save preserve
   const store = createStore(), open = vi.fn()
   renderPage(store, undefined, open)
   const user = userEvent.setup()
-  await user.click(screen.getByRole('button', { name: '随机选词' }))
+  await user.click(summary('新词选取'))
+  await user.click(screen.getByRole('option', { name: '随机选词' }))
   vi.spyOn(store, 'updateSettings').mockRejectedValue(Error('quota'))
   await user.click(screen.getByRole('button', { name: '保存设置' }))
   await screen.findByText(/保存失败/)
-  expect(screen.getByRole('button', { name: '随机选词' })).toHaveAttribute('aria-pressed', 'true')
+  expect(summary('新词选取')).toHaveAccessibleName('新词选取 随机选词')
   await user.click(screen.getByRole('button', { name: '开发验收与维护' }))
   expect(screen.getByRole('dialog', { name: '设置尚未保存' })).toBeInTheDocument()
   expect(open).not.toHaveBeenCalled()

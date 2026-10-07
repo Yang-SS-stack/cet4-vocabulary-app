@@ -37,17 +37,58 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-test('shows all five first-run settings and the visible estimate explanation', () => {
+test('shows six first-run settings without the unnecessary constant explanation', () => {
   renderModal({ mode: 'initial' })
 
   expect(screen.getByRole('dialog', { name: '开始前，先设定你的学习计划' })).toBeInTheDocument()
   expect(summary('考试日期')).toBeInTheDocument()
   expect(summary('学习词表')).toBeInTheDocument()
+  expect(summary('新词选取')).toHaveAccessibleName('新词选取 顺序选词')
   expect(summary('每日新词')).toBeInTheDocument()
   expect(summary('每日复习数量')).toBeInTheDocument()
   expect(summary('每日学习时长')).toBeInTheDocument()
-  expect(screen.getByText(/每个新词约 1 分钟、每个复习词约 20 秒/)).toBeVisible()
+  expect(screen.queryByText(/每个新词约 1 分钟、每个复习词约 20 秒/)).not.toBeInTheDocument()
   expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+})
+
+test('saves the selected first-run mode with the complete plan', async () => {
+  const onSave = vi.fn()
+  renderModal({ onSave })
+  const user = userEvent.setup()
+  await user.click(summary('新词选取'))
+  await user.click(screen.getByRole('option', { name: '随机选词' }))
+  expect(onSave).not.toHaveBeenCalled()
+  await user.click(screen.getByRole('button', { name: '保存并继续' }))
+  await waitFor(() => expect(onSave).toHaveBeenCalledWith({
+    examDate: baseSettings.examDate, todayWordBookId: 'cet4', newWordSelectionMode: 'random',
+    dailyNewWords: 51, dailyReviewWords: 20, dailyStudyMinutes: 60,
+  }))
+})
+
+test('restores an existing mode and preserves the selection on failed save', async () => {
+  const onSave = vi.fn().mockRejectedValue(Error('quota'))
+  renderModal({ settings: { ...baseSettings, newWordSelectionMode: 'random' }, onSave })
+  expect(summary('新词选取')).toHaveAccessibleName('新词选取 随机选词')
+  const user = userEvent.setup()
+  await user.click(summary('新词选取'))
+  await user.click(screen.getByRole('option', { name: '顺序选词' }))
+  await user.click(screen.getByRole('button', { name: '保存并继续' }))
+  await screen.findByText(/保存失败/)
+  expect(summary('新词选取')).toHaveAccessibleName('新词选取 顺序选词')
+  expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ newWordSelectionMode: 'sequential' }))
+})
+
+test('cancelling a changed mode leaves the saved settings untouched', async () => {
+  const onSave = vi.fn(), onClose = vi.fn()
+  const settings = { ...baseSettings, newWordSelectionMode: 'sequential' }
+  renderModal({ settings, onSave, onClose })
+  const user = userEvent.setup()
+  await user.click(summary('新词选取'))
+  await user.click(screen.getByRole('option', { name: '随机选词' }))
+  await user.click(screen.getByRole('button', { name: '暂不开始' }))
+  await waitFor(() => expect(onClose).toHaveBeenCalledOnce())
+  expect(onSave).not.toHaveBeenCalled()
+  expect(settings.newWordSelectionMode).toBe('sequential')
 })
 
 test('keeps the mistakes setup mode isolated for the later mistakes flow', () => {
@@ -291,6 +332,7 @@ test('fills null fields with visible defaults and saves one complete mode patch'
   expect(onSave).toHaveBeenCalledWith({
     examDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
     todayWordBookId: 'cet4',
+    newWordSelectionMode: 'sequential',
     dailyNewWords: expect.any(Number),
     dailyReviewWords: 20,
     dailyStudyMinutes: expect.any(Number),
@@ -334,6 +376,7 @@ test('normalizes legacy values to choices supported by every setup wheel before 
   expect(learningSave).toHaveBeenCalledWith({
     examDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
     todayWordBookId: 'cet4',
+    newWordSelectionMode: 'sequential',
     dailyNewWords: expect.any(Number),
     dailyReviewWords: 100,
     dailyStudyMinutes: expect.any(Number),

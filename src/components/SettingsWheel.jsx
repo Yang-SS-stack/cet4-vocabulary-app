@@ -198,7 +198,7 @@ const WheelColumn = forwardRef(function WheelColumn({ label, value, options, act
   )
 })
 
-const SettingsWheel = forwardRef(function SettingsWheel({ label, value, displayValue, variant = 'number', disabled = false, isOpen, isAnotherOpen = false, onToggle, onChange, onColumnsChange, onSettlingChange, columns }, ref) {
+const SettingsWheel = forwardRef(function SettingsWheel({ label, value, displayValue, variant = 'number', icon, disabled = false, isOpen, isAnotherOpen = false, onToggle, onChange, onColumnsChange, onSettlingChange, columns }, ref) {
   const [isTrayMounted, setIsTrayMounted] = useState(isOpen)
   const [isClosing, setIsClosing] = useState(false)
   const columnRefs = useRef({})
@@ -243,7 +243,7 @@ const SettingsWheel = forwardRef(function SettingsWheel({ label, value, displayV
       <div className="settings-wheel__surface">
         <button type="button" className="settings-wheel__summary" aria-label={`${label} ${displayValue}`} aria-expanded={isOpen} disabled={disabled} onClick={onToggle}>
           <span className="settings-wheel__label">{shortLabel}</span>
-          <strong>{variant !== 'number' && <SettingsIcon name={variant === 'date' ? 'calendar' : variant === 'book' ? 'book' : 'headphones'} />}{numeric ? <>{numeric[1]} <small>{numeric[2]}</small></> : displayValue}</strong>
+          <strong>{variant !== 'number' && icon !== false && <SettingsIcon name={icon ?? (variant === 'date' ? 'calendar' : variant === 'book' ? 'book' : 'headphones')} />}{numeric ? <>{numeric[1]} <small>{numeric[2]}</small></> : displayValue}</strong>
           <span className="settings-wheel__chevron" aria-hidden="true" />
         </button>
         {isTrayMounted && (isOpen || !isAnotherOpen) && (
@@ -262,6 +262,7 @@ export function SettingsIcon({ name }) {
     calendar: 'M8 3v4m8-4v4M4 10h16M5 5h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z',
     book: 'M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1m0-15c3-2 6-2 9-1v15c-3-1-6-1-9 1V5',
     headphones: 'M4 15v-3a8 8 0 0 1 16 0v3M4 13H3v7h4v-7H4Zm16 0h1v7h-4v-7h3Z',
+    list: 'M9 6h12M9 12h12M9 18h12M3 6h1M3 12h1M3 18h1',
     wrench: 'M14 6a5 5 0 0 0-6 6L3 17a2.8 2.8 0 0 0 4 4l5-5a5 5 0 0 0 6-6l-3 3-4-4 3-3Z',
     arrow: 'M4 12h15m-6-6 6 6-6 6',
   }

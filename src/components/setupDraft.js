@@ -7,8 +7,17 @@ import {
 } from '../data/learning/recommendations'
 
 export const INITIAL_SETUP_FIELDS = [
-  'examDate', 'todayWordBookId', 'dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes',
+  'examDate', 'todayWordBookId', 'newWordSelectionMode', 'dailyNewWords', 'dailyReviewWords', 'dailyStudyMinutes',
 ]
+
+export function wordSelectionWheelProps(value) {
+  const options = [{ value: 'sequential', label: '顺序选词' }, { value: 'random', label: '随机选词' }]
+  return {
+    label: '新词选取',
+    displayValue: options.find(option => option.value === value)?.label ?? options[0].label,
+    columns: [{ label: '新词选取', value, options }],
+  }
+}
 
 const countValid = (value) => Number.isSafeInteger(value) && value >= 1 && value <= 100
 const minutesValid = (value) => Number.isSafeInteger(value)
@@ -53,6 +62,7 @@ export function initialSetupComplete(settings, now = new Date()) {
     && Number.isFinite(Date.parse(`${settings.examDate}T00:00:00`))
     && daysUntilExam(settings.examDate, now) > 0
   return validDate
+    && ['sequential', 'random'].includes(settings.newWordSelectionMode)
     && wordBooks.some(({ id }) => id === settings.todayWordBookId)
     && countValid(settings.dailyNewWords)
     && countValid(settings.dailyReviewWords)

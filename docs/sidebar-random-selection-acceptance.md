@@ -2,6 +2,8 @@
 
 日期：2026-10-06。状态：实施、自动检查及浏览器核验完成；用户人工验收待进行。
 
+2026-10-07 补充：本文保留首次制作版证据。选词入口的位置与形式、侧栏按钮和首次设置弹窗已按后续批准方案修订，最新交付见[修订验收记录](sidebar-settings-onboarding-revision-acceptance.md)。
+
 制作分支：`codex/sidebar-random-selection`。基线：`6ee921c23f45834a53e9ed6c4a7ddd5eb4ef0cdb`。正式目录与 main 未合并，未推送。制作版提交以该分支 HEAD 和维护页构建信息为准。
 
 ## 实现结果
