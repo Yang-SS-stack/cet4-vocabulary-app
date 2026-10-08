@@ -16,7 +16,7 @@ function FadeContent({ children, className = '' }) {
       gsap.fromTo(
         contentRef.current,
         { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: 0.36, ease: 'power2.out' },
+        { opacity: 1, y: 0, duration: 0.36, ease: 'power2.out', clearProps: 'transform' },
       )
     }, contentRef)
 
