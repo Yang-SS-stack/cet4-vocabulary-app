@@ -11,7 +11,7 @@ function setup() {
   let fail = false
   let date = new Date(2026, 8, 24, 23, 59)
   const storage = { getItem: () => raw, setItem: (_, value) => { if (fail) throw Error('quota'); raw = value } }
-  const open = () => createLearningStore({ storage, now: () => date })
+  const open = () => createLearningStore({ random: () => 0.999, storage, now: () => date })
   const store = open()
   store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 2 })
   const loader = vi.fn(async () => createInlineWordBookSession(words))

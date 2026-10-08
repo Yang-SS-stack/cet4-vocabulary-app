@@ -1,4 +1,5 @@
-import { SELF_ASSESSMENT, GUIDED_RECALL, nextLearningItem, requireLearningTurn, applySelfAssessment, canCorrectLearningFeedback } from './selfAssessment'
+import { createPresentation, advancePresentation, legacyPresentation } from './presentation'
+import { SELF_ASSESSMENT, GUIDED_RECALL, requireLearningTurn, applySelfAssessment, canCorrectLearningFeedback } from './selfAssessment'
 import { REVIEW_GUIDED_RECALL, isReviewSession, requireReviewTurn, createReviewProgress, nextReviewItem,
   applyReviewFeedback, canCorrectReviewFeedback } from './reviewSession'
 import { addCompletedLearningReview, withdrawLearningReview, projectedMissingReviews, dueReviewWords } from './reviewLibrary'
@@ -15,7 +16,7 @@ const own = (object, key) => Object.hasOwn(object, key) ? object[key] : null
  * Storage errors propagate; failed writes never publish a new snapshot.
  * getSnapshot/subscribe can be passed directly to React.useSyncExternalStore.
  */
-export function createLearningStore({ storage = globalThis.localStorage, now = () => new Date() } = {}) {
+export function createLearningStore({ storage = globalThis.localStorage, now = () => new Date(), random = Math.random } = {}) {
   assert(storage && typeof storage.getItem === 'function' && typeof storage.setItem === 'function', 'Local storage unavailable')
   let saved = storage.getItem(LEARNING_STORAGE_KEY)
   let state = freeze(saved === null ? createState() : migrateState(JSON.parse(saved)))
@@ -279,13 +280,16 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
         const history = next.extraLearning[date]
         if (items.length === 0) { history.exhausted = true; return }
         items.forEach(item => { ensureWord(next, item.wordId); ensureWordBookWord(next, item.wordBookId, item.wordId) })
-        history.batches.push({
+        const task = {
           date, kind: 'extra-learning', taskId: `${date}:extra:${history.batches.length + 1}`,
           wordBookId: daily.wordBookId, createdAt, settings: { ...daily.settings },
           itemIds: items.map(item => item.id), items: Object.fromEntries(items.map(item => [item.id, createProgress(item)])),
           currentItemId: items[0].id, previousItemId: null, view: 'question',
           method: { ...daily.method }, sessionRevision: 0, feedbackEvents: [], choice: null,
-        })
+        }
+        task.presentation = createPresentation(task, random)
+        task.currentItemId = task.presentation.order[0] ?? null
+        history.batches.push(task)
       })
       return candidates.length ? api.getExtraLearning(date) : null
     },
@@ -387,7 +391,8 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
         assert(task.method.id !== GUIDED_RECALL.id || task.choice === null || task.choice.revealed,
           'Reveal learning details before advancing')
         task.previousItemId = task.currentItemId
-        task.currentItemId = nextLearningItem(task)
+        task.presentation = advancePresentation(task, random)
+        task.currentItemId = task.presentation.order[task.presentation.index] ?? null
         task.view = 'question'
         task.choice = null
         task.sessionRevision += 1
@@ -414,7 +419,7 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
     getMistake(word) { return own(state.mistakes, wordId(word)) },
     getTask(kind, date = today()) { return taskAt(state, kind, date) },
 
-    /** Input order is authoritative. Re-entry returns the existing daily task unchanged. */
+    /** Input order defines the selected assignment. Re-entry returns the existing daily task unchanged. */
     ensureTask(kind, words, wordBookId = state.settings.todayWordBookId, method = SELF_ASSESSMENT) {
       const date = today()
       const existing = taskAt(state, kind, date)
@@ -439,6 +444,11 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
           method: kind === 'learning' ? { id: method.id, rulesVersion: 1 } : null,
           sessionRevision: 0, feedbackEvents: [], choice: null,
         }
+        if (kind === 'learning') {
+          const task = next.days[date][kind]
+          task.presentation = createPresentation(task, random)
+          task.currentItemId = task.presentation.order[0] ?? null
+        }
       })
       return taskAt(state, kind, date)
     },
@@ -447,7 +457,16 @@ export function createLearningStore({ storage = globalThis.localStorage, now = (
       const date = today()
       validatePatch(patch, ['currentItemId', 'previousItemId', 'view'])
       assert(!isReviewSession(taskAt(state, kind, date)), 'Use guarded review session commands')
-      change((next) => { Object.assign(requireTask(next, kind, date), patch) })
+      change((next) => {
+        const task = requireTask(next, kind, date)
+        Object.assign(task, patch)
+        if (kind === 'learning' && Object.hasOwn(patch, 'currentItemId')) {
+          const index = patch.currentItemId === null ? task.presentation.order.length
+            : task.presentation.order.indexOf(patch.currentItemId)
+          if (index >= 0) task.presentation.index = index
+          else task.presentation = { ...legacyPresentation(task), round: task.presentation.round }
+        }
+      })
     },
 
     recordFeedback(kind, entry, feedback) {

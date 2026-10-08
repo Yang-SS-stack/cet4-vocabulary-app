@@ -8,7 +8,7 @@ function environment() {
   let raw = null
   let fail = false
   const storage = { getItem: () => raw, setItem: (_, value) => { if (fail) throw new Error('quota'); raw = value } }
-  const open = () => createLearningStore({ storage, now: () => date })
+  const open = () => createLearningStore({ random: () => 0.999, storage, now: () => date })
   const store = open()
   store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 2 })
   return { store, open, storage, nextDay: () => { date = new Date(2026, 8, 25) }, fail: (value) => { fail = value } }
@@ -109,7 +109,7 @@ test('version one records migrate without changing old progress or overwriting u
   const raw = JSON.stringify(legacy)
   env.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = env.open()
-  expect(migrated.getSnapshot().version).toBe(7)
+  expect(migrated.getSnapshot().version).toBe(8)
   expect(migrated.getTask('learning').items).toEqual(legacy.days['2026-09-24'].learning.items)
   expect(env.storage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
   migrated.updateSettings({ dailyNewWords: 3 })

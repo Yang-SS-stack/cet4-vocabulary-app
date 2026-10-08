@@ -1,5 +1,7 @@
+import { legacyPresentation } from './presentation'
+
 export const LEARNING_STORAGE_KEY = 'linguajet.learning'
-export const SCHEMA_VERSION = 7
+export const SCHEMA_VERSION = 8
 export const EXTRA_LEARNING_BATCH_SIZE = 10
 export const MISTAKE_ENTRY_THRESHOLD = 5
 export const REVIEW_STAGE_DAYS = Object.freeze([1, 2, 4, 7, 15])
@@ -245,6 +247,11 @@ export function validateState(state, version = SCHEMA_VERSION) {
           feedbackEvents: (events) => Array.isArray(events) && events.every((event) => feedbackEvent(event, task, version)),
         } : {}),
         ...(version >= 3 ? { choice } : {}),
+        ...(version >= 8 && ['learning', 'extra-learning'].includes(kind) ? { presentation: (p) => shape(p, {
+          order: (order) => Array.isArray(order) && order.every(id => task.itemIds.includes(id))
+            && new Set(order).size === order.length, index: integer, round: (v) => integer(v) && v >= 1,
+        }) && p.index <= p.order.length
+          && task.currentItemId === (p.order[p.index] ?? null) } : {}),
       }), 'Invalid task')
       if (version >= 3) {
         assert(['learning', 'extra-learning'].includes(task.kind)
@@ -347,7 +354,7 @@ export function freeze(value) {
 // Validate the entire v1 snapshot before adding fields; never fabricate lost events.
 export function migrateState(state) {
   if (state?.version === SCHEMA_VERSION) return validateState(state)
-  assert([1, 2, 3, 4, 5, 6].includes(state?.version), 'Invalid or unsupported learning snapshot')
+  assert([1, 2, 3, 4, 5, 6, 7].includes(state?.version), 'Invalid or unsupported learning snapshot')
   validateState(state, state.version)
   const next = JSON.parse(JSON.stringify(state))
   if (next.version === 1) {
@@ -377,14 +384,24 @@ export function migrateState(state) {
     next.extraLearning = {}
     validateState(next, 4)
   }
-  next.version = 6
-  validateState(next, 6)
-  next.settings.newWordSelectionMode = 'sequential'
+  if (next.version < 7) {
+    next.version = 6
+    validateState(next, 6)
+    next.settings.newWordSelectionMode = 'sequential'
+    for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) {
+      task.settings.newWordSelectionMode = 'sequential'
+    }
+    for (const process of Object.values(next.extraLearning)) for (const task of process.batches) {
+      task.settings.newWordSelectionMode = 'sequential'
+    }
+    next.version = 7
+    validateState(next, 7)
+  }
   for (const tasks of Object.values(next.days)) for (const task of Object.values(tasks)) {
-    task.settings.newWordSelectionMode = 'sequential'
+    if (task.kind === 'learning') task.presentation = legacyPresentation(task)
   }
   for (const process of Object.values(next.extraLearning)) for (const task of process.batches) {
-    task.settings.newWordSelectionMode = 'sequential'
+    task.presentation = legacyPresentation(task)
   }
   next.version = SCHEMA_VERSION
   return validateState(next)

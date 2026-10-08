@@ -17,7 +17,7 @@ function environment() {
   let raw = null
   let fail = false
   const storage = { getItem: () => raw, setItem: (_, value) => { if (fail) throw new Error('quota'); raw = value } }
-  const open = () => createLearningStore({ storage, now: () => date })
+  const open = () => createLearningStore({ random: () => 0.999, storage, now: () => date })
   const store = open()
   store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 2 })
   const task = store.ensureTodayLearning('cet4', ['alpha', 'beta'], store.getToday(), store.getSnapshot().settings, guided)
@@ -107,12 +107,18 @@ test('guided later encounters use self assessment and a wrong first pick cannot 
   store.prepareLearningChoice(token(beta), [{ word: 'alpha', meaning: '第一个' }, ...options.slice(0, 1), ...options.slice(2)])
   store.submitLearningChoice(token(store.getTask('learning')), null)
   store.advanceLearning(token(store.getTask('learning')))
+  // The next round reverses the two-word order; beta still needs its first recall.
+  expect(store.getTask('learning').currentItemId).toBe(beta.currentItemId)
+  expect(() => store.submitSelfAssessment(token(store.getTask('learning')), 'known')).toThrow()
+  store.prepareLearningChoice(token(store.getTask('learning')), options)
+  store.submitLearningChoice(token(store.getTask('learning')), null)
+  store.advanceLearning(token(store.getTask('learning')))
   expect(store.getTask('learning').currentItemId).toBe(task.currentItemId)
   expect(store.getTask('learning').choice).toBe(null)
   store.submitSelfAssessment(token(store.getTask('learning')), 'known')
   expect(store.getTask('learning').items[task.currentItemId].knownCount).toBe(2)
   expect(store.getTask('learning').feedbackEvents.map(event => event.source)).toEqual([
-    'guided-choice', 'guided-choice', 'self-assessment',
+    'guided-choice', 'guided-choice', 'guided-choice', 'self-assessment',
   ])
 })
 

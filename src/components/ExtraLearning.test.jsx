@@ -28,7 +28,7 @@ function finish(store, get = () => store.getTask('learning')) {
 function setup(method, selectionMode = 'sequential') {
   let raw = null, fail = false, date = new Date(2026, 8, 29)
   const storage = { getItem: () => raw, setItem: vi.fn((_, value) => { if (fail) throw Error('quota'); raw = value }) }
-  const open = () => createLearningStore({ storage, now: () => date })
+  const open = () => createLearningStore({ random: () => 0.999, storage, now: () => date })
   const store = open()
   store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1, newWordSelectionMode: selectionMode })
   store.ensureTodayLearning('cet4', ['daily'], store.getToday(), store.getSnapshot().settings, method)

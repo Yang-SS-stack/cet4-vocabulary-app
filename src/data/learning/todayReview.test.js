@@ -152,6 +152,7 @@ test('an empty existing task reconciles new historical entries without changing 
   const e = env(); const empty = ensure(e.store)
   e.store.ensureTodayLearning('cet4', ['alpha']); finishLearning(e.store)
   const raw = JSON.parse(e.storage.getItem()); raw.wordBooks.cet4.words.alpha.review = null
+  raw.days[empty.date].learning.presentation.index = raw.days[empty.date].learning.presentation.order.length
   raw.days[empty.date].learning.currentItemId = null; raw.days[empty.date].learning.view = 'question'
   e.storage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(raw)); e.store.reload()
   const writes = vi.spyOn(e.storage, 'setItem'); const task = ensure(e.store)
@@ -252,7 +253,7 @@ test.each([1, 2, 3, 4, 5])('migrates v%i completely without adding initial feedb
     if (version < 2) { delete task.method; delete task.sessionRevision; delete task.feedbackEvents }
   }
   e.storage.setItem(LEARNING_STORAGE_KEY, JSON.stringify(old)); const loaded = e.open().getSnapshot()
-  expect(loaded.version).toBe(7); expect(loaded.wordBooks).toEqual(old.wordBooks); expect(loaded.mistakes).toEqual(old.mistakes)
+  expect(loaded.version).toBe(8); expect(loaded.wordBooks).toEqual(old.wordBooks); expect(loaded.mistakes).toEqual(old.mistakes)
   expect(loaded.days[e.store.getToday()].review.method).toBe(null)
   expect(loaded.days[e.store.getToday()].review.items).toEqual(old.days[e.store.getToday()].review.items)
   expect(loaded.days[e.store.getToday()].learning.items).toEqual(old.days[e.store.getToday()].learning.items)
@@ -334,7 +335,7 @@ test.each([4, 5])('real v%i extra batches and correction events migrate unchange
   for (const book of Object.values(old.wordBooks)) for (const word of Object.values(book.words)) if (word.review) delete word.review.provenance
   const raw = JSON.stringify(old); e.storage.setItem(LEARNING_STORAGE_KEY, raw)
   const migrated = e.open()
-  expect(migrated.getSnapshot().version).toBe(7)
+  expect(migrated.getSnapshot().version).toBe(8)
   expect(migrated.getSnapshot().extraLearning).toMatchObject(old.extraLearning)
   expect(migrated.getSnapshot().wordBooks).toEqual(old.wordBooks)
   expect(e.storage.getItem()).toBe(raw)

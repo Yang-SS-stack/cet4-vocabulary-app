@@ -15,7 +15,7 @@ const token = task => ({ date: task.date, itemId: task.currentItemId, revision: 
 function setup({ guided = false, count = 2 } = {}) {
   let raw = null, fail = false
   const storage = { getItem: () => raw, setItem: (_, value) => { if (fail) throw Error('quota'); raw = value } }
-  const open = () => createLearningStore({ storage })
+  const open = () => createLearningStore({ random: () => 0.999, storage })
   const store = open()
   store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: count })
   store.ensureTodayLearning('cet4', words.slice(0, count).map(w => w.word), store.getToday(), store.getSnapshot().settings,
@@ -108,7 +108,7 @@ test('completed final details exit without confirmation, reduced motion exits pr
 })
 
 test('exit with no saved task does not invent remaining words', async () => {
-  const store = createLearningStore({ storage: { getItem: () => null, setItem: () => {} } }), exit = vi.fn()
+  const store = createLearningStore({ random: () => 0.999, storage: { getItem: () => null, setItem: () => {} } }), exit = vi.fn()
   render(<LearningStoreProvider store={store}><LearningSession onExit={exit} /></LearningStoreProvider>)
   await screen.findByRole('alert')
   await userEvent.setup().click(screen.getByRole('button', { name: '返回主界面' }))
@@ -119,7 +119,7 @@ test('exit with no saved task does not invent remaining words', async () => {
 test('exit during delayed daily details does not create a task', async () => {
   vi.stubGlobal('matchMedia', () => ({ matches: false }))
   const writes = vi.fn()
-  const store = createLearningStore({ storage: { getItem: () => null, setItem: writes } })
+  const store = createLearningStore({ random: () => 0.999, storage: { getItem: () => null, setItem: writes } })
   store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1 })
   writes.mockClear()
   const ensure = vi.spyOn(store, 'ensureTodayLearning')

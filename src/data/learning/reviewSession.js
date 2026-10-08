@@ -1,5 +1,5 @@
 import { assert, createProgress, localDayStartIso, MISTAKE_ENTRY_THRESHOLD } from './model'
-import { nextLearningItem } from './selfAssessment'
+import { nextCircularItem } from './selfAssessment'
 
 export const REVIEW_GUIDED_RECALL = Object.freeze({ id: 'review-guided-recall', rulesVersion: 1 })
 const intervals = [2, 4, 7, 15, 30, 30]
@@ -14,7 +14,7 @@ export function requireReviewTurn(task, token, date, view) {
 export function createReviewProgress(word, initialKnownCount) {
   return { ...createProgress(word), knownCount: initialKnownCount, initialKnownCount, settlement: null }
 }
-export const nextReviewItem = nextLearningItem
+export const nextReviewItem = nextCircularItem
 export function canCorrectReviewFeedback(task) {
   if (!isReviewSession(task) || task.view !== 'feedback' || task.currentItemId === null) return false
   const event = task.feedbackEvents.at(-1)

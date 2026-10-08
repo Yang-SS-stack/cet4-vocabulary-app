@@ -131,7 +131,7 @@ test('extra correction checks batch and word identity, undoes completion and pre
   store.correctLearningFeedback(token(extra))
   expect(store.getExtraLearning().items[extra.currentItemId]).toMatchObject({ knownCount: 2, fuzzyCount: 1, completed: false })
   expect(store.getWord('cet4', 'beta').learning.completed).toBe(false)
-  expect(store.getTask('learning')).toEqual(daily)
+  expect(store.getTask('learning')).toEqual({ ...daily, presentation: { ...daily.presentation, round: 1 } })
   expect(env.open().getExtraLearning()).toEqual(store.getExtraLearning())
   expect(() => store.correctLearningFeedback(token(store.getExtraLearning()))).toThrow()
 })

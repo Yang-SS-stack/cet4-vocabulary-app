@@ -3,8 +3,8 @@ import { assert, MISTAKE_ENTRY_THRESHOLD } from './model'
 export const SELF_ASSESSMENT = Object.freeze({ id: 'self-assessment', rulesVersion: 1 })
 export const GUIDED_RECALL = Object.freeze({ id: 'guided-recall', rulesVersion: 1 })
 
-// Presentation order can change without changing task.itemIds (the fixed assignment).
-export function nextLearningItem(task) {
+// Legacy circular scheduling remains in use by review; learning has its own queue.
+export function nextCircularItem(task) {
   const start = task.itemIds.indexOf(task.currentItemId)
   for (let offset = 1; offset <= task.itemIds.length; offset++) {
     const id = task.itemIds[(start + offset) % task.itemIds.length]

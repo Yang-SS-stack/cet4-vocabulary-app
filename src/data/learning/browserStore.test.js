@@ -119,3 +119,16 @@ test('corrections use the browser lock, reject duplicates and stale tabs, and ch
   const withoutLock = createBrowserLearningStore({ ...options, locks: null })
   await expect(withoutLock.correctLearningFeedback(token(before))).rejects.toThrow(/lock/)
 })
+
+test('lock denial cannot advance or reshuffle a saved learning feedback turn', async () => {
+  const env = shared(), store = createBrowserLearningStore(env)
+  await store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 1 })
+  const task = await store.ensureTodayLearning('cet4', ['alpha'])
+  await store.submitSelfAssessment({ date: task.date, itemId: task.currentItemId, revision: 0 }, 'known')
+  const denied = createBrowserLearningStore({ ...env, locks: null })
+  const before = denied.getSnapshot(), raw = env.storage.getItem()
+  await expect(denied.advanceLearning({ date: task.date, itemId: task.currentItemId, revision: 1 })).rejects.toThrow(/lock/)
+  expect(denied.getSnapshot()).toBe(before)
+  expect(env.storage.getItem()).toBe(raw)
+  expect(before.days[task.date].learning.presentation).toEqual({ order: task.itemIds, index: 0, round: 1 })
+})
