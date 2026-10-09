@@ -18,11 +18,11 @@ Requirements:
 - Deterministic tests must cover real observed behavior, not mocks alone: two rounds of five unique words, unfinished subsets, completion/correction, one/two/empty, reload mid-round+feedback, failed write/conflict/stale token/date, extra batch, strict invalid v8 and v1-v7 migration including nonfirst current and feedback.
 - Existing tests depending on fixed word order should inject a deterministic random source or identify current word instead of hardcoding; don't weaken progress assertions or mock Math.random globally to hide randomized behavior.
 Steps:
-- [ ] Run relevant baseline tests, add failing tests, record RED.
-- [ ] Implement queue helpers, model migration/validation, store integration.
-- [ ] Run focused tests, adapt legacy fixtures deliberately, record GREEN.
-- [ ] Run full suite once before commit, self-review and commit only scoped source/tests.
-- [ ] Write report with exact commands/counts, files, RED/GREEN, concerns to .superpowers/sdd/round-order/task-1-report.md.
+- [x] Run relevant baseline tests, add failing tests, record RED.
+- [x] Implement queue helpers, model migration/validation, store integration.
+- [x] Run focused tests, adapt legacy fixtures deliberately, record GREEN.
+- [x] Run full suite once before commit, self-review and commit only scoped source/tests.
+- [x] Write report with exact commands/counts, files, RED/GREEN, concerns to .superpowers/sdd/round-order/task-1-report.md.
 
 ## Task 2: Stabilize word-card face rendering
 Scope: src/components/FadeContent.jsx, WordCard.jsx, WordCard.css, relevant existing tests only if behavior changes.
@@ -31,12 +31,11 @@ Scope: src/components/FadeContent.jsx, WordCard.jsx, WordCard.css, relevant exis
 - Do not claim exact root confirmed or transient bug reproduced absent evidence. Old diagnostics did not capture flash.
 - Avoid speculative GPU CSS pileup; one change at a time.
 - Browser on isolated 4176, ordinary desktop and 2560x1440 DPR1/2, narrow mobile, rapid reverse, scrolling and keyboard/reduced-motion. Recording previously rejected by automatic approval; do not retry.
-- [ ] Implement controlled change and relevant component tests.
-- [ ] Commit scoped changes; report tested vs residual user hardware acceptance separately.
+- [x] Implement controlled change and relevant component tests.
+- [x] Commit scoped changes; report tested vs residual user hardware acceptance separately.
 
 ## Final verification and delivery
-- [ ] Independent task reviews and whole-branch review.
-- [ ] Full regression suite, build, lint (report host policy block if present; do not bypass).
-- [ ] Isolated preview with exact branch/commit metadata and five-word two-round/reload acceptance.
-- [ ] Record results and remaining hardware visual limitation; return preview for one-step manual acceptance.
-
+- [x] Independent task reviews and whole-branch review.
+- [x] Full regression suite, build, lint (report host policy block if present; do not bypass).
+- [x] Isolated preview with exact branch/commit metadata and five-word two-round/reload acceptance.
+- [x] Record results and remaining hardware visual limitation; return preview for one-step manual acceptance.
