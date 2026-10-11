@@ -5,10 +5,11 @@ import { useLearningStore } from '../data/learning'
 import { useLearningFacts } from '../data/assistant/react'
 import { ProgressRing } from './DataMotion'
 import LearningAdviceModal from './LearningAdviceModal'
+import SessionAdviceModal from './SessionAdviceModal'
 import { wordBooks } from '../data/wordBooks'
 import './TodayLearningPage.css'
 
-function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
+function TodayLearningPage({ now, loadBook, onFocusModeChange, startLearningRequested, onLearningRequestConsumed, onLearningContextChange, legacy = false }) {
   const { store, snapshot } = useLearningStore()
   const { settings } = snapshot
   const selectedWordBook = wordBooks.find(({ id }) => id === settings.todayWordBookId) ?? wordBooks[0]
@@ -24,6 +25,7 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
   const [learning, setLearning] = useState(false)
   const [confirmExtra, setConfirmExtra] = useState(false)
   const [adviceOpen, setAdviceOpen] = useState(false)
+  const [sessionAdviceOpen, setSessionAdviceOpen] = useState(false)
   const adviceEntry = useRef(null)
   const [returned, setReturned] = useState(false)
   const entryButton = useRef(null)
@@ -33,6 +35,8 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
   const entryRequested = useRef(false)
   const focusCallback = useRef(onFocusModeChange)
   useEffect(() => { focusCallback.current = onFocusModeChange }, [onFocusModeChange])
+  useEffect(() => { if (learning !== 'learning') onLearningContextChange?.(null) }, [learning, onLearningContextChange])
+  useEffect(() => () => onLearningContextChange?.(null), [onLearningContextChange])
   useEffect(() => { if (!learning && returned) (returnMode.current === 'review' ? reviewButton : entryButton).current?.focus({ preventScroll: true }) }, [learning, returned])
 
   useEffect(() => {
@@ -69,35 +73,50 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
     } else enter('review')
   }
 
+  const initialStart = useRef(null)
+  initialStart.current = () => {
+    start('learning')
+    onLearningRequestConsumed?.()
+  }
+  useEffect(() => {
+    if (startLearningRequested) initialStart.current()
+  }, [startLearningRequested])
+
   const exit = () => { entryRequested.current = false; setReturned(true); setLearning(false); onFocusModeChange?.(false) }
-  if (learning === 'learning' || learning === 'extra') return <LearningSession loadBook={loadBook} onExit={exit} initialMode={learning} animateEntry />
+  if (learning === 'learning' || learning === 'extra') return <LearningSession loadBook={loadBook} onExit={exit} initialMode={learning} onLearningContextChange={learning === 'learning' ? onLearningContextChange : undefined} animateEntry />
   if (learning === 'review') return <ReviewSession loadBook={loadBook} onExit={exit} animateEntry />
 
-  return (
-    <section className={`learning-overview ${pendingEntry ? 'is-leaving' : returned ? 'is-entering' : ''}`} inert={Boolean(pendingEntry)} aria-label="今日学习概览">
-      <div className="learning-overview__actions">
+  const actions = <div className="learning-overview__actions">
         <button ref={entryButton} type="button" onClick={() => start('learning')}>今日学习 <ActionArrow /></button>
         <button ref={reviewButton} type="button" onClick={() => start('review')}>今日复习 <ActionArrow /></button>
       </div>
-      <div className="learning-overview__status-strip">
+  return (
+    <section className={`learning-overview ${legacy ? 'learning-overview--legacy' : 'learning-overview--floating'} ${pendingEntry ? 'is-leaving' : returned ? 'is-entering' : ''}`} inert={Boolean(pendingEntry)} aria-label="今日学习概览">
+      {legacy && actions}
+      <div className={`learning-overview__status-strip${!legacy && !recommendation ? ' is-unavailable' : ''}`}>
         <StatusMetric label="距离考试" value={formatDays(daysRemaining)} />
         <StatusMetric
-          label={`${selectedWordBook.label} 剩余`}
-          value={recommendation ? `${formatNumber(recommendation.remainingWords)} / ${formatNumber(selectedWordBook.totalWords)} 词` : '词书资料不完整或不一致，无法计算'}
+          label={legacy ? `${selectedWordBook.label} 剩余` : '词书剩余'}
+          unavailable={!recommendation}
+          value={recommendation ? legacy ? `${formatNumber(recommendation.remainingWords)} / ${formatNumber(selectedWordBook.totalWords)} 词` : `${formatNumber(recommendation.remainingWords)} 词` : '词书资料不完整或不一致，无法计算'}
         />
       </div>
 
       <section className="today-tasks" aria-label="今日任务进度">
-        <h2>今日任务</h2>
+        <h2>今日任务{!legacy && <small>本日进度</small>}</h2>
         <div className="today-tasks__rings">
-          <TaskRing label="今日新词" progress={facts?.today.learning} currentBook={settings.todayWordBookId} error={factsError} empty="本日无新词任务" />
-          <TaskRing label="额外学习" progress={factsError ? null : extraProgress} currentBook={settings.todayWordBookId} error={factsError} empty="本轮无额外任务" exhausted={extraProcess?.exhausted} extra />
-          <TaskRing label="今日复习" progress={facts?.today.review} currentBook={settings.todayWordBookId} error={factsError} empty="本日无复习任务" />
+          <TaskRing label="今日新词" progress={facts?.today.learning} currentBook={settings.todayWordBookId} error={factsError} empty="本日无新词任务" showRemaining={!legacy} />
+          {legacy && <TaskRing label="额外学习" progress={factsError ? null : extraProgress} currentBook={settings.todayWordBookId} error={factsError} empty="本轮无额外任务" exhausted={extraProcess?.exhausted} extra />}
+          <TaskRing label="今日复习" progress={facts?.today.review} currentBook={settings.todayWordBookId} error={factsError} empty="本日无复习任务" showRemaining={!legacy} />
+          {!legacy && <TaskRing label="额外学习" progress={factsError ? null : extraProgress} currentBook={settings.todayWordBookId} error={factsError} empty="本轮无额外任务" exhausted={extraProcess?.exhausted} extra />}
         </div>
+        {!legacy && actions}
       </section>
       <p className="learning-overview__flow-status" role="status" aria-live="polite">{status}</p>
       {factsError && <p className="learning-overview__error">{factsError}</p>}
-      <button ref={adviceEntry} type="button" className="learning-advice-entry" aria-haspopup="dialog" onClick={() => setAdviceOpen(true)}>学习建议 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6" /></svg></button>
+      {legacy && <button type="button" className="learning-advice-entry" aria-haspopup="dialog" onClick={() => setSessionAdviceOpen(true)}>安排本次学习 <ActionArrow /></button>}
+      {sessionAdviceOpen && <SessionAdviceModal now={now} onClose={() => setSessionAdviceOpen(false)} onStart={() => { setSessionAdviceOpen(false); start('learning') }} />}
+      {legacy && <button ref={adviceEntry} type="button" className="learning-advice-entry" aria-haspopup="dialog" onClick={() => setAdviceOpen(true)}>学习建议 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m4 7 6 6 6-6" /></svg></button>}
       {adviceOpen && <LearningAdviceModal recommendation={recommendation} settings={settings} bookLabel={adviceBookLabel} daysLabel={formatDays(daysRemaining)} planResult={recommendation ? formatPlanResult(recommendation, settings) : null} returnFocus={adviceEntry} onClose={() => setAdviceOpen(false)}>
         {recommendation ? <RecommendationCard recommendation={recommendation} settings={settings} reviewLoad={facts.reviewLoad} /> : <p>规则建议无法计算：请选择词书并核对词书资料。</p>}
       </LearningAdviceModal>}
@@ -112,14 +131,14 @@ function TodayLearningPage({ now, loadBook, onFocusModeChange }) {
 
 function ActionArrow() { return <svg className="learning-action-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg> }
 
-function TaskRing({ label, progress, currentBook, error, empty, extra = false, exhausted = false }) {
+function TaskRing({ label, progress, currentBook, error, empty, extra = false, exhausted = false, showRemaining = false }) {
   const valid = progress && Number.isSafeInteger(progress.assignedWords) && Number.isSafeInteger(progress.completedWords) && progress.assignedWords >= 0 && progress.completedWords >= 0 && progress.completedWords <= progress.assignedWords
   const state = error || (progress && !valid) ? '资料异常' : !progress ? (exhausted ? '词书已无剩余新词' : '尚未创建') : progress.assignedWords === 0 ? empty : null
   const book = wordBooks.find(book => book.id === progress?.wordBookId)
   return <section className="today-task" aria-label={label}>
     <h3>{label}</h3>
     <ProgressRing label={label} value={state ? null : progress.completedWords} total={state ? null : progress.assignedWords} state={state} accent={extra} />
-    <div className="today-task__note">{extra && <span>本轮进度</span>}{progress && progress.wordBookId !== currentBook && <span>已保存词书：{book?.label ?? progress.wordBookId}</span>}{valid && progress.assignedWords > 0 && progress.completedWords === progress.assignedWords && <span>已完成</span>}</div>
+    <div className="today-task__note">{extra ? <span>本轮进度</span> : showRemaining && valid && progress.assignedWords > progress.completedWords && <span>{label === '今日复习' ? '待复习' : '剩余'} {progress.assignedWords - progress.completedWords} 词</span>}{progress && progress.wordBookId !== currentBook && <span>已保存词书：{book?.label ?? progress.wordBookId}</span>}{valid && progress.assignedWords > 0 && progress.completedWords === progress.assignedWords && <span>已完成</span>}</div>
   </section>
 }
 
@@ -140,9 +159,9 @@ function ExtraLearningConfirmation({ onConfirm, onCancel }) {
   </dialog>
 }
 
-function StatusMetric({ label, value }) {
+function StatusMetric({ label, value, unavailable = false }) {
   return (
-    <div className="learning-overview__metric">
+    <div className={`learning-overview__metric${unavailable ? ' is-unavailable' : ''}`}>
       <p>{label}</p>
       <strong>{value}</strong>
     </div>

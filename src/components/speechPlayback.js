@@ -25,12 +25,34 @@ export function playSpeechSequence(segments, { scope, onSegment, onState, onCanc
   let alive = true
   let stopSegment = null
   let failure = null
+  let prepared = null
+  const stopPrepared = () => {
+    const media = prepared?.media
+    prepared = null
+    if (!media) return
+    safelyStop(() => media.pause())
+    safelyStop(() => media.removeAttribute('src'))
+    safelyStop(() => media.load())
+  }
+  const prepareNext = index => {
+    const src = segments[index]?.src
+    if (!alive || !src || typeof window.Audio !== 'function') return
+    // Load only the next known asset during the current segment, without playing it.
+    // A preload failure must not interrupt current speech; normal playback can retry.
+    try {
+      const media = new window.Audio(src)
+      prepared = { index, media }
+      media.preload = 'auto'
+      media.load()
+    } catch { stopPrepared() }
+  }
   const owner = { scope, cancel() {
     if (!alive) return
     // Invalidate first: pause/cancel can dispatch a synchronous stale end event.
     alive = false
     if (activePlayback === owner) activePlayback = null
     safelyStop(() => stopSegment?.(true))
+    stopPrepared()
     safelyStop(() => window.speechSynthesis?.cancel?.())
     onState?.('idle')
     onCancel?.()
@@ -46,6 +68,7 @@ export function playSpeechSequence(segments, { scope, onSegment, onState, onCanc
     }
     const { text, lang = 'en-US', src } = segments[index]
     onSegment?.(index)
+    if (!alive) return
     let finished = false
     let timer
     let media
@@ -74,10 +97,12 @@ export function playSpeechSequence(segments, { scope, onSegment, onState, onCanc
     try {
       if (!speechSupported(src)) { finish('unsupported'); return }
       if (src && typeof window.Audio === 'function') {
-        media = new window.Audio(src)
+        media = prepared?.index === index ? prepared.media : new window.Audio(src)
+        prepared = null
         media.onended = () => finish()
         media.onerror = () => finish('error')
         onState?.('speaking')
+        if (!alive) return
         media.play()?.catch(() => finish('error'))
       } else {
         const synthesis = window.speechSynthesis
@@ -92,8 +117,10 @@ export function playSpeechSequence(segments, { scope, onSegment, onState, onCanc
         utterance.onend = () => finish()
         utterance.onerror = () => finish('error')
         onState?.('speaking')
+        if (!alive) return
         synthesis.speak(utterance)
       }
+      if (alive && !finished) prepareNext(index + 1)
       // A blocked/hung API must not withhold the answer forever.
       if (!finished) timer = window.setTimeout(() => finish('error'), Math.max(30000, text.length * 180))
     } catch { finish('error') }

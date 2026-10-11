@@ -5,10 +5,21 @@ import { loadAudioManifest } from '../data/audioManifest'
 import { reviewFixture, reviewWords } from './reviewTestFixture'
 
 vi.mock('../data/audioManifest', () => ({ loadAudioManifest: vi.fn() }))
-let sounds, synthesis
+let sounds, active, peakActive, synthesis
 beforeEach(() => {
   sounds = []
-  vi.stubGlobal('Audio', class { constructor(src) { this.src = src; this.play = vi.fn().mockResolvedValue(); this.pause = vi.fn(); sounds.push(this) } })
+  active = new Set()
+  peakActive = 0
+  vi.stubGlobal('Audio', class {
+    constructor(src) {
+      this.src = src
+      this.load = vi.fn()
+      this.removeAttribute = vi.fn(name => { if (name === 'src') this.src = '' })
+      this.pause = vi.fn(() => active.delete(this))
+      this.play = vi.fn(() => { active.add(this); peakActive = Math.max(peakActive, active.size); return Promise.resolve() })
+      sounds.push(this)
+    }
+  })
   synthesis = { speak: vi.fn(), cancel: vi.fn() }
   vi.stubGlobal('speechSynthesis', synthesis)
   vi.stubGlobal('SpeechSynthesisUtterance', class { constructor(text) { this.text = text } })
@@ -17,29 +28,48 @@ beforeEach(() => {
   loadAudioManifest.mockResolvedValue({ words: { alpha: { 'en-GB': '/alpha', 'en-US': '/alpha-us', example: '/example' }, beta: { 'en-GB': '/beta' } } })
   loadAudioManifest.mockClear()
 })
-afterEach(() => { cleanup(); vi.useRealTimers() })
-async function end(sound = sounds.at(-1), failure = false) { await act(async () => { (failure ? sound.onerror : sound.onended)?.(); await Promise.resolve() }) }
+afterEach(() => { cleanup(); vi.useRealTimers(); expect(peakActive).toBeLessThanOrEqual(1) })
+const played = () => sounds.filter(sound => sound.play.mock.calls.length > 0)
+const playing = () => [...active].at(-1)
+async function end(sound = playing(), failure = false) { await act(async () => { active.delete(sound); (failure ? sound.onerror : sound.onended)?.(); await Promise.resolve() }) }
 const click = async name => userEvent.setup().click(await screen.findByRole('button', { name, exact: true }))
 
 test('English/details serialize, Chinese cancels queued audio, stale end cannot read the answer', async () => {
-  const e = reviewFixture(); e.show(); await waitFor(() => expect(sounds.map(s => s.src)).toEqual(['/alpha']))
-  await click('认识'); await screen.findByText('例句翻译'); await waitFor(() => expect(sounds.length).toBe(2))
-  const old = sounds.at(-1), oldEnd = old.onended
+  const e = reviewFixture(); e.show(); await waitFor(() => expect(played().map(s => s.src)).toEqual(['/alpha']))
+  await click('认识'); await screen.findByText('例句翻译'); await waitFor(() => expect(played().map(s => s.src)).toEqual(['/alpha', '/alpha']))
+  const old = playing(), oldEnd = old.onended, prepared = sounds.at(-1)
+  expect(prepared.src).toBe('/example'); expect(prepared.load).toHaveBeenCalledOnce(); expect(prepared.play).not.toHaveBeenCalled()
+  const count = sounds.length
   await click('下一词'); await screen.findByRole('heading', { name: '首字母；开端' })
-  expect(old.pause).toHaveBeenCalled(); expect(sounds).toHaveLength(2)
-  await act(async () => { oldEnd(); await Promise.resolve() }); expect(sounds).toHaveLength(2)
+  expect(old.pause).toHaveBeenCalled(); expect(active.size).toBe(0); expect(sounds).toHaveLength(count); expect(played()).toHaveLength(2)
+  expect(prepared.pause).toHaveBeenCalled(); expect(prepared.removeAttribute).toHaveBeenCalledWith('src'); expect(prepared.src).toBe(''); expect(prepared.load).toHaveBeenCalledTimes(2)
+  await act(async () => { oldEnd(); await Promise.resolve() }); expect(sounds).toHaveLength(count); expect(played()).toHaveLength(2); expect(active.size).toBe(0)
+  expect(prepared.play).not.toHaveBeenCalled()
   expect(synthesis.speak).not.toHaveBeenCalled()
-  await click('认识'); await screen.findByText('例句翻译'); await waitFor(() => expect(sounds).toHaveLength(3))
-  await end(); expect(sounds.at(-1).src).toBe('/example')
+  await click('认识'); await screen.findByText('例句翻译'); await waitFor(() => expect(played()).toHaveLength(3))
+  expect(playing().src).toBe('/alpha')
+  const nextExample = sounds.at(-1)
+  expect(nextExample.src).toBe('/example'); expect(nextExample.load).toHaveBeenCalledOnce(); expect(nextExample.play).not.toHaveBeenCalled()
+  await end(); expect(playing()).toBe(nextExample); expect(nextExample.play).toHaveBeenCalledOnce()
+  expect(played().map(s => s.src)).toEqual(['/alpha', '/alpha', '/alpha', '/example'])
+  expect(e.store.getTask('review').feedbackEvents).toHaveLength(2)
 })
 
 test('count one reads word then example; manual playback cancels autoplay queue and failures allow feedback', async () => {
   const e = reviewFixture(); e.store.ensureTodayReview(); e.feedback('fuzzy'); e.advance(); e.show()
-  await waitFor(() => expect(sounds.at(-1)?.src).toBe('/alpha')); await end(); expect(sounds.at(-1).src).toBe('/example')
-  await click('认识'); await screen.findByText('例句翻译'); await waitFor(() => expect(sounds.at(-1).src).toBe('/alpha'))
-  const old = sounds.at(-1), oldEnd = old.onended
-  await click('alpha 美音'); expect(old.pause).toHaveBeenCalled(); expect(sounds.at(-1).src).toBe('/alpha-us')
+  await waitFor(() => expect(playing()?.src).toBe('/alpha'))
+  const firstExample = sounds.at(-1)
+  expect(firstExample.src).toBe('/example'); expect(firstExample.load).toHaveBeenCalledOnce(); expect(firstExample.play).not.toHaveBeenCalled()
+  expect(played().map(s => s.src)).toEqual(['/alpha'])
+  await end(); expect(playing()).toBe(firstExample); expect(firstExample.play).toHaveBeenCalledOnce()
+  expect(played().map(s => s.src)).toEqual(['/alpha', '/example'])
+  await click('认识'); await screen.findByText('例句翻译'); await waitFor(() => expect(playing().src).toBe('/alpha'))
+  const old = playing(), oldEnd = old.onended, prepared = sounds.at(-1)
+  expect(prepared.src).toBe('/example'); expect(prepared.load).toHaveBeenCalledOnce(); expect(prepared.play).not.toHaveBeenCalled()
+  await click('alpha 美音'); expect(old.pause).toHaveBeenCalled(); expect(playing().src).toBe('/alpha-us')
+  expect(prepared.pause).toHaveBeenCalled(); expect(prepared.removeAttribute).toHaveBeenCalledWith('src'); expect(prepared.src).toBe(''); expect(prepared.load).toHaveBeenCalledTimes(2)
   const count = sounds.length; await act(async () => { oldEnd(); await Promise.resolve() }); expect(sounds).toHaveLength(count)
+  expect(played().map(s => s.src)).toEqual(['/alpha', '/example', '/alpha', '/alpha-us']); expect(playing().src).toBe('/alpha-us'); expect(prepared.play).not.toHaveBeenCalled()
   await end(undefined, true); await click('下一词'); await click('模糊'); await screen.findByText('例句翻译')
   expect(e.store.getTask('review').feedbackEvents).toHaveLength(3)
 })
@@ -58,14 +88,17 @@ test('review autoplay waits for word and body entry animations before starting',
   const e = reviewFixture(); e.show()
   await act(async () => Promise.resolve())
   expect(screen.getByRole('heading', { name: 'alpha' })).toBeInTheDocument()
-  expect(sounds).toHaveLength(0)
-  await act(async () => vi.advanceTimersByTimeAsync(239)); expect(sounds).toHaveLength(0)
-  await act(async () => vi.advanceTimersByTimeAsync(1)); expect(sounds).toHaveLength(1)
+  expect(played()).toHaveLength(0)
+  await act(async () => vi.advanceTimersByTimeAsync(239)); expect(played()).toHaveLength(0)
+  await act(async () => vi.advanceTimersByTimeAsync(1)); expect(played()).toHaveLength(1)
   fireEvent.click(screen.getByRole('button', { name: '认识', exact: true }))
-  await act(async () => Promise.resolve()); expect(sounds).toHaveLength(1)
-  await act(async () => vi.advanceTimersByTimeAsync(160)); expect(sounds).toHaveLength(1)
-  await act(async () => vi.advanceTimersByTimeAsync(239)); expect(sounds).toHaveLength(1)
-  await act(async () => vi.advanceTimersByTimeAsync(1)); expect(sounds).toHaveLength(2)
+  await act(async () => Promise.resolve()); expect(played()).toHaveLength(1)
+  await act(async () => vi.advanceTimersByTimeAsync(160)); expect(played()).toHaveLength(1)
+  await act(async () => vi.advanceTimersByTimeAsync(239)); expect(played()).toHaveLength(1)
+  await act(async () => vi.advanceTimersByTimeAsync(1)); expect(played()).toHaveLength(2)
+  expect(played().map(s => s.src)).toEqual(['/alpha', '/alpha']); expect(playing().src).toBe('/alpha')
+  const prepared = sounds.at(-1)
+  expect(prepared.src).toBe('/example'); expect(prepared.load).toHaveBeenCalledOnce(); expect(prepared.play).not.toHaveBeenCalled()
 })
 
 test('confirmed exit ignores delayed book and prevents new details and audio work', async () => {

@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { buildLearningRecommendation } from '../data/learning/recommendations'
 import { wordBooks } from '../data/wordBooks'
-import { INITIAL_SETUP_FIELDS, setupPlanStatus, synchronizeSetupDraft, wordSelectionWheelProps } from './setupDraft'
+import { INITIAL_SETUP_FIELDS, initialSetupComplete, setupPlanStatus, synchronizeSetupDraft, wordSelectionWheelProps } from './setupDraft'
 import SettingsWheel from './SettingsWheel'
 import './LearningSetupModal.css'
 
@@ -34,7 +34,7 @@ const MINUTE_OPTIONS = Array.from({ length: 48 }, (_, index) => ({
   label: `${(index + 1) * 5} 分钟`,
 }))
 
-function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recommendation = {}, onSave, onClose }) {
+function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recommendation = {}, onSave, onClose, presentation, beforeFields, afterFields, onSaved }) {
   const fields = MODE_FIELDS[mode]
   if (!fields) throw new Error(`Unsupported setup mode: ${mode}`)
 
@@ -50,7 +50,8 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
   const isSwitchingRef = useRef(false)
   const requestedFieldRef = useRef(null)
   const initialDraftRef = useRef(null)
-  if (initialDraftRef.current === null) initialDraftRef.current = createDraft(mode, settings, snapshot, now)
+  if (initialDraftRef.current === null) initialDraftRef.current = presentation === 'session' && initialSetupComplete(settings, now)
+    ? { ...settings } : createDraft(mode, settings, snapshot, now)
   const [draft, setDraft] = useState(initialDraftRef.current)
   const draftRef = useRef(initialDraftRef.current)
   const [activeField, setActiveField] = useState(null)
@@ -69,6 +70,13 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
       window.clearTimeout(settleTimerRef.current)
     }
   }, [])
+
+  useEffect(() => {
+    if (presentation !== 'session') return undefined
+    const overflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = overflow }
+  }, [presentation])
 
   useEffect(() => {
     const appShell = document.querySelector('.app-shell')
@@ -182,7 +190,8 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
     setError('')
     try {
       await onSave(patch)
-      requestCloseAfterSave(onClose, returnFocusRef, closeTimerRef, setIsClosing)
+      if (onSaved) onSaved()
+      else requestCloseAfterSave(onClose, returnFocusRef, closeTimerRef, setIsClosing)
     } catch (failure) {
       setError(/elsewhere/.test(failure.message)
         ? '记录已在其他页面更新，请选择暂不开始，然后刷新页面读取最新设置。'
@@ -246,7 +255,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
     <div className={isClosing ? 'learning-setup-backdrop is-closing' : 'learning-setup-backdrop'}>
       <div
         ref={dialogRef}
-        className={`learning-setup-modal${mode === 'initial' ? ' learning-setup-modal--initial' : ''}${isClosing ? ' is-closing' : ''}`}
+        className={`learning-setup-modal${mode === 'initial' ? ' learning-setup-modal--initial' : ''}${presentation === 'session' ? ' learning-setup-modal--session' : ''}${isClosing ? ' is-closing' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
@@ -259,7 +268,9 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
         </header>
 
         <div ref={bodyRef} className="learning-setup-modal__body">
+        {beforeFields?.(draft)}
         <div className="learning-setup-modal__fields">
+          {presentation === 'session' && <h3 className="session-settings-title">每日计划设置</h3>}
           {fields.map((field) => (
             <FieldWheel
               key={field}
@@ -274,6 +285,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
             />
           ))}
         </div>
+        {afterFields}
 
         {planStatus.exceedsDailyWordLimit && (
           <p className="learning-setup-modal__plan-warning" role="status">
@@ -297,7 +309,7 @@ function LearningSetupModal({ mode, settings, snapshot, now = new Date(), recomm
         <footer className="learning-setup-modal__footer">
           <button type="button" className="learning-setup-modal__text-button" disabled={isSaving} onClick={requestClose}>暂不开始</button>
           <button type="button" className="learning-setup-modal__save-button" disabled={isSaving} onClick={() => requestSave()}>
-            {isSaving ? '正在保存…' : '保存并继续'}
+            {isSaving ? '正在保存…' : presentation === 'session' ? '完成设置' : '保存并继续'}
           </button>
         </footer>
       </div>

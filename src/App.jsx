@@ -5,6 +5,8 @@ import LineSidebar from './components/LineSidebar'
 import NavigationIcon from './components/NavigationIcon'
 import MobileNavigation from './components/MobileNavigation'
 import LearningSetupModal from './components/LearningSetupModal'
+import FloatingLearningAssistant from './components/FloatingLearningAssistant'
+import BrandFlightMark from './components/BrandFlightMark'
 import ParticleTextTransition from './components/ParticleTextTransition'
 import SplashScreen from './components/SplashScreen'
 import SettingsPage from './components/SettingsPage'
@@ -21,8 +23,9 @@ import { AssistantProvider } from './data/assistant/react'
 const pages = ['今日学习', '词表', '模拟练习', '统计', '设置']
 const RECOVERY_CLOSE_DURATION = 180
 
-function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, pageTitleRef, isBrandConcealed, isTransitionPrepared }) {
+function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, logoRef, pageTitleRef, isBrandConcealed, isTransitionPrepared, startLearningRequested, onLearningRequestConsumed, onLearningContextChange, legacy }) {
   const [focusMode, setFocusMode] = useState(false)
+  useEffect(() => { if (selectedPage !== '今日学习') setFocusMode(false) }, [selectedPage])
   const [isMobile, setIsMobile] = useState(() => globalThis.matchMedia?.('(max-width: 800px)').matches ?? false)
   useEffect(() => {
     const media = globalThis.matchMedia?.('(max-width: 800px)')
@@ -64,8 +67,8 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
         inert={focusMode || isMobile}
       >
         <div className="brand-mark" aria-label="LinguaJet">
+          <span className="brand-initial" aria-hidden="true"><BrandFlightMark /></span>
           <span ref={isMobile ? undefined : logoRef} className={isBrandConcealed ? 'brand-name is-brand-concealed' : 'brand-name'}>LinguaJet</span>
-          <span className="brand-initial" aria-hidden="true">L</span>
         </div>
         <button
           className={isNavOpen ? 'nav-toggle is-open' : 'nav-toggle'}
@@ -108,7 +111,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
 
       <main className={`content-area ${compactPage ? 'content-area--overview' : ''}`}>
         <FadeContent key={selectedPage}>
-          {selectedPage !== '词表' && <section className={`page-intro ${compactPage ? 'page-intro--overview' : ''}`} aria-labelledby="page-title" hidden={focusMode}>
+          {selectedPage !== '词表' && <section className={`page-intro ${compactPage ? 'page-intro--overview' : ''} ${selectedPage === '今日学习' && !legacy ? 'page-intro--today' : ''}`} aria-labelledby="page-title" hidden={focusMode}>
             <h1 ref={pageTitleRef} id="page-title" tabIndex={-1}>{selectedPage === '统计' ? '学习统计' : selectedPage}</h1>
             {selectedPage === '今日学习' ? (
               <p className="page-lede">当前词书 · {currentBook?.label ?? '尚未设置'}</p>
@@ -128,7 +131,7 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
           <div className="content-rule" hidden={focusMode || compactPage} />
 
           {selectedPage === '今日学习' ? (
-            <TodayLearningPage onFocusModeChange={setFocusMode} />
+            <TodayLearningPage legacy={legacy} onFocusModeChange={setFocusMode} startLearningRequested={startLearningRequested} onLearningRequestConsumed={onLearningRequestConsumed} onLearningContextChange={onLearningContextChange} />
           ) : selectedPage === '词表' ? (
             <VocabularyPage />
           ) : selectedPage === '设置' ? (
@@ -156,9 +159,12 @@ function LearningSurface({ selectedPage, isNavOpen, onNavToggle, onPageChange, l
 }
 
 function LearningApp({ learningStore }) {
+  const legacy = new URLSearchParams(window.location.search).get('ui') === 'legacy'
   const [selectedPage, setSelectedPage] = useState('今日学习')
   const [isNavOpen, setIsNavOpen] = useState(true)
   const [showInitialSetup, setShowInitialSetup] = useState(false)
+  const [startLearningRequested, setStartLearningRequested] = useState(false)
+  const [learningContext, setLearningContext] = useState(null)
   const [showSplash, setShowSplash] = useState(true)
   const [particleSources, setParticleSources] = useState(null)
   const [particleLogoElement, setParticleLogoElement] = useState(null)
@@ -187,7 +193,8 @@ function LearningApp({ learningStore }) {
     setIsLearningRevealed(true)
     setParticleSources(null)
     setShowSplash(false)
-    setShowInitialSetup(!initialSetupComplete(learningStore.getSnapshot().settings))
+    const setupMode = new URLSearchParams(window.location.search).get('setup')
+    setShowInitialSetup(['initial', 'legacy'].includes(setupMode) || !initialSetupComplete(learningStore.getSnapshot().settings))
   }, [learningStore])
 
   const releaseParticleSource = useCallback(() => setIsParticleSourceReleased(true), [])
@@ -199,6 +206,11 @@ function LearningApp({ learningStore }) {
     shouldRestoreSetupFocusRef.current = true
     setShowInitialSetup(false)
   }, [])
+
+  // Returning learners see the launcher as the main page starts to reveal.
+  // Keep first-run setup protected; the hint waits for the completed transition.
+  const firstRunPending = ['initial', 'legacy'].includes(new URLSearchParams(window.location.search).get('setup')) || !initialSetupComplete(learningStore.getSnapshot().settings)
+  const assistantEnabled = !legacy && !showInitialSetup && isLearningRevealed && (!showSplash || !firstRunPending)
 
   return (
     <>
@@ -213,10 +225,15 @@ function LearningApp({ learningStore }) {
             pageTitleRef={pageTitleRef}
             isBrandConcealed={showSplash}
             isTransitionPrepared={!isLearningRevealed}
+            startLearningRequested={startLearningRequested}
+            onLearningRequestConsumed={() => setStartLearningRequested(false)}
+            onLearningContextChange={setLearningContext}
+            legacy={legacy}
           />
           {showInitialSetup && (
             <InitialLearningSetup onClose={closeInitialSetup} />
           )}
+          <FloatingLearningAssistant enabled={assistantEnabled} hintReady={!showSplash} selectedPage={selectedPage} learningContext={selectedPage === '今日学习' ? learningContext : null} onStartLearning={() => { setSelectedPage('今日学习'); setStartLearningRequested(true) }} />
         </AssistantProvider>
       </LearningStoreProvider>
       {showSplash && (

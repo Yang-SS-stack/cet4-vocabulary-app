@@ -1,0 +1,133 @@
+.floating-launcher-zone { position: fixed; z-index: 80; right: 24px; bottom: 20px; }
+.floating-assistant-launcher { display: flex; align-items: center; justify-content: center; gap: 10px; width: 150px; min-height: 48px; padding: 10px 14px; border: 0; border-radius: 28px; background: var(--ink); color: var(--white); font: inherit; font-weight: 700; cursor: pointer; box-shadow: 0 5px 18px #0b22442b; touch-action: none; user-select: none; }
+.floating-assistant-launcher svg { width: 25px; height: 25px; fill: none; stroke: var(--gold-soft); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.floating-assistant-launcher:hover { background: #204168; }
+.floating-assistant-hint { position: absolute; right: 0; bottom: 62px; width: min(270px, calc(100vw - 32px)); padding: 16px 20px; border: 1px solid var(--gold); border-radius: 12px; background: var(--white); color: var(--ink); box-shadow: 0 6px 22px #0b22441a; font-size: 14px; }
+.floating-assistant-hint::after { content: ''; position: absolute; right: 50px; bottom: -7px; width: 12px; height: 12px; transform: rotate(45deg); background: var(--white); border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold); }
+.floating-assistant-hint strong { color: var(--gold); }
+.floating-assistant-hint p { margin: 8px 0 0; line-height: 1.6; }
+.floating-assistant-hint button { position: absolute; top: 5px; right: 7px; width: 28px; height: 28px; border: 0; background: transparent; color: var(--ink); font-size: 20px; cursor: pointer; }
+.floating-assistant { position: fixed; z-index: 91; display: flex; flex-direction: column; overflow: hidden; border-radius: 16px; background: var(--white, #fffefa); color: var(--ink); box-shadow: 0 12px 48px #0b224438; font-size: 14px; transform-origin: top left; }
+.floating-assistant__header { display: flex; align-items: center; gap: 10px; flex: none; padding: 16px 12px 16px 18px; background: var(--ink); color: var(--white); cursor: move; touch-action: none; user-select: none; }
+.floating-assistant__header div { flex: 1; min-width: 0; }
+.floating-assistant__header h2 { margin: 0; font-size: 15px; font-weight: 700; }
+.floating-assistant__header p { margin: 5px 0 0; color: #e0d9c8; font-size: 11px; }
+.floating-assistant__header button { flex: none; padding: 5px; width: 30px; height: 32px; border: 0; color: #fffefa; background: transparent; cursor: pointer; }
+.floating-assistant__header button:hover { background: #ffffff1a; border-radius: 5px; }
+.floating-assistant__header button svg, .floating-assistant__resize svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+.assistant-symbol { flex: none; width: 32px; height: 32px; fill: none; stroke: #e5c77e; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.floating-assistant__body { flex: 1; min-height: 0; overflow: hidden; }
+.assistant-layout { position: relative; height: 100%; display: flex; flex-direction: column; }
+.assistant-send-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.assistant-stage { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-color: #b6a982 #f2f0ea; scrollbar-width: thin; }
+.assistant-stage > div:not([hidden]) { min-height: 100%; display: flex; flex-direction: column; }
+.floating-assistant__resize { position: absolute; z-index: 2; right: 2px; bottom: 2px; width: 24px; height: 24px; border: 0; background: transparent; color: var(--gold); cursor: nwse-resize; touch-action: none; }
+.floating-assistant button, .floating-assistant input, .floating-assistant select { font: inherit; }
+.floating-assistant button:disabled { opacity: .55; cursor: default; }
+.floating-assistant button:focus-visible, .floating-assistant input:focus-visible, .floating-assistant select:focus-visible, .floating-assistant-launcher:focus-visible, .floating-assistant-hint button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.floating-assistant ::selection { color: var(--white); background: var(--ink); }
+.floating-assistant input { caret-color: var(--ink); }
+.floating-assistant input::placeholder { color: #526176; }
+.assistant-conversation { flex: 1; display: flex; flex-direction: column; }
+.assistant-conversation__messages { flex: 1; padding: 20px 18px 12px; overflow-x: clip; }
+.assistant-conversation__end { display: block; height: 1px; scroll-margin-bottom: 180px; }
+.assistant-message { width: fit-content; max-width: 94%; margin: 0 0 14px; padding: 12px 14px; border-radius: 12px; background: #f0ece2; line-height: 1.65; overflow-wrap: anywhere; }
+.assistant-message__label { display: block; font-size: 10px; font-weight: 650; margin-bottom: 4px; color: #526176; }
+.assistant-message__text { white-space: pre-wrap; }
+.assistant-message--user, .assistant-message--flight { margin-left: auto; background: var(--ink); color: var(--white); transform-origin: top left; }
+.assistant-message--user.is-sending { visibility: hidden; }
+.assistant-message--flight { position: absolute; max-width: none; margin: 0; }
+.assistant-message--user .assistant-message__label, .assistant-message--flight .assistant-message__label { color: #e0d9c8; }
+.assistant-message--flight .assistant-message__label { color: inherit; }
+/* Shared defaults must not override a primary button inside an action group. */
+:where(.assistant-conversation__suggestions button, .assistant-plan__heading button, .assistant-plan__actions button, .assistant-plan__result > section > button, .assistant-plan__demo > button) { border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; background: transparent; color: var(--ink); cursor: pointer; }
+.assistant-conversation__composer { flex: none; z-index: 1; padding: 12px 12px 18px; background: var(--white); border-top: 1px solid var(--line); }
+.assistant-conversation__suggestions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin-bottom: 10px; }
+.assistant-conversation__suggestions button { display: inline-flex; align-items: center; justify-content: center; gap: 3px; padding: 8px 3px; min-width: 0; white-space: nowrap; font-size: 11px; transition: background 180ms ease-out, color 180ms ease-out, border-color 180ms ease-out; }
+.assistant-conversation__suggestions button:hover:enabled, .assistant-conversation__suggestions button:focus-visible { color: #795816; border-color: var(--gold); background: #f2e6ca; }
+.assistant-capability-icon { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 220ms var(--ease-out); }
+.assistant-conversation__suggestions button:hover:enabled svg, .assistant-conversation__suggestions button:focus-visible svg { transform: translateY(-2px) rotate(-5deg); }
+.assistant-pending { display: flex; align-items: center; gap: 10px; margin: 12px 0 18px; color: var(--ink-soft); font-size: 12px; }
+.assistant-pending > span { display: flex; gap: 4px; }
+.assistant-pending i { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); animation: assistant-wait 1s ease-in-out infinite; }
+.assistant-pending i:nth-child(2) { animation-delay: 120ms; }
+.assistant-pending i:nth-child(3) { animation-delay: 240ms; }
+@keyframes assistant-wait { 50% { transform: translateY(-3px); opacity: .5; } }
+.assistant-conversation__composer form { display: flex; gap: 8px; }
+.assistant-conversation__composer input { width: 100%; min-width: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 24px; background: transparent; color: var(--ink); }
+.assistant-conversation__composer form button { flex: none; width: 43px; height: 43px; border: 0; border-radius: 50%; background: var(--ink); color: var(--white); cursor: pointer; }
+.assistant-conversation__composer form svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.assistant-time-choice { padding: 0 18px 18px; }
+.assistant-time-choice output { float: right; color: var(--gold); }
+.assistant-time-choice input { display: block; width: 100%; margin: 14px 0; accent-color: var(--ink); }
+.assistant-task-summary { border-top: 1px solid var(--line); padding-top: 12px; line-height: 1.6; }
+.assistant-task-summary h3 { margin-top: 0; }
+.assistant-plan { padding: 18px 20px 24px; line-height: 1.6; }
+.assistant-plan__heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+.assistant-plan__heading h3 { margin: 0; font-size: 20px; }
+.assistant-plan__heading button { font-size: 12px; padding: 5px 9px; }
+.assistant-plan__facts, .assistant-plan__numbers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 12px; }
+.assistant-plan__facts > div { padding: 12px; border-radius: 10px; background: #f2f0ea; }
+.assistant-plan dt { color: var(--ink-soft); font-size: 12px; }
+.assistant-plan dd { margin: 0; font-size: 25px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.assistant-plan small { font-size: 11px; font-weight: 400; }
+.assistant-note { margin: 8px 0 12px; font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+.assistant-plan .session-intent { padding: 8px 0 0; }
+.assistant-plan .session-intent__time { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-weight: 650; }
+.assistant-plan .session-intent output { color: var(--gold); font-size: 18px; }
+.assistant-plan input[type=range] { width: 100%; accent-color: var(--ink); margin: 12px 0 4px; touch-action: auto; }
+.assistant-plan .session-intent__range-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-soft); }
+.assistant-plan fieldset { border: 0; padding: 14px 0 0; margin: 0; }
+.assistant-plan legend { padding: 0; font-weight: 650; }
+.assistant-plan .session-intent__goals { display: grid; grid-template-columns: 1fr; gap: 5px; margin: 10px 0 0; }
+.assistant-plan .session-intent__goals button, .assistant-plan .session-intent__goals button[aria-pressed='true'] { display: flex; align-items: center; gap: 12px; padding: 10px 2px; color: var(--ink); background: transparent; border: 0; text-align: left; cursor: pointer; transition: transform 200ms var(--ease-out), color 180ms ease-out; }
+.assistant-plan .session-intent__goals button:hover, .assistant-plan .session-intent__goals button:focus-visible { color: #795816; background: transparent; transform: translateX(3px); }
+.assistant-plan .session-intent__goals strong { display: block; font-size: 14px; font-weight: 650; }
+.assistant-plan .session-intent__goals small { display: block; margin-top: 2px; color: var(--ink-soft); font-size: 11px; line-height: 1.55; }
+.assistant-plan .session-intent__goals button::before { content: ''; width: 16px; height: 16px; flex: none; border: 1px solid #b6a982; border-radius: 50%; background: var(--white); transition: background 180ms ease-out, border-color 180ms ease-out; }
+.assistant-plan .session-intent__goals button[aria-pressed='true']::before { border-color: var(--ink); background: var(--ink); }
+.assistant-plan :where(.assistant-plan__heading button, .assistant-plan__actions button, .assistant-plan__basis, .assistant-plan__result > section > button, .assistant-plan__demo > button, .assistant-primary) { transition: color 180ms var(--ease-out), background 180ms var(--ease-out), border-color 180ms var(--ease-out); }
+.assistant-plan :where(.assistant-plan__heading button, .assistant-plan__actions button, .assistant-plan__basis, .assistant-plan__result > section > button, .assistant-plan__demo > button, .assistant-primary):is(:hover, :focus-visible, :active):enabled { color: var(--white); background: var(--ink); border-color: var(--ink); }
+.assistant-primary { width: 100%; padding: 11px 14px; border: 0; border-radius: 8px; background: var(--ink); color: var(--white); font-weight: 650 !important; cursor: pointer; }
+.assistant-primary:is(:hover, :focus-visible, :active):enabled { background: var(--ink-hover, #204168); color: var(--white); }
+.assistant-plan__result { padding-top: 16px; margin-top: 16px; border-top: 1px solid var(--line); }
+.assistant-plan__result h4, .assistant-plan__demo h4 { margin: 0 0 12px; font-size: 15px; }
+.assistant-plan__result.is-stale > .assistant-plan__numbers { opacity: .55; }
+.assistant-plan__numbers { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.assistant-plan__numbers dd { font-size: 22px; }
+.assistant-plan__numbers > div { padding: 12px 8px; border-radius: 10px; background: #f2f0ea; }
+.assistant-allocation { display: flex; height: 9px; border-radius: 6px; overflow: hidden; background: #e6e3dc; }
+.assistant-allocation span:first-child { background: var(--ink); }
+.assistant-allocation span + span { background: #b6a982; }
+.assistant-plan__actions { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.assistant-plan__actions button { font-size: 12px; }
+.assistant-plan__basis { display: flex; justify-content: space-between; width: 100%; margin: 14px 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--ink); cursor: pointer; }
+.assistant-plan__actions > button { flex: 1; }
+.assistant-plan__actions > .assistant-plan__adopt { flex: 1.5; display: flex; justify-content: center; align-items: center; gap: 12px; padding: 12px; border-radius: 10px; border-color: var(--ink); color: var(--white); background: var(--ink); font-weight: 650; }
+.assistant-plan__actions > .assistant-plan__adopt:is(:hover, :focus-visible, :active):enabled { background: var(--ink-hover, #204168); color: var(--white); }
+.assistant-plan__adopt svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.assistant-plan__result section { padding-top: 14px; border-top: 1px solid var(--line); margin-top: 14px; }
+.assistant-plan__result label { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 8px 0; }
+.assistant-plan input[type=number] { width: 70px; min-height: 36px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: var(--white); }
+.assistant-plan__demo { padding-top: 18px; margin: 18px 0; border-top: 1px solid var(--line); }
+.assistant-plan__demo label { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.assistant-plan__demo select { padding: 7px 9px; color: var(--ink); border: 1px solid var(--line); border-radius: 6px; background: var(--white); }
+.assistant-plan__failure { margin: 18px 0; padding: 24px 20px 20px; border: 1px solid #e6dfd0; border-radius: 14px; background: #f2f0ea; text-align: center; }
+.assistant-plan__failure > svg { width: 48px; height: 48px; margin-bottom: 8px; fill: none; stroke: #b6a982; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.assistant-plan__failure h4 { margin: 0 0 10px; font-size: 23px; line-height: 1.3; }
+.assistant-plan__failure p { margin: 8px 0; font-size: 13px; line-height: 1.65; }
+.assistant-plan__failure .assistant-plan__actions > button { flex: 1 1 0; min-width: 0; min-height: 48px; margin: 0; }
+[hidden].floating-launcher-zone, [hidden].floating-assistant-layer, [hidden].floating-assistant-launcher, .floating-assistant [hidden] { display: none !important; }
+@media (min-width: 641px) {
+  .assistant-conversation__composer { padding-bottom: 32px; }
+}
+@media (max-width: 640px) {
+  .floating-launcher-zone { right: 16px; bottom: max(12px, env(safe-area-inset-bottom)); }
+  .floating-assistant__backdrop { position: fixed; inset: 0; z-index: 90; background: #0b224433; }
+  .floating-assistant { left: 0; right: 0; bottom: 0; height: min(760px, 86dvh); max-height: calc(100dvh - 12px); border-radius: 18px 18px 0 0; padding-bottom: env(safe-area-inset-bottom); transition: transform 200ms cubic-bezier(.16, 1, .3, 1); }
+  .floating-assistant__grab { flex: none; width: 100%; height: 24px; border: 0; background: var(--white); color: var(--ink); touch-action: none; cursor: grab; }
+  .floating-assistant.is-pulling { transition: none; }
+  .floating-assistant__grab span { display: block; width: 44px; height: 4px; margin: auto; background: #b6a982; border-radius: 4px; }
+  .floating-assistant__header { cursor: default; padding: 12px 14px; touch-action: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .floating-assistant, .floating-assistant *, .floating-assistant *::before { transition: none !important; animation: none !important; } .assistant-conversation__suggestions button svg, .assistant-plan .session-intent__goals button:hover, .assistant-plan .session-intent__goals button:focus-visible { transform: none; } }

@@ -45,6 +45,7 @@
 }
 .nav-toggle {
   position: absolute;
+  z-index: 6;
   top: 50dvh;
   right: -22px;
   transform: translateY(-50%);
@@ -65,10 +66,12 @@
 .nav-toggle span { width: 8px; height: 8px; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(-135deg); transition: transform 280ms var(--ease-out); }
 .nav-toggle:not(.is-open) span { transform: rotate(45deg); }
 .brand-mark { position: relative; height: 82px; white-space: nowrap; overflow: hidden; transition: height 280ms var(--ease-out); }
-.brand-name { display: block; letter-spacing: -.03em; }
-.brand-initial { position: absolute; top: 0; left: 8px; font-size: 26px; font-weight: 750; opacity: 0; transition: opacity 150ms ease-out; }
+.brand-name { display: block; margin-left: 40px; letter-spacing: -.03em; }
+.brand-initial { position: absolute; top: 0; left: 8px; font-size: 26px; font-weight: 750; opacity: 1; transition: opacity 150ms ease-out; }
 .is-nav-collapsed .sidebar .brand-name, .is-nav-collapsed .sidebar .sidebar-note { opacity: 0; pointer-events: none; }
 .is-nav-collapsed .brand-initial { opacity: 1; }
+.brand-initial { top: -4px; left: 0; width: 34px; height: 38px; }
+.brand-initial .brand-flight-mark { width: 32px; height: 34px; }
 .is-nav-collapsed .brand-mark { height: 104px; }
 .brand-kicker,
 .panel-label {
@@ -82,7 +85,7 @@
 .brand-name {
   transition: opacity 180ms ease-out;
   font-family: 'Manrope Variable', 'Microsoft YaHei', 'PingFang SC', sans-serif;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 1.1;
 }
@@ -409,3 +412,7 @@ h1 {
 .page-intro--overview .page-lede { margin: 0; padding-left: 24px; border-left: 1px solid var(--line); font-size: 15px; }
 @media (max-width: 800px) { .content-area--overview { padding: 26px 24px 38px; } }
 @media (max-width: 480px) { .content-area--overview { padding: 25px 18px 32px; } .page-intro--overview { gap: 10px; } .page-intro--overview .page-lede { font-size: 12px; padding-left: 12px; } }
+.page-intro--today { flex-direction: column; align-items: flex-start; gap: 8px; padding-right: 50%; }
+.page-intro--today .page-lede { padding: 0; border: 0; }
+.content-area--overview:has(.learning-overview--floating) { padding-bottom: 92px; }
+@media (max-width: 640px) { .page-intro--today { padding-right: 0; } }

@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import App from './App'
+import { completeAssistantReply, completeAssistantTurn, startAssistantClock, requestConfirmedPlan, sendAssistantText } from './test/assistantClock'
 import { createLearningStore, LEARNING_STORAGE_KEY } from './data/learning'
 import { clearWordBookCache } from './data/loadWordBook'
 
@@ -32,6 +33,7 @@ afterEach(() => {
   delete HTMLDialogElement.prototype.showModal
   vi.useRealTimers()
   localStorage.removeItem(LEARNING_STORAGE_KEY)
+  window.history.replaceState({}, '', '/')
 })
 
 async function waitForApp() {
@@ -83,12 +85,20 @@ test('opens one combined setup dialog only after the welcome animation finishes'
   render(<App />)
 
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: '学习助手' })).not.toBeInTheDocument()
   await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: '完成文字拆散' }))
+  expect(screen.queryByRole('button', { name: '学习助手' })).not.toBeInTheDocument()
   await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
 
   expect(screen.getByRole('dialog', { name: '开始前，先设定你的学习计划' })).toBeInTheDocument()
   expect(screen.getByRole('button', { name: /^每日复习数量 / })).toBeInTheDocument()
+  for (const label of ['考试日期', '学习词表', '每日新词', '每日复习数量', '每日学习时长', '新词选取']) {
+    expect(screen.getByRole('button', { name: new RegExp(`^${label} `) })).toBeInTheDocument()
+  }
+  expect(screen.queryByRole('button', { name: '学习助手' })).not.toBeInTheDocument()
+  expect(screen.queryByRole('slider', { name: '本次可用时间' })).not.toBeInTheDocument()
 })
 
 test('does not reopen the first-run dialog when all five settings were saved', async () => {
@@ -101,6 +111,20 @@ test('does not reopen the first-run dialog when all five settings were saved', a
   await enterApp(user)
 
   expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+})
+
+test.each(['initial', 'legacy'])('forced setup=%s keeps the early launcher hidden even with saved settings', async mode => {
+  window.history.replaceState({}, '', `/?setup=${mode}`)
+  configureFirstRun()
+  const user = userEvent.setup()
+  render(<App />)
+  await user.click(screen.getByRole('button', { name: '进入 LinguaJet' }))
+  await user.click(screen.getByRole('button', { name: '完成文字拆散' }))
+  expect(screen.queryByRole('button', { name: '学习助手' })).not.toBeInTheDocument()
+  expect(screen.queryByText('学习助手提示')).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
+  expect(screen.getByRole('dialog', { name: '开始前，先设定你的学习计划' })).toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: '学习助手' })).not.toBeInTheDocument()
 })
 
 test('shows the LinguaJet welcome screen and opens the app after a click', async () => {
@@ -144,8 +168,12 @@ test('hands the logo from the welcome screen to the particle transition', async 
   expect(document.querySelector('.app-shell')).not.toHaveAttribute('inert')
   expect(screen.getByRole('main', { name: 'LinguaJet 欢迎页' })).toHaveClass('is-background-leaving')
 
+  const assistantLauncher = screen.getByRole('button', { name: '学习助手' })
+  expect(screen.queryByText('学习助手提示')).not.toBeInTheDocument()
+
   await user.click(screen.getByRole('button', { name: '完成粒子过场' }))
 
+  expect(screen.getByRole('button', { name: '学习助手' })).toBe(assistantLauncher)
   expect(screen.queryByRole('main', { name: 'LinguaJet 欢迎页' })).not.toBeInTheDocument()
   expect(screen.getByText('LinguaJet', { exact: true })).not.toHaveClass('is-brand-concealed')
 })
@@ -168,7 +196,8 @@ test('replaces the today-learning placeholder with the real overview', async () 
   await enterApp(user)
 
   expect(screen.getByRole('region', { name: '今日学习概览' })).toBeInTheDocument()
-  expect(screen.getByText('学习建议')).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '学习助手' })).toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: '学习建议' })).not.toBeInTheDocument()
   expect(screen.queryByLabelText('今日学习内容')).not.toBeInTheDocument()
 })
 
@@ -201,17 +230,124 @@ test('focuses the Today page title after canceling the automatic first-run setup
 
   await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   await waitFor(() => expect(screen.getByRole('heading', { name: '今日学习' })).toHaveFocus())
+  expect(screen.getByText('词书资料不完整或不一致，无法计算').closest('.learning-overview__status-strip')).toHaveClass('is-unavailable')
 })
 
-test('focuses the Today page title after saving the automatic first-run setup', async () => {
+test('saves the original initial settings and returns directly to today without opening the assistant', async () => {
   const user = userEvent.setup()
   render(<App />)
   await enterApp(user)
 
   await user.click(screen.getByRole('button', { name: '保存并继续' }))
+  await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  expect(screen.queryByText('要看看助手的学习建议吗？')).not.toBeInTheDocument()
+  expect(JSON.parse(localStorage.getItem(LEARNING_STORAGE_KEY)).days).toEqual({})
 
   await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   await waitFor(() => expect(screen.getByRole('heading', { name: '今日学习' })).toHaveFocus())
+})
+
+test('one global assistant keeps the conversation through navigation and explicit legacy disables it', async () => {
+  configureFirstRun()
+  const user = userEvent.setup({ advanceTimers: delay => { if (vi.isFakeTimers()) vi.advanceTimersByTime(delay) } })
+  render(<App />)
+  await enterApp(user)
+  startAssistantClock()
+  await user.click(screen.getByRole('button', { name: '学习助手' }))
+  completeAssistantReply()
+  sendAssistantText('否，暂时不用')
+  completeAssistantReply()
+  await user.click(screen.getByRole('button', { name: '设置' }))
+  expect(screen.getByText('那么你现在想要做些什么？', { selector: '.assistant-message__text' })).toBeInTheDocument()
+  expect(screen.getAllByRole('dialog', { name: 'LinguaJet 学习助手' })).toHaveLength(1)
+})
+
+test('global assistant receives the real Today lesson word and forgets it after exiting the lesson', async () => {
+  configureFirstRun()
+  clearWordBookCache()
+  const assetPaths = {
+    '/data/word-books/cet4/manifest.json': 'public/data/word-books/cet4/manifest.json',
+    '/data/word-books/cet4/chunks/00.json': 'public/data/word-books/cet4/chunks/00.json',
+    '/data/word-books/cet4/search-index.json': 'public/data/word-books/cet4/search-index.json',
+  }
+  vi.stubGlobal('fetch', vi.fn(async url => ({ ok: Boolean(assetPaths[url]), json: async () => JSON.parse(readFileSync(assetPaths[url], 'utf8')) })))
+  vi.stubGlobal('Audio', class { constructor(src) { this.src = src; this.play = vi.fn(() => Promise.resolve()); this.pause = vi.fn() } })
+  const user = userEvent.setup({ advanceTimers: delay => { if (vi.isFakeTimers()) vi.advanceTimersByTime(delay) } })
+  render(<App />)
+  await enterApp(user)
+  await user.click(screen.getAllByRole('button', { name: '今日学习' }).at(-1))
+  await waitFor(() => expect(document.querySelector('.learning-session__word h2')).not.toBeNull())
+  const actualWord = document.querySelector('.learning-session__word h2').textContent
+  startAssistantClock()
+  await user.click(screen.getByRole('button', { name: '学习助手' })); completeAssistantReply()
+  await user.click(screen.getByRole('button', { name: '单词记忆' })); completeAssistantReply()
+  expect(screen.getByText(`帮我记住 ${actualWord}`, { selector: '.assistant-message--user .assistant-message__text' })).toBeVisible()
+  expect(screen.getByText(`目标单词：${actualWord}。单词记忆尚未接入模型，当前无法生成记忆方法。`, { selector: '.assistant-message--assistant .assistant-message__text' })).toBeVisible()
+  await user.click(screen.getByRole('button', { name: '关闭学习助手' }))
+  vi.useRealTimers()
+  await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  await user.click(screen.getByRole('button', { name: '确认退出' }))
+  await waitFor(() => expect(document.querySelector('.learning-session')).toBeNull())
+  startAssistantClock()
+  await user.click(screen.getByRole('button', { name: '学习助手' }))
+  await user.click(screen.getByRole('button', { name: '单词记忆' })); completeAssistantReply()
+  expect(screen.getByText('你想记住哪个单词呢？', { selector: '.assistant-message--assistant .assistant-message__text' })).toBeVisible()
+})
+
+test('explicit legacy mode retains old entries and disables the assistant', async () => {
+  window.history.replaceState({}, '', '?ui=legacy')
+  configureFirstRun()
+  const user = userEvent.setup()
+  render(<App />)
+  await enterApp(user)
+  expect(screen.getByRole('button', { name: '学习建议' })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: '安排本次学习' })).toBeInTheDocument()
+  expect(screen.queryByRole('button', { name: '学习助手' })).not.toBeInTheDocument()
+  window.history.replaceState({}, '', '/')
+})
+
+test.each(['timeout', 'quota'])('original review works independently during a simulated %s outcome', async outcome => {
+  configureFirstRun()
+  const user = userEvent.setup({ advanceTimers: delay => { if (vi.isFakeTimers()) vi.advanceTimersByTime(delay) } })
+  render(<App />)
+  await enterApp(user)
+  const before = localStorage.getItem(LEARNING_STORAGE_KEY)
+  startAssistantClock()
+  await user.click(screen.getByRole('button', { name: '学习助手' }))
+  completeAssistantReply()
+  requestConfirmedPlan('是，设置计划')
+  completeAssistantTurn()
+  await user.selectOptions(screen.getByLabelText('演示状态'), outcome)
+  await user.click(screen.getByRole('button', { name: '运行演示' }))
+  expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(before)
+  vi.useRealTimers()
+  await user.click(screen.getByRole('button', { name: '今日复习' }))
+  expect(document.querySelector('.app-shell')).toHaveClass('is-study-focused')
+  expect(screen.getByRole('dialog', { name: 'LinguaJet 学习助手' })).toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: '关闭学习助手' }))
+  expect(screen.getByRole('button', { name: '学习助手' })).toBeInTheDocument()
+  await waitFor(() => expect(screen.getByText('还没有学过的词')).toBeInTheDocument())
+  await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  expect(document.querySelector('.app-shell')).not.toHaveClass('is-study-focused')
+})
+test('assistant has no daily settings action and original review can return to ordinary settings', async () => {
+  configureFirstRun()
+  const user = userEvent.setup({ advanceTimers: delay => { if (vi.isFakeTimers()) vi.advanceTimersByTime(delay) } })
+  render(<App />)
+  await enterApp(user)
+  await user.click(screen.getByRole('button', { name: '今日复习' }))
+  startAssistantClock()
+  await user.click(screen.getByRole('button', { name: '学习助手' }))
+  completeAssistantReply()
+  requestConfirmedPlan('是，设置计划')
+  completeAssistantTurn()
+  expect(screen.queryByRole('button', { name: '每日计划设置' })).not.toBeInTheDocument()
+  await user.click(screen.getByRole('button', { name: '关闭学习助手' }))
+  vi.useRealTimers()
+  await user.click(await screen.findByRole('button', { name: '返回主界面' }))
+  await user.click(screen.getByRole('button', { name: '设置' }))
+  expect(screen.getByRole('heading', { name: '设置', level: 1 })).toBeVisible()
+  expect(document.querySelector('.app-shell')).not.toHaveClass('is-study-focused')
 })
 
 test('opens editable settings from navigation and returns to the original vocabulary entry', async () => {
@@ -235,10 +371,10 @@ test.each([
 ])('preserves %s and offers an explicit two-step recovery without blocking vocabulary access', async (_label, raw) => {
   const user = userEvent.setup()
   localStorage.setItem(LEARNING_STORAGE_KEY, raw)
-
   render(<App />)
 
   expect(screen.getByRole('alert')).toHaveTextContent('学习数据暂时无法读取')
+  expect(screen.queryByRole('button', { name: '学习助手' })).not.toBeInTheDocument()
   expect(localStorage.getItem(LEARNING_STORAGE_KEY)).toBe(raw)
 
   await user.click(screen.getByRole('button', { name: '继续浏览词表' }))
@@ -476,6 +612,7 @@ test('study and review sessions conceal navigation and return to the dashboard',
   render(<App />)
   await enterApp(user)
   await user.click(screen.getByRole('button', { name: '今日复习' }))
+  expect(screen.getByRole('button', { name: '学习助手' })).toBeInTheDocument()
   expect(document.querySelector('.app-shell')).toHaveClass('is-study-focused')
   expect(document.querySelector('.sidebar')).toHaveAttribute('inert')
   expect(screen.queryByRole('button', { name: '隐藏导航栏' })).not.toBeInTheDocument()

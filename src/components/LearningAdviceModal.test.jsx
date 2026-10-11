@@ -15,7 +15,7 @@ function page(patch = {}) {
   let raw = null
   const store = createLearningStore({ storage: { getItem: () => raw, setItem: (_, value) => { raw = value } }, now: () => now })
   store.updateSettings({ examDate: '2026-10-16', todayWordBookId: 'cet4', dailyNewWords: 24, dailyReviewWords: 20, dailyStudyMinutes: 50, ...patch })
-  const rendered = render(<LearningStoreProvider store={store}><TodayLearningPage now={now} /></LearningStoreProvider>)
+  const rendered = render(<LearningStoreProvider store={store}><TodayLearningPage legacy now={now} /></LearningStoreProvider>)
   return { ...rendered, store, raw: () => raw }
 }
 function open() {

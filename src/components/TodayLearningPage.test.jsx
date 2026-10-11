@@ -29,7 +29,7 @@ function createStore() {
 function renderPage(store) {
   return render(
     <LearningStoreProvider store={store}>
-      <TodayLearningPage now={new Date(2026, 8, 11, 10)} />
+      <TodayLearningPage legacy now={new Date(2026, 8, 11, 10)} />
     </LearningStoreProvider>,
   )
 }

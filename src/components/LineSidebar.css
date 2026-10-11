@@ -171,7 +171,7 @@
 .line-sidebar__icon { display: flex; flex: 0 0 24px; width: 24px; height: 24px; }
 .line-sidebar__icon svg { width: 100%; height: 100%; }
 .line-sidebar__label { transition: opacity 150ms ease-out; }
-.line-sidebar--collapsed .line-sidebar__label { position: absolute; left: 55px; opacity: 0; }
+.line-sidebar--collapsed .line-sidebar__label { position: absolute; left: 55px; opacity: 0; pointer-events: none; }
 .line-sidebar--collapsed .line-sidebar__button { padding-left: 8px; justify-content: flex-start; }
 .line-sidebar--collapsed .line-sidebar__marker { left: -10px; width: 2px; height: 12px; }
 .line-sidebar--collapsed .line-sidebar__list::before { left: -10px; top: 14px; width: 2px; height: 24px; }

@@ -23,6 +23,7 @@ beforeEach(() => {
   vi.stubGlobal('Audio', class {
     constructor(src) {
       this.src = src
+      this.load = vi.fn()
       this.pause = vi.fn(() => active.delete(this))
       this.play = vi.fn(() => { active.add(this); expect(active.size).toBe(1); return Promise.resolve() })
       sounds.push(this)
@@ -50,10 +51,11 @@ function setup({ count = 1, method = { id: 'guided-recall', rulesVersion: 1 } } 
   const show = (s = store) => render(<LearningStoreProvider store={s}><LearningSession loadBook={loadBook} onExit={exit} /></LearningStoreProvider>)
   return { store, open, show, exit, fail: value => { fail = value }, nextDay: () => { date = new Date(2026, 8, 30) } }
 }
-async function finish(sound = sounds.at(-1), failure = false) {
+const played = () => sounds.filter(sound => sound.play.mock.calls.length > 0)
+async function finish(sound = [...active].at(-1), failure = false) {
   await act(async () => { active.delete(sound); (failure ? sound.onerror : sound.onended)?.(); await Promise.resolve() })
 }
-async function ready() { await screen.findByRole('button', { name: '首字母' }); await waitFor(() => expect(sounds.length).toBeGreaterThan(0)) }
+async function ready() { await screen.findByRole('button', { name: '首字母' }); await waitFor(() => expect(played().length).toBeGreaterThan(0)) }
 
 test('wrong choice saves once and stays anchored, revealing green only with correct speech', async () => {
   const env = setup()
@@ -72,11 +74,14 @@ test('wrong choice saves once and stays anchored, revealing green only with corr
   expect(correct).not.toHaveClass('is-correct')
   expect(heading.closest('.study-transition')).not.toHaveClass('is-leaving')
   expect(screen.getByRole('button', { name: '继续' })).toHaveFocus()
-  expect(sounds.at(-1).src).toBe('/beta-gb')
-  await act(async () => { oldEnd(); await Promise.resolve() })
-  expect(sounds.at(-1).src).toBe('/beta-gb')
-  await finish()
+  expect(played().at(-1).src).toBe('/beta-gb')
   expect(sounds.at(-1).src).toBe('/alpha-gb')
+  expect(sounds.at(-1).load).toHaveBeenCalledOnce()
+  expect(sounds.at(-1).play).not.toHaveBeenCalled()
+  await act(async () => { oldEnd(); await Promise.resolve() })
+  expect(played().at(-1).src).toBe('/beta-gb')
+  await finish()
+  expect(played().at(-1).src).toBe('/alpha-gb')
   expect(correct).toHaveClass('is-correct')
   expect(screen.getByRole('heading', { name: 'alpha' })).toBe(heading)
   expect(env.open().getTask('learning').feedbackEvents).toHaveLength(1)
@@ -89,7 +94,7 @@ test('correct choice, details, second and third rounds use their exact serial se
   await ready()
   const heading = screen.getByRole('heading', { name: 'alpha' })
   await user.click(screen.getByRole('button', { name: '首字母' }))
-  expect(sounds.at(-1).src).toBe('/alpha-gb')
+  expect(played().at(-1).src).toBe('/alpha-gb')
   expect(screen.getByRole('heading', { name: 'alpha' })).toBe(heading)
   const beforeDetails = sounds.length
   await user.click(screen.getByRole('button', { name: '继续' }))
@@ -97,14 +102,14 @@ test('correct choice, details, second and third rounds use their exact serial se
   await waitFor(() => expect(sounds.length).toBeGreaterThan(beforeDetails))
   expect(screen.getByRole('heading', { name: 'alpha' })).toBe(heading)
   await finish()
-  expect(sounds.at(-1).src).toBe('/alpha-example')
+  expect(played().at(-1).src).toBe('/alpha-example')
   const beforeSecond = sounds.length
   await user.click(screen.getByRole('button', { name: '下一词' }))
   await screen.findByRole('button', { name: '认识', exact: true })
   await waitFor(() => expect(sounds.length).toBeGreaterThan(beforeSecond))
-  expect(sounds.at(-1).src).toBe('/alpha-gb')
+  expect(played().at(-1).src).toBe('/alpha-gb')
   await finish()
-  expect(sounds.at(-1).src).toBe('/alpha-example')
+  expect(played().at(-1).src).toBe('/alpha-example')
   expect(screen.queryByText('例句翻译')).not.toBeInTheDocument()
   const beforeSelfDetails = sounds.length
   await user.click(screen.getByRole('button', { name: '认识', exact: true }))
@@ -114,7 +119,7 @@ test('correct choice, details, second and third rounds use their exact serial se
   await user.click(screen.getByRole('button', { name: '下一词' }))
   await screen.findByRole('button', { name: '认识', exact: true })
   await waitFor(() => expect(sounds.length).toBeGreaterThan(beforeThird))
-  expect(sounds.at(-1).src).toBe('/alpha-gb')
+  expect(played().at(-1).src).toBe('/alpha-gb')
   const before = sounds.length
   await finish()
   expect(sounds).toHaveLength(before)
@@ -132,22 +137,22 @@ test('failure reveals the answer and retry/manual speech never resumes an abando
   await finish(undefined, true)
   expect(screen.getByText('音频播放失败，请重试。')).toBeInTheDocument()
   await user.click(screen.getByRole('button', { name: '重播本轮朗读' }))
-  expect(sounds.at(-1).src).toBe('/beta-gb')
+  expect(played().at(-1).src).toBe('/beta-gb')
   const beforeDetails = sounds.length
   await user.click(screen.getByRole('button', { name: '继续' }))
   await screen.findByText('例句翻译')
   await waitFor(() => expect(sounds.length).toBeGreaterThan(beforeDetails))
-  const stale = sounds.at(-1).onended
+  const stale = played().at(-1).onended
   await user.click(screen.getByRole('button', { name: 'alpha 美音' }))
-  expect(sounds.at(-1).src).toBe('/alpha-us')
+  expect(played().at(-1).src).toBe('/alpha-us')
   await act(async () => { stale(); await Promise.resolve() })
-  expect(sounds.at(-1).src).toBe('/alpha-us')
+  expect(played().at(-1).src).toBe('/alpha-us')
   await user.click(screen.getByRole('button', { name: '返回主界面' }))
   expect(active.size).toBe(1)
   await user.click(screen.getByRole('button', { name: '继续学习', exact: true }))
   expect(active.size).toBe(1)
   await user.click(screen.getByRole('button', { name: '返回主界面' }))
-  const staleExit = sounds.at(-1).onended
+  const staleExit = played().at(-1).onended
   await user.click(screen.getByRole('button', { name: '确认退出' }))
   expect(active.size).toBe(0)
   await act(async () => { staleExit?.(); await Promise.resolve() })
@@ -163,13 +168,13 @@ test('restores feedback/details without another write and stops at expiry/save e
   view.unmount()
   view = env.show(env.open())
   await screen.findByRole('button', { name: '继续' })
-  await waitFor(() => expect(sounds.at(-1).src).toBe('/beta-gb'))
+  await waitFor(() => expect(played().at(-1).src).toBe('/beta-gb'))
   await user.click(screen.getByRole('button', { name: '继续' }))
   await screen.findByText('例句翻译')
   view.unmount()
   env.show(env.open())
   await screen.findByText('例句翻译')
-  await waitFor(() => expect(sounds.at(-1).src).toBe('/alpha-gb'))
+  await waitFor(() => expect(played().at(-1).src).toBe('/alpha-gb'))
   expect(env.open().getTask('learning').feedbackEvents).toHaveLength(1)
   env.fail(true)
   await user.click(screen.getByRole('button', { name: '下一词' }))

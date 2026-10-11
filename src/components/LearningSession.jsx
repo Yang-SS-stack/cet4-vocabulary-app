@@ -32,7 +32,7 @@ function turnToken(task) {
     ...(task.kind === 'extra-learning' ? { kind: task.kind, taskId: task.taskId } : {}) }
 }
 
-export default function LearningSession({ onExit, loadBook = loadWordBook, initialMode = 'learning', animateEntry = false }) {
+export default function LearningSession({ onExit, loadBook = loadWordBook, initialMode = 'learning', animateEntry = false, onLearningContextChange }) {
   const { store, snapshot } = useLearningStore()
   const [loaded, setLoaded] = useState(null)
   const [error, setError] = useState('')
@@ -282,6 +282,16 @@ export default function LearningSession({ onExit, loadBook = loadWordBook, initi
   const choiceFeedback = guided && task.view === 'feedback' && task.choice && !task.choice.revealed
   const choosing = guided && task.view === 'question' && progress?.knownCount === 0
   const example = item && (item.example?.trim() || supplementalExamples[item.word.toLowerCase()]?.example)
+  const lessonWordId = progress?.wordId
+  useEffect(() => {
+    const available = mode === 'learning' && item && lessonWordId && !expired && !error && !exiting && loaded?.date === store.getToday()
+    onLearningContextChange?.(available ? {
+      source: 'today-learning', date: task.date, itemId: task.currentItemId,
+      wordBookId: task.wordBookId, wordId: lessonWordId, word: item.word,
+      meaning: item.meaning, example: example ?? '',
+    } : null)
+  }, [onLearningContextChange, mode, item, lessonWordId, expired, error, exiting, loaded?.date, store, task?.date, task?.currentItemId, task?.wordBookId, example])
+  useEffect(() => () => onLearningContextChange?.(null), [onLearningContextChange])
   const wordAudio = item && audio?.words?.[item.word.toLowerCase()]
   const wordFrame = item ? `${task.date}:${task.taskId ?? mode}:${task.currentItemId}:${nextTurn}:${chineseQuestion ? 'zh' : 'en'}` : ''
   const bodyPhase = choosing || choiceFeedback || task?.view === 'question' ? 'question' : 'details'

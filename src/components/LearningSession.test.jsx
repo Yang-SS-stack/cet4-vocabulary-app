@@ -1,12 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { expect, test, vi } from 'vitest'
+import { afterEach, expect, test, vi } from 'vitest'
 import { createLearningStore, LearningStoreProvider } from '../data/learning'
 import { createInlineWordBookSession } from '../data/wordBookSession'
 import TodayLearningPage from './TodayLearningPage'
 
 const words = [{ word: 'alpha', meaning: '完整释义；第二释义', example: 'An alpha example.', translation: '例句翻译', phrases: ['alpha phrase'], partOfSpeech: 'n.' }, { word: 'beta', meaning: '第二个词' }, { word: 'gamma', meaning: '第三个词' }, { word: 'delta', meaning: '第四个词' }]
-function setup() {
+const originalShowModal = Object.getOwnPropertyDescriptor(HTMLDialogElement.prototype, 'showModal')
+afterEach(() => {
+  if (originalShowModal) Object.defineProperty(HTMLDialogElement.prototype, 'showModal', originalShowModal)
+  else delete HTMLDialogElement.prototype.showModal
+})
+function setup(props = {}) {
   let raw = null
   let fail = false
   let date = new Date(2026, 8, 24, 23, 59)
@@ -15,9 +20,30 @@ function setup() {
   const store = open()
   store.updateSettings({ todayWordBookId: 'cet4', dailyNewWords: 2 })
   const loader = vi.fn(async () => createInlineWordBookSession(words))
-  const show = (s = store) => render(<LearningStoreProvider store={s}><TodayLearningPage loadBook={loader} /></LearningStoreProvider>)
+  const show = (s = store) => render(<LearningStoreProvider store={s}><TodayLearningPage loadBook={loader} {...props} /></LearningStoreProvider>)
   return { store, open, loader, show, fail: value => { fail = value }, nextDay: () => { date = new Date(2026, 8, 25) } }
 }
+
+test('readonly assistant context follows actual current lesson and clears on exit and unmount', async () => {
+  HTMLDialogElement.prototype.showModal = function () { this.setAttribute('open', '') }
+  const onLearningContextChange = vi.fn()
+  const env = setup({ onLearningContextChange })
+  env.store.ensureTodayLearning('cet4', ['alpha', 'beta'])
+  const user = userEvent.setup(), view = env.show()
+  expect(onLearningContextChange).toHaveBeenLastCalledWith(null)
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await screen.findByRole('heading', { name: 'alpha' })
+  await waitFor(() => expect(onLearningContextChange).toHaveBeenLastCalledWith(expect.objectContaining({ source: 'today-learning', word: 'alpha', wordId: 'alpha', wordBookId: 'cet4', example: 'An alpha example.' })))
+  await user.click(screen.getByRole('button', { name: '认识', exact: true }))
+  await user.click(await screen.findByRole('button', { name: '下一词' }))
+  await screen.findByRole('heading', { name: 'beta' })
+  await waitFor(() => expect(onLearningContextChange).toHaveBeenLastCalledWith(expect.objectContaining({ word: 'beta', wordId: 'beta' })))
+  await user.click(screen.getByRole('button', { name: '返回主界面' }))
+  await user.click(screen.getByRole('button', { name: '确认退出' }))
+  await waitFor(() => expect(onLearningContextChange).toHaveBeenLastCalledWith(null))
+  view.unmount()
+  expect(onLearningContextChange).toHaveBeenLastCalledWith(null)
+})
 
 test('random creation samples beyond the original first words and restores the exact task', async () => {
   const env = setup()
@@ -93,7 +119,7 @@ test('failed save leaves answer hidden; retry counts once; conflicts reload save
 })
 
 test('midnight rejects previous task and offers today entry', async () => {
-  const env = setup()
+  const onLearningContextChange = vi.fn(), env = setup({ onLearningContextChange })
   env.store.ensureTodayLearning('cet4', ['alpha', 'beta'])
   env.show()
   const user = userEvent.setup()
@@ -102,6 +128,7 @@ test('midnight rejects previous task and offers today entry', async () => {
   env.nextDay()
   await user.click(await screen.findByRole('button', { name: '认识', exact: true }))
   expect(await screen.findByRole('alert')).toHaveTextContent('日期已变化')
+  expect(onLearningContextChange).toHaveBeenLastCalledWith(null)
   expect(env.store.getTask('learning', '2026-09-24').feedbackEvents).toHaveLength(0)
   await user.click(screen.getByRole('button', { name: '开始今天的任务' }))
   await waitFor(() => expect(env.store.getTask('learning')?.date).toBe('2026-09-25'))
@@ -125,7 +152,7 @@ test('settings changes and a different chosen book do not redraw an existing tas
 })
 
 test('creation save failure leaves no task; detail load failure leaves existing task intact', async () => {
-  const env = setup()
+  const onLearningContextChange = vi.fn(), env = setup({ onLearningContextChange })
   env.fail(true)
   const view = env.show()
   const user = userEvent.setup()
@@ -141,7 +168,30 @@ test('creation save failure leaves no task; detail load failure leaves existing 
   env.show()
   await user.click(screen.getByRole('button', { name: '今日学习' }))
   expect(await screen.findByRole('alert')).toHaveTextContent('词书加载失败')
+  expect(onLearningContextChange).toHaveBeenLastCalledWith(null)
   expect(env.store.getTask('learning')).toEqual(task)
+})
+
+test('readonly target remains actual word after a distractor answer and clears on completion', async () => {
+  const onLearningContextChange = vi.fn(), env = setup({ onLearningContextChange })
+  env.store.ensureTodayLearning('cet4', ['alpha'], env.store.getToday(), env.store.getSnapshot().settings, { id: 'guided-recall', rulesVersion: 1 })
+  const user = userEvent.setup()
+  env.show()
+  await user.click(screen.getByRole('button', { name: '今日学习' }))
+  await user.click(await screen.findByRole('button', { name: '第二个词' }))
+  expect(env.store.getTask('learning').choice.selectedWord).toBe('beta')
+  expect(onLearningContextChange).toHaveBeenLastCalledWith(expect.objectContaining({ word: 'alpha', wordId: 'alpha' }))
+  await user.click(screen.getByRole('button', { name: '继续' }))
+  await user.click(await screen.findByRole('button', { name: '下一词' }))
+  await user.click(await screen.findByRole('button', { name: '完整释义；第二释义' }))
+  await user.click(screen.getByRole('button', { name: '继续' }))
+  await user.click(await screen.findByRole('button', { name: '下一词' }))
+  for (let round = 0; round < 2; round++) {
+    await user.click(await screen.findByRole('button', { name: '认识', exact: true }))
+    await user.click(await screen.findByRole('button', { name: '下一词' }))
+  }
+  await screen.findByRole('heading', { name: '今日学习已完成' })
+  expect(onLearningContextChange).toHaveBeenLastCalledWith(null)
 })
 
 test('one word reaches completion after three separate self assessment turns', async () => {
