@@ -9,6 +9,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: './src/test/setup.js',
+    maxWorkers: 2,
     exclude: ['.worktrees/**', 'node_modules/**'],
   },
 })
